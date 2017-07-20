@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DemoDataService {
+
     public void demoDataServiceTest(){
         System.out.println("hello world");
     }
+
 }
