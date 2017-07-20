@@ -1,4 +1,4 @@
-package com.pms.model;
+package com.pms.model.Demo;
 
 /**
  * Created by rhan on 2017/7/20.

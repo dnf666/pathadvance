@@ -1,5 +1,5 @@
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.pms.dao.DemoMapper;
+import com.pms.dao.Demo.DemoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionFactoryBean;

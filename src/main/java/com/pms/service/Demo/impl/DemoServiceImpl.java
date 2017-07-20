@@ -1,6 +1,6 @@
-package com.pms.service.impl;
+package com.pms.service.Demo.impl;
 
-import com.pms.service.DemoService;
+import com.pms.service.Demo.DemoService;
 import org.springframework.stereotype.Service;
 
 /**

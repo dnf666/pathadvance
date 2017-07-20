@@ -1,4 +1,4 @@
-package com.pms.controller;
+package com.pms.controller.Demo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

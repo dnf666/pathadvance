@@ -1,4 +1,4 @@
-package com.pms.service;
+package com.pms.service.Demo;
 
 import org.springframework.stereotype.Service;
 

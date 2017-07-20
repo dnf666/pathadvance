@@ -23,7 +23,7 @@
 
     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"/>
-        <property name="mapperLocations" value="classpath*:com/pms/dao/Impl/*.xml"/>
+        <property name="mapperLocations" value="classpath*:com/pms/dao/Demo/Impl/*.xml"/>
         <property name="configurationProperties">
             <props>
                 <prop key="cacheEnable">true</prop>

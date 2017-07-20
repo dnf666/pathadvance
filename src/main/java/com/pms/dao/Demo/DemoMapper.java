@@ -1,4 +1,4 @@
-package com.pms.dao;
+package com.pms.dao.Demo;
 
 import org.springframework.stereotype.Repository;
 
