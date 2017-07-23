@@ -37,6 +37,5 @@ public class BaseTest {
     DemoMapper demoMapper;
     @Test
     public void testMapperManager() throws Exception{
-
     }
 }
