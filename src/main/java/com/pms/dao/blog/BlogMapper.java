@@ -2,7 +2,9 @@ package com.pms.dao.blog;
 
 import com.pms.model.blog.Blog;
 import com.pms.model.blog.BlogWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface BlogMapper {
     int deleteByPrimaryKey(Integer id);
 

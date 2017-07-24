@@ -22,7 +22,7 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--生成映射文件存放位置-->
-        <sqlMapGenerator targetPackage="com.pms.dao.Impl.blog" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.pms.dao.blog.Impl" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao类存放位置-->
