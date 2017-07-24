@@ -30,5 +30,38 @@ public class BlogMapperTest {
         Assert.assertEquals(1,blogMapper.insert(blogWithBLOBs));
 
     }
+    @Test
+    public void delete() throws Exception{
+        Assert.assertEquals(1,blogMapper.deleteByPrimaryKey(1));
+    }
+    @Test
+    public void insertselective()throws Exception{
+        BlogWithBLOBs blogWithBLOBs =new BlogWithBLOBs();
+        blogWithBLOBs.setContext("context");
+        blogWithBLOBs.setCreateTime("time");
+        blogWithBLOBs.setDelTime("deletetime");
+        blogWithBLOBs.setCreateBy("createby");
+        blogWithBLOBs.setDelFlag(true);
+        blogWithBLOBs.setIsPrivate(true);
+        blogWithBLOBs.setTitle("title");
+        Assert.assertEquals(1,blogMapper.insertSelective(blogWithBLOBs));
 
+    }
+        @Test
+    public void update()throws Exception{
+            BlogWithBLOBs blogWithBLOBs =new BlogWithBLOBs();
+            blogWithBLOBs.setId(2);
+            blogWithBLOBs.setContext("context1");
+            blogWithBLOBs.setCreateTime("time1");
+            blogWithBLOBs.setDelTime("deletetime1");
+            blogWithBLOBs.setCreateBy("createby1");
+            blogWithBLOBs.setDelFlag(true);
+            blogWithBLOBs.setIsPrivate(true);
+            blogWithBLOBs.setTitle("title");
+            Assert.assertEquals(1,blogMapper.updateByPrimaryKeyWithBLOBs(blogWithBLOBs));
+        }
+        @Test
+        public void find()throws Exception {
+            System.out.println(blogMapper.selectByPrimaryKey(2));
+        }
 }
