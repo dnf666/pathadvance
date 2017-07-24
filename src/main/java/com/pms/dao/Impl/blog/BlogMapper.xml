@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.dao.blog.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.pms.model.blog.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="is_private" property="isPrivate" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pms.model.blog.BlogWithBLOBs" extends="BaseResultMap" >
+    <result column="context" property="context" jdbcType="LONGVARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="LONGVARCHAR" />
+    <result column="del_time" property="delTime" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, create_by, del_flag, is_private
+  </sql>
+  <sql id="Blob_Column_List" >
+    context, create_time, del_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pms.model.blog.BlogWithBLOBs" >
+    insert into blog (id, title, create_by, 
+      del_flag, is_private, context, 
+      create_time, del_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=BIT}, #{isPrivate,jdbcType=BIT}, #{context,jdbcType=LONGVARCHAR}, 
+      #{createTime,jdbcType=LONGVARCHAR}, #{delTime,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pms.model.blog.BlogWithBLOBs" >
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="isPrivate != null" >
+        is_private,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="delTime != null" >
+        del_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="isPrivate != null" >
+        #{isPrivate,jdbcType=BIT},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="delTime != null" >
+        #{delTime,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pms.model.blog.BlogWithBLOBs" >
+    update blog
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="isPrivate != null" >
+        is_private = #{isPrivate,jdbcType=BIT},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="delTime != null" >
+        del_time = #{delTime,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pms.model.blog.BlogWithBLOBs" >
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      is_private = #{isPrivate,jdbcType=BIT},
+      context = #{context,jdbcType=LONGVARCHAR},
+      create_time = #{createTime,jdbcType=LONGVARCHAR},
+      del_time = #{delTime,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pms.model.blog.Blog" >
+    update blog
+    set title = #{title,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      is_private = #{isPrivate,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
