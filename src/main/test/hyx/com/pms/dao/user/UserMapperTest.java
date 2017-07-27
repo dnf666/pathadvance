@@ -33,6 +33,9 @@ public class UserMapperTest {
 
     @Test
     public void insertIntoUser() throws Exception {
+        User user = new User();
+        user.setUserName("1");
+        userMapper.insertIntoUser(user);
     }
 
     @Test

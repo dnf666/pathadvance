@@ -6,7 +6,7 @@ package com.pms.dataModel.User;
 public class LoginInfo {
     private String userName;
     private String password;
-    private String cerificationCode;
+    private String verificationCode;
 
     public String getUserName() {
         return userName;
@@ -24,11 +24,11 @@ public class LoginInfo {
         this.password = password;
     }
 
-    public String getCerificationCode() {
-        return cerificationCode;
+    public String getVerificationCode() {
+        return verificationCode;
     }
 
-    public void setCerificationCode(String cerificationCode) {
-        this.cerificationCode = cerificationCode;
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

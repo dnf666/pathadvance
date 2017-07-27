@@ -15,5 +15,4 @@ public interface UserMapper {
     public boolean insertIntoUser(User user);
     public PersonInfo selectPersonInfoByUserName(String userName);
     public boolean updateUserInfo(User user);
-    public String hello();
 }

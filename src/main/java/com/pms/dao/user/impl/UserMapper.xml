@@ -49,9 +49,6 @@
     <update id="updateUserInfo" parameterType="com.pms.model.user.User">
        UPDATE USER
        <set>
-           <if test="userName != null ">
-               user_name = #{userName},
-           </if>
            <if test="password != null">
                password = #{password},
            </if>

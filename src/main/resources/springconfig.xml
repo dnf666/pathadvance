@@ -11,7 +11,7 @@
     <context:annotation-config/>
 
     <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?userUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="jdbcUrl" value="mysql:jdbc://localhost:3306/pms?userUnicode=true&amp;characterEncoding=utf-8"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
@@ -23,7 +23,7 @@
 
     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"/>
-        <property name="mapperLocations" value="classpath*:com/pms/dao/*/*/*.xml"/>
+        <property name="mapperLocations" value="classpath*:com/pms/dao/Demo/Impl/*.xml"/>
         <property name="configurationProperties">
             <props>
                 <prop key="cacheEnable">true</prop>
@@ -40,5 +40,4 @@
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="datasource"/>
     </bean>
-
 </beans>
