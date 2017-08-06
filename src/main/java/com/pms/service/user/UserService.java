@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by rhan on 2017/7/27.
  */
 public interface UserService {
-    public boolean login(LoginInfo loginInfo, HttpServletRequest request);
+    public boolean login(LoginInfo loginInfo,String verificationCode);
     public boolean register(User user);
     public boolean modifyInfo(User user);
     public PersonInfo getUserInfo(String userName);

@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService{
 
     String message;
 
-    public boolean login(LoginInfo loginInfo, HttpServletRequest request) {
-        String verificationCode = (String) request.getSession().getAttribute("verificationCode");
+    public boolean login(LoginInfo loginInfo,String verificationCode) {
         if (verificationCode.equals(loginInfo.getVerificationCode())) {
             LoginInfo loginInfo_db = userMapper.selectPasswordByUserName(loginInfo.getUserName());
             if (loginInfo_db != null) {

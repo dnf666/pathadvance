@@ -118,6 +118,15 @@
       <version>4.3.9.RELEASE</version>
     </dependency>
     <!-- 数据库 -->
+
+    <!-- json -->
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20160810</version>
+    </dependency>
+    <!-- json -->
   </dependencies>
 
 </project>
