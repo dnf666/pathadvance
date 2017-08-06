@@ -9,9 +9,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface FileMapper {
-    public File selectByFileName(String fileName);
-    public int deleteByFileName(File file);
-    public int insertByFileName(File file);
-    public int updateFileInfo(File file);
+    public File selectByFileName(String fileName);   //通过文件名称得到文件相关信息
+
+    public int deleteByFileName(File file);     //文件删除
+
+    public int insertByFileName(File file);    //文件上传
+
+    public int updateFileInfo(File file);     //文件信息更改
 
 }
