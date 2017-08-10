@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+userName:<input type="text" class="userName">
+password:<input type="text" class="password">
+<button class="submit" ></button>
+<br/>
+<form action="/jsonTest.do">
+userName1:<input type="text" class="userName" name="userName">
+password1:<input type="text" class="password" name="password">
+    <input type="submit" value="登陆">
+</form>
+</body>
+<script src="/js/jquery.js"></script>
+<script>
+    $('.submit').click(function(){
+        var userName = $('.userName').val();
+        var password = $('.password').val();
+        var json={
+            "userName":userName,
+            "password":password
+        };
+        $.ajax({
+            url:"/jsonTest.do",
+            contentType:"application/json",
+            dataType:"json",
+            type:"POST",
+            data:JSON.stringify(json),
+            success:function (data) {
+                console.log(data);
+            },
+            error:function (data) {
+                alert("失败");
+            }
+            }
+        )
+    })
+</script>
+</html>

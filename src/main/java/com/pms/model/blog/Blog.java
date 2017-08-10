@@ -1,15 +1,15 @@
 package com.pms.model.blog;
 
 public class Blog {
-    private Integer id;
+    private Integer id;//唯一识别号，递增
 
-    private String title;
+    private String title;//题目
 
-    private String createBy;
+    private String createBy;//作者
 
-    private Boolean delFlag;
+    private Boolean delFlag;//是否被删除了
 
-    private Boolean isPrivate;
+    private Boolean isPrivate;//是否私有
 
     public Integer getId() {
         return id;
