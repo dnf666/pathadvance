@@ -13,3 +13,9 @@ KindEditor JSP
 	* json_simple-1.1.jar
 
 3. 打开浏览器，输入http://localhost:[P0RT]/kindeditor/jsp/demo.jsp。
+
+jsp/demo.jsp :写作页面的网页
+jsp/file_manager_json.jsp:提交文件和图片的页面
+jsp/upload_json.jsp:设置文件保存的jsp
+plugins下的是word的插件，不用管
+lang包和themes是该插件必要的文件，不用管

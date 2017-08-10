@@ -27,10 +27,14 @@
     from blog
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insert" parameterType="com.pms.model.blog.BlogWithBLOBs" >
     insert into blog (id, title, create_by, 
       del_flag, is_private, context, 
@@ -39,6 +43,8 @@
       #{delFlag,jdbcType=BIT}, #{isPrivate,jdbcType=BIT}, #{context,jdbcType=LONGVARCHAR}, 
       #{createTime,jdbcType=LONGVARCHAR}, #{delTime,jdbcType=LONGVARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.pms.model.blog.BlogWithBLOBs" >
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -94,6 +100,9 @@
       </if>
     </trim>
   </insert>
+
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.pms.model.blog.BlogWithBLOBs" >
     update blog
     <set >
@@ -121,6 +130,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+
+
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pms.model.blog.BlogWithBLOBs" >
     update blog
     set title = #{title,jdbcType=VARCHAR},
@@ -132,6 +145,7 @@
       del_time = #{delTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.pms.model.blog.Blog" >
     update blog
     set title = #{title,jdbcType=VARCHAR},
