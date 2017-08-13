@@ -83,9 +83,8 @@ public class UserServiceImpl implements UserService{
     /**
      * 自定义的一个异常，在程序当中执行异常处理比做 boolean 判断更好
      */
-    class IsExistException extends Exception{
+    public class IsExistException extends Exception{
         String message;
-
         public IsExistException(String s) {
             this.message = s;
         }
