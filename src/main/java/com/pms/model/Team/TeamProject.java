@@ -1,61 +1,61 @@
-package com.pms.model.Team;
+package com.pms.model.team;
 
 /**
- * Created by liudong on 2017/8/1.
+ * Created by liudong on 2017/8/11.
  */
 public class TeamProject {
-    private String project_name;
-    private String team_name;
-    private String project_info;//项目的简单介绍
-    private String create_by;
-    private String create_time;
-    private int del_flag;
+    private String projectName;
+    private String teamName;
+    private String projectInfo;//项目的简单介绍
+    private String createBy;
+    private String createAt;//项目的创建时间
+    private int delFlag;
 
-    public String getProject_name() {
-        return project_name;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProject_name(String project_name) {
-        this.project_name = project_name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
-    public String getProject_info() {
-        return project_info;
+    public String getProjectInfo() {
+        return projectInfo;
     }
 
-    public void setProject_info(String project_info) {
-        this.project_info = project_info;
+    public void setProjectInfo(String projectInfo) {
+        this.projectInfo = projectInfo;
     }
 
-    public String getCreate_by() {
-        return create_by;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreate_by(String create_by) {
-        this.create_by = create_by;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
     }
 
-    public int getDel_flag() {
-        return del_flag;
+    public int getDelFlag() {
+        return delFlag;
     }
 
-    public void setDel_flag(int del_flag) {
-        this.del_flag = del_flag;
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
     }
 }
