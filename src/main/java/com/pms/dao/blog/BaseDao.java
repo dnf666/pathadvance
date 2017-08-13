@@ -1,6 +1,5 @@
 package com.pms.dao.blog;
 
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
