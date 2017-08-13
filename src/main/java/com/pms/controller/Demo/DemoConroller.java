@@ -30,7 +30,6 @@ public class DemoConroller {
         Map m = new HashMap();
         m.put("123",s);
         JsonUtil.toJSON(m,response);
-
     }
 
 
