@@ -82,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/dao/team/TeamMapper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1216">
-              <caret line="38" column="46" lean-forward="true" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+              <caret line="38" column="46" lean-forward="false" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/model/team/TeamFile.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="192">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding>
                 <element signature="docComment;class#TeamFile#0" expanded="false" />
                 <element signature="e#1500#1501#0" expanded="true" />
@@ -104,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TeamMapperTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TeamMapperTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/test/ld/com/pms/model/team/TeamMapperTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1984">
-              <caret line="191" column="13" lean-forward="true" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
+              <caret line="191" column="13" lean-forward="false" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#testRunWith#0;class#TeamMapperTest#0" expanded="false" />
@@ -139,6 +139,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -160,7 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/resources/springconfig.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/pms/dao/Team/Impl/Team.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/pms/dao/Team/TeamWork.java" />
@@ -184,6 +193,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/pms/dao/team/TeamMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pms/dao/team/impl/TeamMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/test/ld/com/pms/model/team/TeamMapperTest.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1426,7 +1436,7 @@
       <updated>1502342425820</updated>
       <workItem from="1502342427304" duration="17937000" />
       <workItem from="1502417312623" duration="297000" />
-      <workItem from="1502418158165" duration="15234000" />
+      <workItem from="1502418158165" duration="15257000" />
     </task>
     <servers />
   </component>
@@ -1463,7 +1473,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33468000" />
+    <option name="totallyTimeSpent" value="33491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1102" extended-state="7" />
@@ -1814,7 +1824,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/model/Team/TeamMaster.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/model/Team/TeamData.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/model/Team/TeamAnnouncement.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/dao/Team/Impl/Team.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/dao/team/impl/Team.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/dao/file/impl/FileMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1981,7 +1991,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/dao/team/TeamMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1216">
-          <caret line="38" column="46" lean-forward="true" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+          <caret line="38" column="46" lean-forward="false" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1991,7 +2001,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pms/model/team/TeamFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#TeamFile#0" expanded="false" />
             <element signature="e#1500#1501#0" expanded="true" />
@@ -2057,18 +2067,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/test/ld/com/pms/model/team/TeamMapperTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1984">
-          <caret line="191" column="13" lean-forward="true" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
+          <caret line="191" column="13" lean-forward="false" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#testRunWith#0;class#TeamMapperTest#0" expanded="false" />
@@ -2095,6 +2097,14 @@
             <element signature="method#delFileTest#0;class#TeamMapperTest#0" expanded="false" />
             <element signature="method#getFileByTeamNameTest#0;class#TeamMapperTest#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
