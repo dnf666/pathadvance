@@ -1,30 +1,31 @@
-package com.pms.model.Team;
+package com.pms.model.team;
 
 /**
- * Created by liudong on 2017/7/26.
+ * Created by liudong on 2017/8/10.
+ * 记录团队信息
  */
 public class Team {
-    private String team_name;
-    private String create_by;
-    private String createTime;
-    private int del_flag;
-    private String del_time;
-    private String del_remarks;
+    private String teamName;//团队名称
+    private String createBy;//团队创建者
+    private String createTime;//团队创建时间
+    private int delFlag;//删除标志
+    private String delTime;//删除时间
+    private String delRemarks;//删除的备注
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
-    public String getCreate_by() {
-        return create_by;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreate_by(String create_by) {
-        this.create_by = create_by;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public String getCreateTime() {
@@ -35,28 +36,27 @@ public class Team {
         this.createTime = createTime;
     }
 
-    public int getDel_flag() {
-        return del_flag;
+    public int getDelFlag() {
+        return delFlag;
     }
 
-    public void setDel_flag(int del_flag) {
-        this.del_flag = del_flag;
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
     }
 
-    public String getDel_time() {
-        return del_time;
+    public String getDelTime() {
+        return delTime;
     }
 
-    public void setDel_time(String del_time) {
-        this.del_time = del_time;
+    public void setDelTime(String delTime) {
+        this.delTime = delTime;
     }
 
-    public String getDel_remarks() {
-        return del_remarks;
+    public String getDelRemarks() {
+        return delRemarks;
     }
 
-    public void setDel_remarks(String del_remarks) {
-        this.del_remarks = del_remarks;
+    public void setDelRemarks(String delRemarks) {
+        this.delRemarks = delRemarks;
     }
-
 }
