@@ -27,7 +27,7 @@
         WHERE file_name = #{fileName};
     </delete>
 
-    <insert id="insertByFileName">
+    <insert id="insertFileInfo">
         INSERT INTO file
         (file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater)
         VALUES
@@ -40,7 +40,7 @@
             <if test="url != null">
                 url = #{url},
             </if>
-            <if test="class != null">
+            <if test="fileClass != null">
                 class = #{fileClass},
             </if>
             <if test="size !=null">
