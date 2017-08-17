@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.Date;
+import java.util.List;
+
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springconfig.xml")
@@ -52,7 +55,7 @@ public class BlogMapperTest {
             BlogWithBLOBs blogWithBLOBs =new BlogWithBLOBs();
             blogWithBLOBs.setId(2);
             blogWithBLOBs.setContext("context1");
-            blogWithBLOBs.setCreateTime("time1");
+            blogWithBLOBs.setCreateTime(new Date().toString());
             blogWithBLOBs.setDelTime("deletetime1");
             blogWithBLOBs.setCreateBy("createby1");
             blogWithBLOBs.setDelFlag(true);
@@ -64,4 +67,20 @@ public class BlogMapperTest {
         public void find()throws Exception {
             System.out.println(blogMapper.selectByPrimaryKey(2));
         }
+        @Test
+    public void updateDelFlag(){
+                blogMapper.updateDelFlag(2);
+        }
+    @Test
+    public void updateDelFlag1(){
+        blogMapper.setPrivate(2);
+    }
+    @Test
+    public void selectOwnAll(){
+       List<BlogWithBLOBs> list = blogMapper.selectAll();
+       for (BlogWithBLOBs blogWithBLOBs:list)
+       {
+           System.out.println(blogWithBLOBs.toString());
+       }
+    }
 }

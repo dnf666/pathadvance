@@ -154,4 +154,44 @@
       is_private = #{isPrivate,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateDelFlag" parameterType="java.lang.Integer">
+    UPDATE blog
+    <set>
+      del_flag = 1
+    </set>
+    where id = #{id}
+  </update>
+  <update id="setPrivate" parameterType="java.lang.Integer">
+    UPDATE blog
+    <set>
+      is_private = 1
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="selectOwnAll" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where create_by = #{userName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+   WHERE del_flag = 0 and is_private = 0
+  </select>
+  <select id="selectOtherAll" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where create_by = #{userName,jdbcType=VARCHAR} and is_private = 0
+  </select>
 </mapper>
