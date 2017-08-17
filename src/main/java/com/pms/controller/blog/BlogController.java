@@ -3,6 +3,7 @@ package com.pms.controller.blog;
 import com.pms.model.blog.BlogWithBLOBs;
 import com.pms.service.blog.BlogService;
 import com.pms.util.JsonUtil;
+import com.pms.util.MapUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -63,7 +64,7 @@ public class BlogController {
         System.out.println("时间格式："+date);
         blog.setCreateTime(date);
         int i= blogService.insertSelective(blog);
-        Map<String,Object> map =resultJudge(i);
+        Map<String,Object> map =resultJudge(i,null);
         JsonUtil.toJSON(map,response);
     }
 
@@ -80,7 +81,7 @@ public class BlogController {
         blogWithBLOBs.setDelFlag(true);
         System.out.println("时间格式："+date);
         int i = blogService.updateBlogWithBlobsBySelective(blogWithBLOBs);
-        Map<String,Object> map =resultJudge(i);
+        Map<String,Object> map =resultJudge(i,null);
         JsonUtil.toJSON(map,response);
     }
 
@@ -92,7 +93,7 @@ public class BlogController {
     @RequestMapping("updateBlog")
     public void updateBlog(BlogWithBLOBs blog,HttpServletResponse response){
         int i= blogService.updateBlogWithBlobsBySelective(blog);
-        Map<String,Object> map =resultJudge(i);
+        Map<String,Object> map =resultJudge(i,null);
         JsonUtil.toJSON(map,response);
     }
 
@@ -101,16 +102,14 @@ public class BlogController {
      * @param i
      * @return
      */
-    public Map<String,Object> resultJudge(int i){
-        Map<String,Object> map = new HashMap<String,Object>();
+    public Map<String,Object> resultJudge(int i,Object object){
         String result = null ;
         if(i>=1){
             result = "操作成功";
-            map.put("操作成功",result);
         }else {
             result = "操作失败";
-            map.put("操作失败", result);
         }
+        Map<String,Object> map = MapUtil.toMap(1,result,object);
         return map;
     }
 }

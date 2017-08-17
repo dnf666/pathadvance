@@ -16,11 +16,11 @@ public class File {
 
     public String getFileName() { return fileName; }
 
-    public void setFileName() { this.fileName = fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
     public String getUrl() { return url; }
 
-    public void setUrl() { this.url = url; }
+    public void setUrl(String url) { this.url = url; }
 
     public String getFileClass() { return fileClass; }
 
@@ -48,5 +48,5 @@ public class File {
 
     public boolean isPrivater() { return isPrivater; }
 
-    public void setPrivater(boolean privater) { isPrivater = privater; }
+    public void setPrivater(boolean privater) { this.isPrivater = privater; }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.NoSuchElementException;
 
 /**
  * Created by rhan on 2017/7/27.
@@ -21,8 +22,7 @@ public class UserServiceImpl implements UserService{
 
     String message;
 
-    public boolean login(LoginInfo loginInfo, HttpServletRequest request) {
-        String verificationCode = (String) request.getSession().getAttribute("verificationCode");
+    public boolean login(LoginInfo loginInfo,String verificationCode) {
         if (verificationCode.equals(loginInfo.getVerificationCode())) {
             LoginInfo loginInfo_db = userMapper.selectPasswordByUserName(loginInfo.getUserName());
             if (loginInfo_db != null) {
@@ -48,18 +48,20 @@ public class UserServiceImpl implements UserService{
      * @param user
      * @return
      */
-    public boolean register(User user) {
+    public boolean register(User user) throws IsExistException {
         if (!isExist(user.getUserName())) {
             userMapper.insertIntoUser(user);
+            return true;
         }
-        return false;
+        throw new IsExistException("用户名 " + user.getUserName() + " 已经存在");
     }
 
-    public boolean modifyInfo(User user) {
+    public boolean modifyInfo(User user){
         if (isExist(user.getUserName())){
             userMapper.updateUserInfo(user);
+            return true;
         }
-        return false;
+        throw new NoSuchElementException("没有用户名为 : " + user.getUserName() + " 的用户");
     }
 
     public PersonInfo getUserInfo(String userName) {
@@ -73,9 +75,18 @@ public class UserServiceImpl implements UserService{
     public boolean isExist(String userName) {
         PersonInfo personInfo = userMapper.selectPersonInfoByUserName(userName);
         if (personInfo != null) {
-            message = "用户名已经存在";
             return true;
         }
         return false;
+    }
+
+    /**
+     * 自定义的一个异常，在程序当中执行异常处理比做 boolean 判断更好
+     */
+    public class IsExistException extends Exception{
+        String message;
+        public IsExistException(String s) {
+            this.message = s;
+        }
     }
 }
