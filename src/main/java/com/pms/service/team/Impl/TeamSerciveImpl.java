@@ -1,6 +1,6 @@
 package com.pms.service.team.Impl;
 
-import com.pms.dao.team.TeamMapper;
+import com.pms.dao.teamdao.TeamMapper;
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package ld.com.pms.model.team;
 
-import com.pms.dao.team.TeamMapper;
+import com.pms.dao.teamdao.TeamMapper;
 import com.pms.model.team.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
