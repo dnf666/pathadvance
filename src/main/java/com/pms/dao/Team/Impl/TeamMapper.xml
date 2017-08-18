@@ -62,7 +62,6 @@
           INSERT INTO team_member
           (user_name,team_name,team_role,join_time,join_by)VALUES
           (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
-
     </insert>
     <!--团队成员的删除即打上删除标志-->
     <update id="delTeamMember" parameterType="com.pms.model.team.TeamMember">
@@ -90,6 +89,7 @@
 
     <!--团队项目-->
     <resultMap id="teamProject" type="com.pms.model.team.TeamProject">
+        <result column="id" property="id"/>
         <result column="project_name" property="projectName"/>
         <result column="team_name" property="teamName"/>
         <result column="project_info" property="projectInfo"/>
@@ -127,9 +127,9 @@
     <select id="getProjectInfoByTeamName" parameterType="java.lang.String" resultMap="teamProject">
         SELECT * FROM project WHERE team_name=#{teamName} AND del_flag=0
     </select>
-    <!--通过项目名称获取项目信息-->
-    <select id="getProjectInfoByProjectName" parameterType="java.lang.String" resultMap="teamProject">
-        SELECT * FROM project WHERE project_name=#{projectName} AND del_flag=0
+    <!--通过项目id获取项目信息-->
+    <select id="getProjectInfoByProjectId" parameterType="java.lang.Integer" resultMap="teamProject">
+        SELECT * FROM project WHERE id=#{id} AND del_flag=0
     </select>
 
     <!--项目成员-->
@@ -203,7 +203,7 @@
                 del_time=#{delTime}
             </if>
         </set>
-        WHERE title=#{title} AND team_name=#{teamName} AND create_by=#{createBy}
+        WHERE id=#{id}
     </update>
     <!--更改公告-->
     <update id="updateNotice" parameterType="com.pms.model.team.TeamNotice">

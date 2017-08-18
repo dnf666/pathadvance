@@ -4,12 +4,21 @@ package com.pms.model.team;
  * Created by liudong on 2017/8/11.
  */
 public class TeamProject {
+    private int id;
     private String projectName;
     private String teamName;
     private String projectInfo;//项目的简单介绍
     private String createBy;
     private String createAt;//项目的创建时间
     private int delFlag;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getProjectName() {
         return projectName;

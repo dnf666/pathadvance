@@ -77,13 +77,13 @@ public class TeamMapperTest {
         public void getTeamMembersByTeamNameTest(){
             String teamName="公测团队2";
             List<TeamMember> list=teamMapper.getTeamMembersByTeamName(teamName);
-            System.out.println(list.size());
+            System.out.println(list.get(3));
         }
         @Test
         public void getTeamMemberInfoByNameTest(){
             String userName="静香";
-            TeamMember teamMember1=teamMapper.getTeamInfoByUserName(userName);
-            System.out.println(teamMember1.getTeamName());
+            List<TeamMember> list=teamMapper.getTeamInfoByUserName(userName);
+            System.out.println(list.size());
         }
         //团队项目方面的测试
         @Test
@@ -123,10 +123,10 @@ public class TeamMapperTest {
             System.out.println(list.get(0).getProjectName());
         }
         @Test
-        public void getProjectInfoByProjectNameTest(){
-            String projectName="哆啦A梦大结局";
-            List<TeamProject> list=teamMapper.getProjectInfoByProjectName(projectName);
-            System.out.println(list.get(1).getTeamName());
+        public void getProjectInfoByProjectIdTest(){
+            int projectId=3;
+            TeamProject teamProject=teamMapper.getProjectInfoByProjectId(projectId);
+            System.out.println(teamProject.getProjectName());
         }
         //项目成员方面的测试
         @Test
@@ -176,6 +176,7 @@ public class TeamMapperTest {
             teamNotice.setContext("this is a notice");
             teamNotice.setTitle("超级公告");
             teamNotice.setDelFlag(1);
+            teamNotice.setId(2);
             teamMapper.delNotice(teamNotice);
         }
         @Test
