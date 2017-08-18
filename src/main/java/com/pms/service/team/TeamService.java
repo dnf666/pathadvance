@@ -1,5 +1,6 @@
 package com.pms.service.team;
 
+import com.pms.model.file.File;
 import com.pms.model.team.*;
 
 import java.util.List;
@@ -134,34 +135,29 @@ public interface TeamService {
     /**
      *@describle 删除公告
      * @param teamNotice
-     *
      * @return
      */
     public boolean delNotice(TeamNotice teamNotice);
     /**
-     *@describle
-     *
+     *@describle 上传资料
+     * @param file
      * @param
-     * @param
-     *
      * @return
      */
-
+    public boolean putFile(File file);
     /**
-     *@describle
-     *
-     * @param
-     * @param
+     *@describle 更改文件资料
+     * @param file
      *
      * @return
      */
-
+    public boolean updateFile(File file);
     /**
-     *@describle
+     *@describle 删除文件资料
      *
-     * @param
-     * @param
-     *
+     * @param file
+     * @param delBy
      * @return
      */
+    public boolean delFile(File file,String delBy);
 }
