@@ -135,6 +135,7 @@ public class TeamSerciveImpl implements TeamService{
 
     public boolean createProject(TeamProject teamProject) {
         //创建项目必须要有一个团队,首先判断当前用户是否是在当前的团队当中
+        //同时将当前成员插入project_member中
         if (teamProject.getTeamName().equals(getMember(teamMapper.getTeamMembersByTeamName(teamProject.getTeamName()),teamProject.getCreateBy()).getTeamName())){
             return teamMapper.addProject(teamProject);
         }
@@ -165,16 +166,20 @@ public class TeamSerciveImpl implements TeamService{
     }
 
     public boolean createNotice(TeamNotice teamNotice) {
-        if (getTeamPrivilege(getMember(teamMapper.getTeamInfoByUserName(teamNotice.getCreateBy(),teamNotice.getCreateBy())),teamNotice.getCreateBy()){
-
+        if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(teamNotice.getTeamName()),teamNotice.getCreateBy()),teamNotice.getCreateBy())>=1){
+                        return teamMapper.addNotice(teamNotice);
         }
-
         return false;
     }
 
     public boolean delNotice(TeamNotice teamNotice) {
-
+        if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(teamNotice.getTeamName()),teamNotice.getCreateBy()),teamNotice.getCreateBy())>=1){
+            return teamMapper.delNotice(teamNotice);
+        }
         return false;
     }
 
+    public boolean updateNotice(TeamNotice teamNotice) {
+        return false;
+    }
 }

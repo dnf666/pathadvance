@@ -128,10 +128,9 @@ public interface TeamService {
     /**
      *@describle 更新公告
      * @param teamNotice
-     *
      * @return
      */
-
+    public boolean updateNotice(TeamNotice teamNotice);
     /**
      *@describle 删除公告
      * @param teamNotice
