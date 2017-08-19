@@ -111,12 +111,12 @@ public interface TeamService {
     /**
      *@describle 项目成员的删除
      *1.只能够是项目的创建者来操作
-     * @param
-     * @param
-     *
+     * @param projectMember 要删除的项目成员对象
+     * @param delBy
+     *@param projectId 项目的id用来判断该项目的创建者
      * @return
      */
-    public boolean delProjectMember(ProjectMember projectMember,String delBy);
+    public boolean delProjectMember(ProjectMember projectMember,String delBy,int projectId);
     /**
      *@describle 团队公告的创建
      * 1.管理员或者负责人
@@ -129,15 +129,17 @@ public interface TeamService {
     /**
      *@describle 更新公告
      * @param teamNotice
+     * @param updateBy
      * @return
      */
-    public boolean updateNotice(TeamNotice teamNotice);
+    public boolean updateNotice(TeamNotice teamNotice,String updateBy);
     /**
      *@describle 删除公告
      * @param teamNotice
+     * @param delBy
      * @return
      */
-    public boolean delNotice(TeamNotice teamNotice);
+    public boolean delNotice(TeamNotice teamNotice,String delBy);
     /**
      *@describle 上传资料
      * @param file
@@ -160,4 +162,10 @@ public interface TeamService {
      * @return
      */
     public boolean delFile(File file,String delBy);
+    /**
+     * 修改团队成员的角色,通过形参传入的信息，保存到teamMasterHistory对象的信息中，然后将对象中的信息插入这个历史记录表
+     * @param teamMasterHistory 团队成员
+     * @return boolean
+     */
+    public boolean updateTeamRole(TeamMasterHistory teamMasterHistory);
 }

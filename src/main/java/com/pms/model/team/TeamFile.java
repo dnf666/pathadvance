@@ -4,6 +4,7 @@ package com.pms.model.team;
  * Created by liudong on 2017/8/13.
  */
 public class TeamFile {
+    private  String teamName;
     private String fileName;
     private String url;//文件在 服务器上的地址
     private String fileClass;//文件分类
@@ -12,6 +13,14 @@ public class TeamFile {
     private int delFlag;
     private String delTime;
     private int isPrivater;//是否私有
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public String getFileName() {
         return fileName;

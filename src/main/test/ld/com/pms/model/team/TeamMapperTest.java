@@ -52,6 +52,10 @@ public class TeamMapperTest {
                 System.out.println("没有该团队");
             }
         }
+        @Test
+        public void getAllTeamTest(){
+            System.out.println(teamMapper.getAllTeam().size());
+        }
         //团队成员方面的测试
         @Test
         public void addTeamMemberTest(){
@@ -150,11 +154,12 @@ public class TeamMapperTest {
             projectMember.setDelFlag(1);
             teamMapper.delProjectMember(projectMember);
         }
+
         @Test
         public void getaddProjectMembersByProjectTest(){
             String projectName="123";
-            List<ProjectMember> list=teamMapper.getaddProjectMembersByProject(projectName);
-            System.out.println(list.size());
+            List<ProjectMember> projectMember=teamMapper.getProjectMembersByProject("44",projectName);
+            System.out.println(projectMember.get(0).getTeamName());
         }
         //团队公告的测试
         @Test
@@ -191,6 +196,10 @@ public class TeamMapperTest {
             teamMapper.updateNotice(teamNotice);
         }
         @Test
+        public void getNoticeByIdTest(){
+            System.out.println(teamMapper.getNoticeById(3));
+        }
+        @Test
         public void  getNoticeByteamNameTest(){
             List<TeamNotice> list=teamMapper.getNoticeByteamName("公测团队");
             System.out.println(list.size());
@@ -220,5 +229,17 @@ public class TeamMapperTest {
             String teamName="文本内容";
             List<TeamFile> list=teamMapper.getFileByFileName(teamName);
             System.out.println(list.get(0).getFileName());
+        }
+        @Test
+        public void insertTeamMasterHistoryTest(){
+            TeamMasterHistory teamMasterHistory=new TeamMasterHistory();
+            teamMasterHistory.setTeamName("11");
+            teamMasterHistory.setToRole("11");
+            teamMasterHistory.setFromRole("11");
+            teamMasterHistory.setModifyAt("11");
+            teamMasterHistory.setId(1);
+            teamMasterHistory.setUserName("11");
+            teamMasterHistory.setModifyBy("11");
+            teamMapper.insertTeamMasterHistory(teamMasterHistory);
         }
 }
