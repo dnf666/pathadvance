@@ -27,20 +27,20 @@
         WHERE file_name = #{fileName};
     </delete>
 
-    <insert id="insertByFileName">
+    <insert id="insertFileInfo">
         INSERT INTO file
         (file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater)
         VALUES
         (#{fileName},#{url},#{fileClass},#{size},#{createBy},#{createTime},#{delFlag},#{delTime},#{isPrivater})
     </insert>
 
-    <update id="updateFileInfo" parameterType="com.pms.model.file.File">
+    <update id="updateFileInfo" parameterType="com.pms.model.file.File" >
         UPDATE file
         <set>
             <if test="url != null">
                 url = #{url},
             </if>
-            <if test="class != null">
+            <if test="fileClass != null">
                 class = #{fileClass},
             </if>
             <if test="size !=null">
@@ -60,6 +60,32 @@
             </if>
             <if test="isPrivater != null">
                 is_privater = #{isPrivater}
+            </if>
+        </set>
+        WHERE file_name = #{fileName};
+    </update>
+
+    <update id="deleteByDelFlag">
+        UPDATE file
+        <set>
+            <if test="delFlag != 0">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
+            </if>
+        </set>
+        WHERE file_name = #{fileName};
+    </update>
+
+    <update id="recoverByDelFlag">
+        UPDATE file
+        <set>
+            <if test="delFlag = 0">
+                del_flag = #{delFlag},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime}
             </if>
         </set>
         WHERE file_name = #{fileName};
