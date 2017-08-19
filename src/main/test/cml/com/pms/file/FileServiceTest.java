@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +41,14 @@ public class FileServiceTest {
 
     @Test
     public void selectByFileName() throws Exception {
-        File file = new File();
-        fileService.selectByFileName((List<File>) file,"file");
+        File file1 = new File();
+        File file2 = new File();
+        File file3 = new File();
+        List list = new ArrayList();
+        list.add(file1);
+        list.add(file2);
+        list.add(file3);
+        fileService.selectByFileName((List<File>) list,"file");
 
     }
 

@@ -1,12 +1,14 @@
 package com.pms.service.file;
 
 import com.pms.model.file.File;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by Chenmeiling on 2017/8/18.
  */
+@Repository
 public interface FileService {
     /**
      * 上传文件
@@ -19,7 +21,7 @@ public interface FileService {
      * 查看文件信息
      * @return boolean
      */
-    public File selectByFileName(List<File> list, String fileName);
+    public File selectByFileName(List<File> list,String fileName);
 
     /**
      * 更新文件信息

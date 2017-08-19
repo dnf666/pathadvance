@@ -3,6 +3,7 @@ package com.pms.service.file.Impl;
 import com.pms.dao.file.FileMapper;
 import com.pms.model.file.File;
 import com.pms.service.file.FileService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by Chenmeiling on 2017/8/18.
  */
+@Service
 public class FileServiceImpl implements FileService {
 
     @Resource
@@ -23,7 +25,7 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    public File selectByFileName(List<File> list, String fileName) {
+    public File selectByFileName(List<File> list,String fileName) {
         if (list.size() == 0) {
             return null;
         } else {
