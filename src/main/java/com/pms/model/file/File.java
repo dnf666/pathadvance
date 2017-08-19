@@ -16,11 +16,11 @@ public class File {
 
     public String getFileName() { return fileName; }
 
-    public void setFileName() { this.fileName = fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
 
     public String getUrl() { return url; }
 
-    public void setUrl() { this.url = url; }
+    public void setUrl(String url) { this.url = url; }
 
     public String getFileClass() { return fileClass; }
 
@@ -46,7 +46,7 @@ public class File {
 
     public void setDelTime(String delTime) { this.delTime = delTime; }
 
-    public boolean isPrivater() { return isPrivater; }
+    public boolean getIsPrivater() { return isPrivater; }
 
-    public void setPrivater(boolean privater) { isPrivater = privater; }
+    public void setIsPrivater(boolean privater) { isPrivater = privater; }
 }
