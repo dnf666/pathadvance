@@ -1,6 +1,6 @@
 package ld.com.pms.model.team;
 
-import com.pms.dao.team.TeamMapper;
+import com.pms.dao.teamdao.TeamMapper;
 import com.pms.model.team.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +52,10 @@ public class TeamMapperTest {
                 System.out.println("没有该团队");
             }
         }
+        @Test
+        public void getAllTeamTest(){
+            System.out.println(teamMapper.getAllTeam().size());
+        }
         //团队成员方面的测试
         @Test
         public void addTeamMemberTest(){
@@ -77,13 +81,13 @@ public class TeamMapperTest {
         public void getTeamMembersByTeamNameTest(){
             String teamName="公测团队2";
             List<TeamMember> list=teamMapper.getTeamMembersByTeamName(teamName);
-            System.out.println(list.size());
+            System.out.println(list.get(3));
         }
         @Test
         public void getTeamMemberInfoByNameTest(){
             String userName="静香";
-            TeamMember teamMember1=teamMapper.getTeamInfoByUserName(userName);
-            System.out.println(teamMember1.getTeamName());
+            List<TeamMember> list=teamMapper.getTeamInfoByUserName(userName);
+            System.out.println(list.size());
         }
         //团队项目方面的测试
         @Test
@@ -123,10 +127,10 @@ public class TeamMapperTest {
             System.out.println(list.get(0).getProjectName());
         }
         @Test
-        public void getProjectInfoByProjectNameTest(){
-            String projectName="哆啦A梦大结局";
-            List<TeamProject> list=teamMapper.getProjectInfoByProjectName(projectName);
-            System.out.println(list.get(1).getTeamName());
+        public void getProjectInfoByProjectIdTest(){
+            int projectId=3;
+            TeamProject teamProject=teamMapper.getProjectInfoByProjectId(projectId);
+            System.out.println(teamProject.getProjectName());
         }
         //项目成员方面的测试
         @Test
@@ -150,11 +154,12 @@ public class TeamMapperTest {
             projectMember.setDelFlag(1);
             teamMapper.delProjectMember(projectMember);
         }
+
         @Test
         public void getaddProjectMembersByProjectTest(){
             String projectName="123";
-            List<ProjectMember> list=teamMapper.getaddProjectMembersByProject(projectName);
-            System.out.println(list.size());
+            List<ProjectMember> projectMember=teamMapper.getProjectMembersByProject("44",projectName);
+            System.out.println(projectMember.get(0).getTeamName());
         }
         //团队公告的测试
         @Test
@@ -176,6 +181,7 @@ public class TeamMapperTest {
             teamNotice.setContext("this is a notice");
             teamNotice.setTitle("超级公告");
             teamNotice.setDelFlag(1);
+            teamNotice.setId(2);
             teamMapper.delNotice(teamNotice);
         }
         @Test
@@ -188,6 +194,10 @@ public class TeamMapperTest {
             teamNotice.setTitle("超级公告");
             teamNotice.setId(2);
             teamMapper.updateNotice(teamNotice);
+        }
+        @Test
+        public void getNoticeByIdTest(){
+            System.out.println(teamMapper.getNoticeById(3));
         }
         @Test
         public void  getNoticeByteamNameTest(){
@@ -219,5 +229,17 @@ public class TeamMapperTest {
             String teamName="文本内容";
             List<TeamFile> list=teamMapper.getFileByFileName(teamName);
             System.out.println(list.get(0).getFileName());
+        }
+        @Test
+        public void insertTeamMasterHistoryTest(){
+            TeamMasterHistory teamMasterHistory=new TeamMasterHistory();
+            teamMasterHistory.setTeamName("11");
+            teamMasterHistory.setToRole("11");
+            teamMasterHistory.setFromRole("11");
+            teamMasterHistory.setModifyAt("11");
+            teamMasterHistory.setId(1);
+            teamMasterHistory.setUserName("11");
+            teamMasterHistory.setModifyBy("11");
+            teamMapper.insertTeamMasterHistory(teamMasterHistory);
         }
 }

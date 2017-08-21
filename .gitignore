@@ -1,4 +1,5 @@
 .idea/
 target/
 pms.iml
-.gitgnore
+.gitignore
+blogconfig/

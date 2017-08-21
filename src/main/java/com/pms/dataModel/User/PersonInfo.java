@@ -1,5 +1,7 @@
 package com.pms.dataModel.User;
 
+import com.pms.model.user.User;
+
 /**
  * Created by rhan on 2017/7/22.
  */
@@ -8,6 +10,13 @@ public class PersonInfo {
     private String picture;
     private int stuId;
     private String peofession;
+
+    public PersonInfo(User user){
+        this.userName = user.getUserName();
+        this.picture = user.getPicture();
+        this.stuId = user.getStuId();
+        this.peofession = user.getPeofession();
+    }
 
     public String getUserName() {
         return userName;

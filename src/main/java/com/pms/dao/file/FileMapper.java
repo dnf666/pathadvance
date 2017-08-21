@@ -10,12 +10,48 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface FileMapper {
-    public File selectByFileName(String fileName);   //通过文件名称得到文件相关信息
+    /**
+     * 通过文件名称得到文件相关信息
+     * @param fileName
+     * @return
+     */
+    public File selectByFileName(String fileName);
 
-    public int deleteByFileName(String fileName);     //文件删除
+    /**
+     * 文件删除
+     * @param fileName
+     * @return
+     */
+    public boolean deleteByFileName(String fileName);
 
-    public boolean insertFileInfo(File file);    //文件上传
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
+    public boolean  insertFileInfo(File file);
 
-    public int updateFileInfo(File file);     //文件信息更改
+
+    /**
+     * 文件信息更改
+     * @param file
+     * @return
+     */
+    public boolean updateFileInfo(File file);
+
+
+    /**
+     * 文件删除，只是修改删除标记
+     * @param file
+     * @return
+     */
+    public boolean deleteByDelFlag(File file);
+
+    /**
+     * 删除文件的恢复，修改删除标记
+     * @param file
+     * @return
+     */
+    public boolean recoverByDelFlag(File file);
 
 }

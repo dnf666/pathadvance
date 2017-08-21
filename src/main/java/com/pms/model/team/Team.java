@@ -1,5 +1,7 @@
 package com.pms.model.team;
 
+
+
 /**
  * Created by liudong on 2017/8/10.
  * 记录团队信息
@@ -11,7 +13,6 @@ public class Team {
     private int delFlag;//删除标志
     private String delTime;//删除时间
     private String delRemarks;//删除的备注
-
     public String getTeamName() {
         return teamName;
     }

@@ -5,7 +5,11 @@ import com.sdicons.json.mapper.MapperException;
 import com.sdicons.json.model.JSONArray;
 import com.sdicons.json.model.JSONValue;
 import com.sdicons.json.parser.JSONParser;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringReader;
@@ -49,7 +53,6 @@ public class JsonUtil {
         try {
             String str = JSONMapper.toJSON(o).render(false);
             response.addHeader("Content-Type", "application/json; charset=utf-8");
-
 //			response.setCharacterEncoding("UTF-8");
             response.addHeader("Access-Control-Allow-Origin", "*");
             response.addHeader("Access-Control-Allow-Methods","POST,GET");
@@ -75,5 +78,10 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void toJSON(Object o){
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        toJSON(o,response);
     }
 }
