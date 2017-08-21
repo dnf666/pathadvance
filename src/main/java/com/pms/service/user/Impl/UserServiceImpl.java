@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService{
      */
     public class IsExistException extends Exception{
         String message;
-
         public IsExistException(String s) {
             this.message = s;
         }
