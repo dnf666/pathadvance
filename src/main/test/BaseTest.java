@@ -12,13 +12,13 @@ import javax.annotation.Resource;
  * Created by rhan on 2017/7/20.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:springconfig.xml")
-public class BaseTest {
+    @ContextConfiguration(locations = "classpath:springconfig.xml")
+    public class BaseTest {
+
     @Test
     public void testRunWith()throws Exception{
         System.out.println("hello spring Junit");
     }
-
     @Resource
     ComboPooledDataSource comboPooledDataSource;
     @Test

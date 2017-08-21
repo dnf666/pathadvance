@@ -12,7 +12,6 @@ public class User {
     private long createAt;
     private boolean delFlag;
     private String delRemarks;
-
     public String getUserName() {
         return userName;
     }

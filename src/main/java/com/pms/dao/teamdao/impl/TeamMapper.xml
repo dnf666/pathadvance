@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.dao.teamdao.TeamMapper">
+    <!--对团队的操控-->
+    <resultMap id="team" type="com.pms.model.team.Team">
+        <result column="team_name" property="teamName"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="del_time" property="delTime"/>
+        <result column="del_remarks" property="delRemarks"/>
+    </resultMap>
+    <!--对团队表进行操作，新建一个团队-->
+    <insert id="addTeam">
+        INSERT INTO team
+        (team_name,create_by,create_time) VALUES
+        (#{teamName},#{createBy},#{createTime})
+    </insert>
+    <!--  注销团队,因为并不是实际在数据库中删除信息，所以打上删除的标记就好-->
+    <update id="delTeam" parameterType="com.pms.model.team.Team">
+        UPDATE team
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag},
+            </if>
+            <if test="delTime!=null">
+                del_time=#{delTime},
+            </if>
+            <if test="delRemarks!=null">
+                del_remarks=#{delRemarks}
+            </if>
+        </set>
+        WHERE team_name=#{teamName} AND del_flag=0
+    </update>
+    <!--得到团队的信息-->
+    <resultMap id="teamInfo" type="com.pms.model.team.Team">
+        <result column="team_name" property="teamName"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <select id="getTeamInfo" resultMap="teamInfo" parameterType="java.lang.String">
+        select * from team WHERE team_name=#{teamName} AND del_flag=0;
+    </select>
+    <!--得到所有团队-->
+    <select id="getAllTeam" resultMap="teamInfo">
+        select * from team WHERE  del_flag=0;
+    </select>
+    <!--对团队成员的操控-->
+    <resultMap id="teamMember" type="com.pms.model.team.TeamMember">
+        <result column="user_name" property="userName"  />
+        <result column="team_name" property="teamName" />
+        <result column="team_role" property="teamRole"  />
+        <result column="team_privelige" property="teamPrivelige"/>
+        <result column="join_time" property="joinTime" />
+        <result column="join_by" property="joinBy"  />
+        <result column="del_flag" property="delFlag" />
+        <result column="del_time" property="delTime" />
+        <result column="del_by" property="delBy" />
+        <result column="del_remarks" property="delRemarks" />
+    </resultMap>
+    <!--团队成员的增加-->
+    <insert id="addTeamMember" parameterType="com.pms.model.team.TeamMember">
+          INSERT INTO team_member
+          (user_name,team_name,team_role,join_time,join_by,team_privelige)VALUES
+          (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy},#{teamPrivelige})
+    </insert>
+    <!--团队成员的删除即打上删除标志-->
+    <update id="delTeamMember" parameterType="com.pms.model.team.TeamMember">
+        UPDATE  team_member
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag},
+            </if>
+            <if test="delTime!=null">
+                del_time=#{delTime},
+            </if>
+            <if test="delRemarks!=null">
+                del_remarks=#{delRemarks}
+            </if>
+        </set>
+        WHERE team_name=#{teamName} AND user_name=#{userName}
+    </update>
+    <!--得到团队成员-->
+    <select id="getTeamMembersByTeamName" parameterType="String" resultMap="teamMember">
+        SELECT * FROM team_member WHERE del_flag=0 AND team_name=#{teamName};
+    </select>
+    <select id="getTeamInfoByUserName" parameterType="String" resultMap="teamMember">
+        SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName}
+    </select>
+
+    <!--团队项目-->
+    <resultMap id="teamProject" type="com.pms.model.team.TeamProject">
+        <result column="id" property="id"/>
+        <result column="project_name" property="projectName"/>
+        <result column="team_name" property="teamName"/>
+        <result column="project_info" property="projectInfo"/>
+        <result column="create_by" property="createBy" />
+        <result column="create_at" property="createAt"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+    <!--创建项目-->
+    <insert id="addProject" parameterType="com.pms.model.team.TeamProject">
+         INSERT INTO project
+        (project_name,team_name,project_info,create_by,create_at) VALUES
+        (#{projectName},#{teamName},#{projectInfo},#{createBy},#{createAt})
+    </insert>
+    <!--删除项目-->
+    <update id="delProject" parameterType="com.pms.model.team.TeamProject">
+        UPDATE project
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag}
+            </if>
+        </set>
+        WHERE team_name=#{teamName} AND project_name=#{projectName} AND del_flag=0
+    </update>
+    <!--更新项目信息-->
+    <update id="updateProject" parameterType="com.pms.model.team.TeamProject">
+        UPDATE project
+        <set>
+            <if test="projectInfo!=null">
+                project_info=#{projectInfo}
+            </if>
+        </set>
+        WHERE team_name=#{teamName} AND del_flag=0 AND project_name=#{projectName}
+    </update>
+    <!--通过团队名称获取项目名称-->
+    <select id="getProjectInfoByTeamName" parameterType="java.lang.String" resultMap="teamProject">
+        SELECT * FROM project WHERE team_name=#{teamName} AND del_flag=0
+    </select>
+    <!--通过项目id获取项目信息-->
+    <select id="getProjectInfoByProjectId" parameterType="java.lang.Integer" resultMap="teamProject">
+        SELECT * FROM project WHERE id=#{id} AND del_flag=0
+    </select>
+
+    <!--项目成员-->
+    <resultMap id="project_members" type="com.pms.model.team.ProjectMember">
+        <result column="project_name" property="projectName"/>
+        <result column="user_name" property="userName"/>
+        <result column="team_role" property="teamRole"/>
+        <result column="join_time" property="joinTime"/>
+        <result column="join_by" property="joinBy"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="del_time" property="delTime"/>
+        <result column="del_by" property="delBy"/>
+        <result column="del_remarks" property="delRemarks"/>
+    </resultMap>
+    <!--增加项目成员-->
+    <insert id="addProjectMember" parameterType="com.pms.model.team.ProjectMember">
+        INSERT INTO project_member
+        (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
+        (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
+    </insert>
+    <!--删除项目成员-->
+    <update id="delProjectMember" parameterType="com.pms.model.team.ProjectMember">
+        UPDATE project_member
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag},
+            </if>
+            <if test="delTime!=null">
+                del_time=#{delTime},
+            </if>
+            <if test="delBy!=null">
+                del_by=#{delBy},
+            </if>
+            <if test="delRemarks!=null">
+                del_remarks=#{delRemarks}
+            </if>
+        </set>
+        WHERE project_name=#{projectName} AND user_name=#{userName}
+    </update>
+    <!--获取项目成员-->
+    <select id="getProjectMembersByProject"  resultMap="project_members">
+        SELECT * FROM project_member
+        WHERE del_flag=0 AND team_name = #{teamName} AND project_name = #{projectName}
+    </select>
+    <!--团队公告-->
+    <resultMap id="teamNotice" type="com.pms.model.team.TeamNotice">
+        <result column="id" property="id"/>
+        <result column="title" property="title" />
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime" />
+        <result column="del_flag" property="delFlag" />
+        <result column="del_time" property="delTime" />
+        <result column="context" property="context" />
+        <result column="team_name" property="teamName" />
+    </resultMap>
+    <!--创建团队公告-->
+    <!--创建公告-->
+    <insert id="addNotice" parameterType="com.pms.model.team.TeamNotice">
+        INSERT INTO notice
+        (title,create_by,create_time,context,team_name) VALUES
+        (#{title},#{createBy},#{createTime},#{context},#{teamName})
+    </insert>
+    <!--删除公告-->
+    <update id="delNotice" parameterType="com.pms.model.team.TeamNotice">
+        UPDATE notice
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag},
+            </if>
+            <if test="delTime=null">
+                del_time=#{delTime}
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+    <!--更改公告-->
+    <update id="updateNotice" parameterType="com.pms.model.team.TeamNotice">
+        UPDATE notice
+        <set>
+            <if test="title!=null">
+                title=#{title},
+            </if>
+            <if test="createBy!=null">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <if test="context!=null">
+                context=#{context}
+            </if>
+        </set>
+        WHERE team_name=#{teamName} AND id=#{id}  AND del_flag=0
+    </update>
+    <select id="getNoticeById" parameterType="java.lang.Integer" resultMap="teamNotice">
+        SELECT *
+        FROM notice
+        WHERE id=#{id} AND del_flag=0
+    </select>
+    <!--得到公告信息-->
+    <select id="getNoticeByteamName" parameterType="java.lang.String" resultMap="teamNotice">
+        SELECT *
+        FROM notice
+        WHERE team_name=#{teamName} AND del_flag=0
+    </select>
+    <!--团队资料-->
+    <resultMap id="teamFile" type="com.pms.model.team.TeamFile">
+        <result column="file_name" property="fileName"/>
+        <result column="url" property="url" />
+        <result column="class" property="fileClass" />
+        <result column="size" property="fileSize" />
+        <result column="create_by" property="createBy"/>
+        <result column="del_flag" property="delFlag" />
+        <result column="del_time" property="delTime" />
+        <result column="is_privater" property="isPrivater" />
+    </resultMap>
+    <!--上传团队资料-->
+    <insert id="addFile" parameterType="com.pms.model.team.TeamFile">
+        INSERT INTO file
+        (file_name,url,class,size,create_by,is_privater) VALUES
+        (#{fileName},#{url},#{fileClass},#{fileSize},#{createBy},#{isPrivater})
+    </insert>
+    <!--删除团队资料-->
+    <update id="delFile" parameterType="com.pms.model.team.TeamFile">
+        UPDATE file
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag},
+            </if>
+            <if test="delTime!=null">
+                del_time=#{delTime}
+            </if>
+        </set>
+        WHERE url=#{url} AND file_name=#{fileName}
+    </update>
+   <!--得到团队资料-->
+    <select id="getFileByFileName" parameterType="java.lang.String" resultMap="teamFile">
+        SELECT *
+        FROM file
+        WHERE file_name=#{fileName}
+    </select>
+    <insert id="insertTeamMasterHistory">
+        INSERT INTO team_master_history (team_name,user_name,to_role,from_role,modify_by,modify_at)
+        VALUES (#{teamName},#{userName},#{toRole},#{fromRole},#{modifyBy},#{modifyAt})
+    </insert>
+</mapper>
