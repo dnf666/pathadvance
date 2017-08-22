@@ -204,42 +204,4 @@ public class TeamMapperTest {
             List<TeamNotice> list=teamMapper.getNoticeByteamName("公测团队");
             System.out.println(list.size());
         }
-        //团队资料的测试
-        @Test
-        public void addFileTest(){
-            TeamFile teamFile=new TeamFile();
-            teamFile.setCreateBy("123");
-            teamFile.setFileName("文本内容");
-            teamFile.setFileClass("学习");
-            teamFile.setIsPrivater(0);
-            teamFile.setUrl("www.baidu.com");
-            teamFile.setFileSize(55.2);
-            teamMapper.addFile(teamFile);
-    }
-        @Test
-        public void delFileTest(){
-            TeamFile teamFile=new TeamFile();
-            teamFile.setFileName("文本内容");
-            teamFile.setDelFlag(1);
-            teamFile.setUrl("www.baidu.com");
-            teamMapper.delFile(teamFile);
-        }
-        @Test
-        public void getFileByTeamNameTest(){
-            String teamName="文本内容";
-            List<TeamFile> list=teamMapper.getFileByFileName(teamName);
-            System.out.println(list.get(0).getFileName());
-        }
-        @Test
-        public void insertTeamMasterHistoryTest(){
-            TeamMasterHistory teamMasterHistory=new TeamMasterHistory();
-            teamMasterHistory.setTeamName("11");
-            teamMasterHistory.setToRole("11");
-            teamMasterHistory.setFromRole("11");
-            teamMasterHistory.setModifyAt("11");
-            teamMasterHistory.setId(1);
-            teamMasterHistory.setUserName("11");
-            teamMasterHistory.setModifyBy("11");
-            teamMapper.insertTeamMasterHistory(teamMasterHistory);
-        }
 }
