@@ -41,7 +41,7 @@ public class UserAction {
             map = MapUtil.toMap(1,"success",null);
             request.getSession().setAttribute("userName",loginInfo.getUserName());
         }else {
-            map = MapUtil.toMap(2,userService.getMessage(),null);
+            map = MapUtil.toMap(0,userService.getMessage(),null);
         }
         JsonUtil.toJSON(map);
     }
@@ -74,9 +74,9 @@ public class UserAction {
         user = userModelService.prepareForModify(user);
         try {
             userService.modifyInfo(user);
-            map = MapUtil.toMap(1,"修改成功",user);
+            map = MapUtil.toMap(1,"修改成功",userModelService.toPersonInfo(user));
         } catch (NoSuchElementException e) {
-            map = MapUtil.toMap(0,"修改失败",user);
+            map = MapUtil.toMap(0,"修改失败",userModelService.toPersonInfo(user));
             e.printStackTrace();
         }
         JsonUtil.toJSON(map);

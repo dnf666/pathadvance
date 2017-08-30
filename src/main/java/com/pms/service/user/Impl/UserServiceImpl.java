@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService{
     /**
      * 该方法主要是提供注册功能
      * todo User 当中数据的完整性没有检查
+     * todo 没有给 User 完善数据，例如创建时间、删除标记
      * @param user
      * @return
      */
