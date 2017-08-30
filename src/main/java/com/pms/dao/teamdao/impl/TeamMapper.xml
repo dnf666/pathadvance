@@ -238,42 +238,6 @@
         FROM notice
         WHERE team_name=#{teamName} AND del_flag=0
     </select>
-    <!--团队资料-->
-    <resultMap id="teamFile" type="com.pms.model.team.TeamFile">
-        <result column="file_name" property="fileName"/>
-        <result column="url" property="url" />
-        <result column="class" property="fileClass" />
-        <result column="size" property="fileSize" />
-        <result column="create_by" property="createBy"/>
-        <result column="del_flag" property="delFlag" />
-        <result column="del_time" property="delTime" />
-        <result column="is_privater" property="isPrivater" />
-    </resultMap>
-    <!--上传团队资料-->
-    <insert id="addFile" parameterType="com.pms.model.team.TeamFile">
-        INSERT INTO file
-        (file_name,url,class,size,create_by,is_privater) VALUES
-        (#{fileName},#{url},#{fileClass},#{fileSize},#{createBy},#{isPrivater})
-    </insert>
-    <!--删除团队资料-->
-    <update id="delFile" parameterType="com.pms.model.team.TeamFile">
-        UPDATE file
-        <set>
-            <if test="delFlag!=0">
-                del_flag=#{delFlag},
-            </if>
-            <if test="delTime!=null">
-                del_time=#{delTime}
-            </if>
-        </set>
-        WHERE url=#{url} AND file_name=#{fileName}
-    </update>
-   <!--得到团队资料-->
-    <select id="getFileByFileName" parameterType="java.lang.String" resultMap="teamFile">
-        SELECT *
-        FROM file
-        WHERE file_name=#{fileName}
-    </select>
     <insert id="insertTeamMasterHistory">
         INSERT INTO team_master_history (team_name,user_name,to_role,from_role,modify_by,modify_at)
         VALUES (#{teamName},#{userName},#{toRole},#{fromRole},#{modifyBy},#{modifyAt})

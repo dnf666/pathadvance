@@ -228,24 +228,6 @@ public class TeamSerciveImpl implements TeamService{
         return false;
     }
 
-    /*
-        未完成，暂时先放着，还有的没有完成
-     */
-
-    public boolean putFile(File file) {
-
-        return false;
-    }
-
-    public boolean updateFile(File file) {
-        return false;
-    }
-
-    public boolean delFile(File file, String delBy) {
-        return false;
-    }
-    //历史纪录
-
     public boolean updateTeamRole(TeamMasterHistory teamMasterHistory) {
         //更改相关成员的职务得有相关的权限
         if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(teamMasterHistory.getTeamName()),teamMasterHistory.getUserName()),teamMasterHistory.getModifyBy())>=1){

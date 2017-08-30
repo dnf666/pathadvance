@@ -141,28 +141,6 @@ public interface TeamService {
      */
     public boolean delNotice(TeamNotice teamNotice,String delBy);
     /**
-     *@describle 上传资料
-     * @param file
-     * @param
-     * @return
-     */
-    public boolean putFile(File file);
-    /**
-     *@describle 更改文件资料
-     * @param file
-     *
-     * @return
-     */
-    public boolean updateFile(File file);
-    /**
-     *@describle 删除文件资料
-     *
-     * @param file
-     * @param delBy
-     * @return
-     */
-    public boolean delFile(File file,String delBy);
-    /**
      * 修改团队成员的角色,通过形参传入的信息，保存到teamMasterHistory对象的信息中，然后将对象中的信息插入这个历史记录表
      * @param teamMasterHistory 团队成员
      * @return boolean
