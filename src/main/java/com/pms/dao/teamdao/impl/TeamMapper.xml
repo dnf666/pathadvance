@@ -60,6 +60,14 @@
         <result column="del_by" property="delBy" />
         <result column="del_remarks" property="delRemarks" />
     </resultMap>
+    <!--设置团队成员的权限-->
+    <update id="setPrivilege" parameterType="com.pms.model.team.TeamMember">
+        UPDATE team_member
+        <set>
+            team_privelige={#teamPrivelige}
+        </set>
+        WHERE team_name={#teamName} AND del_flag=0 AND user_name={#userName}
+    </update>
     <!--团队成员的增加-->
     <insert id="addTeamMember" parameterType="com.pms.model.team.TeamMember">
           INSERT INTO team_member
@@ -87,7 +95,7 @@
         SELECT * FROM team_member WHERE del_flag=0 AND team_name=#{teamName};
     </select>
     <select id="getTeamInfoByUserName" parameterType="String" resultMap="teamMember">
-        SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName}
+        SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName};
     </select>
 
     <!--团队项目-->
@@ -114,7 +122,7 @@
                 del_flag=#{delFlag}
             </if>
         </set>
-        WHERE team_name=#{teamName} AND project_name=#{projectName} AND del_flag=0
+        WHERE id=#{id} AND del_flag=0
     </update>
     <!--更新项目信息-->
     <update id="updateProject" parameterType="com.pms.model.team.TeamProject">
@@ -170,7 +178,7 @@
                 del_remarks=#{delRemarks}
             </if>
         </set>
-        WHERE project_name=#{projectName} AND user_name=#{userName}
+        WHERE team_name=#{teamName} AND project_name=#{projectName} AND user_name=#{userName} AND del_flag=0
     </update>
     <!--获取项目成员-->
     <select id="getProjectMembersByProject"  resultMap="project_members">
@@ -202,11 +210,11 @@
             <if test="delFlag!=0">
                 del_flag=#{delFlag},
             </if>
-            <if test="delTime=null">
+            <if test="delTime!=null">
                 del_time=#{delTime}
             </if>
         </set>
-        WHERE id=#{id}
+        WHERE id=#{id} AND del_flag=0;
     </update>
     <!--更改公告-->
     <update id="updateNotice" parameterType="com.pms.model.team.TeamNotice">

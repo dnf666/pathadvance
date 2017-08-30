@@ -43,6 +43,7 @@ public interface TeamMapper {
      * @param teamMember
      * @return
      */
+
     public boolean addTeamMember(TeamMember teamMember);
 
     /**
@@ -85,7 +86,7 @@ public interface TeamMapper {
      * @param teamProject
      * @return
      */
-    public boolean updateProject(TeamProject teamProject);
+     public boolean updateProject(TeamProject teamProject);
 
     /**
      * 通过团队名称获取所有项目信息
@@ -158,6 +159,12 @@ public interface TeamMapper {
      */
     public List<TeamNotice> getNoticeByteamName(String teamName);
 
+    /**
+     * 设置权限
+     * @param teamMember
+     * @return
+     */
+    public boolean setPrivilege(TeamMember teamMember);
     /**
      * 团队成员职务变动记录,
      * 只有更改了默认的职务才会在该表中添加信息,

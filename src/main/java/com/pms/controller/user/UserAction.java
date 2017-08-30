@@ -35,7 +35,7 @@ public class UserAction {
 
     @RequestMapping("login")
     public void login(LoginInfo loginInfo, HttpServletRequest request){
-        Map map;
+            Map map;
         String code = (String) request.getSession().getAttribute("verificationCode");
         if (userService.login(loginInfo,code)) {
             map = MapUtil.toMap(1,"success",null);

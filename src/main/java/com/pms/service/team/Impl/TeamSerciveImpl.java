@@ -7,11 +7,11 @@ import com.pms.service.team.TeamService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by liudong on 2017/8/15.
- *
  *
  */
 @Service
@@ -83,7 +83,22 @@ public class TeamSerciveImpl implements TeamService{
             }
     }
 
-    public boolean delTeam(Team team ,String delBy) {
+    public List<Team> getAllTeam() {
+        return teamMapper.getAllTeam();
+    }
+
+    public List<Team> getMyteam(String userName) {
+        List<Team> teamList=new LinkedList<Team>();
+        List<TeamMember> teamMemberList=teamMapper.getTeamInfoByUserName(userName);
+        if (userName!=null&&teamMemberList!=null&&teamMemberList.size()>0){
+            for (int i=0 ; i<teamMemberList.size();i++){
+                teamList.add(teamMapper.getTeamInfo(teamMemberList.get(i).getTeamName()));
+            }
+        }
+        return teamList;
+    }
+
+    public boolean delTeam(Team team , String delBy) {
         if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(team.getTeamName()),delBy),delBy)==2){
 
             if (teamMapper.delTeam(team)){
@@ -96,7 +111,6 @@ public class TeamSerciveImpl implements TeamService{
                         list.get(k).setDelTime(team.getDelTime());
                         list.get(k).setDelBy(delBy);
                         if (teamMapper.delTeamMember(list.get(k))){
-
                             ;//不做任何操作,坐等下一次循环
                         }else {
                             //删除任何一个成员失败则返回失败，暂时这样处理。。。
@@ -116,6 +130,9 @@ public class TeamSerciveImpl implements TeamService{
     }
 
     public boolean inviteMember(TeamMember teamMember) {
+        //如果团队中已经存在该成员，则不必再次邀请
+
+        if (getMember(teamMapper.getTeamMembersByTeamName(teamMember.getTeamName()),teamMember.getUserName())==null){
         if (getTeamPrivilege(teamMember,teamMember.getJoinBy())>=1){
             if (teamMapper.addTeamMember(teamMember)){
                 return true;
@@ -125,8 +142,14 @@ public class TeamSerciveImpl implements TeamService{
         }else {
             return false;//当前操作用户没有足够的权限
         }
+        }else {
+            return false;//当前成员已经在列表中了。
+        }
     }
 
+    public List<TeamMember> getTeamMembers(String teamName) {
+        return teamMapper.getTeamMembersByTeamName(teamName);
+    }
 
     public boolean delMember(TeamMember teamMember) {
         if (getTeamPrivilege(teamMember,teamMember.getDelBy())>=1){
@@ -161,25 +184,37 @@ public class TeamSerciveImpl implements TeamService{
 
     public boolean delProject(TeamProject teamProject, String delBy) {
         //只有创建者才能够删除自己的项目,并且同时删除项目所有成员
-        if (delBy.equals(teamProject.getCreateBy())){
             if(teamMapper.delProject(teamProject)){
                 //首先得到当前项目下的所有成员，然后再逐个删除
                 List<ProjectMember> list=teamMapper.getProjectMembersByProject(teamProject.getTeamName(),teamProject.getProjectName());
-                if (list.size()>0){
+                if (list!=null){
                     for (int k=0;k<list.size();k++){
                         list.get(k).setDelFlag(1);
                         list.get(k).setDelBy(delBy);
-                        if (teamMapper.delProjectMember(list.get(k))){
-
-                        }else {
+                        if (!teamMapper.delProjectMember(list.get(k))){
                             return false;
                         }
                     }
                     return true;
                 }
             }
-        }
         return false;
+    }
+
+    public boolean setTeamPrivilige(TeamMember teamMember) {
+           return teamMapper.setPrivilege(teamMember);
+    }
+
+    public List<TeamProject> getTeamProjectsByTeamName(String teamName) {
+        return teamMapper.getProjectInfoByTeamName(teamName);
+    }
+
+    public TeamProject getTeamProjectsById(int id) {
+        return teamMapper.getProjectInfoByProjectId(id);
+    }
+
+    public List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName, String projectName) {
+        return teamMapper.getProjectMembersByProject(teamName,projectName);
     }
 
     public boolean updateaProject(TeamProject teamProject, String updateBy) {
@@ -191,6 +226,8 @@ public class TeamSerciveImpl implements TeamService{
     }
 
     public boolean addProjectMember(ProjectMember projectMember, String inviteBy) {
+        //首先判断该项目中是否存在此成员，存在则不必再添加,没有写哈
+
         //添加项目成员，必须是项目中的人
         if(isProMember(teamMapper.getProjectMembersByProject(projectMember.getTeamName(),projectMember.getProjectName()),inviteBy)){
             return teamMapper.addProjectMember(projectMember);
@@ -198,9 +235,11 @@ public class TeamSerciveImpl implements TeamService{
         return false;
     }
 
-    public boolean delProjectMember(ProjectMember projectMember, String delBy,int projectId) {
+    public boolean delProjectMember(ProjectMember projectMember,int projectId) {
         //必须是项目的创建者才能够删除项目成员
-        if(isProMember(teamMapper.getProjectMembersByProject(projectMember.getTeamName(),projectMember.getProjectName()),delBy)&&delBy.equals(teamMapper.getProjectInfoByProjectId(projectId).getCreateBy())){
+
+        if(isProMember(teamMapper.getProjectMembersByProject(projectMember.getTeamName(),projectMember.getProjectName()),projectMember.getDelBy())&&projectMember.getDelBy().equals(teamMapper.getProjectInfoByProjectId(projectId).getCreateBy())){
+
             //如果数据库里没有该项目的id，则会抛出一个空指针异常
             return teamMapper.delProjectMember(projectMember);
         }
@@ -221,7 +260,15 @@ public class TeamSerciveImpl implements TeamService{
         return false;
     }
 
-    public boolean updateNotice(TeamNotice teamNotice,String updateBy) {
+    public List<TeamNotice> getTeamNotice(String teamName) {
+        return teamMapper.getNoticeByteamName(teamName);
+    }
+
+    public TeamNotice getNoticeById(int id) {
+        return teamMapper.getNoticeById(id);
+    }
+
+    public boolean updateNotice(TeamNotice teamNotice, String updateBy) {
         if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(teamNotice.getTeamName()),updateBy),updateBy)>=1){
             return teamMapper.updateNotice(teamNotice);
         }
@@ -234,5 +281,9 @@ public class TeamSerciveImpl implements TeamService{
             return teamMapper.insertTeamMasterHistory(teamMasterHistory);
           }
           return false;
+    }
+
+    public String getMessage() {
+        return (msg == null) ? null:msg;
     }
 }
