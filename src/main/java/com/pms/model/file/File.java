@@ -48,9 +48,9 @@ public class File {
 
     public boolean getIsPrivater() { return isPrivater; }
 
-<<<<<<< HEAD
-    public void setPrivater(boolean privater) { this.isPrivater = privater; }
-=======
+//<<<<<<< HEAD
+//    public void setPrivater(boolean privater) { this.isPrivater = privater; }
+//=======
     public void setIsPrivater(boolean privater) { isPrivater = privater; }
->>>>>>> 9e0147a2021659d2b24d7cbe54ac5982290fb5d4
+//>>>>>>> 9e0147a2021659d2b24d7cbe54ac5982290fb5d4
 }

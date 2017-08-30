@@ -2,6 +2,7 @@ package dnf;
 
 import com.pms.dao.blog.BlogMapper;
 import com.pms.model.blog.BlogWithBLOBs;
+import com.pms.model.blog.Role;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,5 +83,18 @@ public class BlogMapperTest {
        {
            System.out.println(blogWithBLOBs.toString());
        }
+    }
+    @Test
+    public void testlomboc (){
+        Role r = new Role(1,1,1);
+        System.out.println(r.toString());
+        r.setId(2);
+        r.setRoleId(2);
+        r.setUserId(2);
+        System.out.println(r.getId());
+        System.out.println(r.getRoleId());
+        System.out.println(r.getUserId());
+
+
     }
 }

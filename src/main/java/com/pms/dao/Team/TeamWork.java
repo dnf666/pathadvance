@@ -1,12 +1,12 @@
-package com.pms.dao.Team;
+/*package com.pms.dao.Team;
 
-import com.pms.dataModel.Team.*;
+
 
 import org.springframework.stereotype.Repository;
 
-/**
+*//**
  * Created by liudong on 2017/7/25.
- */
+ *//*
 @Repository
 public interface TeamWork {
     //通过查询，得到相关的信息
@@ -40,4 +40,4 @@ public interface TeamWork {
     public boolean AddTeam();//新建团队，完成
     public boolean UpdateTeam();//更改团队的相关信息，完成
     public boolean DelTeam();//注销团队，完成
-    }
+    }*/
