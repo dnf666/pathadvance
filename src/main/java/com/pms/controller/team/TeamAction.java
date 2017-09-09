@@ -103,8 +103,9 @@ public class TeamAction{
     @RequestMapping(value = "/notice/show.do")
     public void showNotice(String teamName){
         Map map=null;
-        List<TeamNotice> listOfTeamNotice=null;
-        if (teamService.getTeamNotice(teamName).size()!=0){
+        List<TeamNotice> listOfTeamNotice=teamService.getTeamNotice(teamName);
+        if (listOfTeamNotice!=null){
+
             map=MapUtil.toMap(1,"success",listOfTeamNotice);
         }else {
             map=MapUtil.toMap(0,"false",null);
