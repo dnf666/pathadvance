@@ -1,7 +1,7 @@
 package com.pms.service.team.Impl;
 
 import com.pms.dao.teamdao.TeamMapper;
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import org.springframework.stereotype.Service;
@@ -185,15 +185,15 @@ public class TeamSerciveImpl implements TeamService{
         return false;
     }
 
-    public boolean putFile(File file) {
+    public boolean putFile(FileImpl file) {
         return false;
     }
 
-    public boolean updateFile(File file) {
+    public boolean updateFile(FileImpl file) {
         return false;
     }
 
-    public boolean delFile(File file, String delBy) {
+    public boolean delFile(FileImpl file, String delBy) {
         return false;
     }
 }
