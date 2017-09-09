@@ -1,18 +1,24 @@
 package com.pms.model.file;
 
 /**
- * Created by Administrator on 2017/8/1.
+ * Created by Chenmeiling on 2017/8/26.
  */
-public class File {
+public class FileImpl {
+    private int id;
     private String fileName;
     private String url;
     private String fileClass;
     private int size;
     private String createBy;
     private String createTime;
+    private String teamName;
     private boolean delFlag;
     private String delTime;
     private boolean isPrivater;
+
+    public Integer getId(){ return id; }
+
+    public void setId(int id){ this.id = id; }
 
     public String getFileName() { return fileName; }
 
@@ -38,7 +44,11 @@ public class File {
 
     public void setCreateTime(String createTime) { this.createTime = createTime; }
 
-    public boolean isDelFlag() { return delFlag; }
+    public String getTeamName(){ return teamName; }
+
+    public void setTeamName(String teamName){ this.teamName = teamName; }
+
+    public boolean getDelFlag() { return delFlag; }
 
     public void setDelFlag(boolean delFlag) { this.delFlag = delFlag; }
 

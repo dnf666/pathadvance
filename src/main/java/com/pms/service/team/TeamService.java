@@ -1,6 +1,6 @@
 package com.pms.service.team;
 
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import com.pms.model.team.*;
 import com.pms.service.team.Impl.TeamSerciveImpl;
 
@@ -183,7 +183,25 @@ public interface TeamService {
      * @param delBy
      * @return
      */
+<<<<<<< HEAD
+    public boolean delNotice(TeamNotice teamNotice);
+    /**
+     *@describle 上传资料
+     * @param file
+     * @param
+     * @return
+     */
+    public boolean putFile(FileImpl file);
+    /**
+     *@describle 更改文件资料
+     * @param file
+     *
+     * @return
+     */
+    public boolean updateFile(FileImpl file);
+=======
     public boolean delNotice(TeamNotice teamNotice,String delBy);
+>>>>>>> f63180524e895c10b9e0185479444231756e07f9
     /**
      * 得到团队的所有公告信息
      * @param teamName
@@ -197,7 +215,11 @@ public interface TeamService {
      * @param teamMasterHistory 团队成员
      * @return boolean
      */
+<<<<<<< HEAD
+    public boolean delFile(FileImpl file,String delBy);
+=======
     public boolean updateTeamRole(TeamMasterHistory teamMasterHistory);
+<<<<<<< HEAD
 
     /**
      * 根据页码和每一页的尺寸来展示团队信息
@@ -211,4 +233,7 @@ public interface TeamService {
      * @return
      */
     public String getMessage();
+=======
+>>>>>>> f63180524e895c10b9e0185479444231756e07f9
+>>>>>>> 2f6d0c888a9caab957228968514ebf6d34556f1e
 }

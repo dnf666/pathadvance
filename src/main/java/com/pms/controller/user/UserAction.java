@@ -8,13 +8,10 @@ import com.pms.service.user.UserService;
 import com.pms.service.user.VeriCode;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

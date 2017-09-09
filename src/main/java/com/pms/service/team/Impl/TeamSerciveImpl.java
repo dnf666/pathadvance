@@ -1,7 +1,7 @@
 package com.pms.service.team.Impl;
 
 import com.pms.dao.teamdao.TeamMapper;
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import org.springframework.stereotype.Service;
@@ -260,6 +260,7 @@ public class TeamSerciveImpl implements TeamService{
         return false;
     }
 
+<<<<<<< HEAD
     public List<TeamNotice> getTeamNotice(String teamName) {
         return teamMapper.getNoticeByteamName(teamName);
     }
@@ -269,6 +270,26 @@ public class TeamSerciveImpl implements TeamService{
     }
 
     public boolean updateNotice(TeamNotice teamNotice, String updateBy) {
+=======
+<<<<<<< HEAD
+
+    public boolean updateNotice(TeamNotice teamNotice) {
+        return false;
+    }
+
+    public boolean putFile(FileImpl file) {
+        return false;
+    }
+
+    public boolean updateFile(FileImpl file) {
+        return false;
+    }
+
+    public boolean delFile(FileImpl file, String delBy) {
+        return false;
+=======
+    public boolean updateNotice(TeamNotice teamNotice,String updateBy) {
+>>>>>>> 2f6d0c888a9caab957228968514ebf6d34556f1e
         if (getTeamPrivilege(getMember(teamMapper.getTeamMembersByTeamName(teamNotice.getTeamName()),updateBy),updateBy)>=1){
             return teamMapper.updateNotice(teamNotice);
         }
@@ -281,6 +302,7 @@ public class TeamSerciveImpl implements TeamService{
             return teamMapper.insertTeamMasterHistory(teamMasterHistory);
           }
           return false;
+>>>>>>> f63180524e895c10b9e0185479444231756e07f9
     }
 
 
