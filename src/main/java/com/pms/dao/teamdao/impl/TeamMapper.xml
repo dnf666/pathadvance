@@ -15,8 +15,8 @@
     <!--对团队表进行操作，新建一个团队-->
     <insert id="addTeam">
         INSERT INTO team
-        (team_name,create_by,create_time,del_flag,del_time,del_remarks) VALUES
-        (#{teamName},#{createBy},#{createTime},#{delFlag},#{delTime},#{delRemarks})
+        (team_name,create_by,create_time) VALUES
+        (#{teamName},#{createBy},#{createTime})
     </insert>
     <!--  注销团队,因为并不是实际在数据库中删除信息，所以打上删除的标记就好-->
     <update id="delTeam" parameterType="com.pms.model.team.Team">
@@ -43,7 +43,10 @@
     <select id="getTeamInfo" resultMap="teamInfo" parameterType="java.lang.String">
         select * from team WHERE team_name=#{teamName} AND del_flag=0;
     </select>
-
+    <!--得到所有团队-->
+    <select id="getAllTeam" resultMap="teamInfo">
+        select * from team WHERE  del_flag=0;
+    </select>
     <!--对团队成员的操控-->
     <resultMap id="teamMember" type="com.pms.model.team.TeamMember">
         <result column="user_name" property="userName"  />
@@ -60,8 +63,8 @@
     <!--团队成员的增加-->
     <insert id="addTeamMember" parameterType="com.pms.model.team.TeamMember">
           INSERT INTO team_member
-          (user_name,team_name,team_role,join_time,join_by)VALUES
-          (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
+          (user_name,team_name,team_role,join_time,join_by,team_privelige)VALUES
+          (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy},#{teamPrivelige})
     </insert>
     <!--团队成员的删除即打上删除标志-->
     <update id="delTeamMember" parameterType="com.pms.model.team.TeamMember">
@@ -100,8 +103,8 @@
     <!--创建项目-->
     <insert id="addProject" parameterType="com.pms.model.team.TeamProject">
          INSERT INTO project
-        (project_name,team_name,project_info,create_by,create_at,del_flag) VALUES
-        (#{projectName},#{teamName},#{projectInfo},#{createBy},#{createAt},#{delFlag})
+        (project_name,team_name,project_info,create_by,create_at) VALUES
+        (#{projectName},#{teamName},#{projectInfo},#{createBy},#{createAt})
     </insert>
     <!--删除项目-->
     <update id="delProject" parameterType="com.pms.model.team.TeamProject">
@@ -147,8 +150,8 @@
     <!--增加项目成员-->
     <insert id="addProjectMember" parameterType="com.pms.model.team.ProjectMember">
         INSERT INTO project_member
-        (project_name,user_name,team_role,join_time,join_by)VALUES
-        (#{projectName},#{userName},#{teamRole},#{joinTime},#{joinBy})
+        (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
+        (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
     </insert>
     <!--删除项目成员-->
     <update id="delProjectMember" parameterType="com.pms.model.team.ProjectMember">
@@ -170,9 +173,9 @@
         WHERE project_name=#{projectName} AND user_name=#{userName}
     </update>
     <!--获取项目成员-->
-    <select id="getaddProjectMembersByProject" parameterType="java.lang.String" resultMap="project_members">
+    <select id="getProjectMembersByProject"  resultMap="project_members">
         SELECT * FROM project_member
-        WHERE del_flag=0 AND project_name=#{projectName}
+        WHERE del_flag=0 AND team_name = #{teamName} AND project_name = #{projectName}
     </select>
     <!--团队公告-->
     <resultMap id="teamNotice" type="com.pms.model.team.TeamNotice">
@@ -224,46 +227,19 @@
         </set>
         WHERE team_name=#{teamName} AND id=#{id}  AND del_flag=0
     </update>
+    <select id="getNoticeById" parameterType="java.lang.Integer" resultMap="teamNotice">
+        SELECT *
+        FROM notice
+        WHERE id=#{id} AND del_flag=0
+    </select>
     <!--得到公告信息-->
     <select id="getNoticeByteamName" parameterType="java.lang.String" resultMap="teamNotice">
         SELECT *
         FROM notice
         WHERE team_name=#{teamName} AND del_flag=0
     </select>
-    <!--团队资料-->
-    <resultMap id="teamFile" type="com.pms.model.team.TeamFile">
-        <result column="file_name" property="fileName"/>
-        <result column="url" property="url" />
-        <result column="class" property="fileClass" />
-        <result column="size" property="fileSize" />
-        <result column="create_by" property="createBy"/>
-        <result column="del_flag" property="delFlag" />
-        <result column="del_time" property="delTime" />
-        <result column="is_privater" property="isPrivater" />
-    </resultMap>
-    <!--上传团队资料-->
-    <insert id="addFile" parameterType="com.pms.model.team.TeamFile">
-        INSERT INTO file
-        (file_name,url,class,size,create_by,is_privater) VALUES
-        (#{fileName},#{url},#{fileClass},#{fileSize},#{createBy},#{isPrivater})
+    <insert id="insertTeamMasterHistory">
+        INSERT INTO team_master_history (team_name,user_name,to_role,from_role,modify_by,modify_at)
+        VALUES (#{teamName},#{userName},#{toRole},#{fromRole},#{modifyBy},#{modifyAt})
     </insert>
-    <!--删除团队资料-->
-    <update id="delFile" parameterType="com.pms.model.team.TeamFile">
-        UPDATE file
-        <set>
-            <if test="delFlag!=0">
-                del_flag=#{delFlag},
-            </if>
-            <if test="delTime!=null">
-                del_time=#{delTime}
-            </if>
-        </set>
-        WHERE url=#{url} AND file_name=#{fileName}
-    </update>
-   <!--得到团队资料-->
-    <select id="getFileByFileName" parameterType="java.lang.String" resultMap="teamFile">
-        SELECT *
-        FROM file
-        WHERE file_name=#{fileName}
-    </select>
 </mapper>

@@ -96,18 +96,21 @@ public class FileAction {
 
     @RequestMapping("updateFileInfo")
     public void updateFileInfo(FileImpl fileImpl,HttpServletResponse response){
+        Map map;
         String res = null;
         if (fileService.updateFileInfo(fileImpl)){
             res = "操作成功";
+            map = MapUtil.toMap(1,res,null);
         }else {
             res = "操作失败";
+            map = MapUtil.toMap(0,res,null);
         }
-        Map<String,Object> map = MapUtil.toMap(1,res,null);
         JsonUtil.toJSON(map,response);
     }
 
     @RequestMapping("deleteByDelFlag")
     public void deleteByDelFlag(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+        Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
         fileImpl.setDelFlag(true);
@@ -116,37 +119,42 @@ public class FileAction {
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileImpl,fileName,teamName)){
             res = "操作成功";
+            map = MapUtil.toMap(1,res,null);
         }else {
             res = "操作失败";
+            map = MapUtil.toMap(0,res,null);
         }
-        Map<String,Object> map = MapUtil.toMap(1,res,null);
         JsonUtil.toJSON(map,response);
 
     }
 
     @RequestMapping("recoverFile")
     public void recoverFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+        Map map;
         String res = null;
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
         if (fileService.recoverFile(fileImpl,fileName,teamName)){
             res = "操作成功";
+            map = MapUtil.toMap(1,res,null);
         }else {
             res = "操作失败";
+            map = MapUtil.toMap(0,res,null);
         }
-        Map<String,Object> map = MapUtil.toMap(1,res,null);
         JsonUtil.toJSON(map,response);
     }
 
     @RequestMapping("deleteFile")
     public void deleteFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+        Map map;
         String res = null;
         //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
         if (fileService.deleteFile(fileImpl,fileName,teamName)){
             res = "操作成功";
+            map = MapUtil.toMap(1,res,null);
         }else {
             res = "操作失败";
+            map = MapUtil.toMap(0,res,null);
         }
-        Map<String,Object> map = MapUtil.toMap(1,res,null);
         JsonUtil.toJSON(map,response);
     }
 }

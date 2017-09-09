@@ -4,23 +4,16 @@ package com.pms.model.team;
  * Created by liudong on 2017/8/11.
  */
 public class ProjectMember {
-   private String projectName;
-   private String userName;
-   private String teamRole;
-   private String joinTime;
-   private String joinBy;
+    private String projectName;
+    private String userName;
+    private String teamRole;
+    private String joinTime;
+    private String joinBy;
     private int delFlag;
-   private String delTime;
-   private String delRemarks;
-   private String delBy;
-
-    public String getDelBy() {
-        return delBy;
-    }
-
-    public void setDeLBy(String deLBy) {
-        this.delBy = delBy;
-    }
+    private String delTime;
+    private String delRemarks;
+    private String delBy;
+    private String teamName;
 
     public String getProjectName() {
         return projectName;
@@ -84,5 +77,21 @@ public class ProjectMember {
 
     public void setDelRemarks(String delRemarks) {
         this.delRemarks = delRemarks;
+    }
+
+    public String getDelBy() {
+        return delBy;
+    }
+
+    public void setDelBy(String delBy) {
+        this.delBy = delBy;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

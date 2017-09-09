@@ -52,6 +52,10 @@ public class TeamMapperTest {
                 System.out.println("没有该团队");
             }
         }
+        @Test
+        public void getAllTeamTest(){
+            System.out.println(teamMapper.getAllTeam().size());
+        }
         //团队成员方面的测试
         @Test
         public void addTeamMemberTest(){
@@ -150,11 +154,12 @@ public class TeamMapperTest {
             projectMember.setDelFlag(1);
             teamMapper.delProjectMember(projectMember);
         }
+
         @Test
         public void getaddProjectMembersByProjectTest(){
             String projectName="123";
-            List<ProjectMember> list=teamMapper.getaddProjectMembersByProject(projectName);
-            System.out.println(list.size());
+            List<ProjectMember> projectMember=teamMapper.getProjectMembersByProject("44",projectName);
+            System.out.println(projectMember.get(0).getTeamName());
         }
         //团队公告的测试
         @Test
@@ -191,34 +196,12 @@ public class TeamMapperTest {
             teamMapper.updateNotice(teamNotice);
         }
         @Test
+        public void getNoticeByIdTest(){
+            System.out.println(teamMapper.getNoticeById(3));
+        }
+        @Test
         public void  getNoticeByteamNameTest(){
             List<TeamNotice> list=teamMapper.getNoticeByteamName("公测团队");
             System.out.println(list.size());
-        }
-        //团队资料的测试
-        @Test
-        public void addFileTest(){
-            TeamFile teamFile=new TeamFile();
-            teamFile.setCreateBy("123");
-            teamFile.setFileName("文本内容");
-            teamFile.setFileClass("学习");
-            teamFile.setIsPrivater(0);
-            teamFile.setUrl("www.baidu.com");
-            teamFile.setFileSize(55.2);
-            teamMapper.addFile(teamFile);
-    }
-        @Test
-        public void delFileTest(){
-            TeamFile teamFile=new TeamFile();
-            teamFile.setFileName("文本内容");
-            teamFile.setDelFlag(1);
-            teamFile.setUrl("www.baidu.com");
-            teamMapper.delFile(teamFile);
-        }
-        @Test
-        public void getFileByTeamNameTest(){
-            String teamName="文本内容";
-            List<TeamFile> list=teamMapper.getFileByFileName(teamName);
-            System.out.println(list.get(0).getFileName());
         }
 }
