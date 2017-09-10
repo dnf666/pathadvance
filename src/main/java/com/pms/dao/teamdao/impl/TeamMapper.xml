@@ -129,10 +129,13 @@
         UPDATE project
         <set>
             <if test="projectInfo!=null">
-                project_info=#{projectInfo}
+                project_info=#{projectInfo},
+            </if>
+            <if test="projectName!=null">
+                project_name=#{projectName}
             </if>
         </set>
-        WHERE team_name=#{teamName} AND del_flag=0 AND project_name=#{projectName}
+        WHERE id=#{id} AND del_flag=0
     </update>
     <!--通过团队名称获取项目名称-->
     <select id="getProjectInfoByTeamName" parameterType="java.lang.String" resultMap="teamProject">
@@ -148,6 +151,7 @@
         <result column="project_name" property="projectName"/>
         <result column="user_name" property="userName"/>
         <result column="team_role" property="teamRole"/>
+        <result column="team_name" property="teamName"/>
         <result column="join_time" property="joinTime"/>
         <result column="join_by" property="joinBy"/>
         <result column="del_flag" property="delFlag"/>

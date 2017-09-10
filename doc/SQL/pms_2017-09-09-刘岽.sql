@@ -143,6 +143,7 @@ DROP TABLE IF EXISTS `project_member`;
 CREATE TABLE `project_member` (
   `project_name` varchar(255) NOT NULL,
   `user_name` varchar(50) NOT NULL,
+  `team_name` varchar(255) NOT NULL,
   `team_role` varchar(50) NOT NULL DEFAULT '成员' COMMENT '负责人、成员',
   `join_time` mediumtext NOT NULL,
   `join_by` varchar(50) NOT NULL,
@@ -203,8 +204,8 @@ CREATE TABLE `team_member` (
   `team_name` varchar(255) NOT NULL,
   `team_role` varchar(50) NOT NULL DEFAULT '成员',
   `team_privelige` tinyint(1) DEFAULT '0',
-  `jion_time` mediumtext NOT NULL,
-  `jion_by` varchar(50) NOT NULL,
+  `join_time` mediumtext NOT NULL,
+  `join_by` varchar(50) NOT NULL,
   `del_flag` tinyint(1) NOT NULL DEFAULT '0',
   `del_time` mediumtext,
   `del_by` varchar(50) DEFAULT NULL,

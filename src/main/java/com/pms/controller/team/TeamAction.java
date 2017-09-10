@@ -4,6 +4,7 @@ import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
+import com.pms.util.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,10 +56,10 @@ public class TeamAction{
      * http://localhost:8080/team/show.do
      */
     @RequestMapping(value = "/team/show.do")
-    public void showTeams(){
+    public void showTeams(int page){
         Map map;
         List<Team> listOfTeam=teamService.getAllTeam();
-        map=MapUtil.toMap(1,"success",listOfTeam);
+        map=MapUtil.toMap(1,"success", PageList.getList(page,listOfTeam));
         JsonUtil.toJSON(map);
     }
     /**3
@@ -292,11 +293,11 @@ public class TeamAction{
      *http://localhost:8080/project/show.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0
      */
     @RequestMapping(value = "/project/show.do")
-    public void showProjects(String teamName){
+    public void showProjects(int page,String teamName){
         Map map=null;
         List<TeamProject> listOfProjects=teamService.getTeamProjectsByTeamName(teamName);
         if (listOfProjects!=null){
-            map=MapUtil.toMap(1,"success",listOfProjects);
+            map=MapUtil.toMap(1,"success",PageList.getList(page,listOfProjects));
         }else {
 
         }
@@ -423,7 +424,5 @@ public class TeamAction{
             map=MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
-
-
     }
 }

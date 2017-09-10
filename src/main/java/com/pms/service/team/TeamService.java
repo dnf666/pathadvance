@@ -185,13 +185,6 @@ public interface TeamService {
      */
     public boolean updateTeamRole(TeamMasterHistory teamMasterHistory);
     /**
-     * 根据页码和每一页的尺寸来展示团队信息
-     * @param page
-     * @param pageSize
-     * @return
-     */
-    public List<Team> getTeamByPage(int page,int pageSize);
-    /**
      * 返回错误信息，例如"密码错误"
      * @return
      */

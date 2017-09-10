@@ -252,10 +252,6 @@ public class TeamSerciveImpl implements TeamService{
     public String getMessage() {
         return (msg == null) ? null:msg;
     }
-    public List<Team> getTeamByPage(int page, int pageSize) {
-        List<Team> list=getAllTeam();
-        return null;
-    }
 }
 
 
