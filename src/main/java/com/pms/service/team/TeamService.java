@@ -1,10 +1,7 @@
+
 package com.pms.service.team;
-
-import com.pms.model.file.File;
 import com.pms.model.team.*;
-
 import java.util.List;
-
 /**
  * Created by liudong on 2017/8/15.
  *
@@ -40,13 +37,23 @@ public interface TeamService {
      */
     public boolean createTeam(Team team);
     /**
+     * 得到所有团队的信息
+     * @return
+     */
+    public List<Team> getAllTeam();
+    /**
+     * 通过用户名获该成员的所在团队
+     * @param userName
+     * @return
+     */
+    public List<Team> getMyteam(String userName);
+    /**
      * @describle 团队注销，只能够由团队负责人注销
      * @param team
      * @param delBy
      * @return boolean
      */
     public boolean delTeam(Team team ,String delBy);
-
     /**
      * @describle 添加团队成员，
      * 1.有一定的权限才能够添加
@@ -56,7 +63,12 @@ public interface TeamService {
      * @retuen boolean
      */
     public boolean inviteMember(TeamMember teamMember);
-
+    /**
+     * 根据团队名称获取团队成员
+     * @param teamName
+     * @return
+     */
+    public List<TeamMember> getTeamMembers(String teamName);
     /**
      *@describle 移除团队成员
      * 1.有一定的权限才能够移除
@@ -67,7 +79,6 @@ public interface TeamService {
      * @retuen boolean
      */
     public boolean delMember(TeamMember teamMember);
-
     /**
      * @describle 团队项目的创建
      * 1.任何人都可以创建项目
@@ -77,7 +88,6 @@ public interface TeamService {
      * @return boolean
      */
     public boolean createProject(TeamProject teamProject);
-
     /**
      *@describle 项目的删除
      *1.操作用户只能是创建者
@@ -87,8 +97,30 @@ public interface TeamService {
      * @return
      */
     public boolean delProject(TeamProject teamProject,String delBy);
-
-
+    /**
+     * 设置成员权限，只有负责人才能够设置
+     * @param teamPrivilige
+     */
+    public boolean setTeamPrivilige(TeamMember teamPrivilige);
+    /**
+     * 团队中的所有项目
+     * @param teamName
+     * @return
+     */
+    public List<TeamProject> getTeamProjectsByTeamName(String teamName);
+    /**
+     * 获得指定项目的详细信息
+     * @param id
+     * @return
+     */
+    public TeamProject getTeamProjectsById(int id);
+    /**
+     * 通过团队名称和项目名称后去项目成员
+     * @param teamName
+     * @param projectName
+     * @return
+     */
+    public List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName,String projectName);
     /**
      *@describle 项目信息的更改
      *1.项目内的成员均可以操作
@@ -112,11 +144,10 @@ public interface TeamService {
      *@describle 项目成员的删除
      *1.只能够是项目的创建者来操作
      * @param projectMember 要删除的项目成员对象
-     * @param delBy
      *@param projectId 项目的id用来判断该项目的创建者
      * @return
      */
-    public boolean delProjectMember(ProjectMember projectMember,String delBy,int projectId);
+    public boolean delProjectMember(ProjectMember projectMember,int projectId);
     /**
      *@describle 团队公告的创建
      * 1.管理员或者负责人
@@ -141,31 +172,21 @@ public interface TeamService {
      */
     public boolean delNotice(TeamNotice teamNotice,String delBy);
     /**
-     *@describle 上传资料
-     * @param file
-     * @param
+     * 得到团队的所有公告信息
+     * @param teamName
      * @return
      */
-    public boolean putFile(File file);
-    /**
-     *@describle 更改文件资料
-     * @param file
-     *
-     * @return
-     */
-    public boolean updateFile(File file);
-    /**
-     *@describle 删除文件资料
-     *
-     * @param file
-     * @param delBy
-     * @return
-     */
-    public boolean delFile(File file,String delBy);
+    public List<TeamNotice> getTeamNotice(String teamName);
+    public TeamNotice getNoticeById(int id);
     /**
      * 修改团队成员的角色,通过形参传入的信息，保存到teamMasterHistory对象的信息中，然后将对象中的信息插入这个历史记录表
      * @param teamMasterHistory 团队成员
      * @return boolean
      */
     public boolean updateTeamRole(TeamMasterHistory teamMasterHistory);
+    /**
+     * 返回错误信息，例如"密码错误"
+     * @return
+     */
+    public String getMessage();
 }

@@ -1,9 +1,14 @@
 package com.pms.dao.file;
 
 
-import com.pms.model.file.File;
-import com.sdicons.json.validator.impl.predicates.Str;
+
+
+import com.pms.model.file.FileImpl;
+import org.apache.ibatis.annotations.Param;
+
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/1.
@@ -15,21 +20,21 @@ public interface FileMapper {
      * @param fileName
      * @return
      */
-    public File selectByFileName(String fileName);
+    List<FileImpl> selectByFileName(String fileName);
 
     /**
      * 文件删除
-     * @param fileName
+     * @param fileName,teamName
      * @return
      */
-    public boolean deleteByFileName(String fileName);
+    boolean deleteFile(FileImpl fileImpl, @Param("fileName") String fileName, @Param("teamName") String teamName);
 
     /**
      * 文件上传
      * @param file
      * @return
      */
-    public boolean  insertFileInfo(File file);
+    boolean  insertFileInfo(FileImpl file);
 
 
     /**
@@ -37,21 +42,21 @@ public interface FileMapper {
      * @param file
      * @return
      */
-    public boolean updateFileInfo(File file);
+    boolean updateFileInfo(FileImpl file);
 
 
     /**
      * 文件删除，只是修改删除标记
-     * @param file
+     * @param fileImpl
      * @return
      */
-    public boolean deleteByDelFlag(File file);
+    boolean deleteByDelFlag(FileImpl fileImpl);
 
     /**
      * 删除文件的恢复，修改删除标记
-     * @param file
+     * @param fileImpl
      * @return
      */
-    public boolean recoverByDelFlag(File file);
+    boolean recoverFile(FileImpl fileImpl);
 
 }

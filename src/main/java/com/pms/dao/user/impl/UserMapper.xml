@@ -58,9 +58,6 @@
            <if test="peofession != null">
                peofession = #{peofession}
            </if>
-           <if test="createAt != null">
-               create_at = #{createAt},
-           </if>
            <if test="delFlag != null">
                del_flag = #{delFlag},
            </if>

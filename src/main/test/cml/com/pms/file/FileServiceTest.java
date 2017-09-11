@@ -1,7 +1,7 @@
 package cml.com.pms.file;
 
 import com.pms.dao.file.FileMapper;
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import com.pms.service.file.FileService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,12 +25,13 @@ public class FileServiceTest {
 
     @Test
     public void insertFileInfo() throws Exception {
-        File file = new File();
+        FileImpl file = new FileImpl();
         file.setFileName("file");
         file.setUrl("url");
         file.setSize(1);
         file.setCreateBy("createBy");
         file.setCreateTime("createTime");
+        file.setTeamName("teamName");
         file.setFileClass("text");
         file.setDelFlag(true);
         file.setDelTime("delTime");
@@ -41,25 +42,26 @@ public class FileServiceTest {
 
     @Test
     public void selectByFileName() throws Exception {
-        File file1 = new File();
-        File file2 = new File();
-        File file3 = new File();
+        FileImpl file1 = new FileImpl();
+        FileImpl file2 = new FileImpl();
+        FileImpl file3 = new FileImpl();
         List list = new ArrayList();
         list.add(file1);
         list.add(file2);
         list.add(file3);
-        fileService.selectByFileName((List<File>) list,"file");
+        fileService.selectByFileName("file");
 
     }
 
     @Test
     public void updateFileInfo() throws Exception {
-        File file1 = new File();
+        FileImpl file1 = new FileImpl();
         file1.setFileName("file1");
         file1.setUrl("url1");
         file1.setSize(1);
         file1.setCreateBy("createBy1");
         file1.setCreateTime("createTime1");
+        file1.setTeamName("teamName");
         file1.setFileClass("text1");
         file1.setDelFlag(true);
         file1.setDelTime("delTime1");
@@ -70,40 +72,42 @@ public class FileServiceTest {
 
     @Test
     public void deleteByDelFlag() throws Exception {
-        File file1 = new File();
+        FileImpl file1 = new FileImpl();
         file1.setFileName("file1");
         file1.setUrl("url1");
         file1.setSize(1);
         file1.setCreateBy("createBy1");
         file1.setCreateTime("createTime1");
+        file1.setTeamName("teamName");
         file1.setFileClass("text1");
         file1.setDelFlag(true);
         file1.setDelTime("delTime1");
         file1.setIsPrivater(true);
-        fileService.deleteByDelFlag(file1);
+        fileService.deleteByDelFlag(file1,"file1","teamName");
 
     }
 
     @Test
-    public void recoverByDelFlag() throws Exception {
-        File file2 = new File();
+    public void recoverFile() throws Exception {
+        FileImpl file2 = new FileImpl();
         file2.setFileName("file2");
         file2.setUrl("url2");
         file2.setSize(1);
         file2.setCreateBy("createBy2");
         file2.setCreateTime("createTime2");
+        file2.setTeamName("teamName");
         file2.setFileClass("text2");
         file2.setDelFlag(false);
         file2.setDelTime("delTime2");
         file2.setIsPrivater(true);
-        fileService.recoverByDelFlag(file2);
+        fileService.recoverFile(file2,"file2","teamName");
 
     }
 
     @Test
-    public void deleteByFileName() throws Exception{
-        fileService.deleteByFileName("file2");
-
+    public void deleteFile() throws Exception{
+        FileImpl fileImpl = new FileImpl();
+        fileMapper.deleteFile(fileImpl,"fileName","teamName");
     }
 
 }
