@@ -9,6 +9,7 @@
     <sql id="all">
         user_id,role_id,master_id
     </sql>
+
     <select id="selectByConbinationKey" parameterType="com.pms.model.blog.Role" resultMap="role">
       select <include refid="all"/> from b_user_role WHERE b_user_role.user_id = #{userId} and b_user_role.role_id =#{roleId} and b_user_role.master_id = #{masterId};
     </select>

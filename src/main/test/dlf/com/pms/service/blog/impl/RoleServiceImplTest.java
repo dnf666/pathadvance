@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springconfig.xml")
 public class RoleServiceImplTest {
-    Role r = new Role(1,1,1);
+    Role r = new Role("1",1,"1");
     @Resource
     private RoleService roleService;
     @Resource

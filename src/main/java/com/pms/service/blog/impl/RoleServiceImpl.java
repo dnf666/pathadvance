@@ -11,15 +11,16 @@ import javax.annotation.Resource;
 public class RoleServiceImpl implements RoleService {
     @Resource
     RoleMapper roleMapper;
+
     public int insertRole(Role role) {
-        return 0;
+        return roleMapper.insert(role);
     }
 
     public int deleteRoleByConbinationKey(Role role) {
-        return 0;
+        return roleMapper.deleteByConbinationKey(role);
     }
 
     public Role selectByConbinationKey(Role role) {
-        return null;
+        return roleMapper.selectByConbinationKey(role);
     }
 }

@@ -1,12 +1,11 @@
 package com.pms.model.blog;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Blog {
     private Integer id;//唯一识别号，递增
 

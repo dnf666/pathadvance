@@ -23,7 +23,7 @@ public class BlogControllerTest {
     private BlogService blogService;
     @Test
     public void selectOwnAll() throws Exception {
-       List<BlogWithBLOBs> list = blogService.selectOwnAll("2");
+       List<BlogWithBLOBs> list = blogService.selectOwnAll("createby");
        for(BlogWithBLOBs blog:list)
        {
            System.out.println(blog.toString());

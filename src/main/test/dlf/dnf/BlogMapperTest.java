@@ -86,11 +86,11 @@ public class BlogMapperTest {
     }
     @Test
     public void testlomboc (){
-        Role r = new Role(1,1,1);
+        Role r = new Role("1",1,"1");
         System.out.println(r.toString());
-        r.setMasterId(2);
+        r.setMasterId("2");
         r.setRoleId(2);
-        r.setUserId(2);
+        r.setUserId("2");
         System.out.println(r.getMasterId());
         System.out.println(r.getRoleId());
         System.out.println(r.getUserId());
