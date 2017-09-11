@@ -64,7 +64,7 @@ public class UserAction {
     public void pushCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         char[] chars = veriCode.getChars();
         BufferedImage image = veriCode.getImage(chars);
-        request.getSession().setAttribute("verificationCode",chars.toString());
+        request.getSession().setAttribute("verificationCode",new String(chars));
         ImageIO.write(image,"jpg",response.getOutputStream());
     }
 
