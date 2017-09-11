@@ -22,7 +22,7 @@ public class BlogController {
     BlogWithBLOBs blogWithBLOBs = new BlogWithBLOBs();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH-mm-ss");
 
-    @Resource
+    @Resource1
     private BlogService blogService;
 
     /**
