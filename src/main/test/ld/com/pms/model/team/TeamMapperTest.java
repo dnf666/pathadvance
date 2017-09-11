@@ -34,7 +34,7 @@ public class TeamMapperTest {
         @Test
         public void delTeamTest(){//有错误
             Team team=new Team();
-            team.setTeamName("公测团队2");
+            team.setTeamName("团队名称");
             team.setCreateBy("刘岽");
             team.setDelRemarks("太帅");
             team.setDelFlag(1);
@@ -43,7 +43,7 @@ public class TeamMapperTest {
         }
         @Test
         public void getTeamInfoTest() {
-            String teamName = "公测团队";
+            String teamName = "团队名称";
             Team team1 = teamMapper.getTeamInfo(teamName);
             if (team1 != null) {
                 System.out.println(team1.getTeamName());
@@ -65,13 +65,14 @@ public class TeamMapperTest {
             teamMember.setUserName("小小");
             teamMember.setJoinBy("小丁");
             teamMember.setJoinTime("2014252255");
-            teamMapper.addTeamMember(teamMember);
+            System.out.println(teamMapper.addTeamMember(teamMember));
         }
         @Test
         public void delTeamMemberTest(){
             TeamMember teamMember=new TeamMember();
-            teamMember.setUserName("胖虎");
-            teamMember.setTeamName("公测团队");
+            teamMember.setTeamName("公测团队2");
+            teamMember.setTeamRole("boss");
+            teamMember.setUserName("小小");
             teamMember.setDelFlag(1);
             teamMember.setDelRemarks("太胖");
             teamMember.setDelTime("44444");
@@ -81,11 +82,11 @@ public class TeamMapperTest {
         public void getTeamMembersByTeamNameTest(){
             String teamName="公测团队2";
             List<TeamMember> list=teamMapper.getTeamMembersByTeamName(teamName);
-            System.out.println(list.get(3));
+            System.out.println(list.size());
         }
         @Test
         public void getTeamMemberInfoByNameTest(){
-            String userName="静香";
+            String userName="小小";
             List<TeamMember> list=teamMapper.getTeamInfoByUserName(userName);
             System.out.println(list.size());
         }
@@ -102,29 +103,31 @@ public class TeamMapperTest {
             teamMapper.addProject(teamProject);
         }
         @Test
-        public void delProjectTest(){
+        public void delProjectTest(){//根据id删除项目
             TeamProject teamProject=new TeamProject();
-            teamProject.setTeamName("公测团队4");
+            teamProject.setTeamName("公测团队5");
             teamProject.setCreateAt("1545646");
             teamProject.setCreateBy("大熊");
             teamProject.setProjectInfo("这是最棒的项目了");
             teamProject.setProjectName("哆啦A梦大结局");
+            teamProject.setId(11);
             teamProject.setDelFlag(1);
             teamMapper.delProject(teamProject);
         }
         @Test
         public void updateProjectTest(){
             TeamProject teamProject=new TeamProject();
-            teamProject.setTeamName("公测团队5");
-            teamProject.setProjectInfo("tomcat");
+            teamProject.setId(11);
+            teamProject.setTeamName("公测团队");
+            teamProject.setProjectInfo("tomcat6");
             teamProject.setProjectName("哆啦A梦大结局");
             teamMapper.updateProject(teamProject);
         }
         @Test
         public void getProjectInfoByTeamNameTest(){
-            String teamName="公测团队5";
+            String teamName="ddd";
             List<TeamProject> list=teamMapper.getProjectInfoByTeamName(teamName);
-            System.out.println(list.get(0).getProjectName());
+            System.out.println(list.size());
         }
         @Test
         public void getProjectInfoByProjectIdTest(){
@@ -137,6 +140,7 @@ public class TeamMapperTest {
         public void addProjectMemberTest(){
             ProjectMember projectMember=new ProjectMember();
             projectMember.setTeamRole("大佬");
+            projectMember.setTeamName("ddd");
             projectMember.setProjectName("123");
             projectMember.setJoinBy("小小");
             projectMember.setJoinTime("4545646");
