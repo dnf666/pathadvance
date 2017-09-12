@@ -22,7 +22,7 @@ public class TeamAction{
     /**1
      * 团队创建
      * @param team
-     *
+     *                                                      action暂时没有改
      * 测试用的数据： 涉及到team和team_member表。
      * teamName:团队名称
      * createTime:123434
@@ -217,17 +217,17 @@ public class TeamAction{
      *
      *http://localhost:8080/teammember/delmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8Exiao%E9%9C%B8&delBy=%E5%88%98%E5%B2%BD&delFlag=1
      */
-//    @RequestMapping(value = "/teammember/delmembers")
-//    public void delTeamMember(TeamMember teamMember){
-//        Map map=null;
-//        if (teamService.delTeamMember(teamMember)){
-//            map=MapUtil.toMap(1,"success",null);
-//        }else {
-//            map=MapUtil.toMap(0,"false",null);
-//        }
-//        JsonUtil.toJSON(map);
-//    }
-//
+    @RequestMapping(value = "/teammember/delmembers")
+    public void delTeamMember(TeamMember teamMember){
+        Map map=null;
+        if (teamService.delTeamMember(teamMember)){
+            map=MapUtil.toMap(1,"success",null);
+        }else {
+            map=MapUtil.toMap(0,"false",null);
+        }
+        JsonUtil.toJSON(map);
+    }
+
 //    /**3
 //     * 添加团队成员
 //     * @param teamMember
