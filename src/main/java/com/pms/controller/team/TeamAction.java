@@ -15,34 +15,23 @@ import java.util.Map;
  */
 @Controller
 public class TeamAction{
-    String msg;
     @Autowired
-    TeamService teamService;
+    private TeamService teamService;
 
     /**1
      * 团队创建
-     * @param team
-     *                                                      action暂时没有改
-     * 测试用的数据： 涉及到team和team_member表。
-     * teamName:团队名称
-     * createTime:123434
+     * @param team 团队  eam需要设值的参数：teamName , createBy , createTime
+     *
      * createBy:刘岽
      * http://localhost:8080/team/addteam.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&createBy=%E5%88%98%E5%B2%BD&createTime=123434
      */
     @RequestMapping("/team/addteam.do")
     public void addTeam(Team team){
         Map map;
-        if (team.getTeamName()!=null&&team.getCreateBy()!=null&&team.getCreateTime()!=null){
-            if(teamService.createTeam(team)){
-                msg="团队创建成功";
-                map= MapUtil.toMap(1,"success",team);//团队创建成功的同时，需要将团队的信息传给前台
-            }else {
-                msg="团队创建失败";
-                map=MapUtil.toMap(-1,"false",null);//团队创建失败，并且不反悔任何信息
-            }
+        if (team != null && team.getTeamName() != null && team.getCreateBy() != null && team.getCreateTime() != null){
+            map = teamService.createTeam(team) ? MapUtil.toMap(1,"success",team) : MapUtil.toMap(-1,"false",null);
         }else {
-            msg="团队创建失败";
-            map=MapUtil.toMap(0,"false，团队信息不完全",null);//团队创建失败，并且不反悔任何信息
+            map=MapUtil.toMap(0,"false",null);//团队创建失败，并且不反悔任何信息
         }
         JsonUtil.toJSON(map);
     }
@@ -52,34 +41,36 @@ public class TeamAction{
      *
      * 测试数据：涉及到team表。
      *
-     * http://localhost:8080/team/show.do
+     * http://localhost:8080/team/show.do ? page = 1
      */
     @RequestMapping(value = "/team/show.do")
     public void showTeams(int page){
         Map map;
         List<Team> listOfTeam=teamService.getAllTeam();
-        map=MapUtil.toMap(1,"success", PageList.getList(page,listOfTeam));
+        map = (page != 0) ? MapUtil.toMap(1,"success", PageList.getList(page,listOfTeam)):MapUtil.toMap(0,"false",null);
         JsonUtil.toJSON(map);
     }
     /**3
      * 展示团队成员所在团队的信息
      *
-     * 测试数据：涉及到team,team_member表。
-     *
      * http://localhost:8080/myteam/show.do?userName=%E5%88%98%E5%B2%BD
      */
     @RequestMapping(value = "/myteam/show.do")
     public void myteamShow(String userName){
-        Map map=null;
-        List<Team> listOfMyteam=teamService.getMyteam(userName);
-        map=MapUtil.toMap(1,"success",listOfMyteam);
+        Map map;
+        if (userName != null){
+            List<Team> listOfMyteam = teamService.getMyteam(userName);
+            map =  MapUtil.toMap(1,"success",listOfMyteam);
+        }else {
+            map = MapUtil.toMap(0,"false",null);
+        }
         JsonUtil.toJSON(map);
     }
 
     /**4
      * 注销团队
-     * @param team
-     * @param delBy
+     * @param team  团队 team需要设值的参数：teamName , delFlag , delTime , delRemarks
+     * @param delBy 删除者
      *
      * 测试数据：涉及到team,team_member表。
      *
@@ -87,66 +78,55 @@ public class TeamAction{
      */
     @RequestMapping(value = "/team/delteam.do")
     public void delTeam(Team team,String delBy){
-        Map map=null;
-        if (teamService.delTeam(team,delBy)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"权限不够",null);
+        Map map;
+        if (delBy != null && team !=null && team.getTeamName() != null && team.getDelTime() != null && team.getDelRemarks() != null){
+            map = (teamService.delTeam(team,delBy) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null));
+        } else {
+            map = MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
     }
 
     /**1
      * 展示团队公告
-     * @param teamName
+     * @param teamName 团队名称
      */
     @RequestMapping(value = "/notice/show.do")
     public void showNotice(String teamName){
-        Map map=null;
-        List<TeamNotice> listOfTeamNotice=teamService.getTeamNotice(teamName);
-        if (listOfTeamNotice!=null){
-
+        Map map;
+        if (teamName != null){
+            List<TeamNotice> listOfTeamNotice=teamService.getTeamNotice(teamName);
             map=MapUtil.toMap(1,"success",listOfTeamNotice);
-        }else {
+        } else {
             map=MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
-
     }
 
     /**2
      * 展示选定公告的详细信息
-     * @param id
+     * @param id 公告id
      *
      * http://localhost:8080/notice/showinfomation.do?id=1
      */
     @RequestMapping(value = "notice/showinfomation.do")
     public void getNoticeById(int id){
-        Map map=null;
+        Map map;
         TeamNotice teamNotice=teamService.getNoticeById(id);
-        if (teamNotice!=null){
-            map=MapUtil.toMap(1,"success",teamNotice);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
+        map = (teamNotice!=null) ? MapUtil.toMap(1,"success",teamNotice) : MapUtil.toMap(0,"false",null);
         JsonUtil.toJSON(map);
     }
 
     /**3
      * 创建一个新公告
-     * @param teamNotice
-     *
+     * @param teamNotice 团队公告  teamNotice需要设值的参数： title , createBy , createTime , context , teamName ,
      * localhost:8080/notice/addnotice.do?title=公告&createBy=刘岽&createTime=123456&context=内容内容&teamName=团队名称
      */
     @RequestMapping(value = "/notice/addnotice.do")
     public void addNotice(TeamNotice teamNotice){
-        Map map=null;
-        if (teamNotice.getCreateBy()!=null&&teamNotice.getTeamName()!=null&&teamNotice.getContext()!=null&&teamNotice.getCreateTime()!=null){
-            if (teamService.createNotice(teamNotice)){
-                map=MapUtil.toMap(1,"success",teamNotice);
-            }else {
-                map=MapUtil.toMap(0,"false",null);
-            }
+        Map map;
+        if (teamNotice.getCreateBy() != null && teamNotice.getTeamName() != null && teamNotice.getContext() != null && teamNotice.getCreateTime() != null){
+            map = (teamService.createNotice(teamNotice)) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null);
         }else {
             map=MapUtil.toMap(0,"false",null);
         }
@@ -155,19 +135,15 @@ public class TeamAction{
 
     /**4
      * 删除团队公告,
-     * @param teamNotice
+     * @param teamNotice  teamNotice需要设值的参数：id (团队公告的id) ， delFlag ,delTime
      *只需要传入公告的id，teamName,和delBy就可以成功删除公告
      *http://localhost:8080/notice/delnotice.do?delFlag=1&delTime=1222&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&delBy=%E5%88%98%E5%B2%BD&id=3
      */
     @RequestMapping(value = "/notice/delnotice.do")
     public void delNotice(TeamNotice teamNotice,String delBy){
-        Map map=null;
-        if (teamNotice.getTeamName()!=null){
-            if (teamService.delNotice(teamNotice,delBy)){
-                map=MapUtil.toMap(1,"success",null);
-            }else {
-                map=MapUtil.toMap(0,"false",null);
-            }
+        Map map;
+        if (teamNotice.getTeamName() != null){
+                map = (teamService.delNotice(teamNotice,delBy)) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null);
         }else {
             map=MapUtil.toMap(0,"false",null);
         }
@@ -176,74 +152,73 @@ public class TeamAction{
 
     /**5
      * 更新团队公告
-     * @param teamNotice
-     * @param updateBy
+     * @param teamNotice 团队公告  teamNotice需要设值的参数：id (团队公告的id) ， title , createBy , createTime , context
+     * @param updateBy 更新者
      *
      * http://localhost:8080/notice/reeditnotice.do?id=1&title=%E5%85%AC%E5%91%8A&createBy=%E5%88%98%E5%B2%BD&createTime=123456&context=%E5%86%85ddddddddd%E5%AE%B9&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&updateBy=%E5%88%98%E5%B2%BD
      */
     @RequestMapping(value = "/notice/reeditnotice.do")
     public void updateNotice(TeamNotice teamNotice,String updateBy){
-        Map map=null;
-        if (teamNotice.getTeamName()!=null&&teamNotice.getContext()!=null&&teamNotice.getCreateTime()!=null){
-            if (teamService.updateNotice(teamNotice,updateBy)){
-                map=MapUtil.toMap(1,"success",teamNotice);
-            }else {
-                map=MapUtil.toMap(0,"false",null);
-            }
+        Map map;
+        if (teamNotice.getTeamName() != null && teamNotice.getContext() != null && teamNotice.getCreateTime() != null){
+            map = teamService.updateNotice(teamNotice,updateBy) ? MapUtil.toMap(1,"success",teamNotice) : MapUtil.toMap(0,"false",null);
         }else {
-            map=MapUtil.toMap(0,"false",null);
+            map = MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
     }
 
     /**1
      * 展示团队成员
-     * @param teamName
+     * @param teamName 团队名称
      *
      * http://localhost:8080/teammember/show.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0
      */
     @RequestMapping(value = "/teammember/show.do")
     public void showTeamMember(String teamName){
-        Map map=null;
-        List<TeamMember> list=teamService.getTeamMembers(teamName);
-        map=MapUtil.toMap(1,"success",list);
+        Map map;
+        if (teamName != null){
+            List<TeamMember> list=teamService.getTeamMembers(teamName);
+            map = ( list != null ) ? MapUtil.toMap(1,"success",list): MapUtil.toMap(0,"false",null);
+        }else{
+            map =  MapUtil.toMap(0,"false",null);
+        }
+
         JsonUtil.toJSON(map);
     }
 
     /**2
      * 删除团队成员
-     * @param teamMember
+     * @param teamMember  teamMember需要设值的参数：delFlag , delTime , delRemarks ,teamName ,userName
      *
      *
      *http://localhost:8080/teammember/delmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8Exiao%E9%9C%B8&delBy=%E5%88%98%E5%B2%BD&delFlag=1
      */
     @RequestMapping(value = "/teammember/delmembers")
     public void delTeamMember(TeamMember teamMember){
-        Map map=null;
-        if (teamService.delTeamMember(teamMember)){
-            map=MapUtil.toMap(1,"success",null);
+        Map map = (teamService.delTeamMember(teamMember)) ? MapUtil.toMap(1,"success",null)  :  MapUtil.toMap(0,"false",null);
+        JsonUtil.toJSON(map);
+    }
+
+    /**3
+     * 添加团队成员
+     * @param teamMember teamMember需要设值的参数：userName , teamName , teamRole , joinTime , joinBy , teamPrivelege
+     * http://localhost:8080/teammember/addmembers.do?teamRole=%E8%8F%9C%E9%B8%9F&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2323&joinBy=%E5%88%98%E5%B2%BD
+     */
+    @RequestMapping(value = "/teammember/addmembers.do")
+    public void addTeamMember(TeamMember teamMember){
+        Map map;
+        if (teamMember != null && teamMember.getTeamName() != null
+                && teamMember.getTeamPrivelige() >= 1 && teamMember.getUserName() !=null
+                && teamMember.getJoinBy() != null && teamMember.getTeamRole() != null
+                && teamMember.getJoinTime() != null){
+                map =  (teamService.inviteMember(teamMember)) ? MapUtil.toMap(1,"success",teamMember)  :  MapUtil.toMap(0,"false",null);
         }else {
-            map=MapUtil.toMap(0,"false",null);
+            map = MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
     }
 
-//    /**3
-//     * 添加团队成员
-//     * @param teamMember
-//     * http://localhost:8080/teammember/addmembers.do?teamRole=%E8%8F%9C%E9%B8%9F&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2323&joinBy=%E5%88%98%E5%B2%BD
-//     */
-//    @RequestMapping(value = "/teammember/addmembers.do")
-//    public void addTeamMember(TeamMember teamMember){
-//        Map map=null;
-//        if (teamService.inviteMember(teamMember)){
-//            map=MapUtil.toMap(1,"success",teamMember);
-//        }else {
-//            map=MapUtil.toMap(0,"false",null);
-//        }
-//        JsonUtil.toJSON(map);
-//    }
-//
 //    /**4
 //     * 设置团队成员的权限，未完成
 //     *

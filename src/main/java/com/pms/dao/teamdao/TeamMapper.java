@@ -40,7 +40,8 @@ public interface TeamMapper {
 
     /**
      * 添加团队成员
-     * @param teamMember 团队成员  teamMember需要设值的参数：userName , teamName , teamRole , joinTime , joinBy , teamPrivelege
+     * @param teamMember 团队成员
+     *         teamMember需要设值的参数：userName , teamName , teamRole , joinTime , joinBy , teamPrivelege
      * @return boolean
      */
 
