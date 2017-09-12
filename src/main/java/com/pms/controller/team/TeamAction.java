@@ -1,5 +1,4 @@
 package com.pms.controller.team;
-
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import com.pms.util.JsonUtil;
@@ -218,211 +217,223 @@ public class TeamAction{
      *
      *http://localhost:8080/teammember/delmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8Exiao%E9%9C%B8&delBy=%E5%88%98%E5%B2%BD&delFlag=1
      */
-    @RequestMapping(value = "/teammember/delmembers")
-    public void delTeamMember(TeamMember teamMember){
-        Map map=null;
-        if (teamService.delMember(teamMember)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**3
-     * 添加团队成员
-     * @param teamMember
-     * http://localhost:8080/teammember/addmembers.do?teamRole=%E8%8F%9C%E9%B8%9F&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2323&joinBy=%E5%88%98%E5%B2%BD
-     */
-    @RequestMapping(value = "/teammember/addmembers.do")
-    public void addTeamMember(TeamMember teamMember){
-        Map map=null;
-        if (teamService.inviteMember(teamMember)){
-            map=MapUtil.toMap(1,"success",teamMember);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**4
-     * 设置团队成员的权限，未完成
-     *
-     * @param setBy
-     * @param setted
-     */
-    @RequestMapping("teammember/updateprivilege")
-    public void updatePrivilege(TeamMember setBy,TeamMember setted){
-        Map map=null;
-        if (teamService.getTeamPrivilege(setBy,setBy.getUserName())==2){
-            if (teamService.setTeamPrivilige(setted)){
-                map=MapUtil.toMap(1,"success",teamService.getMember(teamService.getTeamMembers(setted.getTeamName()),setted.getUserName()));
-            }
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**5
-     * 移交超级管理员的权限，未完成
-     *
-     * @param setBy
-     * @param setted
-     */
-    @RequestMapping("/teammember/changeprivilege")
-    public void changePrivilege(TeamMember setBy,TeamMember setted){
-        Map map=null;
-        if (teamService.getTeamPrivilege(setBy,setBy.getUserName())==2){
-            setBy.setTeamPrivelige(2);
-            if (teamService.setTeamPrivilige(setted)&&teamService.setTeamPrivilige(setBy)){
-                List<TeamMember> list=null;
-                list.add(teamService.getMember(teamService.getTeamMembers(setBy.getTeamName()),setBy.getUserName()));
-                list.add(teamService.getMember(teamService.getTeamMembers(setted.getTeamName()),setted.getUserName()));
-                map=MapUtil.toMap(1,"success",list);
-            }
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**1
-     * 将团队的所有项目都展示出来
-     * @param teamName
-     *http://localhost:8080/project/show.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0
-     */
-    @RequestMapping(value = "/project/show.do")
-    public void showProjects(int page,String teamName){
-        Map map=null;
-        List<TeamProject> listOfProjects=teamService.getTeamProjectsByTeamName(teamName);
-        if (listOfProjects!=null){
-            map=MapUtil.toMap(1,"success",PageList.getList(page,listOfProjects));
-        }else {
-
-        }
-        if (teamName==null){
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**2
-     * 展示指定项目的信息
-     * @param id
-     *
-     * http://localhost:8080/project/showprojectinfomation.do?id=2
-     */
-    @RequestMapping("/project/showprojectinfomation.do")
-    public void showProjectInfomation(int id){
-        Map map=null;
-        TeamProject teamProject=teamService.getTeamProjectsById(id);
-        if (teamProject!=null){
-            map=MapUtil.toMap(1,"success",teamProject);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-    /**3
-     * 展示指定项目的成员信息
-     * @param teamName
-     * @param projectName
-     * http://localhost:8080/project/showmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE
-     */
-    @RequestMapping("/project/showmembers.do")
-    public void showProMember(String teamName,String projectName){
-        Map map=null;
-        List<ProjectMember> list=teamService.getProMemberByTeamNameAndProjectName(teamName,projectName);
-        if (list!=null){
-            map=MapUtil.toMap(1,"success",list);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**4
-     * 添加团队项目
-     * @param teamProject
-     *
-     * http://localhost:8080/project/addproject.do?projectName=xiaoxiao%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectInfo=%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6&createBy=%E5%88%98%E5%B2%BD&createAt=2324
-     */
-    @RequestMapping("/project/addproject.do")
-    public void addProject(TeamProject teamProject){
-        Map map=null;
-        if (teamService.createProject(teamProject)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**5
-     * 删除团队项目
-     * @param teamProject
-     *http://localhost:8080/project/delproject.do?id=2&delBy=%E5%88%98%E5%B2%BD&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&delFlag=1&createBy=%E5%88%98%E5%B2%BD&projectName=xiaoxiao%E5%A4%A7%E9%A1%B9%E7%9B%AE
-     */
-    @RequestMapping(value = "/project/delproject")
-    public void delTeamProject(TeamProject teamProject,String delBy){
-        Map map=null;
-        if (teamService.delProject(teamProject,delBy)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**6
-     * 删除项目成员
-     * @param projectMember
-     *
-     *http://localhost:8080/project/delmember.do?delRemarks=3gfjkg&delFlag=1&userName=XIAOXIAO&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamRole=%E8%8F%9C%E9%B8%9F&joinBy=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2333&delBy=%E5%88%98%E5%B2%BD&id=1&delTime=99999
-     */
-    @RequestMapping(value = "/project/delmember.do")
-    public void delProjectMember(ProjectMember projectMember,int id){
-        Map map=null;
-        if (teamService.delProjectMember(projectMember,id)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**
-     * 增添项目成员
-     * @param projectMember
-     *
-     * http://localhost:8080/project/addmember.do?userName=XIAOXIAO&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamRole=%E8%8F%9C%E9%B8%9F&joinBy=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2333&inviteBy=%E6%9D%8E%E5%85%83%E9%9C%B8
-     */
-    @RequestMapping(value = "/project/addmember.do")
-    public void addProjectMember(ProjectMember projectMember,String inviteBy){
-        Map map=null;
-        if (teamService.addProjectMember(projectMember,inviteBy)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
-
-    /**
-     * 团队成员角色变化记录
-     * @param teamMasterHistory
-     *
-     * http://localhost:8080/team/historymanager.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=XIAOXIAO&fromRole=%E8%8F%9C%E9%B8%9F&toRole=%E5%A4%A7%E5%B8%88&modifyBy=%E6%9D%8E%E5%85%83%E9%9C%B8&ModifyAt=444
-     */
-    @RequestMapping("/team/historymanager.do")
-    public void historyMaster(TeamMasterHistory teamMasterHistory){
-        Map map=null;
-        if (teamService.updateTeamRole(teamMasterHistory)){
-            map=MapUtil.toMap(1,"success",null);
-        }else {
-            map=MapUtil.toMap(0,"false",null);
-        }
-        JsonUtil.toJSON(map);
-    }
+//    @RequestMapping(value = "/teammember/delmembers")
+//    public void delTeamMember(TeamMember teamMember){
+//        Map map=null;
+//        if (teamService.delTeamMember(teamMember)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**3
+//     * 添加团队成员
+//     * @param teamMember
+//     * http://localhost:8080/teammember/addmembers.do?teamRole=%E8%8F%9C%E9%B8%9F&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2323&joinBy=%E5%88%98%E5%B2%BD
+//     */
+//    @RequestMapping(value = "/teammember/addmembers.do")
+//    public void addTeamMember(TeamMember teamMember){
+//        Map map=null;
+//        if (teamService.inviteMember(teamMember)){
+//            map=MapUtil.toMap(1,"success",teamMember);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**4
+//     * 设置团队成员的权限，未完成
+//     *
+//     * @param setBy
+//     * @param setted
+//     */
+//    @RequestMapping("teammember/updateprivilege")
+//    public void updatePrivilege(TeamMember setBy,TeamMember setted){
+//        Map map=null;
+//        if (teamService.getTeamPrivilege(setBy,setBy.getUserName())==2){
+//            if (teamService.setTeamPrivilige(setted)){
+//                map=MapUtil.toMap(1,"success",teamService.getMember(teamService.getTeamMembers(setted.getTeamName()),setted.getUserName()));
+//            }
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**5
+//     * 移交超级管理员的权限，未完成
+//     *
+//     * @param setBy
+//     * @param setted
+//     */
+//    @RequestMapping("/teammember/changeprivilege")
+//    public void changePrivilege(TeamMember setBy,TeamMember setted){
+//        Map map=null;
+//        if (teamService.getTeamPrivilege(setBy,setBy.getUserName())==2){
+//            setBy.setTeamPrivelige(2);
+//            if (teamService.setTeamPrivilige(setted)&&teamService.setTeamPrivilige(setBy)){
+//                List<TeamMember> list=null;
+//                list.add(teamService.getMember(teamService.getTeamMembers(setBy.getTeamName()),setBy.getUserName()));
+//                list.add(teamService.getMember(teamService.getTeamMembers(setted.getTeamName()),setted.getUserName()));
+//                map=MapUtil.toMap(1,"success",list);
+//            }
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**1
+//     * 将团队的所有项目都展示出来
+//     * @param teamName
+//     *http://localhost:8080/project/show.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0
+//     */
+//    @RequestMapping(value = "/project/show.do")
+//    public void showProjects(int page,String teamName){
+//        Map map=null;
+//        List<TeamProject> listOfProjects=teamService.getTeamProjectsByTeamName(teamName);
+//        if (listOfProjects!=null){
+//            map=MapUtil.toMap(1,"success",PageList.getList(page,listOfProjects));
+//        }else {
+//
+//        }
+//        if (teamName==null){
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**2
+//     * 展示指定项目的信息
+//     * @param id
+//     *
+//     * http://localhost:8080/project/showprojectinfomation.do?id=2
+//     */
+//    @RequestMapping("/project/showprojectinfomation.do")
+//    public void showProjectInfomation(int id){
+//        Map map=null;
+//        TeamProject teamProject=teamService.getTeamProjectsById(id);
+//        if (teamProject!=null){
+//            map=MapUtil.toMap(1,"success",teamProject);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//    /**3
+//     * 展示指定项目的成员信息
+//     * @param teamName
+//     * @param projectName
+//     * http://localhost:8080/project/showmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE
+//     */
+//    @RequestMapping("/project/showmembers.do")
+//    public void showProMember(String teamName,String projectName){
+//        Map map=null;
+//        List<ProjectMember> list=teamService.getProMemberByTeamNameAndProjectName(teamName,projectName);
+//        if (list!=null){
+//            map=MapUtil.toMap(1,"success",list);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**4
+//     * 添加团队项目
+//     * @param teamProject
+//     *
+//     * http://localhost:8080/project/addproject.do?projectName=xiaoxiao%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectInfo=%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6%E9%A1%B6&createBy=%E5%88%98%E5%B2%BD&createAt=2324
+//     */
+//    @RequestMapping("/project/addproject.do")
+//    public void addProject(TeamProject teamProject){
+//        Map map=null;
+//        if (teamService.createProject(teamProject)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**5
+//     * 删除团队项目
+//     * @param teamProject
+//     *http://localhost:8080/project/delproject.do?id=2&delBy=%E5%88%98%E5%B2%BD&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&delFlag=1&createBy=%E5%88%98%E5%B2%BD&projectName=xiaoxiao%E5%A4%A7%E9%A1%B9%E7%9B%AE
+//     */
+//    @RequestMapping(value = "/project/delproject")
+//    public void delTeamProject(TeamProject teamProject,String delBy){
+//        Map map=null;
+//        if (teamService.delProject(teamProject,delBy)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**6
+//     * 删除项目成员
+//     * @param projectMember
+//     *
+//     *http://localhost:8080/project/delmember.do?delRemarks=3gfjkg&delFlag=1&userName=XIAOXIAO&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamRole=%E8%8F%9C%E9%B8%9F&joinBy=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2333&delBy=%E5%88%98%E5%B2%BD&id=1&delTime=99999
+//     */
+//    @RequestMapping(value = "/project/delmember.do")
+//    public void delProjectMember(ProjectMember projectMember,int id){
+//        Map map=null;
+//        if (teamService.delProjectMember(projectMember,id)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**
+//     * 增添项目成员
+//     * @param projectMember
+//     *
+//     * http://localhost:8080/project/addmember.do?userName=XIAOXIAO&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&projectName=%E5%A4%A7%E5%A4%A7%E5%A4%A7%E9%A1%B9%E7%9B%AE&teamRole=%E8%8F%9C%E9%B8%9F&joinBy=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2333&inviteBy=%E6%9D%8E%E5%85%83%E9%9C%B8
+//     */
+//    @RequestMapping(value = "/project/addmember.do")
+//    public void addProjectMember(ProjectMember projectMember,String inviteBy){
+//        Map map=null;
+//        if (teamService.addProjectMember(projectMember,inviteBy)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//
+//    /**
+//     * 团队成员角色变化记录
+//     * @param teamMasterHistory
+//     *
+//     * http://localhost:8080/team/historymanager.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=XIAOXIAO&fromRole=%E8%8F%9C%E9%B8%9F&toRole=%E5%A4%A7%E5%B8%88&modifyBy=%E6%9D%8E%E5%85%83%E9%9C%B8&ModifyAt=444
+//     */
+//    @RequestMapping("/team/historymanager.do")
+//    public void historyMaster(TeamMasterHistory teamMasterHistory){
+//        Map map=null;
+//        if (teamService.updateTeamRole(teamMasterHistory)){
+//            map=MapUtil.toMap(1,"success",null);
+//        }else {
+//            map=MapUtil.toMap(0,"false",null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
+//    @RequestMapping( "/team/team/teamaccounts.do")
+//    public void getTeamSize(){
+//        Map map=null;
+//        map=MapUtil.toMap(1,"success",teamService.getCounts(teamService.getAllTeam()));
+//        JsonUtil.toJSON(map);
+//    }
+//    @RequestMapping("/team/project/projectcounts.do")
+//    public void getProjectSize(String teamName){
+//        Map map=null;
+//        map=MapUtil.toMap(1,"success",teamService.getCounts(teamService.getTeamProjectsByTeamName(teamName)));
+//        JsonUtil.toJSON(map);
+//    }
 }

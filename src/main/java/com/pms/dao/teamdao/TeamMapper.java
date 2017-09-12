@@ -1,176 +1,119 @@
 package com.pms.dao.teamdao;
-
 import com.pms.model.team.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by liudong on 2017/8/10.
+ *
+ *                                                         关于团队项目和团队文件还没有写
  */
 @Repository
 public interface TeamMapper {
     /**
      * 创建团队
-     * @param team
-     * @return
+     * @param team 团队 team需要设值的参数：teamName , createBy , createTime
+     * @return boolean
      */
-    public boolean addTeam(Team team);
+    boolean addTeam(Team team);
 
     /**
      * 注销团队
-     * @param team
-     * @return
+     * @param team 团队 team需要设值的参数：teamName , delFlag , delTime , delRemarks
+     * @return boolean
      */
-    public boolean delTeam(Team team);
+    boolean delTeam(Team team);
 
     /**
      * 通过团队的名称得到团队的相关信息
-     * @param teamName
-     * @return
+     * @param teamName 团队名称
+     * @return String
      */
-    public Team getTeamInfo(String teamName);
+    Team getTeamInfo(String teamName);
 
     /**
      * 得到所有团队对象
-     * @return
+     * @return List
      */
-    public List<Team> getAllTeam();
+    List<Team> getAllTeam();
 
     /**
      * 添加团队成员
-     * @param teamMember
-     * @return
+     * @param teamMember 团队成员  teamMember需要设值的参数：userName , teamName , teamRole , joinTime , joinBy , teamPrivelege
+     * @return boolean
      */
 
-    public boolean addTeamMember(TeamMember teamMember);
+    boolean addTeamMember(TeamMember teamMember);
 
     /**
      * 删除团队成员
-     * @param teamMember
-     * @return
+     * @param teamMember 团队成员 teamMember需要设值的参数：delFlag , delTime , delRemarks ,teamName ,userName
+     * @return boolean
      */
-    public boolean delTeamMember(TeamMember teamMember);
+    boolean delTeamMember(TeamMember teamMember);
 
     /**
      * //通过团队名称获得该团队成员
-     * @param teamName
-     * @return
+     * @param teamName 团队名称
+     * @return List
      */
-    public List<TeamMember> getTeamMembersByTeamName(String teamName);
+    List<TeamMember> getTeamMembersByTeamName(String teamName);
 
     /**
      * 通过用户名来获取用户加入了哪些团队
-     * @param userName
-     * @return
+     * @param userName 用户名称
+     * @return List
      */
-    public List<TeamMember> getTeamInfoByUserName(String userName);
-
-    /**
-     * 创建项目
-     * @param teamProject
-     * @return
-     */
-    public boolean addProject(TeamProject teamProject);
-
-    /**
-     * 删除项目
-     * @param teamProject
-     * @return
-     */
-    public boolean delProject(TeamProject teamProject);
-
-    /**
-     * 更改项目
-     * @param teamProject
-     * @return
-     */
-     public boolean updateProject(TeamProject teamProject);
-
-    /**
-     * 通过团队名称获取所有项目信息
-     * @param teamName
-     * @return
-     */
-    public List<TeamProject> getProjectInfoByTeamName(String teamName);
-
-    /**
-     * 通过项目id获取项目信息
-     * @param projectId
-     * @return
-     */
-    public TeamProject getProjectInfoByProjectId(int projectId);
-
-    /**
-     * 添加项目成员
-     * @param projectMember
-     * @return
-     */
-    public boolean addProjectMember(ProjectMember projectMember);
-
-    /**
-     * 删除项目成员
-     * @param projectMember
-     * @return
-     */
-    public boolean delProjectMember(ProjectMember projectMember);
-
-    /**
-     * 得到该项目的成员
-     * @param teamName
-     * @param projectName
-     * @return
-     */
-    public List<ProjectMember> getProjectMembersByProject(@Param("teamName")String teamName, @Param("projectName") String projectName);//通过项目名称获取所有项目成员的相关信息
-
+    List<TeamMember> getTeamInfoByUserName(String userName);
     /**
      * 创建公告
-     * @param teamNotice
-     * @return
+     * @param teamNotice 团队公告 teamNotice需要设值的参数： title , createBy , createTime , context , teamName ,
+     * @return addNotice
      */
-    public boolean addNotice(TeamNotice teamNotice);
+    boolean addNotice(TeamNotice teamNotice);
 
     /**
      * 删除公告
-     * @param teamNotice
-     * @return
+     * @param teamNotice 团队公告 teamNotice需要设值的参数：id (团队公告的id) ， delFlag ,delTime
+     * @return boolean
      */
-    public boolean delNotice(TeamNotice teamNotice);
+    boolean delNotice(TeamNotice teamNotice);
 
     /**
      * 更新公告
-     * @param teamNotice
-     * @return
+     * @param teamNotice 团队公告 teamNotice需要设值的参数：id (团队公告的id) ， title , createBy , createTime , context
+     * @return boolean
      */
-    public boolean updateNotice(TeamNotice teamNotice);
+    boolean updateNotice(TeamNotice teamNotice);
 
     /**
      * 通过id获取准确的公告信息
-     * @param id
-     * @return
+     * @param id 公告的id
+     * @return TeamNotice
      */
-    public TeamNotice getNoticeById(int id);
+    TeamNotice getNoticeById(int id);
 
     /**
      * 获得该团队的所有公告
-     * @param teamName
-     * @return
+     * @param teamName 团队名称
+     * @return List
      */
-    public List<TeamNotice> getNoticeByteamName(String teamName);
+    List<TeamNotice> getNoticeByteamName(String teamName);
 
     /**
      * 设置权限
-     * @param teamMember
-     * @return
+     * @param teamMember 团队成员  teamMember需要设值的参数： team_privelige , teamName , userName.
+     * @return boolean
      */
-    public boolean setPrivilege(TeamMember teamMember);
+    boolean setPrivilege(TeamMember teamMember);
     /**
      * 团队成员职务变动记录,
      * 只有更改了默认的职务才会在该表中添加信息,
      * 同时团队成员表中的信息也会更改。
-     * @param teamMasterHistory
-     * @return
+     * @param teamMasterHistory 团队成员职务变化历史纪录
+     *        teamMasterHistory需要设值的参数：teamName , userName , toRole , fromRole , modifyBy , modifyAr
+     * @return boolean
      */
-    public boolean insertTeamMasterHistory(TeamMasterHistory teamMasterHistory);
+    boolean insertTeamMasterHistory(TeamMasterHistory teamMasterHistory);
 }
