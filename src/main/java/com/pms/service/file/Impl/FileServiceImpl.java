@@ -1,12 +1,14 @@
 package com.pms.service.file.Impl;
 
 import com.pms.dao.file.FileMapper;
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import com.pms.service.file.FileService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+//import com.pms.model.file.File;
 
 /**
  * Created by Chenmeiling on 2017/8/18.
@@ -17,56 +19,47 @@ public class FileServiceImpl implements FileService {
     @Resource
     private FileMapper fileMapper;
 
-    public boolean insertFileInfo(File file) {
-        if (fileMapper.insertFileInfo(file)){
+    public boolean insertFileInfo(FileImpl fileImpl) {
+        if (fileMapper.insertFileInfo(fileImpl))
             return true;
-        }else {
-            return false;
-        }
+        return false;
     }
 
-    public File selectByFileName(List<File> list,String fileName) {
-        if (list.size() == 0) {
-            return null;
+    public List<FileImpl> selectByFileName(String fileName){
+        return fileMapper.selectByFileName(fileName);
+    }
+
+
+    public boolean updateFileInfo(FileImpl fileImpl) {
+        if (fileMapper.updateFileInfo(fileImpl)) {
+            return true;
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (fileName.equals(list.get(i).getFileName()))
-                    return list.get(i);
-            }
-        }
-        return null;
-    }
-
-
-    public boolean updateFileInfo(File file) {
-        if (fileMapper.updateFileInfo(file)){
-            return true;
-        }else {
             return false;
         }
     }
 
-    public boolean deleteByDelFlag(File file) {
-        if (fileMapper.deleteByDelFlag(file)){
-            return true;
-        }else {
+    public boolean deleteByDelFlag(FileImpl fileImpl,String fileName,String teamName){
+        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
+            if (fileMapper.deleteByDelFlag(fileImpl))
+                return true;
             return false;
-        }
     }
 
-    public boolean recoverByDelFlag(File file) {
-        if (fileMapper.recoverByDelFlag(file)){
-            return true;
-        }else {
-            return false;
-        }
+    public boolean recoverFile(FileImpl fileImpl,String fileName,String teamName) {
+        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
+            if (fileMapper.recoverFile(fileImpl))
+                return true;
+        return false;
     }
 
-    public boolean deleteByFileName(String fileName) {
-        if (fileMapper.deleteByFileName(fileName)){
-            return true;
-        }else {
-            return false;
-        }
+    public boolean deleteFile(FileImpl fileImpl,String fileName,String teamName) {
+        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
+            if (fileMapper.deleteFile(fileImpl,fileName,teamName))
+                return true;
+        return false;
+    }
+
+    public boolean downloadFile(String fileName){
+        return true;
     }
 }

@@ -6,6 +6,7 @@ import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.NoSuchElementException;
 
 /**
  * Created by rhan on 2017/7/27.
@@ -28,7 +29,7 @@ public interface UserService {
      */
     public boolean register(User user) throws UserServiceImpl.IsExistException;
 
-    public boolean modifyInfo(User user) throws Exception;
+    public boolean modifyInfo(User user) throws NoSuchElementException;
 
     public PersonInfo getUserInfo(String userName);
 

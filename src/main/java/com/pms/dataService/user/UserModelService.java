@@ -9,4 +9,11 @@ public class UserModelService {
     public PersonInfo toPersonInfo(User user){
         return new PersonInfo(user);
     }
+
+    public User prepareForModify(User user){
+        user.setUserName(null);
+        user.setDelFlag(false);
+        user.setDelRemark(null);
+        return user;
+    }
 }

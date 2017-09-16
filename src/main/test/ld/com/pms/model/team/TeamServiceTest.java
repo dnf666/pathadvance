@@ -126,7 +126,7 @@ public class TeamServiceTest {
         projectMember.setDelTime("444444");
         projectMember.setDelRemarks("不知道");
         projectMember.setDelBy("东东");
-        System.out.println(teamService.delProjectMember(projectMember,"东东",8));
+        System.out.println(teamService.delProjectMember(projectMember,8));
     }
     @Test
     public void createNoticeTest(){
@@ -172,5 +172,18 @@ public class TeamServiceTest {
         teamMasterHistory.setModifyBy("东东");
         teamMasterHistory.setUserName("佳佳");
         System.out.println(teamService.updateTeamRole(teamMasterHistory));
+    }
+    @Test
+    public void getMyteamTest(){
+        teamService.getMyteam("刘岽");
+    }
+    @Test
+    public void delNotice(){
+        TeamNotice teamNotice=new TeamNotice();
+        teamNotice.setId(2);
+        teamNotice.setDelFlag(1);
+        teamNotice.setDelTime("1122");
+        teamNotice.setTeamName("团队名称");
+        teamService.delNotice(teamNotice,"刘岽");
     }
 }
