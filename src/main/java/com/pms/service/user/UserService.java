@@ -1,4 +1,4 @@
-package com.pms.service.user;
+﻿package com.pms.service.user;
 
 import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataModel.User.PersonInfo;
@@ -6,6 +6,7 @@ import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -27,7 +28,7 @@ public interface UserService {
      * @return
      * @throws Exception
      */
-    //public boolean register(User user) throws UserServiceImpl.IsExistException;
+    public boolean register(User user) throws UserServiceImpl.IsExistException;
 
     public boolean modifyInfo(User user) throws NoSuchElementException;
 
@@ -41,4 +42,20 @@ public interface UserService {
      *  false 不存在
      */
     public boolean isExist(String userName);
+
+
+    /**
+     * 返回错误信息，例如"密码错误"
+     * @return
+     */
+
+    public String getMessage();
+
+    /**
+     * 模糊查询用户
+     * @param user 用户名的对象
+     * @return
+     */
+    List<User> findUserBySearching(User user);
+
 }

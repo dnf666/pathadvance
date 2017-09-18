@@ -1,4 +1,4 @@
-package com.pms.service.user.Impl;
+﻿package com.pms.service.user.Impl;
 
 import com.pms.dao.user.UserMapper;
 import com.pms.dataModel.User.LoginInfo;
@@ -8,6 +8,7 @@ import com.pms.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -67,6 +68,19 @@ public class UserServiceImpl implements UserService{
     public PersonInfo getUserInfo(String userName) {
         return userMapper.selectPersonInfoByUserName(userName);
     }
+
+    public String getMessage() {
+        return (message == null) ? null:message;
+    }
+
+    public List findUserBySearching(User user) {
+        if(user.getUserName()==null)
+            return null;
+       return userMapper.findUserBySearching(user);
+
+
+    }
+
 
     public boolean isExist(String userName) {
         PersonInfo personInfo = userMapper.selectPersonInfoByUserName(userName);

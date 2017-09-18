@@ -65,4 +65,7 @@
        </set>
        WHERE user_name = #{userName};
     </update>
+    <select id = "findUserBySearching" parameterType="com.pms.model.user.User" resultMap="User">
+        select user_name from USER WHERE user_name LIKE "%"#{userName}"%" and del_flag = 0
+    </select>
 </mapper>

@@ -1,7 +1,8 @@
-package java.dnf;
+package dnf;
 
 import com.pms.dao.blog.BlogMapper;
 import com.pms.model.blog.BlogWithBLOBs;
+import com.pms.model.blog.Role;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,14 +10,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-<<<<<<< HEAD
+
 
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-=======
->>>>>>> 72e5c5f6f452e2a434c2d3c548e18530c465a56c
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springconfig.xml")
 public class BlogMapperTest {
@@ -85,5 +84,18 @@ public class BlogMapperTest {
        {
            System.out.println(blogWithBLOBs.toString());
        }
+    }
+    @Test
+    public void testlomboc (){
+        Role r = new Role("1",1,"1");
+        System.out.println(r.toString());
+        r.setMasterId("2");
+        r.setRoleId(2);
+        r.setUserId("2");
+        System.out.println(r.getMasterId());
+        System.out.println(r.getRoleId());
+        System.out.println(r.getUserId());
+
+
     }
 }

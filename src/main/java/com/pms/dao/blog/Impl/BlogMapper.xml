@@ -162,6 +162,7 @@
     </set>
     where id = #{id}
   </update>
+
   <update id="setPrivate" parameterType="java.lang.Integer">
     UPDATE blog
     <set>
@@ -178,6 +179,7 @@
     from blog
     where create_by = #{userName,jdbcType=VARCHAR}
   </select>
+
   <select id="selectAll" resultMap="ResultMapWithBLOBs" >
     select
     <include refid="Base_Column_List" />
@@ -186,6 +188,7 @@
     from blog
    WHERE del_flag = 0 and is_private = 0
   </select>
+
   <select id="selectOtherAll" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

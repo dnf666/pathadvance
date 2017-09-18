@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.dao.blog.RoleMapper" >
+    <resultMap id="role" type="com.pms.model.blog.Role">
+        <id property="userId" column="user_id"/>
+        <id property="roleId" column="role_id"/>
+        <id property="masterId" column="master_id"/>
+    </resultMap>
+    <sql id="all">
+        user_id,role_id,master_id
+    </sql>
+
+    <select id="selectByConbinationKey" parameterType="com.pms.model.blog.Role" resultMap="role">
+      select <include refid="all"/> from b_user_role WHERE b_user_role.user_id = #{userId} and b_user_role.role_id =#{roleId} and b_user_role.master_id = #{masterId};
+    </select>
+    <insert id="insert" parameterType="com.pms.model.blog.Role">
+        insert into b_user_role (user_id, role_id,master_id) VALUES (#{userId},#{roleId},#{masterId});
+    </insert>
+    <delete id = "deleteByConbinationKey" parameterType="com.pms.model.blog.Role">
+        delete from b_user_role where b_user_role.user_id =#{userId} and b_user_role.role_id = #{roleId} and b_user_role.master_id = #{masterId};
+    </delete>
+</mapper>
