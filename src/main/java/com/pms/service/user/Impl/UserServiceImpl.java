@@ -68,10 +68,6 @@ public class UserServiceImpl implements UserService{
         return userMapper.selectPersonInfoByUserName(userName);
     }
 
-    public String getMessage() {
-        return (message == null) ? null:message;
-    }
-
     public boolean isExist(String userName) {
         PersonInfo personInfo = userMapper.selectPersonInfoByUserName(userName);
         if (personInfo != null) {

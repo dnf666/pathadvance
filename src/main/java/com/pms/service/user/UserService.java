@@ -41,11 +41,4 @@ public interface UserService {
      *  false 不存在
      */
     public boolean isExist(String userName);
-
-    /**
-     * 返回错误信息，例如"密码错误"
-     * @return
-     */
-
-    public String getMessage();
 }
