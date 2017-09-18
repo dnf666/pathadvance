@@ -1,9 +1,11 @@
 package com.pms.dao.file;
 
 
-//import com.pms.model.file.File;
+
+
 import com.pms.model.file.FileImpl;
 import org.apache.ibatis.annotations.Param;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public interface FileMapper {
      * @return
      */
     boolean  insertFileInfo(FileImpl file);
+
 
     /**
      * 文件信息更改

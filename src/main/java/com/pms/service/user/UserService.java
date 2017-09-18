@@ -27,7 +27,7 @@ public interface UserService {
      * @return
      * @throws Exception
      */
-    public boolean register(User user) throws UserServiceImpl.IsExistException;
+    //public boolean register(User user) throws UserServiceImpl.IsExistException;
 
     public boolean modifyInfo(User user) throws NoSuchElementException;
 

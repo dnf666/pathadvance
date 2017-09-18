@@ -27,7 +27,17 @@ public class BlogWithBLOBs extends Blog {
         return delTime;
     }
 
+    @Override
+    public String toString() {
+        return "BlogWithBLOBs{" +
+                "context='" + context + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", delTime='" + delTime + '\'' +
+                '}';
+    }
+
     public void setDelTime(String delTime) {
+
         this.delTime = delTime == null ? null : delTime.trim();
     }
 }
