@@ -6,6 +6,7 @@ import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -48,4 +49,11 @@ public interface UserService {
      */
 
     public String getMessage();
+
+    /**
+     * 模糊查询用户
+     * @param user 用户名的对象
+     * @return
+     */
+    List<User> findUserBySearching(User user);
 }

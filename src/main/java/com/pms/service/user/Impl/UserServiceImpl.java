@@ -8,6 +8,7 @@ import com.pms.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -70,6 +71,14 @@ public class UserServiceImpl implements UserService{
 
     public String getMessage() {
         return (message == null) ? null:message;
+    }
+
+    public List findUserBySearching(User user) {
+        if(user.getUserName()==null)
+            return null;
+       return userMapper.findUserBySearching(user);
+
+
     }
 
     public boolean isExist(String userName) {

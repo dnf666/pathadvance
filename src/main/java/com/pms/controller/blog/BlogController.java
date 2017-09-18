@@ -24,7 +24,7 @@ public class BlogController {
     private BlogService blogService;
 
     /**
-     * 查看自己的全部博客
+     * 查看自己的全部博客或者有权限查看
      * @param userName 自己的用户名
      */
     @RequestMapping("selectOwnAll")

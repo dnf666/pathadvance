@@ -54,7 +54,7 @@ public class BlogControllerTest {
         System.out.println("时间格式："+date);
         blog.setCreateTime(date);
         blog.setCreateBy("戴林甫");
-        blog.setId(5);
+        blog.setId(2);
         blog.setTitle("title");
         blog.setContext("context");
         int i= blogService.insertSelective(blog);
@@ -64,7 +64,7 @@ public class BlogControllerTest {
     public void deleteBlog() throws Exception {
         String date = simpleDateFormat.format(new Date());
         blog.setDelTime(date);
-        blog.setId(5);
+        blog.setId(9);
         blog.setDelFlag(true);
         System.out.println("时间格式："+date);
         int i = blogService.updateBlogWithBlobsBySelective(blog);
@@ -72,7 +72,7 @@ public class BlogControllerTest {
 
     @Test
     public void updateBlog() throws Exception {
-        blog.setContext("111111111111");
+        blog.setContext("111111111111888888888");
         blog.setId(5);
         int i= blogService.updateBlogWithBlobsBySelective(blog);
     }

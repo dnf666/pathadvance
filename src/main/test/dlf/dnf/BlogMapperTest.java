@@ -1,4 +1,4 @@
-package java.dnf;
+package dnf;
 
 import com.pms.dao.blog.BlogMapper;
 import com.pms.model.blog.BlogWithBLOBs;
@@ -10,14 +10,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-<<<<<<< HEAD
+
 
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-=======
->>>>>>> 72e5c5f6f452e2a434c2d3c548e18530c465a56c
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springconfig.xml")
 public class BlogMapperTest {

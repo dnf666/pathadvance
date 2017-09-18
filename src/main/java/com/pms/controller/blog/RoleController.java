@@ -1,13 +1,16 @@
 package com.pms.controller.blog;
 
 import com.pms.model.blog.Role;
+import com.pms.model.user.User;
 import com.pms.service.blog.RoleService;
+import com.pms.service.user.UserService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,13 +18,15 @@ import java.util.Map;
  * 关于增加和删除的权限就没有实现
  */
 @Controller
+@RequestMapping("/role")
 public class RoleController {
     private int FAILURE = 0;
     private int SUCCESS = 1;
     @Resource
     private RoleService roleService;
     private Role roleModel;
-
+    @Resource
+    private UserService userService;
     /**
      * 查询权限
      *
@@ -30,6 +35,7 @@ public class RoleController {
     @RequestMapping("/selectRoleByConbinationKey.do")
     public void selectRoleByConbinationKey(Role role) {
         try {
+            role.setRoleId(1);
             roleModel = roleService.selectByConbinationKey(role);
             if (roleModel == null)
                 throw new Exception("没有权限");
@@ -90,4 +96,17 @@ public class RoleController {
         }
     }
 
+    /**
+     * 根据查询条件选出用户
+     * @param user 带有用户名的对象
+     */
+    @RequestMapping("/searchUser")
+    public void searchUser(User user){
+        List userList = userService.findUserBySearching(user);
+            String result = "查询成功";
+        if(userList.isEmpty())
+            result="无";
+        Map map = MapUtil.toMap(SUCCESS,result,userList);
+        JsonUtil.toJSON(map);
+    }
 }
