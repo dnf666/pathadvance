@@ -1,7 +1,5 @@
 package com.pms.dao.file;
 
-
-//import com.pms.model.file.File;
 import com.pms.model.file.FileImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

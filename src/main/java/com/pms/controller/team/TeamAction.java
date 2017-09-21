@@ -3,7 +3,8 @@ import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
-import com.pms.util.PageList;
+import com.pms.util.team.IsNull;
+import com.pms.util.team.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +29,16 @@ public class TeamAction{
     @RequestMapping("/team/addteam.do")
     public void addTeam(Team team){
         Map map;
-        if (team != null && team.getTeamName() != null && team.getCreateBy() != null && team.getCreateTime() != null){
-            map = teamService.createTeam(team) ? MapUtil.toMap(1,"success",team) : MapUtil.toMap(-1,"false",null);
+        if (IsNull.addTeamInfoIsOk(team)){
+            boolean isOk = teamService.createTeam(team) ;
+            if (isOk){
+                map = MapUtil.toMap(1,"success",team);
+            }
+            else {
+                map = MapUtil.toMap(-1,"false",null);
+            }
         }else {
-            map=MapUtil.toMap(0,"false",null);//团队创建失败，并且不反悔任何信息
+            map=MapUtil.toMap(0,"false",null);//团队创建失败，并且不返回任何信息
         }
         JsonUtil.toJSON(map);
     }
@@ -47,7 +54,12 @@ public class TeamAction{
     public void showTeams(int page){
         Map map;
         List<Team> listOfTeam=teamService.getAllTeam();
-        map = (page != 0) ? MapUtil.toMap(1,"success", PageList.getList(page,listOfTeam)):MapUtil.toMap(0,"false",null);
+
+        if (page >= 0){
+            map = MapUtil.toMap(1,"success", PageList.getList(page,listOfTeam));
+        }else {
+            map = MapUtil.toMap(0,"false",null);
+        }
         JsonUtil.toJSON(map);
     }
     /**3
@@ -79,8 +91,14 @@ public class TeamAction{
     @RequestMapping(value = "/team/delteam.do")
     public void delTeam(Team team,String delBy){
         Map map;
-        if (delBy != null && team !=null && team.getTeamName() != null && team.getDelTime() != null && team.getDelRemarks() != null){
-            map = (teamService.delTeam(team,delBy) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null));
+        if (delBy != null && IsNull.delTeamInfoIsOk(team) ){
+            boolean isOk = teamService.delTeam(team,delBy);
+            if (isOk){
+                map = MapUtil.toMap(1,"success",null);
+            }
+            else {
+                map = MapUtil.toMap(0,"false",null);
+            }
         } else {
             map = MapUtil.toMap(0,"false",null);
         }
@@ -113,7 +131,12 @@ public class TeamAction{
     public void getNoticeById(int id){
         Map map;
         TeamNotice teamNotice=teamService.getNoticeById(id);
-        map = (teamNotice!=null) ? MapUtil.toMap(1,"success",teamNotice) : MapUtil.toMap(0,"false",null);
+        boolean isOk = teamNotice!=null;
+        if (isOk){
+            map =  MapUtil.toMap(1,"success",teamNotice);
+        }else {
+            map = MapUtil.toMap(0, "false", null);
+        }
         JsonUtil.toJSON(map);
     }
 
@@ -125,8 +148,13 @@ public class TeamAction{
     @RequestMapping(value = "/notice/addnotice.do")
     public void addNotice(TeamNotice teamNotice){
         Map map;
-        if (teamNotice.getCreateBy() != null && teamNotice.getTeamName() != null && teamNotice.getContext() != null && teamNotice.getCreateTime() != null){
-            map = (teamService.createNotice(teamNotice)) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null);
+        if (IsNull.addteamNoticeInfoIsOk(teamNotice)){
+            boolean isOk = teamService.createNotice(teamNotice);
+            if (isOk){
+                map = MapUtil.toMap(1,"success",null);
+            }else {
+                map = MapUtil.toMap(0,"false",null);;
+            }
         }else {
             map=MapUtil.toMap(0,"false",null);
         }
@@ -142,8 +170,13 @@ public class TeamAction{
     @RequestMapping(value = "/notice/delnotice.do")
     public void delNotice(TeamNotice teamNotice,String delBy){
         Map map;
-        if (teamNotice.getTeamName() != null){
-                map = (teamService.delNotice(teamNotice,delBy)) ? MapUtil.toMap(1,"success",null) : MapUtil.toMap(0,"false",null);
+        if (IsNull.delTeamNoticeInfoIsOk(teamNotice)){
+            boolean isOk = teamService.delNotice(teamNotice,delBy);
+            if (isOk){
+                map = MapUtil.toMap(1,"success",null);
+            }else {
+                map = MapUtil.toMap(0,"false",null);
+            }
         }else {
             map=MapUtil.toMap(0,"false",null);
         }
@@ -160,8 +193,13 @@ public class TeamAction{
     @RequestMapping(value = "/notice/reeditnotice.do")
     public void updateNotice(TeamNotice teamNotice,String updateBy){
         Map map;
-        if (teamNotice.getTeamName() != null && teamNotice.getContext() != null && teamNotice.getCreateTime() != null){
-            map = teamService.updateNotice(teamNotice,updateBy) ? MapUtil.toMap(1,"success",teamNotice) : MapUtil.toMap(0,"false",null);
+        if (IsNull.updateaTeamNoticeInfoIsOK(teamNotice)){
+            boolean isOk = teamService.updateNotice(teamNotice,updateBy);
+            if (isOk){
+                map = MapUtil.toMap(1,"success",teamNotice);
+            }else {
+                map =  MapUtil.toMap(0,"false",null);
+            }
         }else {
             map = MapUtil.toMap(0,"false",null);
         }
@@ -179,7 +217,11 @@ public class TeamAction{
         Map map;
         if (teamName != null){
             List<TeamMember> list=teamService.getTeamMembers(teamName);
-            map = ( list != null ) ? MapUtil.toMap(1,"success",list): MapUtil.toMap(0,"false",null);
+            if (list != null){
+                map =  MapUtil.toMap(1,"success",list);
+            }else {
+                map = MapUtil.toMap(0,"false",null);
+            }
         }else{
             map =  MapUtil.toMap(0,"false",null);
         }
