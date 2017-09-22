@@ -25,36 +25,35 @@ public class FileServiceImpl implements FileService {
         return false;
     }
 
-    public List<FileImpl> selectByFileName(String fileName){
-        return fileMapper.selectByFileName(fileName);
+    public List<FileImpl> selectByFileId(int fileId){
+        return fileMapper.selectByFileId(fileId);
     }
 
 
-    public boolean updateFileInfo(FileImpl fileImpl) {
-        if (fileMapper.updateFileInfo(fileImpl)) {
-            return true;
-        } else {
+    public boolean updateFileInfo(FileImpl fileImpl,String fileName) {
+        if (fileName.equals(fileImpl.getFileName()))
+            if (fileMapper.updateFileInfo(fileImpl))
+                return true;
             return false;
-        }
     }
 
-    public boolean deleteByDelFlag(FileImpl fileImpl,String fileName,String teamName){
-        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
+    public boolean deleteByDelFlag(FileImpl fileImpl,int fileId){
+        if (fileId == (fileImpl.getFileId()))
             if (fileMapper.deleteByDelFlag(fileImpl))
                 return true;
             return false;
     }
 
-    public boolean recoverFile(FileImpl fileImpl,String fileName,String teamName) {
-        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
+    public boolean recoverFile(FileImpl fileImpl,int fileId) {
+        if (fileId == (fileImpl.getFileId()))
             if (fileMapper.recoverFile(fileImpl))
                 return true;
         return false;
     }
 
-    public boolean deleteFile(FileImpl fileImpl,String fileName,String teamName) {
-        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName()))
-            if (fileMapper.deleteFile(fileImpl,fileName,teamName))
+    public boolean deleteFile(FileImpl fileImpl,int fileId) {
+        if (fileId == (fileImpl.getFileId()))
+            if (fileMapper.deleteFile(fileImpl,fileId))
                 return true;
         return false;
     }

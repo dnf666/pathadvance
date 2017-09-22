@@ -4,21 +4,20 @@ package com.pms.model.file;
  * Created by Chenmeiling on 2017/8/26.
  */
 public class FileImpl {
-    private int id;
+    private int fileId;
     private String fileName;
     private String url;
     private String fileClass;
     private int size;
     private String createBy;
     private String createTime;
-    private String teamName;
     private boolean delFlag;
     private String delTime;
     private boolean isPrivater;
 
-    public Integer getId(){ return id; }
+    public Integer getFileId(){ return fileId; }
 
-    public void setId(int id){ this.id = id; }
+    public void setFileId(int fileId){ this.fileId = fileId; }
 
     public String getFileName() { return fileName; }
 
@@ -43,10 +42,6 @@ public class FileImpl {
     public String getCreateTime() { return createTime; }
 
     public void setCreateTime(String createTime) { this.createTime = createTime; }
-
-    public String getTeamName(){ return teamName; }
-
-    public void setTeamName(String teamName){ this.teamName = teamName; }
 
     public boolean getDelFlag() { return delFlag; }
 

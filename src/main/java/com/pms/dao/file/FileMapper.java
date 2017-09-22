@@ -1,7 +1,5 @@
 package com.pms.dao.file;
 
-
-//import com.pms.model.file.File;
 import com.pms.model.file.FileImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -14,18 +12,18 @@ import java.util.List;
 @Repository
 public interface FileMapper {
     /**
-     * 通过文件名称得到文件相关信息
-     * @param fileName
+     * 得到文件相关信息
+     * @param fileId
      * @return
      */
-    List<FileImpl> selectByFileName(String fileName);
+    List<FileImpl> selectByFileId(int fileId);
 
     /**
      * 文件删除
-     * @param fileName,teamName
+     * @param fileId
      * @return
      */
-    boolean deleteFile(FileImpl fileImpl, @Param("fileName") String fileName, @Param("teamName") String teamName);
+    boolean deleteFile(FileImpl fileImpl, @Param("fileId") int fileId);
 
     /**
      * 文件上传
@@ -36,10 +34,10 @@ public interface FileMapper {
 
     /**
      * 文件信息更改
-     * @param file
+     * @param fileImpl
      * @return
      */
-    boolean updateFileInfo(FileImpl file);
+    boolean updateFileInfo(FileImpl fileImpl);
 
 
     /**
