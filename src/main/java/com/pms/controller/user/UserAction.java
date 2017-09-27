@@ -1,6 +1,5 @@
 package com.pms.controller.user;
 
-import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataService.user.UserModelService;
 import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;

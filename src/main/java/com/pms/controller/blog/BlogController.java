@@ -25,6 +25,7 @@ public class BlogController {
 
     /**
      * 查看自己的全部博客或者有权限查看
+     *
      * @param userName 自己的用户名
      */
     @RequestMapping("selectOwnAll")
@@ -35,6 +36,7 @@ public class BlogController {
 
     /**
      * 查看别人的博客
+     *
      * @param userName 别人的用户名
      * @param response 前台发过来的response
      */
@@ -46,6 +48,7 @@ public class BlogController {
 
     /**
      * 主页展示全部没被删和公开的博客
+     *
      * @param response 前台发过来的response
      */
     @RequestMapping("selectAll")
@@ -55,7 +58,31 @@ public class BlogController {
     }
 
     /**
+     * 查询博客详情
+     *
+     * @param id       博客id
+     * @param response 回应参数
+     */
+    @RequestMapping("selectByUserName")
+    public void selectByUserName(int id, HttpServletResponse response) {
+        BlogWithBLOBs blogWithBLOBs = blogService.selectByPrimaryKey(id);
+        JsonUtil.toJSON(blogWithBLOBs, response);
+    }
+
+    /**
+     * 博客设置私有
+     *
+     * @param id 博客id
+     */
+    @RequestMapping("setPrivate")
+    public void setPrivate(int id) {
+        int i = blogService.setPrivate(id);
+        JsonUtil.toJSON(i);
+    }
+
+    /**
      * 添加博客
+     *
      * @param blog     添加的博客
      * @param response 前台发过来的response
      */
@@ -71,6 +98,7 @@ public class BlogController {
 
     /**
      * 用户端删除博客，
+     *
      * @param id       删除博客的id
      * @param response 前台发过来的response
      */
@@ -88,6 +116,7 @@ public class BlogController {
 
     /**
      * 更新博客
+     *
      * @param blog     更新的博客
      * @param response 前台发过来的response
      */
@@ -100,6 +129,7 @@ public class BlogController {
 
     /**
      * 返回样式封装
+     *
      * @param i 操作结果
      * @return 返回map
      */
