@@ -1,6 +1,7 @@
 package ld.com.pms.model.team;
 
 import com.pms.dao.teamdao.TeamMapper;
+import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
 @ContextConfiguration(locations = "classpath:springconfig.xml")
 public class TeamServiceTest {
     @Resource
-    TeamMapper teamMapper;
+    private TeamMapper teamMapper;
     @Resource
     TeamService teamService;
     @Test
@@ -68,43 +69,10 @@ public class TeamServiceTest {
         teamMember.setDelRemarks("不知道");
         teamMember.setDelTime("212121");
         teamMember.setDelBy("东东");
-        System.out.println(teamService.delMember(teamMember));
-    }
-    @Test
-    public void createProjectTest(){
-        TeamProject teamProject=new TeamProject();
-        teamProject.setCreateBy("东东");
-        teamProject.setCreateAt("1544546");
-        teamProject.setTeamName("队1");
-        teamProject.setProjectName("项目1");
-        teamProject.setProjectInfo("我也不知道");
-        System.out.println(teamService.createProject(teamProject));
-    }
-    @Test
-    public void delProjectTest(){
-        TeamProject teamProject=new TeamProject();
-        teamProject.setCreateBy("东东");
-        teamProject.setCreateAt("1544546");
-        teamProject.setTeamName("队1");
-        teamProject.setProjectName("项目1");
-        teamProject.setProjectInfo("我也不知道");
-        teamProject.setDelFlag(1);
-
-        System.out.println(teamService.delProject(teamProject,"东东"));
-    }
-    @Test
-    public void updateaProjectTest(){
-        TeamProject teamProject=new TeamProject();
-        teamProject.setCreateBy("东东");
-        teamProject.setCreateAt("1544546");
-        teamProject.setTeamName("队1");
-        teamProject.setProjectName("项目1");
-        teamProject.setProjectInfo("我也不知道,你信么？");
-        System.out.println(teamService.updateaProject(teamProject,"东东"));
     }
     @Test
     public void addProjectMemberTest(){
-        ProjectMember projectMember=new ProjectMember();
+       /* ProjectMember projectMember=new ProjectMember();
         projectMember.setTeamName("队1");
         projectMember.setTeamRole("小菜鸟");
         projectMember.setUserName("小强");
@@ -112,10 +80,10 @@ public class TeamServiceTest {
         projectMember.setProjectName("项目1");
         projectMember.setJoinBy("东东");
         System.out.println(teamService.addProjectMember(projectMember,"东东"));
-    }
+  */  }
     @Test
     public void delProjectMemberTest(){
-        ProjectMember projectMember=new ProjectMember();
+        ProjectMember projectMember=new ProjectMember.Builder().build();
         projectMember.setTeamName("队1");
         projectMember.setTeamRole("小菜鸟");
         projectMember.setUserName("小强");
@@ -180,10 +148,10 @@ public class TeamServiceTest {
     @Test
     public void delNotice(){
         TeamNotice teamNotice=new TeamNotice();
-        teamNotice.setId(2);
+        teamNotice.setId(1);
+        teamNotice.setCreateBy("哆122啦阿盟");
         teamNotice.setDelFlag(1);
         teamNotice.setDelTime("1122");
-        teamNotice.setTeamName("团队名称");
-        teamService.delNotice(teamNotice,"刘岽");
+        teamService.delNotice(teamNotice,"哆122啦阿盟");
     }
 }
