@@ -1,5 +1,6 @@
 package com.pms.dao.teamdao;
 import com.pms.model.team.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,10 +49,17 @@ public interface TeamMapper {
     boolean addTeamMember(TeamMember teamMember);
 
     /**
+     * 重新添加一个曾经被删除过的成员
+     * @param teamMember 团队成员
+     * @return boolean
+     */
+    boolean reAddTeamMember(TeamMember teamMember);
+    /**
      * 删除团队成员
      * @param teamMember 团队成员 teamMember需要设值的参数：delFlag , delTime , delRemarks ,teamName ,userName
      * @return boolean
      */
+
     boolean delTeamMember(TeamMember teamMember);
 
     /**
@@ -61,6 +69,22 @@ public interface TeamMapper {
      */
     List<TeamMember> getTeamMembersByTeamName(String teamName);
 
+    /**
+     * 通过团队名称和用户名获得团队成员
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return teammember
+     */
+    TeamMember getTeamMemberByTeamNameAndUserName(@Param("teamName") String teamName , @Param("userName") String userName);
+
+    /**
+     * 通过团队名称和用户名称获取已经被移除团队成员
+     *
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return Teammember
+     */
+    TeamMember getDelTeamMember(@Param("teamName") String teamName ,@Param("userName") String userName);
     /**
      * 通过用户名来获取用户加入了哪些团队
      * @param userName 用户名称

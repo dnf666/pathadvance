@@ -64,9 +64,9 @@
     <update id="setPrivilege" parameterType="com.pms.model.team.TeamMember">
         UPDATE team_member
         <set>
-            team_privelige={#teamPrivelige}
+                  team_privelige = #{teamPrivelige}
         </set>
-        WHERE team_name={#teamName} AND del_flag=0 AND user_name={#userName}
+        WHERE team_name = #{teamName} AND del_flag = 0 AND user_name = #{userName}
     </update>
     <!--团队成员的增加-->
     <insert id="addTeamMember" parameterType="com.pms.model.team.TeamMember">
@@ -74,6 +74,14 @@
           (user_name,team_name,team_role,join_time,join_by,team_privelige)VALUES
           (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy},#{teamPrivelige})
     </insert>
+    <!--重新添加一个曾被删除的团队成员-->
+    <update id="reAddTeamMember" parameterType="com.pms.model.team.TeamMember">
+        UPDATE team_member
+        <set>
+            del_flag = 0
+        </set>
+        WHERE team_name = #{teamName} AND del_flag = 1 AND user_name = #{userName}
+    </update>
     <!--团队成员的删除即打上删除标志-->
     <update id="delTeamMember" parameterType="com.pms.model.team.TeamMember">
         UPDATE  team_member
@@ -98,7 +106,13 @@
         SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName};
     </select>
 
-
+    <select id="getTeamMemberByTeamNameAndUserName" resultMap="teamMember">
+        SELECT * FROM team_member WHERE user_name = #{userName} AND del_flag=0 AND team_name=#{teamName};
+    </select>
+    <!--得到已经被删除的团队成员-->
+    <select id="getDelTeamMember" resultMap="teamMember">
+        SELECT * FROM team_member WHERE user_name = #{userName} AND del_flag = 1 AND team_name = #{teamName};
+    </select>
     <!--团队公告-->
     <resultMap id="teamNotice" type="com.pms.model.team.TeamNotice">
         <result column="id" property="id"/>

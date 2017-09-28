@@ -54,9 +54,9 @@
 
 
     <resultMap id="project_members" type="com.pms.model.project.ProjectMember">
-        <result column="project_name" property="projectName"/>
+        <result column="project_id" property="projectId"/>
         <result column="user_name" property="userName"/>
-        <result column="team_role" property="teamRole"/>
+        <result column="project_role" property="projectRole"/>
         <result column="team_name" property="teamName"/>
         <result column="join_time" property="joinTime"/>
         <result column="join_by" property="joinBy"/>
@@ -68,8 +68,8 @@
 
     <insert id="addProjectMember" parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
-        (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
-        (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
+        (project_id,user_name,team_name,project_role,join_time,join_by)VALUES
+        (#{projectId},#{userName},#{teamName},#{projectRole},#{joinTime},#{joinBy})
     </insert>
 
     <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
@@ -88,11 +88,11 @@
                 del_remarks=#{delRemarks}
             </if>
         </set>
-        WHERE team_name=#{teamName} AND project_name=#{projectName} AND user_name=#{userName} AND del_flag=0
+        WHERE  user_name=#{userName} AND del_flag=0
     </update>
 
-    <select id="getProjectMembersByTeamNameAndProjectName"  resultMap="project_members">
+    <select id="getProjectMembersByProjectId"  resultMap="project_members">
         SELECT * FROM project_member
-        WHERE del_flag=0 AND team_name = #{teamName} AND project_name = #{projectName}
+        WHERE del_flag=0 AND  project_id = #{projectId}
     </select>
 </mapper>
