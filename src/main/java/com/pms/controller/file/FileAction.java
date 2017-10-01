@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,14 +50,14 @@ public class FileAction {
             file.transferTo(localFile);
             String message = "文件上传成功！";
             //Map map = new HashMap();
-            map = MapUtil.toMap(1,message,null);
+            map = MapUtil.toMap(1,message,file);
             JsonUtil.toJSON(map);
         }
     }
 
     @RequestMapping("downloadFile")
     public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
-        Map map;
+        String message;
         try {
             String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
             InputStream inputStream = new FileInputStream(new File(path + fileName));
@@ -69,21 +70,21 @@ public class FileAction {
             // 这里主要关闭
             os.close();
             inputStream.close();
-            String message = "文件下载成功！";
-            //Map map = new HashMap();
-            map = MapUtil.toMap(1,message,null);
+            message = "文件下载成功！";
+            Map map = new HashMap();
+            map.put("sucMessage",message);
             JsonUtil.toJSON(map);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            String message = "没有该文件!";
-            //Map map = new HashMap();
-            map = MapUtil.toMap(0,message,null);
+            message = "没有该文件!";
+            Map map = new HashMap();
+            map.put("errMessage",message);
             JsonUtil.toJSON(map);
         } catch (IOException e) {
             e.printStackTrace();
-            String message = "文件下载失败!";
-            //Map map = new HashMap();
-            map = MapUtil.toMap(0,message,null);
+            message = "文件下载失败!";
+            Map map = new HashMap();
+            map.put("errMessage",message);
             JsonUtil.toJSON(map);
         }
     }
