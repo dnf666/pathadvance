@@ -1,6 +1,7 @@
 package dnf;
 
 import com.pms.model.user.User;
+import com.pms.service.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
