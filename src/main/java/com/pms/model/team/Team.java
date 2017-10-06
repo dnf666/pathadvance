@@ -13,6 +13,16 @@ public class Team {
     private int delFlag;//删除标志
     private String delTime;//删除时间
     private String delRemarks;//删除的备注
+    public Team(){};
+    private Team(Builder builder) {
+        setTeamName(builder.teamName);
+        setCreateBy(builder.createBy);
+        setCreateTime(builder.createTime);
+        setDelFlag(builder.delFlag);
+        setDelTime(builder.delTime);
+        setDelRemarks(builder.delRemarks);
+    }
+
     public String getTeamName() {
         return teamName;
     }
@@ -59,5 +69,51 @@ public class Team {
 
     public void setDelRemarks(String delRemarks) {
         this.delRemarks = delRemarks;
+    }
+
+    public static final class Builder {
+        private String teamName;
+        private String createBy;
+        private String createTime;
+        private int delFlag;
+        private String delTime;
+        private String delRemarks;
+
+        public Builder() {
+        }
+
+        public Builder teamName(String val) {
+            teamName = val;
+            return this;
+        }
+
+        public Builder createBy(String val) {
+            createBy = val;
+            return this;
+        }
+
+        public Builder createTime(String val) {
+            createTime = val;
+            return this;
+        }
+
+        public Builder delFlag(int val) {
+            delFlag = val;
+            return this;
+        }
+
+        public Builder delTime(String val) {
+            delTime = val;
+            return this;
+        }
+
+        public Builder delRemarks(String val) {
+            delRemarks = val;
+            return this;
+        }
+
+        public Team build() {
+            return new Team(this);
+        }
     }
 }

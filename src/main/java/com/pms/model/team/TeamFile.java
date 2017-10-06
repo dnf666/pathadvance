@@ -13,6 +13,18 @@ public class TeamFile {
     private int delFlag;
     private String delTime;
     private int isPrivater;//是否私有
+    public TeamFile(){};
+    private TeamFile(Builder builder) {
+        setTeamName(builder.teamName);
+        setFileName(builder.fileName);
+        setUrl(builder.url);
+        setFileClass(builder.fileClass);
+        setFileSize(builder.fileSize);
+        setCreateBy(builder.createBy);
+        setDelFlag(builder.delFlag);
+        setDelTime(builder.delTime);
+        setIsPrivater(builder.isPrivater);
+    }
 
     public String getTeamName() {
         return teamName;
@@ -84,5 +96,70 @@ public class TeamFile {
 
     public void setIsPrivater(int isPrivater) {
         this.isPrivater = isPrivater;
+    }
+
+
+    public static final class Builder {
+        private String teamName;
+        private String fileName;
+        private String url;
+        private String fileClass;
+        private double fileSize;
+        private String createBy;
+        private int delFlag;
+        private String delTime;
+        private int isPrivater;
+
+        public Builder() {
+        }
+
+        public Builder teamName(String val) {
+            teamName = val;
+            return this;
+        }
+
+        public Builder fileName(String val) {
+            fileName = val;
+            return this;
+        }
+
+        public Builder url(String val) {
+            url = val;
+            return this;
+        }
+
+        public Builder fileClass(String val) {
+            fileClass = val;
+            return this;
+        }
+
+        public Builder fileSize(double val) {
+            fileSize = val;
+            return this;
+        }
+
+        public Builder createBy(String val) {
+            createBy = val;
+            return this;
+        }
+
+        public Builder delFlag(int val) {
+            delFlag = val;
+            return this;
+        }
+
+        public Builder delTime(String val) {
+            delTime = val;
+            return this;
+        }
+
+        public Builder isPrivater(int val) {
+            isPrivater = val;
+            return this;
+        }
+
+        public TeamFile build() {
+            return new TeamFile(this);
+        }
     }
 }

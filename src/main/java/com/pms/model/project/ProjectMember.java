@@ -4,9 +4,9 @@ package com.pms.model.project;
  * Created by liudong on 2017/8/11.
  */
 public class ProjectMember {
-    private String projectName;
+    private int projectId;
     private String userName;
-    private String teamRole;
+    private String projectRole;
     private String joinTime;
     private String joinBy;
     private int delFlag;
@@ -18,9 +18,9 @@ public class ProjectMember {
     private ProjectMember(){}
 
     private ProjectMember(Builder builder) {
-        setProjectName(builder.projectName);
+        setProjectId(builder.projectId);
         setUserName(builder.userName);
-        setTeamRole(builder.teamRole);
+        setprojectRole(builder.projectRole);
         setJoinTime(builder.joinTime);
         setJoinBy(builder.joinBy);
         setDelFlag(builder.delFlag);
@@ -30,12 +30,11 @@ public class ProjectMember {
         setTeamName(builder.teamName);
     }
 
-    public String getProjectName() {
-        return projectName;
+    public int getProjectId() {
+        return projectId;
     }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getUserName() {
@@ -46,12 +45,12 @@ public class ProjectMember {
         this.userName = userName;
     }
 
-    public String getTeamRole() {
-        return teamRole;
+    public String getprojectRole() {
+        return projectRole;
     }
 
-    public void setTeamRole(String teamRole) {
-        this.teamRole = teamRole;
+    public void setprojectRole(String projectRole) {
+        this.projectRole = projectRole;
     }
 
     public String getJoinTime() {
@@ -112,9 +111,9 @@ public class ProjectMember {
 
 
     public static final class Builder {
-        private String projectName;
+        private int projectId;
         private String userName;
-        private String teamRole;
+        private String projectRole;
         private String joinTime;
         private String joinBy;
         private int delFlag;
@@ -126,8 +125,8 @@ public class ProjectMember {
         public Builder() {
         }
 
-        public Builder projectName(String val) {
-            projectName = val;
+        public Builder projectId(int val) {
+            projectId = val;
             return this;
         }
 
@@ -137,7 +136,7 @@ public class ProjectMember {
         }
 
         public Builder teamRole(String val) {
-            teamRole = val;
+            projectRole = val;
             return this;
         }
 
