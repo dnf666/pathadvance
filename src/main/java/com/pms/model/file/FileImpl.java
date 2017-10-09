@@ -3,6 +3,7 @@ package com.pms.model.file;
 /**
  * Created by Chenmeiling on 2017/8/26.
  */
+//id->fileId
 public class FileImpl {
     private int id;
     private String fileName;
@@ -16,9 +17,13 @@ public class FileImpl {
     private String delTime;
     private boolean isPrivater;
 
-    public Integer getId(){ return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id){ this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFileName() { return fileName; }
 

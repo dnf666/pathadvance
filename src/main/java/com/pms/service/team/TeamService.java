@@ -189,7 +189,7 @@ public interface TeamService {
      */
     List<TeamNotice> getTeamNotice(String teamName);
 
-    /**
+    /** 
      * 通过id获取公告
      * @param id 公告id
      * @return TeamNotice

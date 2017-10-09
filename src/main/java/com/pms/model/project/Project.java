@@ -12,7 +12,9 @@ public class Project {
     private String projectInfo;
     private String createBy;
     private String createAt;
-    private int delFlag;
+    private boolean delFlag;
+
+    private Project(){}
 
     private Project(Builder builder) {
         setId(builder.id);
@@ -73,10 +75,14 @@ public class Project {
     }
 
 
-
-    public int getDelFlag() {
+    public boolean isDelFlag() {
         return delFlag;
     }
+
+    public void setDelFlag(boolean delFlag) {
+        this.delFlag = delFlag;
+    }
+
 
 
     public static final class Builder {
@@ -86,7 +92,7 @@ public class Project {
         private String projectInfo;
         private String createBy;
         private String createAt;
-        private int delFlag;
+        private boolean delFlag;
 
         public Builder() {
         }
@@ -121,7 +127,7 @@ public class Project {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

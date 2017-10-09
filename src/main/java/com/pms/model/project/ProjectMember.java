@@ -3,13 +3,15 @@ package com.pms.model.project;
 /**
  * Created by liudong on 2017/8/11.
  */
+
+//项目成员
 public class ProjectMember {
-    private String projectName;
+    private int projectId;
     private String userName;
-    private String teamRole;
+    private String projectRole;
     private String joinTime;
     private String joinBy;
-    private int delFlag;
+    private boolean delFlag;
     private String delTime;
     private String delRemarks;
     private String delBy;
@@ -18,9 +20,9 @@ public class ProjectMember {
     private ProjectMember(){}
 
     private ProjectMember(Builder builder) {
-        setProjectName(builder.projectName);
+        setProjectId(builder.projectId);
         setUserName(builder.userName);
-        setTeamRole(builder.teamRole);
+        setProjectRole(builder.projectRole);
         setJoinTime(builder.joinTime);
         setJoinBy(builder.joinBy);
         setDelFlag(builder.delFlag);
@@ -30,12 +32,12 @@ public class ProjectMember {
         setTeamName(builder.teamName);
     }
 
-    public String getProjectName() {
-        return projectName;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getUserName() {
@@ -46,12 +48,12 @@ public class ProjectMember {
         this.userName = userName;
     }
 
-    public String getTeamRole() {
-        return teamRole;
+    public String getProjectRole() {
+        return projectRole;
     }
 
-    public void setTeamRole(String teamRole) {
-        this.teamRole = teamRole;
+    public void setProjectRole(String projectRole) {
+        this.projectRole = projectRole;
     }
 
     public String getJoinTime() {
@@ -70,11 +72,11 @@ public class ProjectMember {
         this.joinBy = joinBy;
     }
 
-    public int getDelFlag() {
+    public boolean isDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -111,13 +113,15 @@ public class ProjectMember {
     }
 
 
+
+
     public static final class Builder {
-        private String projectName;
+        private int projectId;
         private String userName;
-        private String teamRole;
+        private String projectRole;
         private String joinTime;
         private String joinBy;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private String delRemarks;
         private String delBy;
@@ -126,8 +130,8 @@ public class ProjectMember {
         public Builder() {
         }
 
-        public Builder projectName(String val) {
-            projectName = val;
+        public Builder projectId(int val) {
+            projectId = val;
             return this;
         }
 
@@ -136,8 +140,8 @@ public class ProjectMember {
             return this;
         }
 
-        public Builder teamRole(String val) {
-            teamRole = val;
+        public Builder projectRole(String val) {
+            projectRole = val;
             return this;
         }
 
@@ -151,7 +155,7 @@ public class ProjectMember {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

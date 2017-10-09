@@ -17,6 +17,8 @@ public class TeamSerciveImpl implements TeamService{
     private final static int MASTER_OF_TEAMMEMBER = 2;//团队负责人即最高权限
     private final static int MANAGER_OF_TEAMMEMBER = 1;//团队管理员的权限
     private final static int NO_SUCH_TEAMMEMBER = -1;//表示当前团队没有这个成员
+            //@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，
+            // 而@Resource默认按 byName自动注入罢了
     @Resource
     private TeamMapper teamMapper;
     public boolean isProMember(List<ProjectMember> list, String userName) {
@@ -70,6 +72,7 @@ public class TeamSerciveImpl implements TeamService{
     public List<Team> getAllTeam() {
         return teamMapper.getAllTeam();
     }
+
     public List<Team> getMyteam(String userName) {
         List<Team> teamList = new LinkedList<Team>();
         if (userName != null){

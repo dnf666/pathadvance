@@ -5,9 +5,12 @@ package com.pms.model.project;
  * On: 2017/9/10.
  * describle:
  */
+// 项目归属
 public class ProjectReference {
     private int projectId;
     private int teamId;
+
+    //删除标志
     private int delFlag;
 
     public int getProjectId() {

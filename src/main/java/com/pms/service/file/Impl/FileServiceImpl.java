@@ -29,7 +29,6 @@ public class FileServiceImpl implements FileService {
         return fileMapper.selectByFileName(fileName);
     }
 
-
     public boolean updateFileInfo(FileImpl fileImpl) {
         if (fileMapper.updateFileInfo(fileImpl)) {
             return true;

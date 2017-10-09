@@ -29,7 +29,6 @@ public class FileActionTest {
         System.out.println("时间格式："+date);
         fileImpl.setCreateTime(date);
         fileImpl.setCreateBy("lalala");
-        fileImpl.setId(1);
         fileImpl.setFileName("fileName");
 
     }

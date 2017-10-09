@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-
+//使用@Component，@Repository，@Service，@Controller注解或者使用@Component的自定义注解
+//的类会自动为bean
 @Service
 public class BlogServiceImpl implements BlogService {
     @Resource

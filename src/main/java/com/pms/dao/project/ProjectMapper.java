@@ -15,12 +15,21 @@ import java.util.List;
  */
 @Repository
 public interface ProjectMapper {
+
+    /**
+     * 得到所有项目
+     * @param
+     * @return list
+     */
+    List<Project> getAllProjects();
+
     /**
      * 添加项目
      * @param project 项目   project需要设值的参数：projectName,teamName,projectInfo,createBy,createAt
      * @return boolean
      */
     boolean addProject(Project project);
+
 
     /**
      * 删除项目
@@ -68,7 +77,8 @@ public interface ProjectMapper {
      * @param project 项目 project需要设值的参数：teamName , projectName.
      * @return list
      */
-    List<ProjectMember> getProjectMembersByTeamNameAndProjectName(Project project);
+    List<ProjectMember> getProjectMembersByProjectId(Project project);
+
 
 
 }

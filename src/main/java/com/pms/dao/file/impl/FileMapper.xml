@@ -5,7 +5,7 @@
 
 <mapper namespace="com.pms.dao.file.FileMapper">
     <resultMap id="FileImpl" type="com.pms.model.file.FileImpl">
-        <result property="id" column="id"/>
+        <result property="id" column="file_id"/>
         <result property="fileName" column="file_name"/>
         <result property="url" column="url"/>
         <result property="fileClass" column="class"/>
@@ -19,10 +19,11 @@
     </resultMap>
 
     <select id="selectByFileName" resultMap="FileImpl" >
-        SELECT id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater
+        SELECT file_id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater
         FROM file
         WHERE file_name = #{fileName} AND del_flag = 0;
     </select>
+
 
     <delete id="deleteFile">
         DELETE FROM file
@@ -31,7 +32,7 @@
 
     <insert id="insertFileInfo">
         INSERT INTO file
-        (id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater)
+        (file_id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater)
         VALUES
         (#{id},#{fileName},#{url},#{fileClass},#{size},#{createBy},#{createTime},#{teamName},#{delFlag},#{delTime},#{isPrivater})
     </insert>
@@ -39,8 +40,8 @@
     <update id="updateFileInfo" parameterType="com.pms.model.file.FileImpl" >
         UPDATE file
         <set>
-            <if test="id != null">
-                id = #{id},
+            <if test="file_id != null">
+                file_id = #{id},
             </if>
             <if test="url != null">
                 url = #{url},
