@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+    <context:component-scan base-package="com.pms.*"/>
+    <context:annotation-config/>
+    <!--<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--&lt;!&ndash; 指定连接数据库的JDBC驱动 &ndash;&gt;-->
+        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
+        <!--&lt;!&ndash; 连接数据库所用的URL &ndash;&gt;-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?userUnicode=true&amp;characterEncoding=utf-8"/>-->
+        <!--&lt;!&ndash; 连接数据库的用户名 &ndash;&gt;-->
+        <!--<property name="user" value="root"/>-->
+        <!--<property name="password" value="root"/>-->
+        <!--&lt;!&ndash; 设置数据库连接池的最大连接数 &ndash;&gt;-->
+        <!--<property name="maxPoolSize" value="20"/>-->
+        <!--&lt;!&ndash; 设置数据库连接池的最小连接数 &ndash;&gt;-->
+        <!--<property name="minPoolSize" value="2"/>-->
+        <!--&lt;!&ndash; 设置数据库连接池的初始化连接数 &ndash;&gt;-->
+        <!--<property name="initialPoolSize" value="2"/>-->
+        <!--&lt;!&ndash; 设置数据库连接池的连接的最大空闲时间,单位为秒 &ndash;&gt;-->
+        <!--<property name="maxIdleTime" value="20"/>-->
+    <!--</bean>-->
+    <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="initialPoolSize" value="5"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="maxPoolSize" value="20"/>
+    </bean>
+<!--//我把映射文件位置改了。没错就是要搞事-->
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="datasource"/>
+        <property name="mapperLocations" value="classpath*:com/pms/dao/**/**/*.xml"/>
+        <property name="configurationProperties">
+            <props>
+                <prop key="cacheEnable">true</prop>
+                <prop key="callSetterOnNulls">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean name="daoManager" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.pms.dao"/>
+    </bean>
+
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="datasource"/>
+</bean>
+</beans>

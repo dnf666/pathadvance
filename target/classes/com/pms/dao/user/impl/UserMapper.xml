@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.dao.user.UserMapper">
+    <resultMap id="User" type="com.pms.model.user.User">
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="picture" column="picture"/>
+        <result property="peofession" column="peofession"/>
+        <result property="createAt" column="create_at"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="delRemarks" column="del_remarks"/>
+    </resultMap>
+
+    <resultMap id="loginInfo" type="com.pms.dataModel.User.LoginInfo">
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <resultMap id="personInfo" type="com.pms.dataModel.User.PersonInfo">
+        <result property="userName" column="user_name"/>
+        <result property="picture" column="picture"/>
+        <result property="stuId" column="stu_id"/>
+        <result property="peofession" column="peofession"/>
+    </resultMap>
+
+    <select id="selectPasswordByUserName" resultMap="loginInfo">
+        SELECT user_name,password
+        FROM USER
+        WHERE user_name = #{userName};
+    </select>
+
+    <select id="selectPersonInfoByUserName" resultMap="personInfo">
+        select user_name,picture,peofession
+        FROM USER
+        WHERE user_name = #{userName};
+    </select>
+
+    <insert id="insertIntoUser">
+        insert into USER
+        (user_name,password,picture,peofession,create_at,del_flag,del_remarks)
+        VALUES
+        (#{userName},#{password},#{picture},#{peofession},#{createAt},#{delFlag},#{delRemarks})
+    </insert>
+
+    <update id="updateUserInfo" parameterType="com.pms.model.user.User">
+       UPDATE USER
+       <set>
+           <if test="password != null">
+               password = #{password},
+           </if>
+           <if test="picture != null">
+               picture = #{picture},
+           </if>
+           <if test="peofession != null">
+               peofession = #{peofession}
+           </if>
+           <if test="delFlag != null">
+               del_flag = #{delFlag},
+           </if>
+           <if test="delRemarks != null">
+               del_remarks = delRemarks
+           </if>
+       </set>
+       WHERE user_name = #{userName};
+    </update>
+    <select id = "findUserBySearching" parameterType="com.pms.model.user.User" resultMap="User">
+        select user_name from USER WHERE user_name LIKE "%"#{userName}"%" and del_flag = 0
+    </select>
+</mapper>
