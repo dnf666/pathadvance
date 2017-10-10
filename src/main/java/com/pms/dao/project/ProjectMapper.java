@@ -64,11 +64,11 @@ public interface ProjectMapper {
     boolean delProjectMember(ProjectMember projectMember);
 
     /**
-     * 得到项目成员
-     * @param project 项目 project需要设值的参数：teamName , projectName.
+     * 通过项目id得到项目成员
+     * @param projectId 项目的id project需要设值的参数：projectId.
      * @return list
      */
-    List<ProjectMember> getProjectMembersByTeamNameAndProjectName(Project project);
+    List<ProjectMember> getProjectMembersByProjectId(int projectId);
 
 
 }

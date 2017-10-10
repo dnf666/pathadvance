@@ -12,6 +12,17 @@ public class TeamMasterHistory {
     private String modifyBy;//修正者
     private String ModifyAt;//修正时间
 
+    public TeamMasterHistory(){};
+    private TeamMasterHistory(Builder builder) {
+        setId(builder.id);
+        setTeamName(builder.teamName);
+        setUserName(builder.userName);
+        setToRole(builder.toRole);
+        setFromRole(builder.fromRole);
+        setModifyBy(builder.modifyBy);
+        setModifyAt(builder.ModifyAt);
+    }
+
     public int getId() {
         return id;
     }
@@ -68,4 +79,56 @@ public class TeamMasterHistory {
         ModifyAt = modifyAt;
     }
 
+
+    public static final class Builder {
+        private int id;
+        private String teamName;
+        private String userName;
+        private String toRole;
+        private String fromRole;
+        private String modifyBy;
+        private String ModifyAt;
+
+        public Builder() {
+        }
+
+        public Builder id(int val) {
+            id = val;
+            return this;
+        }
+
+        public Builder teamName(String val) {
+            teamName = val;
+            return this;
+        }
+
+        public Builder userName(String val) {
+            userName = val;
+            return this;
+        }
+
+        public Builder toRole(String val) {
+            toRole = val;
+            return this;
+        }
+
+        public Builder fromRole(String val) {
+            fromRole = val;
+            return this;
+        }
+
+        public Builder modifyBy(String val) {
+            modifyBy = val;
+            return this;
+        }
+
+        public Builder ModifyAt(String val) {
+            ModifyAt = val;
+            return this;
+        }
+
+        public TeamMasterHistory build() {
+            return new TeamMasterHistory(this);
+        }
+    }
 }

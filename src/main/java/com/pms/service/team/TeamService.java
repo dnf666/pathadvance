@@ -6,9 +6,6 @@ import java.util.List;
 /**
  * Created by liudong on 2017/8/15.
  *
- * 团队的service，包含了团队成员，团队项目，团队公告，团队项目成员以及团队文件。
- *                                          团队文件以及团队项目还没有完成
- *
  */
 public interface TeamService {
     /**
@@ -17,15 +14,29 @@ public interface TeamService {
      * @param userName 用户名
      * @return boolean
      */
-    boolean isProMember(List<ProjectMember> list, String userName);
+   // boolean isProMember(List<ProjectMember> list, String userName);
     /**
-     * 返回 public List<TeamMember> getTeamMembersByTeamName(String teamName),方法中需要的某一个特定成员
+     * 得到名称为username的用户在当前团队的相关信息
      *
      * @param  list 团队成员列表
      * @param userName 用户名
      * @return TeamMember
      */
     TeamMember getTeamMember(List<TeamMember> list,String userName);
+    /**
+     * 通过团队名称和用户名获取团队成员
+     * @param teamName
+     * @param userName
+     */
+    TeamMember getTeamMemberByTeamNameAndUserName(String teamName , String userName);
+
+    /**
+     * 获取已经被删除的团队成员
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return teammember
+     */
+    TeamMember getDelTeamMember(String teamName , String userName);
     /**
      * 得到用户在团队当中的权限。如果当前用户没有在当前的团队中返回-1
      * @param teamMember 团队成员
@@ -132,7 +143,7 @@ public interface TeamService {
      * @param projectName 项目名称
      * @return List
      */
-    List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName,String projectName);
+    //List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName,String projectName);
     /**
      *项目信息的更改
      *1.项目内的成员均可以操作
@@ -151,7 +162,7 @@ public interface TeamService {
      *
      * @return boolean
      */
-    boolean addProjectMember(ProjectMember projectMember,String inviteBy);
+   // boolean addProjectMember(ProjectMember projectMember,String inviteBy);
     /**
      *项目成员的删除
      *1.只能够是项目的创建者来操作
@@ -159,7 +170,7 @@ public interface TeamService {
      *@param projectId 项目的id用来判断该项目的创建者
      * @return boolean
      */
-    boolean delProjectMember(ProjectMember projectMember,int projectId);
+//    boolean delProjectMember(ProjectMember projectMember,int projectId);
     /**
      *团队公告的创建
      * 1.管理员或者负责人

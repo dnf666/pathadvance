@@ -53,7 +53,7 @@ public class ProjectMapperTest {
     }
     @Test
     public void addPMTest(){
-        ProjectMember pm = new ProjectMember.Builder().teamRole("成员啊啊啊").joinBy("jiajia").joinTime("999").projectName("hahha").teamName("ajja").userName("liudddd东").build();
+        ProjectMember pm = new ProjectMember.Builder().teamRole("成员啊啊啊").joinBy("jiajia").joinTime("999").teamName("ajja").userName("liudddd东").build();
         System.out.println(projectMapper.addProjectMember(pm));
     }
     @Test
@@ -61,13 +61,13 @@ public class ProjectMapperTest {
         ProjectMember pm = new ProjectMember
                 .Builder().teamRole("成员啊啊啊").joinBy("jiajia")
                 .delFlag(1).delBy("aaaa")
-                .joinTime("999").projectName("hahha")
+                .joinTime("999")
                 .teamName("ajja").userName("aaa东东").build();
         System.out.println(projectMapper.delProjectMember(pm));
     }
     @Test
     public void getPMsTest(){
-        List<ProjectMember> list = projectMapper.getProjectMembersByTeamNameAndProjectName(new Project.Builder().teamName("ajja").projectName("hahha").build());
+        List<ProjectMember> list = projectMapper.getProjectMembersByProjectId(1);
         System.out.println(list.get(0).getTeamName());
     }
 }

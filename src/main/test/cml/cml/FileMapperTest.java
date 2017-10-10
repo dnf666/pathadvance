@@ -1,7 +1,7 @@
 package cml;
 
 import com.pms.dao.file.FileMapper;
-import com.pms.model.file.File;
+import com.pms.model.file.FileImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +20,7 @@ public class FileMapperTest {
     FileMapper fileMapper;
     @Test
     public void insertFileInfo() throws Exception {
-        File file = new File();
+        FileImpl file = new FileImpl();
         file.setFileName("文件");
         file.setUrl("位置");
         file.setFileClass("类型");
@@ -29,13 +29,13 @@ public class FileMapperTest {
         file.setCreateTime("createTime");
         file.setDelFlag(true);
         file.setDelTime("delTime");
-        file.setPrivater(true);
+        file.setIsPrivater(true);
         fileMapper.insertFileInfo(file);
     }
 
     @Test
     public void updateFileInfo() throws Exception {
-        File file = new File();
+        FileImpl file = new FileImpl();
         file.setFileName("文件1");
         file.setUrl("位置1");
         file.setFileClass("类型1");
@@ -44,7 +44,7 @@ public class FileMapperTest {
         file.setCreateTime("createTime1");
         file.setDelFlag(true);
         file.setDelTime("delTime1");
-        file.setPrivater(true);
+        file.setIsPrivater(true);
         fileMapper.updateFileInfo(file);
 
     }
@@ -56,7 +56,7 @@ public class FileMapperTest {
 
     @Test
     public void deleteByFileName() throws Exception {
-        fileMapper.deleteByFileName("文件");
+        //      fileMapper.deleteByFileName("文件");
 
     }
 

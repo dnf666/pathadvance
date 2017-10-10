@@ -15,7 +15,6 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,11 +29,12 @@ public class FileAction {
 
     @RequestMapping("insertFileInfo")
     public void insertFileInfo(MultipartFile file, HttpServletRequest request) throws IOException {
+        Map map;
         if (file.isEmpty()) {
 //            System.out.println("文件未上传!");
             String message = "文件未上传!";
-            Map map = new HashMap();
-            map.put("errMessage",message);
+            //Map map = new HashMap();
+            map = MapUtil.toMap(0,message,null);
             JsonUtil.toJSON(map);
         } else {
             //得到上传的文件名
@@ -49,14 +49,15 @@ public class FileAction {
             File localFile = new File(path);
             file.transferTo(localFile);
             String message = "文件上传成功！";
-            Map map = new HashMap();
-            map.put("sucMessage", message);
+            //Map map = new HashMap();
+            map = MapUtil.toMap(1,message,file);
             JsonUtil.toJSON(map);
         }
     }
 
     @RequestMapping("downloadFile")
     public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
+        String message;
         try {
             String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
             InputStream inputStream = new FileInputStream(new File(path + fileName));
@@ -69,41 +70,41 @@ public class FileAction {
             // 这里主要关闭
             os.close();
             inputStream.close();
-            String message = "文件下载成功！";
+            message = "文件下载成功！";
             Map map = new HashMap();
             map.put("sucMessage",message);
             JsonUtil.toJSON(map);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            String message = "没有该文件!";
+            message = "没有该文件!";
             Map map = new HashMap();
             map.put("errMessage",message);
             JsonUtil.toJSON(map);
         } catch (IOException e) {
             e.printStackTrace();
-            String message = "文件下载失败!";
+            message = "文件下载失败!";
             Map map = new HashMap();
             map.put("errMessage",message);
             JsonUtil.toJSON(map);
         }
     }
 
-    @RequestMapping("selectByFileName")
-    public void selectByFileName(String fileName,HttpServletResponse response){
-        List<FileImpl> list = fileService.selectByFileName(fileName);
-        JsonUtil.toJSON(list,response);
-    }
+//    @RequestMapping("selectByFileName")
+//    public void selectByFileName(String fileName,HttpServletResponse response){
+//        List<FileImpl> list = fileService.selectByFileName(fileName);
+//        JsonUtil.toJSON(list,response);
+//    }
 
     @RequestMapping("updateFileInfo")
     public void updateFileInfo(FileImpl fileImpl,HttpServletResponse response){
         Map map;
-        String res = null;
+        String message = null;
         if (fileService.updateFileInfo(fileImpl)){
-            res = "操作成功";
-            map = MapUtil.toMap(1,res,null);
+            message = "操作成功";
+            map = MapUtil.toMap(1,message,null);
         }else {
-            res = "操作失败";
-            map = MapUtil.toMap(0,res,null);
+            message = "操作失败";
+            map = MapUtil.toMap(0,message,null);
         }
         JsonUtil.toJSON(map,response);
     }
@@ -115,14 +116,14 @@ public class FileAction {
         fileImpl.setDelTime(date);
         fileImpl.setDelFlag(true);
         System.out.println("时间格式："+date);
-        String res = null;
+        String message = null;
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileImpl,fileName,teamName)){
-            res = "操作成功";
-            map = MapUtil.toMap(1,res,null);
+            message = "操作成功";
+            map = MapUtil.toMap(1,message,null);
         }else {
-            res = "操作失败";
-            map = MapUtil.toMap(0,res,null);
+            message = "操作失败";
+            map = MapUtil.toMap(0,message,null);
         }
         JsonUtil.toJSON(map,response);
 
@@ -131,14 +132,14 @@ public class FileAction {
     @RequestMapping("recoverFile")
     public void recoverFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
         Map map;
-        String res = null;
+        String message = null;
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
         if (fileService.recoverFile(fileImpl,fileName,teamName)){
-            res = "操作成功";
-            map = MapUtil.toMap(1,res,null);
+            message = "操作成功";
+            map = MapUtil.toMap(1,message,null);
         }else {
-            res = "操作失败";
-            map = MapUtil.toMap(0,res,null);
+            message = "操作失败";
+            map = MapUtil.toMap(0,message,null);
         }
         JsonUtil.toJSON(map,response);
     }
@@ -146,14 +147,14 @@ public class FileAction {
     @RequestMapping("deleteFile")
     public void deleteFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
         Map map;
-        String res = null;
+        String message = null;
         //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
         if (fileService.deleteFile(fileImpl,fileName,teamName)){
-            res = "操作成功";
-            map = MapUtil.toMap(1,res,null);
+            message = "操作成功";
+            map = MapUtil.toMap(1,message,null);
         }else {
-            res = "操作失败";
-            map = MapUtil.toMap(0,res,null);
+            message = "操作失败";
+            map = MapUtil.toMap(0,message,null);
         }
         JsonUtil.toJSON(map,response);
     }
