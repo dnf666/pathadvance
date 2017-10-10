@@ -4,6 +4,8 @@ import com.pms.model.blog.Blog;
 import com.pms.model.blog.BlogWithBLOBs;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 博客的dao层
  */
@@ -30,4 +32,22 @@ public interface BlogMapper extends BaseDao<BlogWithBLOBs,Integer>{
      * @return
      */
     int updateByPrimaryKeyWithBLOBs(BlogWithBLOBs record);
+
+    /**
+     * 用户删除，只是修改del_flag
+     * @param id
+     * @return
+     */
+    int updateDelFlag(int id);
+
+    /**
+     * 设置为私有
+     * @param id
+     * @return
+     */
+    int setPrivate(int id);
+
+    List<BlogWithBLOBs> selectOwnAll(String userName);
+
+    List<BlogWithBLOBs> selectOtherAll(String userName);
 }
