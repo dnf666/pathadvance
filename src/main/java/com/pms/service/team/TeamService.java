@@ -1,5 +1,6 @@
 
 package com.pms.service.team;
+import com.pms.model.file.FileImpl;
 import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
 import java.util.List;
@@ -218,6 +219,35 @@ public interface TeamService {
      * @return 列表大小
      */
     int getCounts(List list);
+    //关于团队文件
 
+    /**
+     * 上传团队文件
+     * @param file 文件对象
+     * @param teamId 团队id即将文件上传到的团队id
+     * @return boolean
+     */
+    boolean addTeamFile(FileImpl file, int teamId);
 
+    /**
+     * 根据文件的id将文件删除，只有文件的上传者才能够删除
+     * @param fileId 文件的id
+     * @param delBy 文件删除者
+     * @return boolean
+     */
+    boolean delTeamFileById(int fileId, String delBy);
+
+    /**
+     * 通过文件的id下载文件
+     * @param fileId 文件id
+     * @return boolean
+     */
+    boolean downloadTeamFileById(int fileId);
+
+    /**
+     * 根据团队id展示团队文件
+     * @param teamId 团队id
+     * @return 文件对象的列表
+     */
+    List<FileImpl> showTeamFiles(int teamId);
 }
