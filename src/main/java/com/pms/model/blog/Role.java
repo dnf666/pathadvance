@@ -13,4 +13,5 @@ public class Role {
     private String userId;
     private int roleId;
     private String masterId;
+
 }
