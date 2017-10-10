@@ -56,7 +56,7 @@ public class FileServiceTest {
     public void updateFileInfo() throws Exception {
         FileImpl file1 = new FileImpl();
         file1.setFileId(2);
-        file1.setFileName("file1");
+        file1.setFileName("file12");
         file1.setUrl("url1");
         file1.setSize(1);
         file1.setCreateBy("createBy1");
@@ -65,7 +65,7 @@ public class FileServiceTest {
         file1.setDelFlag(true);
         file1.setDelTime("delTime1");
         file1.setIsPrivater(true);
-        fileService.updateFileInfo(file1,2);
+        fileService.updateFileInfo(file1,"file12");
 
     }
 
