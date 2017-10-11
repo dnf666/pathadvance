@@ -235,7 +235,7 @@ public interface TeamService {
      * @param delBy 文件删除者
      * @return boolean
      */
-    boolean delTeamFileById(int fileId, String delBy);
+    boolean delTeamFileById(FileImpl fileImpl, int fileId, String delBy);
 
     /**
      * 通过文件的id下载文件

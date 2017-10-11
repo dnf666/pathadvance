@@ -23,6 +23,7 @@ import java.util.Map;
 @Controller
 public class FileAction {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH-mm-ss");
+    String message;
 
     @Autowired
     FileService fileService;
@@ -32,7 +33,8 @@ public class FileAction {
         Map map;
         if (file.isEmpty()) {
 //            System.out.println("文件未上传!");
-            String message = "文件未上传!";
+
+            message = "文件未上传!";
             //Map map = new HashMap();
             map = MapUtil.toMap(0,message,null);
             JsonUtil.toJSON(map);
@@ -48,7 +50,9 @@ public class FileAction {
             //把文件上传至path的路径
             File localFile = new File(path);
             file.transferTo(localFile);
-            String message = "文件上传成功！";
+
+            message = "文件上传成功！";
+
             //Map map = new HashMap();
             map = MapUtil.toMap(1,message,file);
             JsonUtil.toJSON(map);
@@ -90,18 +94,19 @@ public class FileAction {
     }
 
 //    @RequestMapping("selectByFileName")
-//    public void selectByFileName(String fileName,HttpServletResponse response){
-//        List<FileImpl> list = fileService.selectByFileName(fileName);
+
+//    public void selectByFileId(int fileId,HttpServletResponse response){
+//        List<FileImpl> list = fileService.selectByFileId(fileId);
 //        JsonUtil.toJSON(list,response);
 //    }
 
     @RequestMapping("updateFileInfo")
-    public void updateFileInfo(FileImpl fileImpl,HttpServletResponse response){
+    public void updateFileInfo(FileImpl fileImpl,String fileName,HttpServletResponse response){
         Map map;
-        String message = null;
-        if (fileService.updateFileInfo(fileImpl)){
+        //String messge = null;
+        if (fileService.updateFileInfo(fileImpl,fileName)){
             message = "操作成功";
-            map = MapUtil.toMap(1,message,null);
+            map = MapUtil.toMap(1,message,fileImpl);
         }else {
             message = "操作失败";
             map = MapUtil.toMap(0,message,null);
@@ -110,15 +115,17 @@ public class FileAction {
     }
 
     @RequestMapping("deleteByDelFlag")
-    public void deleteByDelFlag(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+    public void deleteByDelFlag(FileImpl fileImpl,int fileId,HttpServletResponse response){
         Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
         fileImpl.setDelFlag(true);
         System.out.println("时间格式："+date);
-        String message = null;
+
+        //String message = null;
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
-        if (fileService.deleteByDelFlag(fileImpl,fileName,teamName)){
+        if (fileService.deleteByDelFlag(fileImpl,fileId)){
+
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {
@@ -130,13 +137,14 @@ public class FileAction {
     }
 
     @RequestMapping("recoverFile")
-    public void recoverFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+    public void recoverFile(FileImpl fileImpl,int fileId,HttpServletResponse response){
         Map map;
-        String message = null;
+        //String res = null;
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
-        if (fileService.recoverFile(fileImpl,fileName,teamName)){
+        if (fileService.recoverFile(fileImpl,fileId)){
             message = "操作成功";
-            map = MapUtil.toMap(1,message,null);
+            map = MapUtil.toMap(1,message,fileImpl);
+
         }else {
             message = "操作失败";
             map = MapUtil.toMap(0,message,null);
@@ -145,11 +153,16 @@ public class FileAction {
     }
 
     @RequestMapping("deleteFile")
-    public void deleteFile(FileImpl fileImpl,String fileName,String teamName,HttpServletResponse response){
+    public void deleteFile(FileImpl fileImpl,int fileId,HttpServletResponse response){
         Map map;
-        String message = null;
+        String date = simpleDateFormat.format(new Date());
+        fileImpl.setDelTime(date);
+        fileImpl.setDelFlag(true);
+        System.out.println("时间格式："+date);
+        //String res = null;
         //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
-        if (fileService.deleteFile(fileImpl,fileName,teamName)){
+        if (fileService.deleteFile(fileImpl,fileId)){
+
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {

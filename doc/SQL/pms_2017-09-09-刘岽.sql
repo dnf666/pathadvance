@@ -239,15 +239,10 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `file_reference`;
 CREATE TABLE `file_reference` (
   `file_id` int(11) NOT NULL,
-  
   `team_id` int(11) DEFAULT NULL,
-  
   `project_id` int(11) DEFAULT NULL,
-  
   `user_id` int(20) DEFAULT NULL,
-
   PRIMARY KEY (`file_id`)
-   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

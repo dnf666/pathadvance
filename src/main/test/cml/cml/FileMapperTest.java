@@ -51,7 +51,7 @@ public class FileMapperTest {
 
     @Test
     public void selectByFileName() throws Exception{
-        System.out.println(fileMapper.selectByFileName("文件1"));
+       // System.out.println(fileMapper.selectByFileName("文件1"));
     }
 
     @Test

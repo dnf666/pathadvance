@@ -172,6 +172,25 @@ public class TeamMapperTest {
                         .userName("jjj")
                         .build();
                 Assert.assertEquals(true,teamMapper.insertTeamMasterHistory(teamMasterHistory));
-
         }
+        @Test
+        public void getTeamByIdTest(){
+                int id = 1;
+                Assert.assertEquals("队1",teamMapper.getTeamById(id).getTeamName());
+        }
+        @Test
+        public void addTeamFileTest(){
+                Assert.assertEquals(true, teamMapper.addTeamFile(1,2,3));
+        }
+        @Test
+        public void getFRByFileIdTest(){
+                int fileId = 1;
+                Assert.assertEquals(2,teamMapper.getFRByFileId(fileId).getTeamId());
+        }
+        @Test
+        public void getFRByTeamIdTest(){
+                int teamId = 2;
+                Assert.assertEquals(3, teamMapper.getFRByTeamId(teamId).get(0).getUserId());
+        }
+
 }

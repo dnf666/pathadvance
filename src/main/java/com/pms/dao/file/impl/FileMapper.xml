@@ -5,42 +5,41 @@
 
 <mapper namespace="com.pms.dao.file.FileMapper">
     <resultMap id="FileImpl" type="com.pms.model.file.FileImpl">
-        <result property="id" column="id"/>
+        <result property="fileId" column="file_id"/>
         <result property="fileName" column="file_name"/>
         <result property="url" column="url"/>
         <result property="fileClass" column="class"/>
         <result property="size" column="size"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
-        <result property="teamName" column="team_name"/>
         <result property="delFlag" column="del_flag"/>
         <result property="delTime" column="del_time"/>
         <result property="isPrivater" column="is_privater"/>
     </resultMap>
 
-    <select id="selectByFileName" resultMap="FileImpl" >
-        SELECT id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater
+    <select id="selectByFileId" resultMap="FileImpl" >
+        SELECT file_id,file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater
         FROM file
-        WHERE file_name = #{fileName} AND del_flag = 0;
+        WHERE file_id = #{fileId} AND del_flag = 0;
     </select>
 
     <delete id="deleteFile">
         DELETE FROM file
-        WHERE file_name = #{fileName} AND team_name = #{teamName};
+        WHERE file_id = #{fileId};
     </delete>
 
     <insert id="insertFileInfo">
         INSERT INTO file
-        (id,file_name,url,class,size,create_by,create_time,team_name,del_flag,del_time,is_privater)
+        (file_id,file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater)
         VALUES
-        (#{id},#{fileName},#{url},#{fileClass},#{size},#{createBy},#{createTime},#{teamName},#{delFlag},#{delTime},#{isPrivater})
+        (#{fileId},#{fileName},#{url},#{fileClass},#{size},#{createBy},#{createTime},#{delFlag},#{delTime},#{isPrivater})
     </insert>
 
     <update id="updateFileInfo" parameterType="com.pms.model.file.FileImpl" >
         UPDATE file
         <set>
-            <if test="id != null">
-                id = #{id},
+            <if test="fileId != null">
+                file_id = #{fileId},
             </if>
             <if test="url != null">
                 url = #{url},
@@ -56,9 +55,6 @@
             </if>
             <if test="createTime !=null">
                 create_time = #{createTime},
-            </if>
-            <if test="teamName !=null">
-                team_name = #{teamName},
             </if>
             <if test="delFlag != null">
                 del_flag = #{delFlag},
@@ -83,7 +79,7 @@
                 del_time = #{delTime}
             </if>
         </set>
-        WHERE file_name = #{fileName} AND team_name = #{teamName};
+        WHERE file_id = #{fileId};
     </update>
 
     <update id="recoverFile">
@@ -96,7 +92,7 @@
                 del_time = #{delTime}
             </if>
         </set>
-        WHERE file_name = #{fileName} AND team_name = #{teamName};
+        WHERE file_id = #{fileId};
     </update>
 
 </mapper>

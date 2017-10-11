@@ -1,14 +1,19 @@
 
         package com.pms.service.team.Impl;
         import com.pms.dao.teamdao.TeamMapper;
+        import com.pms.dao.user.UserMapper;
         import com.pms.model.file.FileImpl;
         import com.pms.model.project.ProjectMember;
         import com.pms.model.team.*;
+        import com.pms.service.file.FileService;
         import com.pms.service.team.TeamService;
         import com.pms.util.team.IsNull;
         import org.apache.ibatis.annotations.Param;
         import org.springframework.stereotype.Service;
+        import sun.awt.image.ImageWatched;
+
         import javax.annotation.Resource;
+        import java.util.ArrayList;
         import java.util.LinkedList;
         import java.util.List;
         /**
@@ -21,6 +26,10 @@ public class TeamSerciveImpl implements TeamService{
             private final int MANAGER_OF_TEAMMEMBER = 1;//团队管理员的权限
             private final int NO_SUCH_TEAMMEMBER = -1;//表示当前团队没有这个成员
             private final int DEL_FLAG = 1;//删除的标志
+            @Resource
+            private UserMapper userMapper;
+            @Resource
+            private FileService fileService;
             @Resource
             private TeamMapper teamMapper;
            /* public boolean isProMember(List<ProjectMember> list, String userName) {
@@ -331,28 +340,54 @@ public class TeamSerciveImpl implements TeamService{
 
             public boolean addTeamFile(FileImpl file, int teamId) {
                 //首先判断传入的信息是否为空
-                if ()
+                if (IsNull.addTeamFileInfoIsOK(file)){
+                    //判断teamId是否存在
+                    if (teamMapper.getTeamById(teamId) != null)
+                    {
+                        if (fileService.insertFileInfo(file)){
+                            //如果团队文件上传成功，那么对文件参照关系表进行操作
+                            int userId = userMapper.selectPersonInfoByUserName(file.getCreateBy()).getStuId();
+                            return teamMapper.addTeamFile(teamId , file.getFileId(), userId);
+                        }
+                    }
+                }
                 return false;
             }
 
-            public boolean delTeamFileById(int fileId, String delBy) {
+            public boolean delTeamFileById(FileImpl fileImpl, int fileId, String delBy) {
+                if (fileImpl.getFileId() != fileId || delBy == null){
+                    return false;
+                }
+                FileReference fileReference = teamMapper.getFRByFileId(fileId);
+                String teamName = teamMapper.getTeamById(fileReference.getTeamId()).getTeamName();
+                TeamMember teamMember = getDelTeamMember(teamName, delBy);
+                if (teamMember == null)
+                    return false;
+                if (fileImpl.getCreateBy().equals(delBy) || getTeamPrivilege(teamMember) >= MANAGER_OF_TEAMMEMBER){
+                    return fileService.deleteByDelFlag(fileImpl, fileId);
+                }
                 return false;
             }
 
             public boolean downloadTeamFileById(int fileId) {
+                String fileName = fileService.selectByFileId(fileId).getFileName();
+                fileService.downloadFile(fileName);
                 return false;
             }
 
             public List<FileImpl> showTeamFiles(int teamId) {
-                return null;
+                List<FileImpl> fileList = new ArrayList<FileImpl>();
+                List<FileReference> fileReferenceList;
+                fileReferenceList = teamMapper.getFRByTeamId(teamId);
+                if (fileReferenceList == null) {
+                    return null;
+                }
+                for (FileReference fr : fileReferenceList) {
+                    FileImpl file = fileService.selectByFileId(fr.getFileId());
+                    fileList.add(file);
+                }
+                return fileList;
             }
-/*   public boolean addProjectMember(ProjectMember projectMember, String inviteBy) {
-                return false;
-            }
-
-            public boolean delProjectMember(ProjectMember projectMember, int projectId) {
-                return false;
-            }*/
-        }
+}
 
 

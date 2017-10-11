@@ -5,6 +5,7 @@
 <mapper namespace="com.pms.dao.teamdao.TeamMapper">
     <!--对团队的操控-->
     <resultMap id="team" type="com.pms.model.team.Team">
+        <id column="team_id" property="teamId"/>
         <result column="team_name" property="teamName"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
@@ -42,6 +43,9 @@
     </resultMap>
     <select id="getTeamInfo" resultMap="teamInfo" parameterType="java.lang.String">
         select * from team WHERE team_name=#{teamName} AND del_flag=0;
+    </select>
+    <select id="getTeamById" parameterType="java.lang.Integer" resultMap="teamInfo">
+        select * from team WHERE team_id=#{teamId} AND del_flag=0;
     </select>
     <!--得到所有团队-->
     <select id="getAllTeam" resultMap="teamInfo">
@@ -105,7 +109,6 @@
     <select id="getTeamInfoByUserName" parameterType="String" resultMap="teamMember">
         SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName};
     </select>
-
     <select id="getTeamMemberByTeamNameAndUserName" resultMap="teamMember">
         SELECT * FROM team_member WHERE user_name = #{userName} AND del_flag=0 AND team_name=#{teamName};
     </select>
@@ -189,10 +192,25 @@
     <!--关于文件的归属操作-->
 
     <resultMap id="fileReference" type="com.pms.model.team.FileReference">
-        <result column="file_id" property="fileId"/>
+        <id column="file_id" property="fileId"/>
         <result column="team_id" property="teamId"/>
         <result column="project_id" property="projectId"/>
         <result column="user_id" property="userId"/>
     </resultMap>
+
+    <insert id="addTeamFile">
+        insert into file_reference (file_id, team_id, user_id) values
+        (#{fileId}, #{teamId},#{userId});
+    </insert>
+    <select id="getFRByFileId" parameterType="java.lang.Integer" resultMap="fileReference">
+        SELECT * FROM file_reference
+          WHERE
+            file_id = #{fileId}
+    </select>
+    <select id="getFRByTeamId" parameterType="java.lang.Integer" resultMap="fileReference">
+        SELECT * FROM file_reference
+        WHERE
+        team_id = #{teamId}
+    </select>
 
 </mapper>
