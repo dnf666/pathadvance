@@ -4,8 +4,6 @@ package com.pms.service.file;
 import com.pms.model.file.FileImpl;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created by Chenmeiling on 2017/8/18.
  */
@@ -22,7 +20,7 @@ public interface FileService {
      * 查看文件信息
      * @return boolean
      */
-    List<FileImpl> selectByFileId(int fileId);
+    boolean selectByFileId(FileImpl fileImpl, int fileId);
 
     /**
      * 更新文件信息

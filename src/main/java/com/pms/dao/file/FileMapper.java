@@ -3,10 +3,7 @@ package com.pms.dao.file;
 
 import com.pms.model.file.FileImpl;
 import org.apache.ibatis.annotations.Param;
-
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/1.
@@ -18,7 +15,7 @@ public interface FileMapper {
      * @param fileId
      * @return
      */
-    List<FileImpl> selectByFileId(int fileId);
+    boolean selectByFileId(int fileId);
 
     /**
      * 文件删除
