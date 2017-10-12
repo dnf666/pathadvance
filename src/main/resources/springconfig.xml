@@ -56,6 +56,8 @@
     </bean>
 <!--dao接口所在包名，Spring会自动查找其下的类-->
     <bean name="daoManager" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--这项在这个项目中其实可以不写，因为MapperScannerConfigurer将会自动创建MapperFactoryBean之后自动装配，但是你
+        如果使用了一个以上的DateSource就会装配失败， 就要以下面的方式指定sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.pms.dao"/>
     </bean>

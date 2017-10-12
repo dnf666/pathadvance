@@ -134,7 +134,7 @@ CREATE TABLE `project` (
   `project_info` varchar(255) DEFAULT NULL COMMENT '项目的简单介绍\n',
   `create_by` varchar(50) NOT NULL,
   `create_at` mediumtext NOT NULL,
-  `del_flag` tinyint(1) DEFAULT 0,
+  `del_flag` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `project_id_uindex` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

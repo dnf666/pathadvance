@@ -102,13 +102,24 @@
         WHERE team_name=#{teamName} AND project_id=#{projectId} AND user_name=#{userName} AND del_flag=0
     </update>-->
 
-    <delete id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
-        DELETE FROM project_member
-        WHERE team_name=#{teamName} AND project_id=#{projectId}
-    </delete>
+    <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
+        UPDATE project_member
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag}
+            </if>
+        </set>
+        WHERE team_name = #{teamName}
+         AND user_name = #{userName} AND del_flag = 0
+    </update>
 
     <select id="getProjectMembersByProjectId"  resultMap="project_members">
         SELECT * FROM project_member
         WHERE del_flag=0 AND project_id = #{projectId}
+    </select>
+
+    <select id="getProjectMembersByTeamName" resultMap="project_members">
+        SELECT * FROM project_member
+        WHERE team_name = #{teamName}
     </select>
 </mapper>

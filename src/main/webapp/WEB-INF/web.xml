@@ -24,8 +24,12 @@
       classpath*:springconfig.xml
     </param-value>
   </context-param>
+    <context-param>
+        <param-name/>
+        <param-value/>
+    </context-param>
 
-  <filter>
+    <filter>
     <filter-name>filterEncoding</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>

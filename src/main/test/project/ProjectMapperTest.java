@@ -52,5 +52,15 @@ public class ProjectMapperTest {
         System.out.println(list.get(0).getCreateBy());
     }
 
+    @Test
+    public void delProMemberTest(){
+        ProjectMember projectMember = new ProjectMember.Builder().userName("MEI")
+                .teamName("MeiYongJie").joinTime("2017-10-09").joinBy("ZhangShiRu").projectRole("成员").delFlag(true)
+                .build();
+        if(projectMapper.delProjectMember(projectMember)){
+            System.out.println("通过改变删除标志删除成功！");
+        }
+    }
+
 
 }

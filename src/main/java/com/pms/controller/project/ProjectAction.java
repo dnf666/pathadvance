@@ -2,15 +2,19 @@ package com.pms.controller.project;
 
 import com.pms.controller.file.FileAction;
 import com.pms.model.file.FileImpl;
+import com.pms.model.project.FileReference;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
+import com.pms.service.FileReference.FileReferenceService;
 import com.pms.service.file.FileService;
 import com.pms.service.project.ProjectService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +33,8 @@ public class ProjectAction {
     FileService fileService;
     @Autowired
     FileAction fileAction;
+    @Autowired
+    FileReferenceService fileReferenceService;
 
     @RequestMapping(value = "/project/showpros.do")
     public void showAllProjects(){
@@ -42,14 +48,27 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping(value = "/project/showpro.do")
-    public void showProject(int  projectId){
+    @RequestMapping(value = "/project/showpro.do"   , method = RequestMethod.GET)
+    public void showProject(int projectId){
         Map map;
         Project project = projectService.getProject(projectId);
         if (project != null){
             map = MapUtil.toMap(1, "success", project);
         }else {
             map = MapUtil.toMap(0, "false", null);
+        }
+        System.out.println("接收到了请求...");
+        JsonUtil.toJSON(map);
+    }
+
+    @RequestMapping("/project/showfile.do")
+    public void showFiles(int projectId){
+        Map map;
+        List<FileImpl> files = fileReferenceService.getFilesByProjectId(projectId);
+        if (files != null && files.size()>0){
+            map = MapUtil.toMap(1,"success", files);
+        }else {
+            map = MapUtil.toMap(0,"false",null);
         }
         JsonUtil.toJSON(map);
     }
@@ -84,7 +103,7 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping(value = "/project/addmem.do")
+        @RequestMapping(value = "/project/addmem.do")
     public void addMem(ProjectMember projectMember){
         Map map;
         if (projectService.addProMember(projectMember)){
@@ -111,12 +130,5 @@ public class ProjectAction {
         }
 
 
-       /* Map map;
-        if (projectService.deleteProMember(userName, projectId, projectMember)){
-            map = MapUtil.toMap(1, "success", null);
-        }else{
-            map = MapUtil.toMap(0, "false", null);
-        }
-        JsonUtil.toJSON(map);*/
     }
 }

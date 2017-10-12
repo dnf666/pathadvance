@@ -79,6 +79,13 @@ public interface ProjectMapper {
      */
     List<ProjectMember> getProjectMembersByProjectId(Project project);
 
+    /**
+     *
+     * @param teamName
+     * @return boolean
+     */
+    boolean getProjectMembersByTeamName(String teamName);
+
 
 
 }
