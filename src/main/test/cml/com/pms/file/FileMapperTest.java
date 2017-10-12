@@ -21,13 +21,13 @@ public class FileMapperTest {
     @Test
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
+        file.setFileId(1);
         file.setFileName("fileName");
         file.setUrl("位置");
         file.setFileClass("类型");
         file.setSize(1);
         file.setCreateBy("createBy");
         file.setCreateTime("createTime");
-        file.setTeamName("teamName");
         file.setDelFlag(true);
         file.setDelTime("delTime");
         file.setIsPrivater(false);
@@ -38,13 +38,13 @@ public class FileMapperTest {
     @Test
     public void updateFileInfo() throws Exception {
         FileImpl fileImpl = new FileImpl();
+        fileImpl.setFileId(2);
         fileImpl.setFileName("文件1");
         fileImpl.setUrl("位置1");
         fileImpl.setFileClass("类型1");
         fileImpl.setSize(1);
         fileImpl.setCreateBy("createBy1");
         fileImpl.setCreateTime("createTime1");
-        fileImpl.setTeamName("teamName");
         fileImpl.setDelFlag(true);
         fileImpl.setDelTime("delTime1");
         fileImpl.setIsPrivater(true);
@@ -54,26 +54,27 @@ public class FileMapperTest {
 
     @Test
     public void selectByFileName() throws Exception{
-        System.out.println(fileMapper.selectByFileName("文件1"));
+        System.out.println(fileMapper.selectByFileId(1));
     }
 
     @Test
     public void deleteFile() throws Exception {
         FileImpl fileImpl = new FileImpl();
-        fileMapper.deleteFile(fileImpl,"fileName","teamName");
+        fileImpl.setFileId(3);
+        fileMapper.deleteFile(fileImpl,3);
 
     }
 
     @Test
     public void deleteByDelFlag() throws Exception{
         FileImpl file2 = new FileImpl();
+        file2.setFileId(4);
         file2.setFileName("文件2");
         file2.setUrl("位置2");
         file2.setFileClass("类型2");
         file2.setSize(1);
         file2.setCreateBy("createBy2");
         file2.setCreateTime("createTime2");
-        file2.setTeamName("teamName");
         file2.setDelFlag(false);
         file2.setDelTime("delTime2");
         file2.setIsPrivater(false);
@@ -83,13 +84,13 @@ public class FileMapperTest {
     @Test
     public void recoverFile() throws Exception{
         FileImpl file3 = new FileImpl();
+        file3.setFileId(5);
         file3.setFileName("文件3");
         file3.setUrl("位置3");
         file3.setFileClass("类型3");
         file3.setSize(1);
         file3.setCreateBy("createBy3");
         file3.setCreateTime("createTime3");
-        file3.setTeamName("teamName");
         file3.setDelFlag(true);
         file3.setDelTime("delTime3");
         file3.setIsPrivater(false);

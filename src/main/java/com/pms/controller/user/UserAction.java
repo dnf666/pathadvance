@@ -1,6 +1,5 @@
 package com.pms.controller.user;
 
-import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataService.user.UserModelService;
 import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
@@ -30,18 +29,18 @@ public class UserAction {
     @Autowired
     VeriCode veriCode;
 
-    @RequestMapping("login")
-    public void login(LoginInfo loginInfo, HttpServletRequest request){
-            Map map;
-        String code = (String) request.getSession().getAttribute("verificationCode");
-        if (userService.login(loginInfo,code)) {
-            map = MapUtil.toMap(1,"success",null);
-            request.getSession().setAttribute("userName",loginInfo.getUserName());
-        }else {
-            map = MapUtil.toMap(0,userService.getMessage(),null);
-        }
-        JsonUtil.toJSON(map);
-    }
+//    @RequestMapping("login")
+//    public void login(LoginInfo loginInfo, HttpServletRequest request){
+//            Map map;
+//        String code = (String) request.getSession().getAttribute("verificationCode");
+//        if (userService.login(loginInfo,code)) {
+//            map = MapUtil.toMap(1,"success",null);
+//            request.getSession().setAttribute("userName",loginInfo.getUserName());
+//        }else {
+//            map = MapUtil.toMap(0,userService.getMessage(),null);
+//        }
+//        JsonUtil.toJSON(map);
+//    }
 
     @RequestMapping("register")
     public void register(User user, HttpServletRequest request){
@@ -61,7 +60,7 @@ public class UserAction {
     public void pushCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         char[] chars = veriCode.getChars();
         BufferedImage image = veriCode.getImage(chars);
-        request.getSession().setAttribute("verificationCode",chars.toString());
+        request.getSession().setAttribute("verificationCode",new String(chars));
         ImageIO.write(image,"jpg",response.getOutputStream());
     }
 

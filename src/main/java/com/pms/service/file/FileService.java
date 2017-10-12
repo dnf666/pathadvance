@@ -4,8 +4,6 @@ package com.pms.service.file;
 import com.pms.model.file.FileImpl;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created by Chenmeiling on 2017/8/18.
  */
@@ -22,35 +20,35 @@ public interface FileService {
      * 查看文件信息
      * @return boolean
      */
-    List<FileImpl> selectByFileName(String fileName);
+    boolean selectByFileId(FileImpl fileImpl, int fileId);
 
     /**
      * 更新文件信息
      * @param fileImpl
      * @return boolean
      */
-    boolean updateFileInfo(FileImpl fileImpl);
+    boolean updateFileInfo(FileImpl fileImpl,String fileName);
 
     /**
      * 删除文件，只是修改删除标记
      * @param fileImpl
      * @return boolean
      */
-    boolean deleteByDelFlag(FileImpl fileImpl,String fileName,String teamName);
+    boolean deleteByDelFlag(FileImpl fileImpl,int fileId);
 
     /**
      * 删除文件恢复，即修改删除标记
-     * @param fileName,teamName
+     * @param fileId
      * @return boolean
      */
-    boolean recoverFile(FileImpl fileImpl,String fileName,String teamName);
+    boolean recoverFile(FileImpl fileImpl,int fileId);
 
     /**
      * 删除文件
-     * @param fileName
+     * @param fileId
      * @return boolean
      */
-    boolean deleteFile(FileImpl fileImpl,String fileName,String teamName);
+    boolean deleteFile(FileImpl fileImpl,int fileId);
 
     /**
      * 下载文件
