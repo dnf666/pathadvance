@@ -63,8 +63,9 @@ public class FileAction {
     public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
         String message;
         try {
-            String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
-            InputStream inputStream = new FileInputStream(new File(path + fileName));
+            String path1 = request.getSession().getServletContext().getRealPath("upload") + File.separator;
+            String path = path1 + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + fileName;
+            InputStream inputStream = new FileInputStream(new File(path));
             OutputStream os = response.getOutputStream();
             byte[] b = new byte[2048];
             int length;

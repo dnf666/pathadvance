@@ -24,8 +24,12 @@
       classpath*:springconfig.xml
     </param-value>
   </context-param>
+    <context-param>
+        <param-name/>
+        <param-value/>
+    </context-param>
 
-  <filter>
+    <filter>
     <filter-name>filterEncoding</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
@@ -33,6 +37,7 @@
       <param-value>UTF-8</param-value>
     </init-param>
   </filter>
+
   <filter-mapping>
     <filter-name>filterEncoding</filter-name>
     <url-pattern>/*</url-pattern>
@@ -53,9 +58,11 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+
   <listener>
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
+
   <servlet>
     <servlet-name>DispatcherServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -66,9 +73,9 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-  <servlet-mapping>
-    <servlet-name>DispatcherServlet</servlet-name>
-    <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+      <servlet-name>DispatcherServlet</servlet-name>
+      <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
 
 </web-app>

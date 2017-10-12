@@ -3,6 +3,7 @@ package com.pms.model.file;
 /**
  * Created by Chenmeiling on 2017/8/26.
  */
+//id->fileId
 public class FileImpl {
     private int fileId;
     private String fileName;

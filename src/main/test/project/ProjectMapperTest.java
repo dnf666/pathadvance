@@ -32,7 +32,7 @@ public class ProjectMapperTest {
     @Test
     public void delPTest(){
         Project p = new Project.Builder().createAt("123").createBy("bailixiang").projectInfo("xiangmuxiangmu")
-                .teamName("hahah").projectName("projectanam").id(2).delFlag(1).build();
+                .teamName("hahah").projectName("projectanam").id(2).delFlag(true).build();
         projectMapper.delProject(p);
     }
     @Test
@@ -51,7 +51,9 @@ public class ProjectMapperTest {
         List<Project> list = projectMapper.getProjectsByTeamName("ddd");
         System.out.println(list.get(0).getCreateBy());
     }
+
     @Test
+<<<<<<< HEAD
     public void addPMTest(){
         ProjectMember pm = new ProjectMember.Builder().teamRole("成员啊啊啊").joinBy("jiajia").joinTime("999").teamName("ajja").userName("liudddd东").build();
         System.out.println(projectMapper.addProjectMember(pm));
@@ -69,5 +71,16 @@ public class ProjectMapperTest {
     public void getPMsTest(){
         List<ProjectMember> list = projectMapper.getProjectMembersByProjectId(1);
         System.out.println(list.get(0).getTeamName());
+=======
+    public void delProMemberTest(){
+        ProjectMember projectMember = new ProjectMember.Builder().userName("MEI")
+                .teamName("MeiYongJie").joinTime("2017-10-09").joinBy("ZhangShiRu").projectRole("成员").delFlag(true)
+                .build();
+        if(projectMapper.delProjectMember(projectMember)){
+            System.out.println("通过改变删除标志删除成功！");
+        }
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     }
+
+
 }

@@ -22,6 +22,7 @@
  */
 @Service
 public class TeamSerciveImpl implements TeamService{
+<<<<<<< HEAD
             private final int MASTER_OF_TEAMMEMBER = 2;//团队负责人即最高权限
             private final int MANAGER_OF_TEAMMEMBER = 1;//团队管理员的权限
             private final int NO_SUCH_TEAMMEMBER = -1;//表示当前团队没有这个成员
@@ -53,6 +54,21 @@ public class TeamSerciveImpl implements TeamService{
                         if (userName.equals(teamMember.getUserName())){
                             return teamMember;
                         }
+=======
+    private final static int MASTER_OF_TEAMMEMBER = 2;//团队负责人即最高权限
+    private final static int MANAGER_OF_TEAMMEMBER = 1;//团队管理员的权限
+    private final static int NO_SUCH_TEAMMEMBER = -1;//表示当前团队没有这个成员
+            //@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，
+            // 而@Resource默认按 byName自动注入罢了
+    @Resource
+    private TeamMapper teamMapper;
+    public boolean isProMember(List<ProjectMember> list, String userName) {
+        if (list != null && userName != null){
+            if (list.size() != 0){
+                for (ProjectMember projectMemberName:list) {
+                    if (userName.equals(projectMemberName.getUserName())){
+                        return true;
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
                     }
                 }
                 return null;//表示没有匹配的团队成员
@@ -91,6 +107,7 @@ public class TeamSerciveImpl implements TeamService{
             public List<Team> getAllTeam() {
                 return teamMapper.getAllTeam();
             }
+<<<<<<< HEAD
             public List<Team> getMyteam(String userName) {
                 List<Team> teamList = new LinkedList<Team>();
                 if (userName != null){
@@ -101,6 +118,23 @@ public class TeamSerciveImpl implements TeamService{
                             teamList.add(teamMapper.getTeamInfo(teamName));
                         }
                     }
+=======
+        }
+        return false;
+    }
+    public List<Team> getAllTeam() {
+        return teamMapper.getAllTeam();
+    }
+
+    public List<Team> getMyteam(String userName) {
+        List<Team> teamList = new LinkedList<Team>();
+        if (userName != null){
+            List<TeamMember> teamMemberList = teamMapper.getTeamInfoByUserName(userName);//通过团队成员获得团队名称的信息
+            if (teamMemberList != null && teamMemberList.size() > 0){
+                for (TeamMember tm:teamMemberList) {
+                    String teamName = tm.getTeamName();
+                    teamList.add(teamMapper.getTeamInfo(teamName));
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
                 }
                 return teamList;
             }

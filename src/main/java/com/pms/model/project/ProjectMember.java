@@ -3,13 +3,15 @@ package com.pms.model.project;
 /**
  * Created by liudong on 2017/8/11.
  */
+
+//项目成员
 public class ProjectMember {
     private int projectId;
     private String userName;
     private String projectRole;
     private String joinTime;
     private String joinBy;
-    private int delFlag;
+    private boolean delFlag;
     private String delTime;
     private String delRemarks;
     private String delBy;
@@ -20,7 +22,11 @@ public class ProjectMember {
     private ProjectMember(Builder builder) {
         setProjectId(builder.projectId);
         setUserName(builder.userName);
+<<<<<<< HEAD
         setprojectRole(builder.projectRole);
+=======
+        setProjectRole(builder.projectRole);
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         setJoinTime(builder.joinTime);
         setJoinBy(builder.joinBy);
         setDelFlag(builder.delFlag);
@@ -33,6 +39,10 @@ public class ProjectMember {
     public int getProjectId() {
         return projectId;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
@@ -45,11 +55,19 @@ public class ProjectMember {
         this.userName = userName;
     }
 
+<<<<<<< HEAD
     public String getprojectRole() {
         return projectRole;
     }
 
     public void setprojectRole(String projectRole) {
+=======
+    public String getProjectRole() {
+        return projectRole;
+    }
+
+    public void setProjectRole(String projectRole) {
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         this.projectRole = projectRole;
     }
 
@@ -69,11 +87,11 @@ public class ProjectMember {
         this.joinBy = joinBy;
     }
 
-    public int getDelFlag() {
+    public boolean isDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -110,13 +128,15 @@ public class ProjectMember {
     }
 
 
+
+
     public static final class Builder {
         private int projectId;
         private String userName;
         private String projectRole;
         private String joinTime;
         private String joinBy;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private String delRemarks;
         private String delBy;
@@ -135,7 +155,11 @@ public class ProjectMember {
             return this;
         }
 
+<<<<<<< HEAD
         public Builder teamRole(String val) {
+=======
+        public Builder projectRole(String val) {
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
             projectRole = val;
             return this;
         }
@@ -150,7 +174,7 @@ public class ProjectMember {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

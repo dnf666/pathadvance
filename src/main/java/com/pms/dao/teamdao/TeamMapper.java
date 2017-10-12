@@ -10,6 +10,9 @@ import java.util.List;
  *
  *                                                         关于团队项目和团队文件还没有写
  */
+
+//此注解 能将其注册为Spring Bean
+// 能将所标注的类抛出的数据访问异常封装为Spring的数据访问异常，使得异常独立于底层框架
 @Repository
 public interface TeamMapper {
     /**

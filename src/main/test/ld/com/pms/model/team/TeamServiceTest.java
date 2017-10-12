@@ -81,6 +81,7 @@ public class TeamServiceTest {
         projectMember.setJoinBy("东东");
         System.out.println(teamService.addProjectMember(projectMember,"东东"));
   */  }
+<<<<<<< HEAD
     @Test
     public void delProjectMemberTest(){
         ProjectMember projectMember=new ProjectMember.Builder().build();
@@ -96,6 +97,9 @@ public class TeamServiceTest {
         projectMember.setDelBy("东东");
        // System.out.println(teamService.delProjectMember(projectMember,8));
     }
+=======
+
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     @Test
     public void createNoticeTest(){
         TeamNotice teamNotice=new TeamNotice();
