@@ -1,6 +1,7 @@
 
 package com.pms.service.team;
 import com.pms.model.file.FileImpl;
+import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
 import java.util.List;
@@ -111,16 +112,15 @@ public interface TeamService {
      * @param teamProject 团队项目对象
      * @return boolean
      */
-//    boolean createProject(TeamProject teamProject);
-//    /**
-//     *项目的删除
-//     *1.操作用户只能是创建者
-//     * @param teamProject 团队项目
-//     * @param delBy 删除者
-//     *
-//     * @return boolean
-//     */
-//    boolean delProject(TeamProject teamProject,String delBy);
+    boolean createProject(Project teamProject);
+    /**
+     *项目的删除
+     *1.操作用户只能是创建者
+     * @param teamProject 团队项目
+     * @param delBy 删除者
+     * @return boolean
+     */
+    boolean delProject(Project teamProject,String delBy);
 //    /**
 //     * 设置成员权限，只有负责人才能够设置
 //     * @param teamPrivilige 团队成员的权限
@@ -227,27 +227,27 @@ public interface TeamService {
      * @param teamId 团队id即将文件上传到的团队id
      * @return boolean
      */
-    boolean addTeamFile(FileImpl file, int teamId);
+   /* boolean addTeamFile(FileImpl file, int teamId);
 
-    /**
+    *//**
      * 根据文件的id将文件删除，只有文件的上传者才能够删除
      * @param fileId 文件的id
      * @param delBy 文件删除者
      * @return boolean
-     */
+     *//*
     boolean delTeamFileById(FileImpl fileImpl, int fileId, String delBy);
 
-    /**
+    *//**
      * 通过文件的id下载文件
      * @param fileId 文件id
      * @return boolean
-     */
+     *//*
     boolean downloadTeamFileById(int fileId);
 
-    /**
+    *//**
      * 根据团队id展示团队文件
      * @param teamId 团队id
      * @return 文件对象的列表
-     */
-    List<FileImpl> showTeamFiles(int teamId);
+     *//*
+    List<FileImpl> showTeamFiles(int teamId);*/
 }

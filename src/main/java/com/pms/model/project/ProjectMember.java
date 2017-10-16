@@ -22,11 +22,7 @@ public class ProjectMember {
     private ProjectMember(Builder builder) {
         setProjectId(builder.projectId);
         setUserName(builder.userName);
-<<<<<<< HEAD
-        setprojectRole(builder.projectRole);
-=======
         setProjectRole(builder.projectRole);
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         setJoinTime(builder.joinTime);
         setJoinBy(builder.joinBy);
         setDelFlag(builder.delFlag);
@@ -39,10 +35,7 @@ public class ProjectMember {
     public int getProjectId() {
         return projectId;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
@@ -55,19 +48,11 @@ public class ProjectMember {
         this.userName = userName;
     }
 
-<<<<<<< HEAD
-    public String getprojectRole() {
-        return projectRole;
-    }
-
-    public void setprojectRole(String projectRole) {
-=======
     public String getProjectRole() {
         return projectRole;
     }
 
     public void setProjectRole(String projectRole) {
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         this.projectRole = projectRole;
     }
 
@@ -155,11 +140,7 @@ public class ProjectMember {
             return this;
         }
 
-<<<<<<< HEAD
-        public Builder teamRole(String val) {
-=======
         public Builder projectRole(String val) {
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
             projectRole = val;
             return this;
         }

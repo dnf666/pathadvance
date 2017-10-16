@@ -15,12 +15,7 @@ public interface FileMapper {
      * @param fileId
      * @return
      */
-<<<<<<< HEAD
-    FileImpl selectByFileId(int fileId);
-=======
     boolean selectByFileId(int fileId);
-
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
 
     /**
      * 文件删除

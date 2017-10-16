@@ -74,12 +74,8 @@ public interface ProjectMapper {
 
     /**
      * 通过项目id得到项目成员
-     * @param projectId 项目的id project需要设值的参数：projectId.
      * @return list
      */
-<<<<<<< HEAD
-    List<ProjectMember> getProjectMembersByProjectId(int projectId);
-=======
     List<ProjectMember> getProjectMembersByProjectId(Project project);
 
     /**
@@ -88,8 +84,6 @@ public interface ProjectMapper {
      * @return boolean
      */
     boolean getProjectMembersByTeamName(String teamName);
-
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
 
 
 }

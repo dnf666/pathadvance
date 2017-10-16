@@ -24,16 +24,11 @@ public class FileServiceImpl implements FileService {
         return false;
     }
 
-<<<<<<< HEAD
-    public FileImpl selectByFileId(int fileId){
-        return fileMapper.selectByFileId(fileId);
-=======
     public boolean selectByFileId(FileImpl fileImpl, int fileId){
         if (fileId == (fileImpl.getFileId()))
             if (fileMapper.selectByFileId(fileId))
                 return true;
         return false;
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     }
 
 
@@ -68,4 +63,5 @@ public class FileServiceImpl implements FileService {
     public boolean downloadFile(String fileName){
         return true;
     }
+
 }

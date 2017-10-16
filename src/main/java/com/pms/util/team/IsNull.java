@@ -1,6 +1,7 @@
 package com.pms.util.team;
 
 import com.pms.model.file.FileImpl;
+import com.pms.model.project.Project;
 import com.pms.model.team.Team;
 import com.pms.model.team.TeamMember;
 import com.pms.model.team.TeamNotice;
@@ -51,6 +52,13 @@ public class IsNull
                 && teamNotice.getContext() != null
                 && teamNotice.getCreateTime() != null
                 && teamNotice.getId() != 0;
+    }
+    public static boolean addTeamProjectInfoIsOK(Project teamProject){
+        return teamProject != null
+                && teamProject.getProjectName() != null
+                && teamProject.getCreateBy() != null
+                && teamProject.getCreateAt() != null
+                && teamProject.getTeamName() != null;
     }
     public static boolean addTeamFileInfoIsOK(FileImpl file){
         return file.getCreateBy() != null

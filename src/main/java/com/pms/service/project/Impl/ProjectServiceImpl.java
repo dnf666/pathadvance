@@ -33,9 +33,10 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getProject(int id) {
         return projectMapper.getProjectById(id);
     }
+//这个方法需要重写
 
     public boolean deleteFile(FileImpl fileImpl, String fileName, String teamName) {
-        if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName())) {
+        /*   if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName())) {
             if (fileMapper.deleteFile(fileImpl, fileName, teamName)) {
                 return true;
             } else {
@@ -43,7 +44,8 @@ public class ProjectServiceImpl implements ProjectService {
             }
         } else {
             return false;
-        }
+        }*/
+        return false;
     }
 
     public boolean addFile(FileImpl file) {

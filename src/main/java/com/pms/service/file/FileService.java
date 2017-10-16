@@ -20,11 +20,7 @@ public interface FileService {
      * 查看文件信息
      * @return boolean
      */
-<<<<<<< HEAD
-    FileImpl selectByFileId(int fileId);
-=======
     boolean selectByFileId(FileImpl fileImpl, int fileId);
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
 
     /**
      * 更新文件信息
