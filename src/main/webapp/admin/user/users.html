@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理页面</title>
+    <link href="../../bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="ready()">
+<div class="container">
+    <div id="header" class="row">
+        <!--<iframe src="../element/head.html" width="100%" scrolling="no" frameborder="0"></iframe>-->
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>学号</th>
+                <th>专业</th>
+                <th>已停用</th>
+                <th>注册时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="users_body">
+        </tbody>
+    </table>
+    <ul class="pagination" id="pageBody">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li class="disabled"><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+<script src="../../js/jquery.js"></script>
+<script src="../js/users.js"></script>
+</body>
+</html>

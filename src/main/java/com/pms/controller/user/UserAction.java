@@ -1,5 +1,6 @@
 package com.pms.controller.user;
 
+import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataService.user.UserModelService;
 import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
@@ -7,10 +8,12 @@ import com.pms.service.user.UserService;
 import com.pms.service.user.VeriCode;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
+import com.pms.util.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,19 +31,21 @@ public class UserAction {
     UserModelService userModelService;
     @Autowired
     VeriCode veriCode;
+    @Resource(name = "httpSession")
+    Session session;
 
-//    @RequestMapping("login")
-//    public void login(LoginInfo loginInfo, HttpServletRequest request){
-//            Map map;
-//        String code = (String) request.getSession().getAttribute("verificationCode");
-//        if (userService.login(loginInfo,code)) {
-//            map = MapUtil.toMap(1,"success",null);
-//            request.getSession().setAttribute("userName",loginInfo.getUserName());
-//        }else {
-//            map = MapUtil.toMap(0,userService.getMessage(),null);
-//        }
-//        JsonUtil.toJSON(map);
-//    }
+    @RequestMapping("login")
+    public void login(LoginInfo loginInfo, HttpServletRequest request){
+            Map map;
+        String code = (String) request.getSession().getAttribute("verificationCode");
+        if (userService.login(loginInfo,code)) {
+            map = MapUtil.toMap(1,"success",null);
+            request.getSession().setAttribute("userName",loginInfo.getUserName());
+        }else {
+            map = MapUtil.toMap(0,userService.getMessage(),null);
+        }
+        JsonUtil.toJSON(map);
+    }
 
     @RequestMapping("register")
     public void register(User user, HttpServletRequest request){
@@ -60,7 +65,7 @@ public class UserAction {
     public void pushCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         char[] chars = veriCode.getChars();
         BufferedImage image = veriCode.getImage(chars);
-        request.getSession().setAttribute("verificationCode",new String(chars));
+        request.getSession().setAttribute("verificationCode",chars.toString());
         ImageIO.write(image,"jpg",response.getOutputStream());
     }
 
