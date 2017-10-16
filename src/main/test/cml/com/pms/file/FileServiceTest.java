@@ -40,7 +40,7 @@ public class FileServiceTest {
     }
 
     @Test
-    public void selectByFileName() throws Exception {
+    public void selectByFileId() throws Exception {
         FileImpl file1 = new FileImpl();
         FileImpl file2 = new FileImpl();
         FileImpl file3 = new FileImpl();
@@ -48,7 +48,7 @@ public class FileServiceTest {
         list.add(file1);
         list.add(file2);
         list.add(file3);
-        fileService.selectByFileId(2);
+        fileService.selectByFileId(file1,2);
 
     }
 

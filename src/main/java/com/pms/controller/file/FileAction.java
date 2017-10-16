@@ -45,7 +45,7 @@ public class FileAction {
             //此处用日期做为标识
             String path = path1 + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + fileName;
             //查看文件上传路径,方便查找
-            System.out.println(path);
+            //System.out.println(path);
             //把文件上传至path的路径
             File localFile = new File(path);
             file.transferTo(localFile);
@@ -60,7 +60,7 @@ public class FileAction {
     public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
         try {
             String path1 = request.getSession().getServletContext().getRealPath("upload") + File.separator;
-            String path = path1 + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + fileName;
+            String path = path1 + fileName;
             InputStream inputStream = new FileInputStream(new File(path));
             OutputStream os = response.getOutputStream();
             byte[] b = new byte[2048];
