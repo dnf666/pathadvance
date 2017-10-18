@@ -21,7 +21,7 @@ public class FileMapperTest {
     @Test
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
-        file.setFileId(1);
+        file.setFileId(3);
         file.setFileName("fileName");
         file.setUrl("位置");
         file.setFileClass("类型");
@@ -38,7 +38,7 @@ public class FileMapperTest {
     @Test
     public void updateFileInfo() throws Exception {
         FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(2);
+        fileImpl.setFileId(4);
         fileImpl.setFileName("文件1");
         fileImpl.setUrl("位置1");
         fileImpl.setFileClass("类型1");
@@ -53,8 +53,8 @@ public class FileMapperTest {
     }
 
     @Test
-    public void selectByFileName() throws Exception{
-        System.out.println(fileMapper.selectByFileId(1));
+    public void selectByFileId() throws Exception{
+        fileMapper.selectByFileId(15);
     }
 
     @Test

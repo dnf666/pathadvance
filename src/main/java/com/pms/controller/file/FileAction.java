@@ -100,7 +100,7 @@ public class FileAction {
     public void updateFileInfo(FileImpl fileImpl,String fileName,HttpServletResponse response){
         Map map;
         //String messge = null;
-        if (fileService.updateFileInfo(fileImpl,fileName)){
+        if (fileService.updateFileInfo(fileName)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
         }else {
@@ -119,7 +119,7 @@ public class FileAction {
         System.out.println("时间格式："+date);
         //String message = null;
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
-        if (fileService.deleteByDelFlag(fileImpl,fileId)){
+        if (fileService.deleteByDelFlag(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {
@@ -135,7 +135,7 @@ public class FileAction {
         Map map;
         //String res = null;
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
-        if (fileService.recoverFile(fileImpl,fileId)){
+        if (fileService.recoverFile(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
         }else {
@@ -154,7 +154,7 @@ public class FileAction {
         System.out.println("时间格式："+date);
         //String res = null;
         //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
-        if (fileService.deleteFile(fileImpl,fileId)){
+        if (fileService.deleteFile(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {

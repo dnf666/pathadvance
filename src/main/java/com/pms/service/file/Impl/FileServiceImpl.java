@@ -19,45 +19,71 @@ public class FileServiceImpl implements FileService {
     private FileMapper fileMapper;
 
     public boolean insertFileInfo(FileImpl fileImpl) {
-        if (fileMapper.insertFileInfo(fileImpl))
+        try {
+            fileMapper.insertFileInfo(fileImpl);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("添加失败");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean selectByFileId(int fileId){
+        try {
+            fileMapper.selectByFileId(fileId);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("查找失败");
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean updateFileInfo(String fileName) {
+        FileImpl fileImpl = new FileImpl();
+        if (fileName != null) {
+            fileMapper.updateFileInfo(fileImpl);
             return true;
+        }
         return false;
     }
 
-    public boolean selectByFileId(FileImpl fileImpl, int fileId){
-        if (fileId == (fileImpl.getFileId()))
-            if (fileMapper.selectByFileId(fileId))
-                return true;
-        return false;
-    }
-
-
-    public boolean updateFileInfo(FileImpl fileImpl,String fileName) {
-        if (fileName.equals(fileImpl.getFileName()))
-            if (fileMapper.updateFileInfo(fileImpl))
-                return true;
+    public boolean deleteByDelFlag(int fileId){
+        FileImpl fileImpl = new FileImpl();
+        try {
+            fileMapper.deleteByDelFlag(fileImpl);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("删除失败");
             return false;
+        }
+        return true;
     }
 
-    public boolean deleteByDelFlag(FileImpl fileImpl,int fileId){
-        if (fileId == (fileImpl.getFileId()))
-            if (fileMapper.deleteByDelFlag(fileImpl))
-                return true;
+    public boolean recoverFile(int fileId) {
+        FileImpl fileImpl = new FileImpl();
+        try {
+            fileMapper.recoverFile(fileImpl);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("恢复失败");
             return false;
+        }
+        return true;
     }
 
-    public boolean recoverFile(FileImpl fileImpl,int fileId) {
-        if (fileId == (fileImpl.getFileId()))
-            if (fileMapper.recoverFile(fileImpl))
-                return true;
-        return false;
-    }
-
-    public boolean deleteFile(FileImpl fileImpl,int fileId) {
-        if (fileId == (fileImpl.getFileId()))
-            if (fileMapper.deleteFile(fileImpl,fileId))
-                return true;
-        return false;
+    public boolean deleteFile(int fileId) {
+        FileImpl fileImpl = new FileImpl();
+        try {
+            fileMapper.deleteFile(fileImpl,fileId);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("删除失败");
+            return false;
+        }
+        return true;
     }
 
     public boolean downloadFile(String fileName){

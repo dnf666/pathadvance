@@ -15,7 +15,7 @@ public interface FileMapper {
      * @param fileId
      * @return
      */
-    boolean selectByFileId(int fileId);
+    FileImpl selectByFileId(int fileId);
 
     /**
      * 文件删除
@@ -26,10 +26,10 @@ public interface FileMapper {
 
     /**
      * 文件上传
-     * @param file
+     * @param fileImpl
      * @return
      */
-    boolean  insertFileInfo(FileImpl file);
+    boolean  insertFileInfo(FileImpl fileImpl);
 
 
     /**
