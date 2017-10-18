@@ -8,7 +8,7 @@ import com.pms.model.user.User;
 public class PersonInfo {
     private String userName;
     private String picture;
-    private int stuId;
+    private String stuId;
     private String peofession;
 
     public PersonInfo(User user){
@@ -16,6 +16,10 @@ public class PersonInfo {
         this.picture = user.getPicture();
         this.stuId = user.getStuId();
         this.peofession = user.getPeofession();
+    }
+
+    public PersonInfo(){
+
     }
 
     public String getUserName() {
@@ -34,19 +38,24 @@ public class PersonInfo {
         this.picture = picture;
     }
 
-    public int getStuId() {
-        return stuId;
-    }
-
-    public void setStuId(int stuId) {
-        this.stuId = stuId;
-    }
-
     public String getPeofession() {
         return peofession;
     }
 
     public void setPeofession(String peofession) {
         this.peofession = peofession;
+    }
+
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
+
+    @Override
+    public String toString() {
+        return userName+" "+picture+" "+stuId+" "+peofession;
     }
 }

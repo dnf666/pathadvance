@@ -3,6 +3,7 @@ package com.pms.service.user.Impl;
 import com.pms.dao.user.UserMapper;
 import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataModel.User.PersonInfo;
+import com.pms.model.blog.Role;
 import com.pms.model.user.User;
 import com.pms.service.user.UserService;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
  * Created by rhan on 2017/7/27.
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Resource
     UserMapper userMapper;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     String message;
 
     public boolean login(LoginInfo loginInfo,String verificationCode) {
-        if (verificationCode.toLowerCase().equals(loginInfo.getVerificationCode().toLowerCase())) {
+        if (verificationCode.equals(loginInfo.getVerificationCode())) {
             LoginInfo loginInfo_db = userMapper.selectPasswordByUserName(loginInfo.getUserName());
             if (loginInfo_db != null) {
                 if (loginInfo_db.getPassword().equals(loginInfo.getPassword())) {
@@ -73,14 +74,14 @@ public class UserServiceImpl implements UserService {
         return (message == null) ? null:message;
     }
 
+
     public List findUserBySearching(User user) {
-        if(user.getUserName()==null)
-            return null;
-        return userMapper.findUserBySearching(user);
-
-
+       if (user.getUserName()==null)
+       {
+           return null;
+       }
+       return userMapper.findBySearchingUser(user);
     }
-
 
     public boolean isExist(String userName) {
         PersonInfo personInfo = userMapper.selectPersonInfoByUserName(userName);
