@@ -1,5 +1,6 @@
 package com.pms.dao.teamdao;
 import com.pms.model.team.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -51,10 +52,17 @@ public interface TeamMapper {
     boolean addTeamMember(TeamMember teamMember);
 
     /**
+     * 重新添加一个曾经被删除过的成员
+     * @param teamMember 团队成员
+     * @return boolean
+     */
+    boolean reAddTeamMember(TeamMember teamMember);
+    /**
      * 删除团队成员
      * @param teamMember 团队成员 teamMember需要设值的参数：delFlag , delTime , delRemarks ,teamName ,userName
      * @return boolean
      */
+
     boolean delTeamMember(TeamMember teamMember);
 
     /**
@@ -65,11 +73,34 @@ public interface TeamMapper {
     List<TeamMember> getTeamMembersByTeamName(String teamName);
 
     /**
+     * 通过团队名称和用户名获得团队成员
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return teammember
+     */
+    TeamMember getTeamMemberByTeamNameAndUserName(@Param("teamName") String teamName , @Param("userName") String userName);
+
+    /**
+     * 通过团队名称和用户名称获取已经被移除团队成员
+     *
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return Teammember
+     */
+    TeamMember getDelTeamMember(@Param("teamName") String teamName ,@Param("userName") String userName);
+    /**
      * 通过用户名来获取用户加入了哪些团队
      * @param userName 用户名称
      * @return List
      */
     List<TeamMember> getTeamInfoByUserName(String userName);
+
+    /**
+     * 通过团队id获得团队对象
+     * @param teamId 团队id
+     * @return team
+     */
+    Team getTeamById(int teamId);
     /**
      * 创建公告
      * @param teamNotice 团队公告 teamNotice需要设值的参数： title , createBy , createTime , context , teamName ,
@@ -120,4 +151,27 @@ public interface TeamMapper {
      * @return boolean
      */
     boolean insertTeamMasterHistory(TeamMasterHistory teamMasterHistory);
+
+    /**
+     * 在文件参照表中插入关联信息
+     * @param teamId 团队id
+     * @param fileId 文件id
+     * @param userId 用户id
+     * @return 执行结果
+     */
+    boolean addTeamFile(@Param("teamId") int teamId,@Param("fileId") int fileId ,@Param("userId") int userId);
+
+    /**
+     * 通过文件id查找文件参照关系
+     * @param fileId 文件id
+     * @return 文件关照对象
+     */
+    FileReference getFRByFileId(int fileId);
+
+    /**
+     * 通过团队id查找文件参照关系
+     * @param teamId
+     * @return 文件参照对象
+     */
+    List<FileReference> getFRByTeamId(int teamId);
 }

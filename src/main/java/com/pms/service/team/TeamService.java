@@ -1,13 +1,12 @@
 
 package com.pms.service.team;
+import com.pms.model.file.FileImpl;
+import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
 import java.util.List;
 /**
  * Created by liudong on 2017/8/15.
- *
- * 团队的service，包含了团队成员，团队项目，团队公告，团队项目成员以及团队文件。
- *                                          团队文件以及团队项目还没有完成
  *
  */
 public interface TeamService {
@@ -17,15 +16,29 @@ public interface TeamService {
      * @param userName 用户名
      * @return boolean
      */
-    boolean isProMember(List<ProjectMember> list, String userName);
+   // boolean isProMember(List<ProjectMember> list, String userName);
     /**
-     * 返回 public List<TeamMember> getTeamMembersByTeamName(String teamName),方法中需要的某一个特定成员
+     * 得到名称为username的用户在当前团队的相关信息
      *
      * @param  list 团队成员列表
      * @param userName 用户名
      * @return TeamMember
      */
     TeamMember getTeamMember(List<TeamMember> list,String userName);
+    /**
+     * 通过团队名称和用户名获取团队成员
+     * @param teamName
+     * @param userName
+     */
+    TeamMember getTeamMemberByTeamNameAndUserName(String teamName , String userName);
+
+    /**
+     * 获取已经被删除的团队成员
+     * @param teamName 团队名称
+     * @param userName 用户名称
+     * @return teammember
+     */
+    TeamMember getDelTeamMember(String teamName , String userName);
     /**
      * 得到用户在团队当中的权限。如果当前用户没有在当前的团队中返回-1
      * @param teamMember 团队成员
@@ -99,16 +112,15 @@ public interface TeamService {
      * @param teamProject 团队项目对象
      * @return boolean
      */
-//    boolean createProject(TeamProject teamProject);
-//    /**
-//     *项目的删除
-//     *1.操作用户只能是创建者
-//     * @param teamProject 团队项目
-//     * @param delBy 删除者
-//     *
-//     * @return boolean
-//     */
-//    boolean delProject(TeamProject teamProject,String delBy);
+    boolean createProject(Project teamProject);
+    /**
+     *项目的删除
+     *1.操作用户只能是创建者
+     * @param teamProject 团队项目
+     * @param delBy 删除者
+     * @return boolean
+     */
+    boolean delProject(Project teamProject,String delBy);
 //    /**
 //     * 设置成员权限，只有负责人才能够设置
 //     * @param teamPrivilige 团队成员的权限
@@ -132,7 +144,7 @@ public interface TeamService {
      * @param projectName 项目名称
      * @return List
      */
-    List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName,String projectName);
+    //List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName,String projectName);
     /**
      *项目信息的更改
      *1.项目内的成员均可以操作
@@ -151,7 +163,7 @@ public interface TeamService {
      *
      * @return boolean
      */
-    boolean addProjectMember(ProjectMember projectMember,String inviteBy);
+   // boolean addProjectMember(ProjectMember projectMember,String inviteBy);
     /**
      *项目成员的删除
      *1.只能够是项目的创建者来操作
@@ -159,7 +171,7 @@ public interface TeamService {
      *@param projectId 项目的id用来判断该项目的创建者
      * @return boolean
      */
-    boolean delProjectMember(ProjectMember projectMember,int projectId);
+//    boolean delProjectMember(ProjectMember projectMember,int projectId);
     /**
      *团队公告的创建
      * 1.管理员或者负责人
@@ -207,6 +219,35 @@ public interface TeamService {
      * @return 列表大小
      */
     int getCounts(List list);
+    //关于团队文件
 
+    /**
+     * 上传团队文件
+     * @param file 文件对象
+     * @param teamId 团队id即将文件上传到的团队id
+     * @return boolean
+     */
+   /* boolean addTeamFile(FileImpl file, int teamId);
 
+    *//**
+     * 根据文件的id将文件删除，只有文件的上传者才能够删除
+     * @param fileId 文件的id
+     * @param delBy 文件删除者
+     * @return boolean
+     *//*
+    boolean delTeamFileById(FileImpl fileImpl, int fileId, String delBy);
+
+    *//**
+     * 通过文件的id下载文件
+     * @param fileId 文件id
+     * @return boolean
+     *//*
+    boolean downloadTeamFileById(int fileId);
+
+    *//**
+     * 根据团队id展示团队文件
+     * @param teamId 团队id
+     * @return 文件对象的列表
+     *//*
+    List<FileImpl> showTeamFiles(int teamId);*/
 }

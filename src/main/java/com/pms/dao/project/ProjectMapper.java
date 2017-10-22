@@ -79,7 +79,7 @@ public interface ProjectMapper {
     boolean delProjectMember(ProjectMember projectMember);
 
     /**
-     * 得到项目成员
+     * 通过项目id得到项目成员
      * @param projectId 项目id
      * @return list
      */
@@ -91,7 +91,6 @@ public interface ProjectMapper {
      * @return boolean
      */
     boolean getProjectMembersByTeamName(String teamId);
-
 
 
 }

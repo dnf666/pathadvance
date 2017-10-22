@@ -17,7 +17,6 @@ public interface FileMapper {
      */
     boolean selectByFileId(int fileId);
 
-
     /**
      * 文件删除
      * @param fileId

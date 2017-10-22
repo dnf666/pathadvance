@@ -8,8 +8,10 @@ import com.pms.util.team.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by liudong on 2017/8/22.
@@ -21,7 +23,7 @@ public class TeamAction{
 
     /**1
      * 团队创建
-     * @param team 团队  eam需要设值的参数：teamName , createBy , createTime
+     * @param team 团队  team需要设值的参数：teamName , createBy , createTime
      *
      * createBy:刘岽
      * http://localhost:8080/team/addteam.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&createBy=%E5%88%98%E5%B2%BD&createTime=123434

@@ -3,6 +3,7 @@ package ld.com.pms.model.team;
 import com.pms.dao.teamdao.TeamMapper;
 import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,146 +26,171 @@ public class TeamMapperTest {
         //团队方面的测试
         @Test
         public void addTeamTest(){//创建团队的接口测试
-            Team team=new Team();
-            team.setTeamName("公ddkfjdkj");
-            team.setCreateBy("刘岽");
-            team.setCreateTime("2017810");
-            team.setDelTime("2019555");
-            teamMapper.addTeam(team);
+            Team team = new Team.Builder()
+                    .teamName("队队")
+                    .createBy("刘岽")
+                    .createTime("0000")
+                    .build();
+            boolean re = teamMapper.addTeam(team);
+            Assert.assertEquals(true,re);
         }
         @Test
         public void delTeamTest(){//有错误
-            Team team=new Team();
-            team.setTeamName("团队名称");
-            team.setCreateBy("刘岽");
-            team.setDelRemarks("太帅");
-            team.setDelFlag(1);
-            team.setDelTime("2019666");
-            teamMapper.delTeam(team);
+                Team team = new Team.Builder()
+                        .teamName("队1")
+                        .createBy("刘岽")
+                        .createTime("0000")
+                        .delFlag(1)
+                        .delRemarks("测试")
+                        .delTime("4444")
+                        .build();
+                boolean re = teamMapper.delTeam(team);
+                Assert.assertEquals(true,re);
         }
         @Test
         public void getTeamInfoTest() {
-            String teamName = "团队名称";
-            Team team1 = teamMapper.getTeamInfo(teamName);
-            if (team1 != null) {
-                System.out.println(team1.getTeamName());
-                System.out.println(team1);
-            }else{
-                System.out.println("没有该团队");
-            }
+                String teamName = "队1";
+                Assert.assertEquals(teamName , teamMapper.getTeamInfo(teamName).getTeamName());
         }
         @Test
         public void getAllTeamTest(){
-            System.out.println(teamMapper.getAllTeam().size());
+                int number = 2;//没有被删除的团队的数目
+                Assert.assertEquals(number , teamMapper.getAllTeam().size());
+                Assert.assertEquals("队1" , teamMapper.getAllTeam().get(0).getTeamName());
         }
         //团队成员方面的测试
         @Test
         public void addTeamMemberTest(){
-            TeamMember teamMember=new TeamMember();
-            teamMember.setTeamName("公测团队2");
-            teamMember.setTeamRole("boss");
-            teamMember.setUserName("小小");
-            teamMember.setJoinBy("小丁");
-            teamMember.setJoinTime("2014252255");
-            System.out.println(teamMapper.addTeamMember(teamMember));
+                TeamMember teamMember = new TeamMember.Builder()
+                        .teamName("队1")
+                        .teamPrivelige(1)
+                        .joinBy("刘d")
+                        .userName("刘岽")
+                        .teamRole("负责人")
+                        .joinTime("111")
+                        .build();
+                Assert.assertEquals(true , teamMapper.addTeamMember(teamMember));
         }
         @Test
         public void delTeamMemberTest(){
-            TeamMember teamMember=new TeamMember();
-            teamMember.setTeamName("公测团队2");
-            teamMember.setTeamRole("boss");
-            teamMember.setUserName("小小");
-            teamMember.setDelFlag(1);
-            teamMember.setDelRemarks("太胖");
-            teamMember.setDelTime("44444");
-            teamMapper.delTeamMember(teamMember);
+                TeamMember teamMember = new TeamMember.Builder()
+                        .teamName("队1")
+                        .teamPrivelige(1)
+                        .joinBy("刘岽")
+                        .userName("刘岽")
+                        .teamRole("负责人")
+                        .joinTime("111")
+                        .delTime("2222")
+                        .delFlag(1)
+                        .delBy("刘岽")
+                        .build();
+                Assert.assertEquals(true , teamMapper.delTeamMember(teamMember));
         }
         @Test
         public void getTeamMembersByTeamNameTest(){
-            String teamName="公测团队2";
-            List<TeamMember> list=teamMapper.getTeamMembersByTeamName(teamName);
-            System.out.println(list.size());
+                String teamName = "队1";
+                int number = 3; //当前团队的成员数量
+                Assert.assertEquals(number,teamMapper.getTeamMembersByTeamName(teamName).size());
+        }
+        @Test
+        public void getTeamMemberByTeamNameAndUserNameTest(){
+                Assert.assertEquals("liudong",teamMapper.getTeamMemberByTeamNameAndUserName("队1","liudong").getUserName());
         }
         @Test
         public void getTeamMemberInfoByNameTest(){
-            String userName="小小";
-            List<TeamMember> list=teamMapper.getTeamInfoByUserName(userName);
-            System.out.println(list.size());
+                int number = 2;//表示当前用户加入了多少个团队
+                Assert.assertEquals(number,teamMapper.getTeamInfoByUserName("刘岽").size());
         }
-
-        //项目成员方面的测试
         @Test
-        public void addProjectMemberTest(){
-          /*  ProjectMember projectMember=new ProjectMember();
-            projectMember.setTeamRole("大佬");
-            projectMember.setTeamName("ddd");
-            projectMember.setProjectName("123");
-            projectMember.setJoinBy("小小");
-            projectMember.setJoinTime("4545646");
-            projectMember.setUserName("mingming");
-            teamMapper.addProjectMember(projectMember);
-    */    }
+        public void getDelTeamMemberTest(){
+                Assert.assertNotNull(teamMapper.getDelTeamMember("队1","刘岽"));
+        }
         @Test
-        public void delProjectMemberTest(){
-          /*  ProjectMember projectMember=new ProjectMember();
-            projectMember.setTeamRole("大佬");
-            projectMember.setTeamName("ddd");
-            projectMember.setProjectName("123");
-            projectMember.setJoinBy("小小");
-            projectMember.setJoinTime("4545646");
-            projectMember.setUserName("mingming");
-
-            projectMember.setDelFlag(1);
-            teamMapper.delProjectMember(projectMember);
-      */  }
-
-//        @Test
-//        public void getProjectMembersByProjectTest(){
-//            String projectName="123";
-//            List<ProjectMember> projectMember=teamMapper.getProjectMembersByProject("ddd",projectName);
-//            System.out.println(projectMember.get(0).getTeamName());
-//        }
+        public void reAddTeamMemberTest(){
+                Assert.assertEquals(true,teamMapper.reAddTeamMember(new TeamMember.Builder().teamName("队1").userName("刘岽").build()));
+        }
         //团队公告的测试
         @Test
         public void  addNoticeTest(){
-            TeamNotice teamNotice=new TeamNotice();
-            teamNotice.setTeamName("公测团队");
-            teamNotice.setCreateBy("哆啦阿盟");
-            teamNotice.setCreateTime("222524155");
-            teamNotice.setContext("this is a notice");
-            teamNotice.setTitle("超级公告");
-            teamMapper.addNotice(teamNotice);
+                TeamNotice teamNotice = new TeamNotice.Builder()
+                        .teamName("队2")
+                        .context("不知道什么内容")
+                        .createBy("刘岽")
+                        .createTime("5555")
+                        .title("啦啦jjb ")
+                        .build();
+                Assert.assertEquals(true,teamMapper.addNotice(teamNotice));
         }
         @Test
         public void  delNoticeTest(){
-            TeamNotice teamNotice=new TeamNotice();
-            teamNotice.setTeamName("公测团队");
-            teamNotice.setCreateBy("哆啦阿盟");
-            teamNotice.setCreateTime("222524155");
-            teamNotice.setContext("this is a notice");
-            teamNotice.setTitle("超级公告");
-            teamNotice.setDelFlag(1);
-            teamNotice.setId(1);
-            teamMapper.delNotice(teamNotice);
+                TeamNotice teamNotice = new TeamNotice.Builder()
+                        .id(1)
+                        .delFlag(1)
+                        .delTime("666")
+                        .build();
+                Assert.assertEquals(true,teamMapper.delNotice(teamNotice));
         }
         @Test
         public void  updateNoticeTest(){
-            TeamNotice teamNotice=new TeamNotice();
-            teamNotice.setTeamName("公测团队");
-            teamNotice.setCreateBy("哆122啦阿盟");
-            teamNotice.setCreateTime("6666");
-            teamNotice.setContext("this is a notice");
-            teamNotice.setTitle("超级公告");
-            teamNotice.setId(1);
-            teamMapper.updateNotice(teamNotice);
+                TeamNotice teamNotice = new TeamNotice.Builder()
+                        .id(1)
+                        .teamName("队1")
+                        .context("不知道什么内容")
+                        .createBy("刘岽")
+                        .createTime("5555")
+                        .title("啦啦kkkk ")
+                        .build();
+                Assert.assertEquals(true,teamMapper.updateNotice(teamNotice));
         }
         @Test
         public void getNoticeByIdTest(){
-            System.out.println(teamMapper.getNoticeById(1));
+                String title = "啦啦kkkk ";
+                Assert.assertEquals(title,teamMapper.getNoticeById(1).getTitle());
         }
         @Test
         public void  getNoticeByteamNameTest(){
-            List<TeamNotice> list=teamMapper.getNoticeByteamName("公测团队");
-            System.out.println(list.size());
+                int number = 2;//公告的数量
+                Assert.assertEquals(number,teamMapper.getNoticeByteamName("队2").size());
         }
+        @Test
+        public void setPriviligeTest(){
+                TeamMember teamMember = new TeamMember.Builder()
+                        .teamName("队1")
+                        .userName("LD")
+                        .teamPrivelige(2)
+                        .build();
+                Assert.assertEquals(true,teamMapper.setPrivilege(teamMember));
+        }
+        @Test
+        public void insertTeamMasterHistoryTest(){
+                TeamMasterHistory teamMasterHistory = new TeamMasterHistory.Builder()
+                        .teamName("队1")
+                        .fromRole("成员")
+                        .ModifyAt("111")
+                        .toRole("管理员")
+                        .modifyBy("刘岽")
+                        .userName("jjj")
+                        .build();
+                Assert.assertEquals(true,teamMapper.insertTeamMasterHistory(teamMasterHistory));
+        }
+        @Test
+        public void getTeamByIdTest(){
+                int id = 1;
+                Assert.assertEquals("队1",teamMapper.getTeamById(id).getTeamName());
+        }
+        @Test
+        public void addTeamFileTest(){
+                Assert.assertEquals(true, teamMapper.addTeamFile(1,2,3));
+        }
+        @Test
+        public void getFRByFileIdTest(){
+                int fileId = 1;
+                Assert.assertEquals(2,teamMapper.getFRByFileId(fileId).getTeamId());
+        }
+        @Test
+        public void getFRByTeamIdTest(){
+                int teamId = 2;
+                Assert.assertEquals(3, teamMapper.getFRByTeamId(teamId).get(0).getUserId());
+        }
+
 }

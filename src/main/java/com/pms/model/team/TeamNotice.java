@@ -13,6 +13,18 @@ public class TeamNotice {
     private String context;
     private String teamName;
 
+    public TeamNotice(){};
+    private TeamNotice(Builder builder) {
+        setId(builder.id);
+        setTitle(builder.title);
+        setCreateBy(builder.createBy);
+        setCreateTime(builder.createTime);
+        setDelFlag(builder.delFlag);
+        setDelTime(builder.delTime);
+        setContext(builder.context);
+        setTeamName(builder.teamName);
+    }
+
     public int getId() {
         return id;
     }
@@ -75,5 +87,63 @@ public class TeamNotice {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public static final class Builder {
+        private int id;
+        private String title;
+        private String createBy;
+        private String createTime;
+        private int delFlag;
+        private String delTime;
+        private String context;
+        private String teamName;
+
+        public Builder() {
+        }
+
+        public Builder id(int val) {
+            id = val;
+            return this;
+        }
+
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public Builder createBy(String val) {
+            createBy = val;
+            return this;
+        }
+
+        public Builder createTime(String val) {
+            createTime = val;
+            return this;
+        }
+
+        public Builder delFlag(int val) {
+            delFlag = val;
+            return this;
+        }
+
+        public Builder delTime(String val) {
+            delTime = val;
+            return this;
+        }
+
+        public Builder context(String val) {
+            context = val;
+            return this;
+        }
+
+        public Builder teamName(String val) {
+            teamName = val;
+            return this;
+        }
+
+        public TeamNotice build() {
+            return new TeamNotice(this);
+        }
     }
 }

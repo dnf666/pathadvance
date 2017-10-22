@@ -77,12 +77,15 @@
 
 <!--    <insert id="addProjectMember" parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
+<<<<<<< HEAD
+=======
         (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
         (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
     </insert>-->
 
     <insert id="addProjectMember"    parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         (project_id,user_name,team_name,project_role,join_time,join_by)VALUES
         (#{projectId},#{userName},#{teamName},#{projectRole},#{joinTime},#{joinBy})
     </insert>
@@ -103,6 +106,14 @@
                 del_remarks=#{delRemarks}
             </if>
         </set>
+<<<<<<< HEAD
+        WHERE  user_name=#{userName} AND del_flag=0
+    </update>
+
+    <select id="getProjectMembersByProjectId"  resultMap="project_members">
+        SELECT * FROM project_member
+        WHERE del_flag=0 AND  project_id = #{projectId}
+=======
         WHERE team_name=#{teamName} AND project_id=#{projectId} AND user_name=#{userName} AND del_flag=0
     </update>-->
 
@@ -125,6 +136,7 @@
     <select id="getProjectMembersByTeamName" resultMap="projectMembers">
         SELECT * FROM project_member
         WHERE team_name = #{teamName}
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     </select>
 
 </mapper>

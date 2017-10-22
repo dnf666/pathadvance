@@ -1,0 +1,86 @@
+@media screen and (min-width: 800px) {
+  .nav-head {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding-right: 50px;
+    z-index: 1001;
+    display: block; } }
+
+@media screen and (max-width: 800px) {
+  .nav-head {
+    position: absolute;
+    z-index: 1001;
+    display: block;
+    margin: 0px auto;
+    right: 20px;
+    padding: 0px; }
+  .nav-list li {
+    float: left;
+    margin-left: 10px; }
+  .nav-list li:nth-child(6) {
+    margin-left: 25px; }
+  .nav-list li a {
+    padding: 2px; } }
+
+.nav-head a {
+  color: white; }
+
+.nav > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #11B5AE;
+  color: #cccccc; }
+
+.nav-head a:hovor, .nav-head a:focus {
+  background-color: #11B5AE; }
+
+.head {
+  background-color: #11B5AE;
+  height: 400px; }
+
+.maninfo {
+  position: relative;
+  width: 60%;
+  height: 400px;
+  margin: 0px auto;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  text-align: left;
+  color: white; }
+
+.title {
+  font-size: 50px; }
+
+.name {
+  color: white;
+  cursor: pointer; }
+
+.name:hovor {
+  color: blue; }
+
+.input-group {
+  position: relative;
+  margin: 0px auto;
+  margin-top: 50px; }
+
+@media screen and (min-width: 800px) {
+  .input-group {
+    width: 60%; } }
+
+@media screen and (max-width: 800px) {
+  .input-group {
+    width: 80%; } }
+
+.input-group:last-child {
+  margin-bottom: 50px; }
+
+.textinput {
+  height: 100px; }
+
+.submit {
+  margin-top: 40px;
+  text-align: center;
+  margin-bottom: 50px; }
+
+.btn-info:first-child {
+  margin-right: 20px; }
