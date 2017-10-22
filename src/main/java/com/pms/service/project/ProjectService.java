@@ -42,7 +42,7 @@ public interface ProjectService {
      * @param
      * @return boolean
      */
-    boolean deleteFile(FileImpl fileImpl,int fileId);
+    boolean deleteFile(FileImpl fileImpl, String fileName, String teamName);
 
     /**
      *添加文件

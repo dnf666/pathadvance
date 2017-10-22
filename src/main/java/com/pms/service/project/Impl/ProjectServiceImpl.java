@@ -75,16 +75,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 //这个方法需要重写
 
-<<<<<<< HEAD
 
-    public boolean deleteFile(FileImpl fileImpl, int fileId) {
-        if (fileId == fileImpl.getFileId()) {
-            if (fileMapper.deleteFile(fileImpl, fileId)) {
-=======
     public boolean deleteFile(FileImpl fileImpl, String fileName, String teamName) {
         /*   if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName())) {
             if (fileMapper.deleteFile(fileImpl, fileName, teamName)) {
->>>>>>> d19daacc1b25671f68251eff4321e038d3917683
                 return true;
             } else {
                 return true;
