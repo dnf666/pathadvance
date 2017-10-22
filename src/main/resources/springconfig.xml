@@ -2,15 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/context
-         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 <!--可以扫描基于类的注解，通常使用了这个就不使用<context:annotation-config/>-->
     <context:component-scan base-package="com.pms.*"/>
     <!--仅会查找在同一个Application中的bean注解-->
     <context:annotation-config/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
     <!--<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
         <!--&lt;!&ndash; 指定连接数据库的JDBC驱动 &ndash;&gt;-->
         <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
@@ -65,5 +69,5 @@
     <!--事务管理， 事务回滚-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="datasource"/>
-</bean>
+    </bean>
 </beans>

@@ -39,6 +39,8 @@
 	11、file表中id->改为了file_id
 	12、file表增加了team_name列
 	13、file表的del_time not null-> del_tile null
+	14、file表中删除team_name
+	15、project 和 project_member表修改team_name为team_id
 */
 
 
@@ -96,7 +98,7 @@ CREATE TABLE `file` (
 --   `del_time` mediumtext NOT NULL,
   `del_time` mediumtext,
   `is_privater` tinyint(1) NOT NULL DEFAULT '0',
-  `team_name` varchar(50) NOT NULL,
+--   `team_name` varchar(50) NOT NULL,
   PRIMARY KEY (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -130,7 +132,8 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `project_name` varchar(255) NOT NULL,
-  `team_name` varchar(255) NOT NULL,
+--   `team_name` varchar(255) NOT NULL,
+  `team_id` int(11) not NULL ,
   `project_info` varchar(255) DEFAULT NULL COMMENT '项目的简单介绍\n',
   `create_by` varchar(50) NOT NULL,
   `create_at` mediumtext NOT NULL,
@@ -149,7 +152,8 @@ DROP TABLE IF EXISTS `project_member`;
 CREATE TABLE `project_member` (
   `project_id` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
-  `team_name` varchar(255) NOT NULL,
+--   `team_name` varchar(255) NOT NULL,
+  `team_name` varchar(50) NOT NULL ,
   `project_role` varchar(50) NOT NULL DEFAULT '成员' COMMENT '负责人、成员',
   `join_time` mediumtext NOT NULL,
   `join_by` varchar(50) NOT NULL,

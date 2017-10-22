@@ -20,45 +20,29 @@ import java.util.List;
 public class ProjectMapperTest {
     @Resource
     private ProjectMapper projectMapper;
-    @Test
-    public void addPTest(){
-        System.out.println("dddddddd");
-        Project p = new Project.Builder().createAt("123")
-                .createBy("bailixiang").projectInfo("xiangmuxiangmu")
-                .teamName("hahah").projectName("projectanam").build();
-        System.out.println(projectMapper.addProject(p));
-        System.out.println("dddd");
-    }
-    @Test
-    public void delPTest(){
-        Project p = new Project.Builder().createAt("123").createBy("bailixiang").projectInfo("xiangmuxiangmu")
-                .teamName("hahah").projectName("projectanam").id(2).delFlag(true).build();
-        projectMapper.delProject(p);
-    }
-    @Test
-    public void updatePTest(){
-        Project p = new Project.Builder().createAt("123").createBy("bailixiang").projectInfo("xiangmuxiangmu")
-                .teamName("hahah").projectName("projectanam").id(3).build();
-        projectMapper.updateProject(p);
-    }
+
     @Test
     public void getPTest(){
         Project project = projectMapper.getProjectById(3);
         System.out.println(project.getCreateBy());
     }
-    @Test
-    public void getPsTest(){
-        List<Project> list = projectMapper.getProjectsByTeamName("ddd");
-        System.out.println(list.get(0).getCreateBy());
-    }
+
+
+
 
     @Test
-    public void delProMemberTest(){
-        ProjectMember projectMember = new ProjectMember.Builder().userName("MEI")
-                .teamName("MeiYongJie").joinTime("2017-10-09").joinBy("ZhangShiRu").projectRole("成员").delFlag(true)
-                .build();
-        if(projectMapper.delProjectMember(projectMember)){
-            System.out.println("通过改变删除标志删除成功！");
+    public void getProMemsTest(){
+        List<ProjectMember> members = projectMapper.getProjectMembersByProjectId(1);
+        if (members.size() > 0){
+            System.out.println("members 有成员");
+        }else{
+            System.out.println("members 没有成员");
+        }
+
+        if (members != null){
+            System.out.println("连接到了数据库");
+        }else{
+            System.out.println("没有连接到数据库");
         }
     }
 

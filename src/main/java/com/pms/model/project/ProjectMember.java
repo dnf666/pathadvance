@@ -19,6 +19,22 @@ public class ProjectMember {
 
     private ProjectMember(){}
 
+    @Override
+    public String toString() {
+        return "ProjectMember{" +
+                "projectId=" + projectId +
+                ", userName='" + userName + '\'' +
+                ", projectRole='" + projectRole + '\'' +
+                ", joinTime='" + joinTime + '\'' +
+                ", joinBy='" + joinBy + '\'' +
+                ", delFlag=" + delFlag +
+                ", delTime='" + delTime + '\'' +
+                ", delRemarks='" + delRemarks + '\'' +
+                ", delBy='" + delBy + '\'' +
+                ", teamId='" + teamName + '\'' +
+                '}';
+    }
+
     private ProjectMember(Builder builder) {
         setProjectId(builder.projectId);
         setUserName(builder.userName);
@@ -111,9 +127,6 @@ public class ProjectMember {
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
-
-
-
 
     public static final class Builder {
         private int projectId;

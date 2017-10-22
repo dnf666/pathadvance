@@ -14,7 +14,7 @@ public interface ProjectService {
      * @param project 项目
      *@return boolean
      **/
-    boolean addProject(Project project);
+    boolean addProject(Project project,String teamName, String userName);
 
     /**
      *得到所有项目
@@ -42,7 +42,7 @@ public interface ProjectService {
      * @param
      * @return boolean
      */
-    boolean deleteFile(FileImpl fileImpl,String fileName,String teamName);
+    boolean deleteFile(FileImpl fileImpl,int fileId);
 
     /**
      *添加文件
@@ -51,20 +51,21 @@ public interface ProjectService {
      */
     boolean addFile(FileImpl file);
 
-/*    *//**
-     *通过文件名称来检查文件重复
-     * @param file
-     * @return boolean
-     *//*
-    boolean checkAllFileByName(FileImpl file);*/
-/**
+
+/*     *//**
      *下载文件
      *@param fileId 文件id
      *@return boolean
      *//*
 
-    boolean downFile(int fileId);
-*/
+    boolean downFile(int fileId);*/
+
+    /**
+     * 想项目展示中添加文件
+     * @param file
+     * @return boolean
+     */
+    boolean insertFile(FileImpl file);
 
     /**
      *删除项目成员
@@ -84,10 +85,10 @@ public interface ProjectService {
 
     /**
      *取得所有当前项目中的成员
-     * @param project
+     * @param projectId 项目id
      * @return list
      */
-    List<ProjectMember> getProMembers(Project project);
+    List<ProjectMember> getProMembers(int projectId);
 
 
 }

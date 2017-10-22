@@ -18,6 +18,12 @@ public class ProjectActionTest {
     @Test
     public void testShowAllProjects(){
         Project project = projectService.getProject(1);
-        System.out.println(project.getProjectName());
+            System.out.println(project.getProjectName());
     }
+
+    @Test
+    public void getProMemsTest(){
+
+    }
+
 }

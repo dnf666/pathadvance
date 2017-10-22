@@ -14,12 +14,26 @@ public class Project {
     private String createAt;
     private boolean delFlag;
 
+
     private Project(){}
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", teamId='" + teamName + '\'' +
+                ", projectInfo='" + projectInfo + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createAt='" + createAt + '\'' +
+                ", delFlag=" + delFlag +
+                '}';
+    }
 
     private Project(Builder builder) {
         setId(builder.id);
         setProjectName(builder.projectName);
-        setTeamName(builder.teamName);
+        setTeamId(builder.teamName);
         setProjectInfo(builder.projectInfo);
         setCreateBy(builder.createBy);
         setCreateAt(builder.createAt);
@@ -42,11 +56,11 @@ public class Project {
         this.projectName = projectName;
     }
 
-    public String getTeamName() {
+    public String getTeamId() {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
+    public void setTeamId(String teamName) {
         this.teamName = teamName;
     }
 

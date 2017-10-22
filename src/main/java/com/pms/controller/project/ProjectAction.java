@@ -2,39 +2,33 @@ package com.pms.controller.project;
 
 import com.pms.controller.file.FileAction;
 import com.pms.model.file.FileImpl;
-import com.pms.model.project.FileReference;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
 import com.pms.service.FileReference.FileReferenceService;
-import com.pms.service.file.FileService;
 import com.pms.service.project.ProjectService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ProjectAction {
-    @Autowired
-    ProjectService projectService;
-    @Autowired
-    FileService fileService;
-    @Autowired
-    FileAction fileAction;
-    @Autowired
-    FileReferenceService fileReferenceService;
+    @Resource
+    private ProjectService projectService;
+    @Resource
+    private FileAction fileAction;
+    @Resource
+    private FileReferenceService fileReferenceService;
 
     @RequestMapping(value = "/project/showpros.do")
     public void showAllProjects(){
@@ -48,7 +42,7 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping(value = "/project/showpro.do"   , method = RequestMethod.GET)
+    @RequestMapping(value = "/project/showpro.do")
     public void showProject(int projectId){
         Map map;
         Project project = projectService.getProject(projectId);
@@ -57,11 +51,10 @@ public class ProjectAction {
         }else {
             map = MapUtil.toMap(0, "false", null);
         }
-        System.out.println("接收到了请求...");
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping("/project/showfile.do")
+    @RequestMapping("/project/showfiles.do")
     public void showFiles(int projectId){
         Map map;
         List<FileImpl> files = fileReferenceService.getFilesByProjectId(projectId);
@@ -80,9 +73,9 @@ public class ProjectAction {
     }
 
     @RequestMapping(value = "/project/delfile.do")
-    public void deleteFile(FileImpl fileImpl, String fileName, String teamName, HttpServletResponse response){
-        if (fileImpl != null && fileName != null && teamName != null){
-            fileAction.deleteFile(fileImpl, fileName, teamName, response);
+    public void deleteFile(FileImpl fileImpl,int fileId, HttpServletResponse response){
+        if (fileImpl != null){
+            fileAction.deleteFile(fileImpl, fileId, response);
         }
     }
 
@@ -92,9 +85,9 @@ public class ProjectAction {
     }
 
     @RequestMapping(value = "/project/showmemes.do")
-    public void showMems(Project project){
+    public void showMems(int projectId){
         Map map;
-        List<ProjectMember> projectMembers = projectService.getProMembers(project);
+        List<ProjectMember> projectMembers = projectService.getProMembers(projectId);
         if(projectMembers != null && projectMembers.size() > 0){
             map = MapUtil.toMap(1,"success", projectMembers);
         }else{
@@ -114,18 +107,30 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping(value = "/project/delmem.do")
-    public void deleteMem(String userName, int projectId, ProjectMember projectMember){
+    @RequestMapping(value = "/project/delmem.do",method = RequestMethod.POST)
+    public void deleteMem(String name, int id,  ProjectMember projectMember){
         Map map;
         try {
-            boolean deleteFlag = projectService.deleteProMember(userName, projectId, projectMember);
+            if (projectMember != null){
+                System.out.println(projectMember);
+            }
+            if (name != null){
+                System.out.println(name);
+            }
+            if (id == 1){
+                System.out.println(id);
+            }
+            boolean deleteFlag = projectService.deleteProMember(name, id, projectMember);
             if (deleteFlag){
                 map = MapUtil.toMap(1, "success", null);
                 JsonUtil.toJSON(map);
+            }else {
+                map = MapUtil.toMap(0, "false", "deleteFlag is false");
             }
         } catch (Exception e) {
             String message = e.getMessage();
-            map = MapUtil.toMap(0, "false", message);
+            e.printStackTrace();
+            map = MapUtil.toMap(0, "false", "得到exception");
             JsonUtil.toJSON(map);
         }
 

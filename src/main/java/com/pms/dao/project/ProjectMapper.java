@@ -3,7 +3,6 @@ package com.pms.dao.project;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public interface ProjectMapper {
 
     /**
      * 得到所有项目
-     * @param
      * @return list
      */
     List<Project> getAllProjects();
@@ -47,16 +45,24 @@ public interface ProjectMapper {
     /**
      * 通过id选择项目
      * @param id 项目id
-     * @return project
+     * @return Project
      */
     Project getProjectById(int id);
 
     /**
+     * 通过创建时间和项目名称得到项目
+     * @param createAt
+     * @param projectName
+     * @return Project
+     */
+    Project getProjectByCreateAtAndProjectName(@Param("createAt") String createAt, @Param("projectName") String projectName);
+
+    /**
      * 得到团队的项目
-     * @param teamName 团队名称
+     * @param teamId
      * @return list
      */
-    List<Project> getProjectsByTeamName(String teamName);
+    List<Project> getProjectsByTeamName(String teamId);
 
     /**
      * 添加项目成员
@@ -74,17 +80,17 @@ public interface ProjectMapper {
 
     /**
      * 得到项目成员
-     * @param project 项目 project需要设值的参数：teamName , projectName.
+     * @param projectId 项目id
      * @return list
      */
-    List<ProjectMember> getProjectMembersByProjectId(Project project);
+    List<ProjectMember> getProjectMembersByProjectId(int projectId);
 
     /**
-     *
-     * @param teamName
+     *通过团队名称获得团队成员
+     * @param teamId 团队Id
      * @return boolean
      */
-    boolean getProjectMembersByTeamName(String teamName);
+    boolean getProjectMembersByTeamName(String teamId);
 
 
 

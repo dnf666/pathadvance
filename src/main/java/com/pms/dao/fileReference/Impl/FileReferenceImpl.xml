@@ -14,6 +14,7 @@
     </resultMap>
 
     <resultMap id="file" type="com.pms.model.file.FileImpl">
+        <id column="file_id" property="fileId"/>
         <result column="file_name" property="fileName"/>
         <result column="url" property="url"/>
         <result column="class" property="fileClass"/>
@@ -28,6 +29,10 @@
     <select id="getFilesByProjectId" parameterType="Integer" resultMap="file">
           SELECT *  FROM file WHERE file_id IN (SELECT file_id FROM file_reference WHERE project_id=#{projectId})
     </select>
+
+    <insert id="projectAddFileReference">
+        INSERT INTO file_reference(project_id,user_id) VALUES (#{projectId},#{userId})
+    </insert>
 
 
 </mapper>
