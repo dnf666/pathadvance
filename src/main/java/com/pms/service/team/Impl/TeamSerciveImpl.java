@@ -199,7 +199,7 @@ public class TeamSerciveImpl implements TeamService{
         if (IsNull.addTeamProjectInfoIsOK(teamProject)){
             String teamName = teamProject.getTeamName();
             String userName = teamProject.getCreateBy();
-               if (projectService.addProject(teamProject)){
+             /*  if (projectService.addProject(teamProject)){
                    if (getTeamMemberByTeamNameAndUserName(teamName, userName) != null){
                        //////////////////////////差一个项目id
                        ProjectMember projectMember = new ProjectMember.Builder().projectRole(ROLE_OF_PROJECTCREATER)
@@ -211,7 +211,7 @@ public class TeamSerciveImpl implements TeamService{
                        return projectService.addProMember(projectMember);
                }
 
-            }
+            }*/
         }
         return false;
     }

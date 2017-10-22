@@ -97,6 +97,14 @@ public class Project {
         this.delFlag = delFlag;
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
 
 
     public static final class Builder {
