@@ -25,7 +25,6 @@ public interface ProjectService {
 
     /**
      * 得到项目的数量
-     *@param
      *@return int
     **/
     int getProjectsCount();
@@ -51,8 +50,7 @@ public interface ProjectService {
      */
     boolean addFile(FileImpl file);
 
-
-/*     *//**
+    /**
      *下载文件
      *@param fileId 文件id
      *@return boolean

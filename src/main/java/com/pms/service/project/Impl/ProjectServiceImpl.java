@@ -43,7 +43,6 @@ public class ProjectServiceImpl implements ProjectService {
                     }else{
                         projectMember.setProjectRole("成员");
                     }
-
                     return projectMapper.addProjectMember(projectMember);
                 }
             }
@@ -61,7 +60,6 @@ public class ProjectServiceImpl implements ProjectService {
 
         return false;
     }
-
     public List<Project> getAllProjects() {
         return projectMapper.getAllProjects();
     }

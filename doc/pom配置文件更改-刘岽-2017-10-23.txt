@@ -1,0 +1,3 @@
+1.在pom.xml文件中增添了两项配置
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>

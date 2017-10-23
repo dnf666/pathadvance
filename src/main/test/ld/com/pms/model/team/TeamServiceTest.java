@@ -4,6 +4,7 @@ import com.pms.dao.teamdao.TeamMapper;
 import com.pms.model.project.ProjectMember;
 import com.pms.model.team.*;
 import com.pms.service.team.TeamService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,14 +36,14 @@ public class TeamServiceTest {
     }
     @Test
     public void delTeamTest(){
-        Team team=new Team();
-        team.setTeamName("队1");
-        team.setCreateBy("东东");
+        Team team = new Team();
+        team.setTeamName("团队名称");
+        team.setCreateBy("刘岽");
         team.setCreateTime("2017810");
         team.setDelFlag(1);
         team.setDelTime("13254124");
         team.setDelRemarks("不知道");
-        System.out.println(  teamService.delTeam(team,team.getCreateBy()));
+        Assert.assertEquals(true,teamService.delTeam(team,team.getCreateBy()));
 
     }
     @Test

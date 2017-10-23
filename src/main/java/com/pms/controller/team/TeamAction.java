@@ -31,6 +31,7 @@ public class TeamAction{
     @RequestMapping("/team/addteam.do")
     public void addTeam(Team team){
         Map map;
+        //判断团队信息是否齐全
         if (IsNull.addTeamInfoIsOk(team)){
             boolean isOk = teamService.createTeam(team) ;
             if (isOk){
@@ -53,7 +54,7 @@ public class TeamAction{
      * http://localhost:8080/team/show.do ? page = 1
      */
     @RequestMapping(value = "/team/show.do")
-    public void showTeams(int page){
+    public void showTeams(int page){//这个方法还有需要改进的，即页码的设置
         Map map;
         List<Team> listOfTeam=teamService.getAllTeam();
 
@@ -109,6 +110,7 @@ public class TeamAction{
 
     /**1
      * 展示团队公告
+     * http://localhost:8080/notice/show.do?teamName=%E9%98%9F2
      * @param teamName 团队名称
      */
     @RequestMapping(value = "/notice/show.do")
@@ -155,7 +157,7 @@ public class TeamAction{
             if (isOk){
                 map = MapUtil.toMap(1,"success",null);
             }else {
-                map = MapUtil.toMap(0,"false",null);;
+                map = MapUtil.toMap(0,"false",null);
             }
         }else {
             map=MapUtil.toMap(0,"false",null);
@@ -170,7 +172,7 @@ public class TeamAction{
      *http://localhost:8080/notice/delnotice.do?delFlag=1&delTime=1222&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&delBy=%E5%88%98%E5%B2%BD&id=3
      */
     @RequestMapping(value = "/notice/delnotice.do")
-    public void delNotice(TeamNotice teamNotice,String delBy){
+    public void delNotice(TeamNotice teamNotice,String delBy){//有点小问题
         Map map;
         if (IsNull.delTeamNoticeInfoIsOk(teamNotice)){
             boolean isOk = teamService.delNotice(teamNotice,delBy);
@@ -193,7 +195,7 @@ public class TeamAction{
      * http://localhost:8080/notice/reeditnotice.do?id=1&title=%E5%85%AC%E5%91%8A&createBy=%E5%88%98%E5%B2%BD&createTime=123456&context=%E5%86%85ddddddddd%E5%AE%B9&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&updateBy=%E5%88%98%E5%B2%BD
      */
     @RequestMapping(value = "/notice/reeditnotice.do")
-    public void updateNotice(TeamNotice teamNotice,String updateBy){
+    public void updateNotice(TeamNotice teamNotice,String updateBy){//这个接口没有测试哈
         Map map;
         if (IsNull.updateaTeamNoticeInfoIsOK(teamNotice)){
             boolean isOk = teamService.updateNotice(teamNotice,updateBy);
@@ -239,7 +241,7 @@ public class TeamAction{
      *http://localhost:8080/teammember/delmembers.do?teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8Exiao%E9%9C%B8&delBy=%E5%88%98%E5%B2%BD&delFlag=1
      */
     @RequestMapping(value = "/teammember/delmembers")
-    public void delTeamMember(TeamMember teamMember){
+    public void delTeamMember(TeamMember teamMember){//没有测试
         Map map = (teamService.delTeamMember(teamMember)) ? MapUtil.toMap(1,"success",null)  :  MapUtil.toMap(0,"false",null);
         JsonUtil.toJSON(map);
     }
@@ -250,7 +252,7 @@ public class TeamAction{
      * http://localhost:8080/teammember/addmembers.do?teamRole=%E8%8F%9C%E9%B8%9F&teamName=%E5%9B%A2%E9%98%9F%E5%90%8D%E7%A7%B0&userName=%E6%9D%8E%E5%85%83%E9%9C%B8&joinTime=2323&joinBy=%E5%88%98%E5%B2%BD
      */
     @RequestMapping(value = "/teammember/addmembers.do")
-    public void addTeamMember(TeamMember teamMember){
+    public void addTeamMember(TeamMember teamMember){//没有测试
         Map map;
         if (teamMember != null && teamMember.getTeamName() != null
                 && teamMember.getTeamPrivelige() >= 1 && teamMember.getUserName() !=null
