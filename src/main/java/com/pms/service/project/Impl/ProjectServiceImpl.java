@@ -17,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author MEI
+ */
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
@@ -29,7 +32,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private TeamMapper teamMapper;
 
-    @Transactional
+
+    @Override
     public boolean addProject(Project project, String teamName, String userName) {
         if (projectMapper.addProject(project)){
             List<TeamMember> teamMembers = teamMapper.getTeamMembersByTeamName(teamName);
@@ -48,34 +52,29 @@ public class ProjectServiceImpl implements ProjectService {
                 }
             }
         }
-/*        if (projectMapper.addProject(project)) {
-            Project project1 =projectMapper.getProjectByCreateAtAndProjectName(project.getCreateAt(),project.getProjectName());
-            if (project1 != null){
-                ProjectMember projectMember = new ProjectMember.Builder().userName(userName).joinTime(joinTime).projectId(project1.getId())
-                        .joinBy(joinBy).projectRole("负责人").teamName(project.getTeamName()).build();
-                if (projectMapper.addProjectMember(projectMember)){
-                    return true;
-                }
-            }
-        }*/
+
 
         return false;
     }
 
+    @Override
     public List<Project> getAllProjects() {
         return projectMapper.getAllProjects();
     }
 
+    @Override
     public int getProjectsCount() {
         return projectMapper.getAllProjects().size();
     }
 
+    @Override
     public Project getProject(int id) {
         return projectMapper.getProjectById(id);
     }
 //这个方法需要重写
 
 
+    @Override
     public boolean deleteFile(FileImpl fileImpl, String fileName, String teamName) {
         /*   if (fileName.equals(fileImpl.getFileName()) && teamName.equals(fileImpl.getTeamName())) {
             if (fileMapper.deleteFile(fileImpl, fileName, teamName)) {
@@ -89,11 +88,14 @@ public class ProjectServiceImpl implements ProjectService {
         return false;
     }
 
+    @Override
     public boolean addFile(FileImpl file) {
         return fileMapper.insertFileInfo(file);
     }
 
 
+
+    @Override
     public boolean deleteProMember(String userName, int projectId, ProjectMember projectMember) throws Exception {
         Project project = projectMapper.getProjectById(projectId);
         if (project != null) {
@@ -104,7 +106,7 @@ public class ProjectServiceImpl implements ProjectService {
                     return true;
             }
             if (!userName.equals(project.getCreateBy())) {
-                throw new Exception("只有负责人可以删除成员.");
+                      throw new Exception("只有负责人可以删除成员.");
             }
             if (projectMember.getProjectRole().equals("负责人")) {
                 throw new Exception("负责人不能删除自己.");
@@ -114,18 +116,21 @@ public class ProjectServiceImpl implements ProjectService {
 
     }
 
+    @Override
     public boolean addProMember(ProjectMember projectMember) {
         return projectMember != null && projectMapper.addProjectMember(projectMember);
     }
 
 
 
+    @Override
     public List<ProjectMember> getProMembers(int projectId) {
         return  projectMapper.getProjectMembersByProjectId(projectId);
     }
 
 
 
+    @Override
     public boolean insertFile(FileImpl file) {
         return fileMapper.insertFileInfo(file);
     }
