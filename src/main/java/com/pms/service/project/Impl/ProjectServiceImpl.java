@@ -34,7 +34,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public boolean addProject(Project project, String teamName, String userName) {
+    public boolean addProject(Project project) {
+        String teamName = project.getTeamName();
+        String userName = project.getCreateBy();
         if (projectMapper.addProject(project)){
             List<TeamMember> teamMembers = teamMapper.getTeamMembersByTeamName(teamName);
             if(teamMembers != null){
@@ -96,7 +98,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public boolean deleteProMember(String userName, int projectId, ProjectMember projectMember) throws Exception {
+    public boolean deleteProMember(String userName, ProjectMember projectMember) throws Exception {
+        int projectId = projectMember.getProjectId();
         Project project = projectMapper.getProjectById(projectId);
         if (project != null) {
             String createPerson = project.getCreateBy();

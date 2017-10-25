@@ -14,7 +14,7 @@ public interface ProjectService {
      * @param project 项目
      *@return boolean
      **/
-    boolean addProject(Project project,String teamName, String userName);
+    boolean addProject(Project project);
 
     /**
      *得到所有项目
@@ -74,7 +74,7 @@ public interface ProjectService {
      * @param projectMember 项目成员
      * @return boolean
      */
-    boolean deleteProMember(String userName, int projectId, ProjectMember projectMember) throws Exception;
+    boolean deleteProMember(String userName, ProjectMember projectMember) throws Exception;
 
     /**
      * 添加项目成员
