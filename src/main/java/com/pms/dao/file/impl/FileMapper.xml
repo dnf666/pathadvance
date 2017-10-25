@@ -17,8 +17,12 @@
         <result property="isPrivater" column="is_privater"/>
     </resultMap>
 
+<<<<<<< HEAD
 
     <select id="selectByFileId" resultMap="FileImpl" >
+=======
+    <select id="selectByFileId" resultMap="FileImpl" parameterType="com.pms.model.file.FileImpl">
+>>>>>>> master
         SELECT file_id,file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater
         FROM file
         WHERE file_id = #{fileId} AND del_flag = 0;
@@ -58,7 +62,7 @@
             <if test="createTime !=null">
                 create_time = #{createTime},
             </if>
-            <if test="delFlag != null">
+            <if test="delFlag != 0">
                 del_flag = #{delFlag},
             </if>
             <if test="delTime != null">
@@ -84,7 +88,7 @@
         WHERE file_id = #{fileId};
     </update>
 
-    <update id="recoverFile">
+    <update id="recoverFile" parameterType="java.lang.Integer">
         UPDATE file
         <set>
             <if test="delFlag = 0">
