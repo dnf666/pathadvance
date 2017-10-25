@@ -141,7 +141,6 @@ public class FileAction {
         if (fileService.recoverFile(fileImpl,fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
-
         }else {
             message = "操作失败";
             map = MapUtil.toMap(0,message,null);
@@ -167,4 +166,3 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 }
-
