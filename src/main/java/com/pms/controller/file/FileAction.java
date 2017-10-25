@@ -32,8 +32,6 @@ public class FileAction {
     public void insertFileInfo(MultipartFile file, HttpServletRequest request) throws IOException {
         Map map;
         if (file.isEmpty()) {
-//            System.out.println("文件未上传!");
-
             message = "文件未上传!";
             //Map map = new HashMap();
             map = MapUtil.toMap(0,message,null);
@@ -124,7 +122,6 @@ public class FileAction {
         System.out.println("时间格式："+date);
 
         //String message = null;
-        //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileImpl,fileId)){
 
             message = "操作成功";
@@ -141,7 +138,6 @@ public class FileAction {
     public void recoverFile(FileImpl fileImpl,int fileId,HttpServletResponse response){
         Map map;
         //String res = null;
-        //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
         if (fileService.recoverFile(fileImpl,fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
@@ -161,9 +157,7 @@ public class FileAction {
         fileImpl.setDelFlag(true);
         System.out.println("时间格式："+date);
         //String res = null;
-        //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
         if (fileService.deleteFile(fileImpl,fileId)){
-
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {
