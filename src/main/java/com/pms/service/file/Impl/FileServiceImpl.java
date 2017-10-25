@@ -19,19 +19,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean insertFileInfo(FileImpl fileImpl) {
-<<<<<<< HEAD
-        return fileMapper.insertFileInfo(fileImpl);
-    }
-
-    @Override
-    public boolean selectByFileId(FileImpl fileImpl, int fileId){
-        if (fileId == (fileImpl.getFileId())) {
-            if (fileMapper.selectByFileId(fileId)) {
-                return true;
-            }
-        }
-        return false;
-=======
+//<<<<<<< HEAD
+//        return fileMapper.insertFileInfo(fileImpl);
+//    }
+//
+//    @Override
+//    public boolean selectByFileId(FileImpl fileImpl, int fileId){
+//        if (fileId == (fileImpl.getFileId())) {
+//            if (fileMapper.selectByFileId(fileId)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//=======
         try {
             fileMapper.insertFileInfo(fileImpl);
         }catch(Exception e){
@@ -52,12 +52,12 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         return true;
->>>>>>> master
+//>>>>>>> master
     }
 
 
     @Override
-<<<<<<< HEAD
+/*<<<<<<< HEAD
     public boolean updateFileInfo(FileImpl fileImpl, String fileName) {
         if (fileName.equals(fileImpl.getFileName())) {
             if (fileMapper.updateFileInfo(fileImpl)) {
@@ -95,7 +95,7 @@ public class FileServiceImpl implements FileService {
             }
         }
         return false;
-=======
+=======*/
     public boolean updateFileInfo(String fileName) {
         FileImpl fileImpl = new FileImpl();
         if (fileName != null) {
@@ -141,7 +141,7 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         return true;
->>>>>>> master
+//>>>>>>> master
     }
 
     @Override

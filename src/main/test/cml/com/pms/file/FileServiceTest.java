@@ -38,7 +38,7 @@ public class FileServiceTest {
     }
 
     @Test
-<<<<<<< HEAD
+/*<<<<<<< HEAD
     public void selectByFileName() throws Exception {
         FileImpl file1 = new FileImpl();
         FileImpl file2 = new FileImpl();
@@ -48,7 +48,7 @@ public class FileServiceTest {
         list.add(file2);
         list.add(file3);
         fileService.selectByFileId(file1,2);
-=======
+=======*/
     public void selectByFileId() throws Exception {
         FileImpl fileImpl = new FileImpl();
         fileImpl.setFileId(9);
@@ -66,7 +66,7 @@ public class FileServiceTest {
 //=======
 //        fileService.selectByFileId(2);
 //>>>>>>> 045825e6011a0c2f34bafa8296bd668f410f7e91
->>>>>>> master
+//>>>>>>> master
 
     }
 

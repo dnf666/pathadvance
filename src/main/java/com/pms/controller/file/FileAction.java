@@ -124,13 +124,13 @@ public class FileAction {
         System.out.println("时间格式："+date);
 
         //String message = null;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
         if (fileService.deleteByDelFlag(fileImpl,fileId)){
 
-=======
+=======*/
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileId)){
->>>>>>> master
+//>>>>>>> master
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {
@@ -146,12 +146,12 @@ public class FileAction {
         FileImpl fileImpl = new FileImpl();
         Map map;
         //String res = null;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
         if (fileService.recoverFile(fileImpl,fileId)){
-=======
+=======*/
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
         if (fileService.recoverFile(fileId)){
->>>>>>> master
+//>>>>>>> master
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
         }else {
@@ -170,12 +170,12 @@ public class FileAction {
         fileImpl.setDelFlag(true);
         System.out.println("时间格式："+date);
         //String res = null;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
         if (fileService.deleteFile(fileImpl,fileId)){
-=======
+=======*/
         //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
         if (fileService.deleteFile(fileId)){
->>>>>>> master
+//>>>>>>> master
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
         }else {
