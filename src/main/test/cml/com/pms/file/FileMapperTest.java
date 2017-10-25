@@ -4,8 +4,10 @@ import com.pms.dao.file.FileMapper;
 import com.pms.model.file.FileImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -19,6 +21,8 @@ public class FileMapperTest {
     FileMapper fileMapper;
 
     @Test
+    @Transactional
+    @Rollback
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
         file.setFileId(3);
@@ -61,7 +65,7 @@ public class FileMapperTest {
     public void deleteFile() throws Exception {
         FileImpl fileImpl = new FileImpl();
         fileImpl.setFileId(3);
-        fileMapper.deleteFile(fileImpl,3);
+        fileMapper.deleteFile(3);
 
     }
 

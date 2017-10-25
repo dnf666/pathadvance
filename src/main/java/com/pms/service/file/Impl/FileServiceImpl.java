@@ -75,9 +75,8 @@ public class FileServiceImpl implements FileService {
     }
 
     public boolean deleteFile(int fileId) {
-        FileImpl fileImpl = new FileImpl();
         try {
-            fileMapper.deleteFile(fileImpl,fileId);
+            fileMapper.deleteFile(fileId);
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("删除失败");

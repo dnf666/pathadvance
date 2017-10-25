@@ -97,7 +97,8 @@ public class FileAction {
 //    }
 
     @RequestMapping("updateFileInfo")
-    public void updateFileInfo(FileImpl fileImpl,String fileName,HttpServletResponse response){
+    public void updateFileInfo(String fileName,HttpServletResponse response){
+        FileImpl fileImpl = new FileImpl();
         Map map;
         //String messge = null;
         if (fileService.updateFileInfo(fileName)){
@@ -111,7 +112,8 @@ public class FileAction {
     }
 
     @RequestMapping("deleteByDelFlag")
-    public void deleteByDelFlag(FileImpl fileImpl,int fileId,HttpServletResponse response){
+    public void deleteByDelFlag(int fileId,HttpServletResponse response){
+        FileImpl fileImpl = new FileImpl();
         Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
@@ -131,7 +133,8 @@ public class FileAction {
     }
 
     @RequestMapping("recoverFile")
-    public void recoverFile(FileImpl fileImpl,int fileId,HttpServletResponse response){
+    public void recoverFile(int fileId,HttpServletResponse response){
+        FileImpl fileImpl = new FileImpl();
         Map map;
         //String res = null;
         //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
@@ -146,7 +149,8 @@ public class FileAction {
     }
 
     @RequestMapping("deleteFile")
-    public void deleteFile(FileImpl fileImpl,int fileId,HttpServletResponse response){
+    public void deleteFile(int fileId,HttpServletResponse response){
+        FileImpl fileImpl = new FileImpl();
         Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
