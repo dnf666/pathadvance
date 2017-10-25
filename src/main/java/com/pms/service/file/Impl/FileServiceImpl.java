@@ -18,6 +18,7 @@ public class FileServiceImpl implements FileService {
     @Resource
     private FileMapper fileMapper;
 
+    @Override
     public boolean insertFileInfo(FileImpl fileImpl) {
         try {
             fileMapper.insertFileInfo(fileImpl);
@@ -29,6 +30,7 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
+    @Override
     public boolean selectByFileId(int fileId){
         try {
             fileMapper.selectByFileId(fileId);
@@ -41,6 +43,7 @@ public class FileServiceImpl implements FileService {
     }
 
 
+    @Override
     public boolean updateFileInfo(String fileName) {
         FileImpl fileImpl = new FileImpl();
         if (fileName != null) {
@@ -50,6 +53,7 @@ public class FileServiceImpl implements FileService {
         return false;
     }
 
+    @Override
     public boolean deleteByDelFlag(int fileId){
         FileImpl fileImpl = new FileImpl();
         try {
@@ -62,6 +66,7 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
+    @Override
     public boolean recoverFile(int fileId) {
         FileImpl fileImpl = new FileImpl();
         try {
@@ -74,6 +79,7 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
+    @Override
     public boolean deleteFile(int fileId) {
         try {
             fileMapper.deleteFile(fileId);
@@ -85,6 +91,7 @@ public class FileServiceImpl implements FileService {
         return true;
     }
 
+    @Override
     public boolean downloadFile(String fileName){
         return true;
     }
