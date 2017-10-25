@@ -55,11 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         return false;
     }
-<<<<<<< HEAD
-=======
-
     @Override
->>>>>>> 01f7076b40371ca16ab2743c44fdf4f97a27a241
     public List<Project> getAllProjects() {
         return projectMapper.getAllProjects();
     }
@@ -104,8 +100,9 @@ public class ProjectServiceImpl implements ProjectService {
             String createPerson = project.getCreateBy();
             String projectRole = projectMember.getProjectRole();
             if (userName.equals(createPerson) && !projectRole.equals("负责人")) {
-                if (projectMapper.delProjectMember(projectMember))
+                if (projectMapper.delProjectMember(projectMember)){
                     return true;
+                }
             }
             if (!userName.equals(project.getCreateBy())) {
                       throw new Exception("只有负责人可以删除成员.");
