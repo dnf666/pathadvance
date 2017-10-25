@@ -48,7 +48,9 @@ public class FileServiceTest {
         list.add(file1);
         list.add(file2);
         list.add(file3);
-        fileService.selectByFileId(file1,2);
+
+//       fileService.selectByFileId(2);
+
 
     }
 
