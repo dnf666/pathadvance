@@ -6,6 +6,7 @@ package com.pms.dataModel.User;
 public class LoginInfo {
     private String userName;
     private String password;
+    private Boolean delFlag;
     private String verificationCode;
 
     public String getUserName() {
@@ -30,5 +31,13 @@ public class LoginInfo {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }

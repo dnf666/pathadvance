@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射器文件会被MapperScannerConfigurer自动扫描发现将它们创建成MapperFactoryBean，被MapperFactoryBean自动解析-->
+<mapper namespace="com.pms.dao.fileReference.FileReferenceMapper">
+    
+    <resultMap id="fileReference" type="com.pms.model.project.FileReference">
+        <result column="file_id" property="fileId"/>
+        <result column="team_id" property="teamId"/>
+        <result column="project_id" property="projectId"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <resultMap id="file" type="com.pms.model.file.FileImpl">
+        <id column="file_id" property="fileId"/>
+        <result column="file_name" property="fileName"/>
+        <result column="url" property="url"/>
+        <result column="class" property="fileClass"/>
+        <result column="size" property="size"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="del_time" property="delTime"/>
+        <result column="is_privater" property="isPrivater"/>
+    </resultMap>
+
+    <select id="getFilesByProjectId" parameterType="Integer" resultMap="file">
+          SELECT *  FROM file WHERE file_id IN (SELECT file_id FROM file_reference WHERE project_id=#{projectId})
+    </select>
+
+    <insert id="projectAddFileReference">
+        INSERT INTO file_reference(project_id,user_id) VALUES (#{projectId},#{userId})
+    </insert>
+
+
+</mapper>

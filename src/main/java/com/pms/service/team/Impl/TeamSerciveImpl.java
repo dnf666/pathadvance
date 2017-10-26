@@ -1,16 +1,23 @@
 
-        package com.pms.service.team.Impl;
-        import com.pms.dao.teamdao.TeamMapper;
-        import com.pms.model.project.ProjectMember;
-        import com.pms.model.team.*;
-        import com.pms.service.team.TeamService;
-        import com.pms.util.team.IsNull;
-        import org.apache.ibatis.annotations.Param;
-        import org.springframework.stereotype.Service;
-        import javax.annotation.Resource;
-        import java.util.LinkedList;
-        import java.util.List;
-        /**
+package com.pms.service.team.Impl;
+import com.pms.dao.project.ProjectMapper;
+import com.pms.dao.teamdao.TeamMapper;
+import com.pms.dao.user.UserMapper;
+import com.pms.model.file.FileImpl;
+import com.pms.model.project.Project;
+import com.pms.model.project.ProjectMember;
+import com.pms.model.team.*;
+import com.pms.service.file.FileService;
+import com.pms.service.project.ProjectService;
+import com.pms.service.team.TeamService;
+import com.pms.util.team.IsNull;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+/**
  * Created by liudong on 2017/8/15.
  *
  */
@@ -20,20 +27,15 @@ public class TeamSerciveImpl implements TeamService{
     private final int MANAGER_OF_TEAMMEMBER = 1;//团队管理员的权限
     private final int NO_SUCH_TEAMMEMBER = -1;//表示当前团队没有这个成员
     private final int DEL_FLAG = 1;//删除的标志
+    private final String ROLE_OF_PROJECTCREATER = "负责人";//项目创建者的角色
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private ProjectService projectService;
+    @Resource
+    private FileService fileService;
     @Resource
     private TeamMapper teamMapper;
-   /* public boolean isProMember(List<ProjectMember> list, String userName) {
-        if (list != null && userName != null){
-            if (list.size() != 0){
-                for (ProjectMember projectMemberName:list) {
-                    if (userName.equals(projectMemberName.getUserName())){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }*/
     public TeamMember getTeamMember(List<TeamMember> list, String userName) {
         if (list != null && userName!=null){
             if (list.size() == 0) {
@@ -57,10 +59,10 @@ public class TeamSerciveImpl implements TeamService{
     }
     public TeamMember getTeamMemberByTeamNameAndUserName(String teamName, String userName) {
         return teamMapper.getTeamMemberByTeamNameAndUserName(teamName,userName);
-            }
+    }
     public TeamMember getDelTeamMember(String teamName , String userName) {
         return teamMapper.getDelTeamMember(teamName , userName);
-     }
+    }
     public boolean createTeam(Team team) {
         //检查团队信息是否完整
         if (team != null && team.getCreateBy() != null && team.getTeamName() != null && team.getCreateTime() !=null){
@@ -174,7 +176,7 @@ public class TeamSerciveImpl implements TeamService{
     }
     public List<TeamMember> getTeamMembers(String teamName) {
         if (teamName != null)
-        return teamMapper.getTeamMembersByTeamName(teamName);
+            return teamMapper.getTeamMembersByTeamName(teamName);
         return null;
     }
     public boolean delTeamMember(TeamMember teamMember) {
@@ -190,94 +192,44 @@ public class TeamSerciveImpl implements TeamService{
         }
         return false;
     }
-    /*  暂时放着，有点问题
-    public boolean createProject(TeamProject teamProject) {
+
+    public boolean createProject(Project teamProject) {
         //创建项目必须要有一个团队,首先判断当前用户是否是在当前的团队当中
         //同时将当前成员插入project_member中
+        if (IsNull.addTeamProjectInfoIsOK(teamProject)){
+            String teamName = teamProject.getTeamName();
+            String userName = teamProject.getCreateBy();
+             /*  if (projectService.addProject(teamProject)){
+                   if (getTeamMemberByTeamNameAndUserName(teamName, userName) != null){
+                       //////////////////////////差一个项目id
+                       ProjectMember projectMember = new ProjectMember.Builder().projectRole(ROLE_OF_PROJECTCREATER)
+                               .teamName(teamName)
+                               .userName(userName)
+                               .joinTime(teamProject.getCreateAt())
+                               .joinBy(userName)
+                               .build();
+                       return projectService.addProMember(projectMember);
+               }
 
-        if (teamProject.getTeamName().equals(getTeamMember(teamMapper.getTeamMembersByTeamName(teamProject.getTeamName()),teamProject.getCreateBy()).getTeamName())){
-            if (teamMapper.addProject(teamProject)){
-                //项目创建成功，在项目成员中添加项目的创建者
-                ProjectMember projectMember=new ProjectMember();
-                projectMember.setJoinTime(teamProject.getCreateAt());
-                projectMember.setTeamName(teamProject.getTeamName());
-                projectMember.setUserName(teamProject.getCreateBy());
-                projectMember.setTeamRole(getTeamMember(teamMapper.getTeamMembersByTeamName(teamProject.getTeamName()),teamProject.getCreateBy()).getTeamRole());
-                projectMember.setProjectName(teamProject.getProjectName());
-                projectMember.setJoinBy(teamProject.getCreateBy());
-                return teamMapper.addProjectMember(projectMember);
-            }
+            }*/
         }
         return false;
     }
 
-    public boolean delProject(TeamProject teamProject, String delBy) {
-        //只有创建者才能够删除自己的项目,并且同时删除项目所有成员
-        if(teamMapper.delProject(teamProject)){
-            //首先得到当前项目下的所有成员，然后再逐个删除
-            List<ProjectMember> list=teamMapper.getProjectMembersByProject(teamProject.getTeamName(),teamProject.getProjectName());
-            if (list!=null){
-                for (int k=0;k<list.size();k++){
-                    list.get(k).setDelFlag(1);
-                    list.get(k).setDelBy(delBy);
-                    if (!teamMapper.delProjectMember(list.get(k))){
-                        return false;
-                    }
-                }
-                return true;
-            }
+    public boolean delProject(Project teamProject, String delBy) {
+        if (teamProject != null && teamProject.getCreateBy() != null && teamProject.getCreateBy().equals(delBy)){
+            ////////这里应当写删除项目和删除所有的项目成员信息
         }
         return false;
     }
-     */
+
+
     public boolean setTeamPrivilige(TeamMember teamMember) {
         if (teamMember != null && teamMember.getTeamName() != null && teamMember.getUserName() != null )
-        return teamMapper.setPrivilege(teamMember);
+            return teamMapper.setPrivilege(teamMember);
         return false;
     }
 
-    /*
-    public List<TeamProject> getTeamProjectsByTeamName(String teamName) {
-        return teamMapper.getProjectInfoByTeamName(teamName);
-    }
-    public TeamProject getTeamProjectsById(int id) {
-        return teamMapper.getProjectInfoByProjectId(id);
-    }
-    public List<ProjectMember> getProMemberByTeamNameAndProjectName(String teamName, String projectName) {
-        if (teamName != null && projectName != null ){
-            return teamMapper.getProjectMembersByProject(teamName,projectName);
-        }
-       return null;
-    }
-    */
-
-    /*放着
-    public boolean updateaProject(TeamProject teamProject, String updateBy) {
-        //更新项目内容，必须是项目中的人，这里得到该项目是有点问题的。。。。
-        if(isProMember(teamMapper.getProjectMembersByProject(teamProject.getTeamName(),teamProject.getProjectName()),updateBy)){
-            return teamMapper.updateProject(teamProject);
-        }
-        return false;
-    }
-    */
-    /*
-    public boolean addProjectMember(ProjectMember projectMember, String inviteBy) {
-        //首先判断该项目中是否存在此成员，存在则不必再添加,没有写哈
-        //添加项目成员，必须是项目中的人
-        if(isProMember(teamMapper.getProjectMembersByProject(projectMember.getTeamName(),projectMember.getProjectName()),inviteBy)){
-            return teamMapper.addProjectMember(projectMember);
-        }
-        return false;
-    }
-    public boolean delProjectMember(ProjectMember projectMember,int projectId) {
-        //必须是项目的创建者才能够删除项目成员
-        if(isProMember(teamMapper.getProjectMembersByProject(projectMember.getTeamName(),projectMember.getProjectName()),projectMember.getDelBy())&&projectMember.getDelBy().equals(teamMapper.getProjectInfoByProjectId(projectId).getCreateBy())){
-            //如果数据库里没有该项目的id，则会抛出一个空指针异常
-            return teamMapper.delProjectMember(projectMember);
-        }
-        return false;
-    }
-    */
     public boolean createNotice(TeamNotice teamNotice) {
         if (IsNull.addteamNoticeInfoIsOk(teamNotice)){
             List<TeamMember> listOfTeamMember = getTeamMembers(teamNotice.getTeamName());
@@ -296,7 +248,7 @@ public class TeamSerciveImpl implements TeamService{
         if (IsNull.delTeamNoticeInfoIsOk(teamNotice) ){
             privilige = getTeamPrivilege(teamMapper.getTeamMemberByTeamNameAndUserName(teamNotice.getTeamName() , delBy));
             if (privilige >= 1)
-            return  teamMapper.delNotice(teamNotice);
+                return  teamMapper.delNotice(teamNotice);
         }
         return false;
     }
@@ -326,13 +278,8 @@ public class TeamSerciveImpl implements TeamService{
     }
     public int getCounts(List list) {
         return list.size();
-    }/*   public boolean addProjectMember(ProjectMember projectMember, String inviteBy) {
-                return false;
-            }
+    }
 
-            public boolean delProjectMember(ProjectMember projectMember, int projectId) {
-                return false;
-            }*/
-        }
+}
 
 

@@ -5,6 +5,7 @@
 
 <mapper namespace="com.pms.dao.project.ProjectMapper">
 
+    <!--用来描述如何从数据库结果集中加载你的对象-->
     <resultMap id="Project" type="com.pms.model.project.Project">
         <id column = "id" property="id"/>
         <result column = "project_name" property="projectName"/>
@@ -44,7 +45,7 @@
         WHERE id = #{id} AND del_flag = 0
     </update>
 
-    <select id = "getProjectsByTeamName" parameterType = "java.lang.String"  resultMap="Project">
+    <select id = "getProjectsByTeamName" parameterType = "java.lang.Integer"  resultMap="Project">
         SELECT * FROM project WHERE team_name = #{teamName} AND del_flag = 0
     </select>
 
@@ -52,8 +53,16 @@
         SELECT * FROM project WHERE id = #{id} AND del_flag = 0
     </select>
 
+    <select id="getProjectByCreateAtAndProjectName" resultMap="Project">
+        SELECT * FROM project WHERE create_at=#{createAt} AND project_name=#{projectName}
+    </select>
 
-    <resultMap id="project_members" type="com.pms.model.project.ProjectMember">
+    <select id="getAllProjects" resultMap="Project">
+        SELECT * FROM project WHERE del_flag = 0
+    </select>
+
+
+    <resultMap id="projectMembers" type="com.pms.model.project.ProjectMember">
         <result column="project_id" property="projectId"/>
         <result column="user_name" property="userName"/>
         <result column="project_role" property="projectRole"/>
@@ -66,13 +75,22 @@
         <result column="del_remarks" property="delRemarks"/>
     </resultMap>
 
-    <insert id="addProjectMember" parameterType="com.pms.model.project.ProjectMember">
+<!--    <insert id="addProjectMember" parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
+<<<<<<< HEAD
+=======
+        (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
+        (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
+    </insert>-->
+
+    <insert id="addProjectMember"    parameterType="com.pms.model.project.ProjectMember">
+        INSERT INTO project_member
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         (project_id,user_name,team_name,project_role,join_time,join_by)VALUES
         (#{projectId},#{userName},#{teamName},#{projectRole},#{joinTime},#{joinBy})
     </insert>
 
-    <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
+<!--    <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
         UPDATE project_member
         <set>
             <if test="delFlag!=0">
@@ -88,11 +106,37 @@
                 del_remarks=#{delRemarks}
             </if>
         </set>
+<<<<<<< HEAD
         WHERE  user_name=#{userName} AND del_flag=0
     </update>
 
     <select id="getProjectMembersByProjectId"  resultMap="project_members">
         SELECT * FROM project_member
         WHERE del_flag=0 AND  project_id = #{projectId}
+=======
+        WHERE team_name=#{teamName} AND project_id=#{projectId} AND user_name=#{userName} AND del_flag=0
+    </update>-->
+
+    <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
+        UPDATE project_member
+        <set>
+            <if test="delFlag!=0">
+                del_flag=#{delFlag}
+            </if>
+        </set>
+        WHERE team_name = #{teamName}
+         AND user_name = #{userName} AND del_flag = 0
+    </update>
+
+    <select id="getProjectMembersByProjectId" parameterType="java.lang.Integer" resultMap="projectMembers">
+        SELECT * FROM project_member
+        WHERE del_flag=0 AND project_id = #{projectId}
     </select>
+
+    <select id="getProjectMembersByTeamName" resultMap="projectMembers">
+        SELECT * FROM project_member
+        WHERE team_name = #{teamName}
+>>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
+    </select>
+
 </mapper>

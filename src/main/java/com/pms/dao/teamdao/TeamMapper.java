@@ -10,6 +10,9 @@ import java.util.List;
  *
  *                                                         关于团队项目和团队文件还没有写
  */
+
+//此注解 能将其注册为Spring Bean
+// 能将所标注的类抛出的数据访问异常封装为Spring的数据访问异常，使得异常独立于底层框架
 @Repository
 public interface TeamMapper {
     /**
@@ -91,6 +94,13 @@ public interface TeamMapper {
      * @return List
      */
     List<TeamMember> getTeamInfoByUserName(String userName);
+
+    /**
+     * 通过团队id获得团队对象
+     * @param teamId 团队id
+     * @return team
+     */
+    Team getTeamById(int teamId);
     /**
      * 创建公告
      * @param teamNotice 团队公告 teamNotice需要设值的参数： title , createBy , createTime , context , teamName ,
@@ -141,4 +151,27 @@ public interface TeamMapper {
      * @return boolean
      */
     boolean insertTeamMasterHistory(TeamMasterHistory teamMasterHistory);
+
+    /**
+     * 在文件参照表中插入关联信息
+     * @param teamId 团队id
+     * @param fileId 文件id
+     * @param userId 用户id
+     * @return 执行结果
+     */
+    boolean addTeamFile(@Param("teamId") int teamId,@Param("fileId") int fileId ,@Param("userId") int userId);
+
+    /**
+     * 通过文件id查找文件参照关系
+     * @param fileId 文件id
+     * @return 文件关照对象
+     */
+    FileReference getFRByFileId(int fileId);
+
+    /**
+     * 通过团队id查找文件参照关系
+     * @param teamId
+     * @return 文件参照对象
+     */
+    List<FileReference> getFRByTeamId(int teamId);
 }
