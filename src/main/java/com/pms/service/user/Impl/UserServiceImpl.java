@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService{
 
     String message;
 
-    public boolean login(LoginInfo loginInfo,String verificationCode) {
+    @Override
+    public boolean login(LoginInfo loginInfo, String verificationCode) {
         if (verificationCode.equals(loginInfo.getVerificationCode())) {
             LoginInfo loginInfo_db = userMapper.selectPasswordByUserName(loginInfo.getUserName());
             if (loginInfo_db != null) {
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService{
      * @param user
      * @return
      */
+    @Override
     public boolean register(User user) throws IsExistException {
         if (!isExist(user.getUserName())) {
             userMapper.insertIntoUser(user);
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService{
         throw new IsExistException("用户名 " + user.getUserName() + " 已经存在");
     }
 
+    @Override
     public boolean modifyInfo(User user){
         if (isExist(user.getUserName())){
             userMapper.updateUserInfo(user);
@@ -66,15 +69,19 @@ public class UserServiceImpl implements UserService{
         throw new NoSuchElementException("没有用户名为 : " + user.getUserName() + " 的用户");
     }
 
+    @Override
     public PersonInfo getUserInfo(String userName) {
         return userMapper.selectPersonInfoByUserName(userName);
     }
 
+    @Override
     public String getMessage() {
         return (message == null) ? null:message;
     }
 
 
+
+    @Override
     public List findUserBySearching(User user) {
        if (user.getUserName()==null)
        {
@@ -83,6 +90,7 @@ public class UserServiceImpl implements UserService{
        return userMapper.findBySearchingUser(user);
     }
 
+    @Override
     public boolean isExist(String userName) {
         PersonInfo personInfo = userMapper.selectPersonInfoByUserName(userName);
         if (personInfo != null) {

@@ -10,7 +10,6 @@ import com.pms.model.project.ProjectMember;
 import com.pms.model.team.TeamMember;
 import com.pms.service.project.ProjectService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -58,14 +57,20 @@ public class ProjectServiceImpl implements ProjectService {
         return false;
     }
     @Override
+    public boolean delProject(int projectId, String userName) {
+        Project project = projectMapper.getProjectById(projectId);
+        String createBy = project.getCreateBy();
+        if (userName.equals(createBy)){
+            return projectMapper.delProject(project);
+        }
+        return false;
+    }
+
+    @Override
     public List<Project> getAllProjects() {
         return projectMapper.getAllProjects();
     }
 
-    @Override
-    public int getProjectsCount() {
-        return projectMapper.getAllProjects().size();
-    }
 
     @Override
     public Project getProject(int id) {
@@ -103,7 +108,11 @@ public class ProjectServiceImpl implements ProjectService {
             String createPerson = project.getCreateBy();
             String projectRole = projectMember.getProjectRole();
             if (userName.equals(createPerson) && !projectRole.equals("负责人")) {
+<<<<<<< HEAD
                 if (projectMapper.delProjectMember(projectMember)){
+=======
+                if (projectMapper.delProjectMember(projectMember)) {
+>>>>>>> 0dfdceb90815b69d636c49fa83dd0728c6be54a0
                     return true;
                 }
             }
