@@ -74,8 +74,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public List findUserBySearching(User user) {
-        if(user.getUserName()==null)
+        if(user.getUserName()==null) {
             return null;
+        }
         return userMapper.findUserBySearching(user);
 
 
