@@ -8,10 +8,12 @@ import com.pms.service.user.UserService;
 import com.pms.service.user.VeriCode;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
+import com.pms.util.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +31,8 @@ public class UserAction {
     UserModelService userModelService;
     @Autowired
     VeriCode veriCode;
+    @Resource(name = "httpSession")
+    Session session;
 
     @RequestMapping("login")
     public void login(LoginInfo loginInfo, HttpServletRequest request){
@@ -61,7 +65,7 @@ public class UserAction {
     public void pushCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         char[] chars = veriCode.getChars();
         BufferedImage image = veriCode.getImage(chars);
-        request.getSession().setAttribute("verificationCode",new String(chars));
+        request.getSession().setAttribute("verificationCode",chars.toString());
         ImageIO.write(image,"jpg",response.getOutputStream());
     }
 

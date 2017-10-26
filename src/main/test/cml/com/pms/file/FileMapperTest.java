@@ -4,8 +4,10 @@ import com.pms.dao.file.FileMapper;
 import com.pms.model.file.FileImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -19,9 +21,11 @@ public class FileMapperTest {
     FileMapper fileMapper;
 
     @Test
+    @Transactional
+    @Rollback
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
-        file.setFileId(1);
+        file.setFileId(3);
         file.setFileName("fileName");
         file.setUrl("位置");
         file.setFileClass("类型");
@@ -38,7 +42,7 @@ public class FileMapperTest {
     @Test
     public void updateFileInfo() throws Exception {
         FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(2);
+        fileImpl.setFileId(4);
         fileImpl.setFileName("文件1");
         fileImpl.setUrl("位置1");
         fileImpl.setFileClass("类型1");
@@ -53,15 +57,15 @@ public class FileMapperTest {
     }
 
     @Test
-    public void selectByFileName() throws Exception{
-        System.out.println(fileMapper.selectByFileId(1));
+    public void selectByFileId() throws Exception{
+        fileMapper.selectByFileId(15);
     }
 
     @Test
     public void deleteFile() throws Exception {
         FileImpl fileImpl = new FileImpl();
         fileImpl.setFileId(3);
-        fileMapper.deleteFile(fileImpl,3);
+        fileMapper.deleteFile(3);
 
     }
 

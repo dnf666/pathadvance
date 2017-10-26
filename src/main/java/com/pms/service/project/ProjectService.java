@@ -68,7 +68,6 @@ public interface ProjectService {
     /**
      *删除项目成员
      * @param userName 用户名
-     * @param projectId 项目id
      * @param projectMember 项目成员
      * @return boolean
      */

@@ -20,35 +20,35 @@ public interface FileService {
      * 查看文件信息
      * @return boolean
      */
-    boolean selectByFileId(FileImpl fileImpl, int fileId);
+    boolean selectByFileId(int fileId);
 
     /**
      * 更新文件信息
-     * @param fileImpl
+     * @param fileName
      * @return boolean
      */
-    boolean updateFileInfo(FileImpl fileImpl,String fileName);
+    boolean updateFileInfo(String fileName);
 
     /**
      * 删除文件，只是修改删除标记
-     * @param fileImpl
+     * @param fileId
      * @return boolean
      */
-    boolean deleteByDelFlag(FileImpl fileImpl,int fileId);
+    boolean deleteByDelFlag(int fileId);
 
     /**
      * 删除文件恢复，即修改删除标记
      * @param fileId
      * @return boolean
      */
-    boolean recoverFile(FileImpl fileImpl,int fileId);
+    boolean recoverFile(int fileId);
 
     /**
      * 删除文件
      * @param fileId
      * @return boolean
      */
-    boolean deleteFile(FileImpl fileImpl,int fileId);
+    boolean deleteFile(int fileId);
 
     /**
      * 下载文件

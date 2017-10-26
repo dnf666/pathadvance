@@ -244,7 +244,7 @@ public class TeamSerciveImpl implements TeamService{
             String teamName = teamProject.getTeamName();
             String userName = teamProject.getCreateBy();
 
-            return projectService.addProject(teamProject, teamName, userName);
+            return projectService.addProject(teamProject);
         }
         return false;
     }
