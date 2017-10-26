@@ -47,4 +47,9 @@ public class ProjectServiceTest {
             System.out.println("测试失败！");
         }
     }
+
+    @Test
+    public void delProjectTest(){
+
+    }
 }

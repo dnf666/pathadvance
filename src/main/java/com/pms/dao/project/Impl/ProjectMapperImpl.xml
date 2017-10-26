@@ -85,7 +85,6 @@
 
     <insert id="addProjectMember"    parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         (project_id,user_name,team_name,project_role,join_time,join_by)VALUES
         (#{projectId},#{userName},#{teamName},#{projectRole},#{joinTime},#{joinBy})
     </insert>
