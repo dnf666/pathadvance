@@ -120,7 +120,7 @@ public interface TeamService {
      * @param delBy 删除者
      * @return boolean
      */
-    boolean delProject(Project teamProject,String delBy);
+    boolean delProject(Project teamProject,String delBy);//没有实现，因为没有删除项目的接口
 //    /**
 //     * 设置成员权限，只有负责人才能够设置
 //     * @param teamPrivilige 团队成员的权限
@@ -153,7 +153,7 @@ public interface TeamService {
      *
      * @return boolean
      */
-//    boolean updateaProject(TeamProject teamProject,String updateBy);
+    boolean updateaProject(Project teamProject,String updateBy);
     /**
      *项目成员的添加
      * 1.只能是当前团队的成员

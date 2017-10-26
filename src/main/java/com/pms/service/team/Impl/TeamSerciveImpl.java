@@ -239,12 +239,10 @@ public class TeamSerciveImpl implements TeamService{
     @Override
     public boolean createProject(Project teamProject) {
         //创建项目必须要有一个团队,首先判断当前用户是否是在当前的团队当中
-        //同时将当前成员插入project_member中
         if (IsNull.addTeamProjectInfoIsOK(teamProject)){
-            String teamName = teamProject.getTeamName();
-            String userName = teamProject.getCreateBy();
-
-            return projectService.addProject(teamProject);
+            if(getTeamMemberByTeamNameAndUserName(teamProject.getTeamName(), teamProject.getCreateBy()) != null) {
+                return projectService.addProject(teamProject);
+            }
         }
         return false;
     }
@@ -252,11 +250,16 @@ public class TeamSerciveImpl implements TeamService{
     @Override
     public boolean delProject(Project teamProject, String delBy) {
         if (teamProject != null && teamProject.getCreateBy() != null && teamProject.getCreateBy().equals(delBy)){
-            ////////这里应当写删除项目和删除所有的项目成员信息
+
         }
         return false;
     }
 
+    @Override
+    public boolean updateaProject(Project teamProject, String updateBy) {
+
+        return false;
+    }
 
     public boolean setTeamPrivilige(TeamMember teamMember) {
         if (teamMember != null && teamMember.getTeamName() != null && teamMember.getUserName() != null )
