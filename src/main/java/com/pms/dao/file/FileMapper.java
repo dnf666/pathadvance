@@ -2,7 +2,6 @@ package com.pms.dao.file;
 
 
 import com.pms.model.file.FileImpl;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,21 +14,21 @@ public interface FileMapper {
      * @param fileId
      * @return
      */
-    boolean selectByFileId(int fileId);
+    FileImpl selectByFileId(int fileId);
 
     /**
      * 文件删除
      * @param fileId
      * @return
      */
-    boolean deleteFile(FileImpl fileImpl, @Param("fileId") int fileId);
+    boolean deleteFile(int fileId);
 
     /**
      * 文件上传
-     * @param file
+     * @param fileImpl
      * @return
      */
-    boolean  insertFileInfo(FileImpl file);
+    boolean insertFileInfo(FileImpl fileImpl);
 
 
     /**

@@ -9,8 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Chenmeiling on 2017/8/19.
@@ -40,6 +38,7 @@ public class FileServiceTest {
     }
 
     @Test
+/*<<<<<<< HEAD
     public void selectByFileName() throws Exception {
         FileImpl file1 = new FileImpl();
         FileImpl file2 = new FileImpl();
@@ -49,23 +48,31 @@ public class FileServiceTest {
         list.add(file2);
         list.add(file3);
         fileService.selectByFileId(file1,2);
+=======*/
+    public void selectByFileId() throws Exception {
+        FileImpl fileImpl = new FileImpl();
+        fileImpl.setFileId(9);
+        fileImpl.setFileName("wenjian");
+        fileImpl.setUrl("weizhi");
+        fileImpl.setFileClass("类型1");
+        fileImpl.setSize(1);
+        fileImpl.setCreateBy("createBy1");
+        fileImpl.setCreateTime("createTime1");
+        fileImpl.setDelFlag(true);
+        fileImpl.setDelTime("delTime1");
+        fileImpl.setIsPrivater(true);
+//<<<<<<< HEAD
+        fileService.selectByFileId(2);
+//=======
+//        fileService.selectByFileId(2);
+//>>>>>>> 045825e6011a0c2f34bafa8296bd668f410f7e91
+//>>>>>>> master
 
     }
 
     @Test
     public void updateFileInfo() throws Exception {
-        FileImpl file1 = new FileImpl();
-        file1.setFileId(2);
-        file1.setFileName("file12");
-        file1.setUrl("url1");
-        file1.setSize(1);
-        file1.setCreateBy("createBy1");
-        file1.setCreateTime("createTime1");
-        file1.setFileClass("text1");
-        file1.setDelFlag(true);
-        file1.setDelTime("delTime1");
-        file1.setIsPrivater(true);
-        fileService.updateFileInfo(file1,"file12");
+        fileService.updateFileInfo("wenjian");
 
     }
 
@@ -82,31 +89,22 @@ public class FileServiceTest {
         file1.setDelFlag(true);
         file1.setDelTime("delTime1");
         file1.setIsPrivater(true);
-        fileService.deleteByDelFlag(file1,3);
+        fileService.deleteByDelFlag(3);
 
     }
 
     @Test
     public void recoverFile() throws Exception {
-        FileImpl file2 = new FileImpl();
-        file2.setFileId(4);
-        file2.setFileName("file2");
-        file2.setUrl("url2");
-        file2.setSize(1);
-        file2.setCreateBy("createBy2");
-        file2.setCreateTime("createTime2");
-        file2.setFileClass("text2");
-        file2.setDelFlag(false);
-        file2.setDelTime("delTime2");
-        file2.setIsPrivater(true);
-        fileService.recoverFile(file2,4);
+        //FileImpl file2 = new FileImpl();
+        fileService.recoverFile(4);
 
     }
 
     @Test
     public void deleteFile() throws Exception{
         FileImpl fileImpl = new FileImpl();
-        fileMapper.deleteFile(fileImpl,4);
+        fileImpl.setFileId(14);
+        fileService.deleteFile(14);
     }
 
 }

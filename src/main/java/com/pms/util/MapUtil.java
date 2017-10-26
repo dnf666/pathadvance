@@ -23,7 +23,7 @@ public class MapUtil {
      *  object 可是是一个 List 也可以是单个类，看业务需要
      * @return
      */
-    public static Map toMap(int status,String message,Object object){
+    public static Map toMap(Object status,String message,Object object){
         Map map = new HashMap();
         map.put("status",status);
         map.put("message",message);
