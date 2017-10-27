@@ -94,7 +94,6 @@ CREATE TABLE `file` (
   `del_flag` tinyint(1) DEFAULT '0',
   `del_time` mediumtext,
   `is_privater` tinyint(1) NOT NULL DEFAULT '0',
---   `team_name` varchar(50) NOT NULL,
   PRIMARY KEY (`file_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -128,7 +127,6 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `project_name` varchar(255) NOT NULL,
---   `team_name` varchar(255) NOT NULL,
   `team_id` int(11) not NULL ,
   `project_info` varchar(255) DEFAULT NULL COMMENT '项目的简单介绍\n',
   `create_by` varchar(50) NOT NULL,
@@ -148,7 +146,6 @@ DROP TABLE IF EXISTS `project_member`;
 CREATE TABLE `project_member` (
   `project_id` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
---   `team_name` varchar(255) NOT NULL,
   `team_name` varchar(50) NOT NULL ,
   `project_role` varchar(50) NOT NULL DEFAULT '成员' COMMENT '负责人、成员',
   `join_time` mediumtext NOT NULL,
