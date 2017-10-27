@@ -37,7 +37,6 @@
 	//梅勇杰进行的修改
 	10、project_member中也添加一个team_name字段
 	11、file表中id->改为了file_id
-	12、file表增加了team_name列
 	13、filereference user_id 改为user_name
 */
 
@@ -93,7 +92,6 @@ CREATE TABLE `file` (
   `create_by` varchar(50) NOT NULL,
   `create_time` mediumtext NOT NULL,
   `del_flag` tinyint(1) DEFAULT '0',
---   `del_time` mediumtext NOT NULL,
   `del_time` mediumtext,
   `is_privater` tinyint(1) NOT NULL DEFAULT '0',
 --   `team_name` varchar(50) NOT NULL,

@@ -33,7 +33,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private TeamMapper teamMapper;
 
-// 我觉得这里的参数是需要修改的
     @Override
     public boolean addProject(Project project) {
         String teamName = project.getTeamName();
@@ -59,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         return false;
     }
-    //需要测试
+
     @Override
     public boolean delProject(int projectId, String userName) throws Exception {
         Project project = projectMapper.getProjectById(projectId);
@@ -77,13 +76,31 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.getAllProjects();
     }
 
+    //需要测试
+    @Override
+    public boolean updateProject(Project project, String userName) throws Exception {
+        List<ProjectMember> projectMembers = projectMapper.getProjectMembersByProjectId(project.getId());
+        List<String> userNames = new ArrayList<String>();
+        if (projectMembers != null){
+            for (ProjectMember projectMember : projectMembers){
+                userNames.add(projectMember.getUserName());
+            }
+            if (userNames.contains(userName)){
+                return projectMapper.updateProject(project);
+            }else {
+                throw new Exception("不是项目成员不能够修改项目信息");
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public Project getProject(int id) {
         return projectMapper.getProjectById(id);
     }
 
-//需要测试
+
     @Override
     public boolean deleteFile(FileImpl fileImpl, String userName) throws Exception {
         List<TeamMember> teamMembers = fileReferenceMapper.getTeamMembersByFileId(fileImpl.getFileId());
@@ -100,7 +117,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return false;
     }
-    //需要测试
+
     @Override
     public boolean addFile(MultipartFile file, String userName, int projectId) {
         FileImpl fileImpl = new FileImpl();

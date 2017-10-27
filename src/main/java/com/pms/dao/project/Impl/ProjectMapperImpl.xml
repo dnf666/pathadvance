@@ -42,7 +42,7 @@
                 del_flag = #{delFlag}
             </if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{id} AND del_flag = 0
     </update>
 
     <update id="updateProject" parameterType="com.pms.model.project.Project">
