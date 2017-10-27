@@ -3,6 +3,10 @@ package com.pms.service.project;
 import com.pms.model.file.FileImpl;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import java.util.List;
 
 /**
@@ -21,7 +25,7 @@ public interface ProjectService {
      * @param projectId 项目ID
      * @return 是否删除成功
      */
-    boolean delProject(int projectId, String userName);
+    boolean delProject(int projectId, String userName) throws Exception;
 
     /**
      *得到所有项目
@@ -39,26 +43,18 @@ public interface ProjectService {
     /**
      * 删除文件
      * @param fileImpl 文件
-     * @param fileName 文件名
-     * @param teamName 团队名称
+     * @param userName 删除文件用户的名称
      * @return 是否删除文件成功
      */
-    boolean deleteFile(FileImpl fileImpl, String fileName, String teamName);
+    boolean deleteFile(FileImpl fileImpl, String userName) throws Exception;
 
     /**
      *添加文件
      * @param file 上传文件
      * @return 是否添加文件成功
      */
-    boolean addFile(FileImpl file);
+    boolean addFile(MultipartFile file, String userName, int projectId);
 
-
-    /**
-     * 想项目展示中添加文件
-     * @param file 文件
-     * @return 是否添加文件成功
-     */
-    boolean insertFile(FileImpl file);
 
     /**
      * 删除项目成员

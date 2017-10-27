@@ -116,4 +116,16 @@ public class Team {
             return new Team(this);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamName='" + teamName + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", delFlag=" + delFlag +
+                ", delTime='" + delTime + '\'' +
+                ", delRemarks='" + delRemarks + '\'' +
+                '}';
+    }
 }
