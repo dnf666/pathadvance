@@ -57,14 +57,9 @@
     <mysql.version>5.1.38</mysql.version>
     <c3p0.version>0.9.5.1</c3p0.version>
     <mybatis-spring.version>1.3.0</mybatis-spring.version>
-<<<<<<< HEAD
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
-=======
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
->>>>>>> c1ed8a5768bc8dbd08bcdaec5cfb1353f73917d8
   </properties>
 
   <dependencies>

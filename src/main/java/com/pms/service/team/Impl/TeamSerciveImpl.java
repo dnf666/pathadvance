@@ -107,7 +107,7 @@ public class TeamSerciveImpl implements TeamService{
     }
     @Override
     public List<Team> getMyteam(String userName) {
-        List<Team> teamList = new LinkedList<>();
+        List<Team> teamList = new LinkedList<Team>();
         if (userName != null){
             List<TeamMember> teamMemberList = teamMapper.getTeamInfoByUserName(userName);
             //通过团队成员获得团队名称的信息
@@ -122,7 +122,7 @@ public class TeamSerciveImpl implements TeamService{
     }
     @Override
     public List<Team> getManagedTeam(String userName) {
-        List<Team> teamList = new LinkedList<>();
+        List<Team> teamList = new LinkedList<Team>();
         if (userName != null){
             List<TeamMember> teamMemberList = teamMapper.getTeamInfoByUserName(userName);
             //通过团队成员获得团队名称的信息
@@ -141,7 +141,7 @@ public class TeamSerciveImpl implements TeamService{
     }
     @Override
     public List<Team> getJoinTeam(String userName) {
-        List<Team> teamList = new LinkedList<>();
+        List<Team> teamList = new LinkedList<Team>();
         if (userName != null){
             List<TeamMember> teamMemberList = teamMapper.getTeamInfoByUserName(userName);
             //通过团队成员获得团队名称的信息

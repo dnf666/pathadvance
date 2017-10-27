@@ -57,17 +57,6 @@ public interface ProjectService {
      */
     boolean addFile(FileImpl file);
 
-<<<<<<< HEAD
-    /**
-     *下载文件
-     *@param fileId 文件id
-     *@return boolean
-     *//*
-
-    boolean downFile(int fileId);*/
-=======
->>>>>>> 0dfdceb90815b69d636c49fa83dd0728c6be54a0
-
     /**
      * 想项目展示中添加文件
      * @param file 文件

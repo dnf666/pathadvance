@@ -108,11 +108,8 @@ public class ProjectServiceImpl implements ProjectService {
             String createPerson = project.getCreateBy();
             String projectRole = projectMember.getProjectRole();
             if (userName.equals(createPerson) && !projectRole.equals("负责人")) {
-<<<<<<< HEAD
-                if (projectMapper.delProjectMember(projectMember)){
-=======
+
                 if (projectMapper.delProjectMember(projectMember)) {
->>>>>>> 0dfdceb90815b69d636c49fa83dd0728c6be54a0
                     return true;
                 }
             }
