@@ -19,19 +19,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean insertFileInfo(FileImpl fileImpl) {
-//<<<<<<< HEAD
-//        return fileMapper.insertFileInfo(fileImpl);
-//    }
-//
-//    @Override
-//    public boolean selectByFileId(FileImpl fileImpl, int fileId){
-//        if (fileId == (fileImpl.getFileId())) {
-//            if (fileMapper.selectByFileId(fileId)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//=======
         try {
             fileMapper.insertFileInfo(fileImpl);
         }catch(Exception e){
@@ -52,50 +39,9 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         return true;
-//>>>>>>> master
-    }
-
-
-    @Override
-/*<<<<<<< HEAD
-    public boolean updateFileInfo(FileImpl fileImpl, String fileName) {
-        if (fileName.equals(fileImpl.getFileName())) {
-            if (fileMapper.updateFileInfo(fileImpl)) {
-                return true;
-            }
-        }
-            return false;
     }
 
     @Override
-    public boolean deleteByDelFlag(FileImpl fileImpl, int fileId){
-        if (fileId == (fileImpl.getFileId())) {
-            if (fileMapper.deleteByDelFlag(fileImpl)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean recoverFile(FileImpl fileImpl, int fileId) {
-        if (fileId == (fileImpl.getFileId())) {
-            if (fileMapper.recoverFile(fileImpl)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean deleteFile(FileImpl fileImpl, int fileId) {
-        if (fileId == (fileImpl.getFileId())) {
-            if (fileMapper.deleteFile(fileImpl, fileId)) {
-                return true;
-            }
-        }
-        return false;
-=======*/
     public boolean updateFileInfo(String fileName) {
         FileImpl fileImpl = new FileImpl();
         if (fileName != null) {
@@ -141,7 +87,6 @@ public class FileServiceImpl implements FileService {
             return false;
         }
         return true;
-//>>>>>>> master
     }
 
     @Override

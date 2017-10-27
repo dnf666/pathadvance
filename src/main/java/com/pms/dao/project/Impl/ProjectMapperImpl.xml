@@ -16,6 +16,19 @@
         <result column = "del_flag" property="delFlag"/>
     </resultMap>
 
+    <resultMap id="projectMembers" type="com.pms.model.project.ProjectMember">
+        <result column="project_id" property="projectId"/>
+        <result column="user_name" property="userName"/>
+        <result column="project_role" property="projectRole"/>
+        <result column="team_name" property="teamName"/>
+        <result column="join_time" property="joinTime"/>
+        <result column="join_by" property="joinBy"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="del_time" property="delTime"/>
+        <result column="del_by" property="delBy"/>
+        <result column="del_remarks" property="delRemarks"/>
+    </resultMap>
+
     <insert id = "addProject" parameterType="com.pms.model.project.Project">
         INSERT INTO project
         (project_name,team_name,project_info,create_by,create_at) VALUES
@@ -25,18 +38,18 @@
     <update id = "delProject" parameterType="com.pms.model.project.Project">
         UPDATE project
         <set>
-            <if test = "delFlag!=0">
+            <if test = "delFlag != 0">
                 del_flag = #{delFlag}
             </if>
         </set>
-        WHERE id = #{id} AND del_flag = 0
+        WHERE id = #{id}
     </update>
 
     <update id="updateProject" parameterType="com.pms.model.project.Project">
         UPDATE project
         <set>
             <if test="projectInfo != null">
-                project_info = #{projectInfo},
+                project_info = #{projectInfo}
             </if>
             <if test = "projectName != null">
                 project_name = #{projectName}
@@ -61,61 +74,11 @@
         SELECT * FROM project WHERE del_flag = 0
     </select>
 
-
-    <resultMap id="projectMembers" type="com.pms.model.project.ProjectMember">
-        <result column="project_id" property="projectId"/>
-        <result column="user_name" property="userName"/>
-        <result column="project_role" property="projectRole"/>
-        <result column="team_name" property="teamName"/>
-        <result column="join_time" property="joinTime"/>
-        <result column="join_by" property="joinBy"/>
-        <result column="del_flag" property="delFlag"/>
-        <result column="del_time" property="delTime"/>
-        <result column="del_by" property="delBy"/>
-        <result column="del_remarks" property="delRemarks"/>
-    </resultMap>
-
-<!--    <insert id="addProjectMember" parameterType="com.pms.model.project.ProjectMember">
-        INSERT INTO project_member
-<<<<<<< HEAD
-=======
-        (project_name,user_name,team_name,team_role,join_time,join_by)VALUES
-        (#{projectName},#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy})
-    </insert>-->
-
     <insert id="addProjectMember"    parameterType="com.pms.model.project.ProjectMember">
         INSERT INTO project_member
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
         (project_id,user_name,team_name,project_role,join_time,join_by)VALUES
         (#{projectId},#{userName},#{teamName},#{projectRole},#{joinTime},#{joinBy})
     </insert>
-
-<!--    <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
-        UPDATE project_member
-        <set>
-            <if test="delFlag!=0">
-                del_flag=#{delFlag},
-            </if>
-            <if test="delTime!=null">
-                del_time=#{delTime},
-            </if>
-            <if test="delBy!=null">
-                del_by=#{delBy},
-            </if>
-            <if test="delRemarks!=null">
-                del_remarks=#{delRemarks}
-            </if>
-        </set>
-<<<<<<< HEAD
-        WHERE  user_name=#{userName} AND del_flag=0
-    </update>
-
-    <select id="getProjectMembersByProjectId"  resultMap="project_members">
-        SELECT * FROM project_member
-        WHERE del_flag=0 AND  project_id = #{projectId}
-=======
-        WHERE team_name=#{teamName} AND project_id=#{projectId} AND user_name=#{userName} AND del_flag=0
-    </update>-->
 
     <update id="delProjectMember" parameterType="com.pms.model.project.ProjectMember">
         UPDATE project_member
@@ -136,7 +99,6 @@
     <select id="getProjectMembersByTeamName" resultMap="projectMembers">
         SELECT * FROM project_member
         WHERE team_name = #{teamName}
->>>>>>> fc958eaab499b1ccdc9dfaa67c75f8d681ed86a0
     </select>
 
 </mapper>

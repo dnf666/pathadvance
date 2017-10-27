@@ -65,6 +65,6 @@
 
     <!--事务管理， 事务回滚-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="datasource"/>
+        <property name="dataSource" ref="datasource"/>
     </bean>
 </beans>
