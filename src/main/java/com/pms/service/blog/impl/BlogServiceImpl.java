@@ -4,6 +4,8 @@ import com.pms.dao.blog.BlogMapper;
 import com.pms.model.blog.Blog;
 import com.pms.model.blog.BlogWithBLOBs;
 import com.pms.service.blog.BlogService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +16,7 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
-
+    @CacheEvict(value = "data", allEntries = true)
     public int insert(BlogWithBLOBs blogWithBLOBs) {
         try {
             blogMapper.insert(blogWithBLOBs);
@@ -25,7 +27,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
-
+    @CacheEvict(value = "data", allEntries = true)
     public int insertSelective(BlogWithBLOBs blogWithBLOBs) {
         try {
             blogMapper.insertSelective(blogWithBLOBs);
@@ -36,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
-
+    @CacheEvict(value = "data", allEntries = true)
     public int deleteByPrimaryKey(int id)
     {
         try {
@@ -48,10 +50,11 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
-
+    @CacheEvict(value = "data", allEntries = true)
     public int updateBlogWithBlobs(BlogWithBLOBs blogWithBLOBs) {
 
         try {
+            System.out.println("updateByPrimaryKeyWithBLOBs");
             blogMapper.updateByPrimaryKeyWithBLOBs(blogWithBLOBs);
         }catch(Exception e){
             e.printStackTrace();
@@ -60,9 +63,10 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
-
+    @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectAll() {
         try {
+            System.out.println("selectall");
            List<BlogWithBLOBs> blogWithBLOBsList = blogMapper.selectAll();
            return blogWithBLOBsList;
         }catch(Exception e){
@@ -72,7 +76,7 @@ public class BlogServiceImpl implements BlogService {
         }
 
     }
-
+    @Cacheable(value = "data")
     public BlogWithBLOBs selectByPrimaryKey(int id) {
         try {
           BlogWithBLOBs blogWithBLOBs = blogMapper.selectByPrimaryKey(id);
@@ -83,6 +87,7 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
     }
+    @CacheEvict(value = "data", allEntries = true)
     public int updateBlogWithBlobsBySelective(BlogWithBLOBs blogWithBLOBs) {
         try {
              blogMapper.updateByPrimaryKeySelective(blogWithBLOBs);
@@ -94,19 +99,19 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
-
+    @CacheEvict(value = "data", allEntries = true)
     public int updateDelFlag(int id) {
         return blogMapper.updateDelFlag(id);
     }
-
+    @CacheEvict(value = "data", allEntries = true)
     public int setPrivate(int id) {
         return blogMapper.setPrivate(id);
     }
-
+    @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectOwnAll(String userName) {
         return blogMapper.selectOwnAll(userName);
     }
-
+    @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectOtherAll(String userName) {
         return blogMapper.selectOtherAll(userName);
     }

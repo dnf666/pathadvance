@@ -17,12 +17,8 @@
         <result property="isPrivater" column="is_privater"/>
     </resultMap>
 
-<<<<<<< HEAD
 
-    <select id="selectByFileId" resultMap="FileImpl" >
-=======
     <select id="selectByFileId" resultMap="FileImpl" parameterType="com.pms.model.file.FileImpl">
->>>>>>> master
         SELECT file_id,file_name,url,class,size,create_by,create_time,del_flag,del_time,is_privater
         FROM file
         WHERE file_id = #{fileId} AND del_flag = 0;

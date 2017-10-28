@@ -2,6 +2,8 @@ package com.pms.dao.blog;
 
 import com.pms.model.blog.Blog;
 import com.pms.model.blog.BlogWithBLOBs;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,6 +40,7 @@ public interface BlogMapper extends BaseDao<BlogWithBLOBs,Integer>{
      * @param id
      * @return
      */
+    @Update("update blog set del_flag = 1 where id = #{id}")
     int updateDelFlag(int id);
 
     /**
@@ -46,6 +49,7 @@ public interface BlogMapper extends BaseDao<BlogWithBLOBs,Integer>{
      * @return
      */
     int setPrivate(int id);
+
 
     List<BlogWithBLOBs> selectOwnAll(String userName);
 
