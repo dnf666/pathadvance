@@ -1,10 +1,13 @@
-package com.pms.model.project;
+package com.pms.model.filereference;
 
+/**
+ * @author MEI
+ */
 public class FileReference {
     private int fileId;
-    private int teamId;
+    private int teamName;
     private int projectId;
-    private int userId;
+    private int userName;
 
     public int getFileId() {
         return fileId;
@@ -14,12 +17,12 @@ public class FileReference {
         this.fileId = fileId;
     }
 
-    public int getTeamId() {
-        return teamId;
+    public int getTeamName() {
+        return teamName;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
+    public void setTeamName(int teamName) {
+        this.teamName = teamName;
     }
 
     public int getProjectId() {
@@ -30,11 +33,11 @@ public class FileReference {
         this.projectId = projectId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUserName() {
+        return userName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserName(int userName) {
+        this.userName = userName;
     }
 }

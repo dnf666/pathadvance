@@ -47,4 +47,20 @@ public class ProjectServiceTest {
             System.out.println("测试失败！");
         }
     }
+
+    @Test
+    public void addProjectTest(){
+
+    }
+    //测试成功
+    @Test
+    public void delProjectTest(){
+        try {
+            projectService.delProject(1,"MEI");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }
