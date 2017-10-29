@@ -4,29 +4,44 @@ import com.pms.controller.file.FileAction;
 import com.pms.model.file.FileImpl;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
+import com.pms.model.user.User;
 import com.pms.service.FileReference.FileReferenceService;
 import com.pms.service.project.ProjectService;
 import com.pms.util.JsonUtil;
 import com.pms.util.MapUtil;
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-/*
+
+/**
+ * @author MEI
+ */
 @Controller
 public class ProjectAction {
     @Resource
     private ProjectService projectService;
-    @Resource
-    private FileAction fileAction;
     @Resource
     private FileReferenceService fileReferenceService;
 
@@ -67,21 +82,76 @@ public class ProjectAction {
     }
 
     @RequestMapping(value = "/project/downloadFile.do")
-    public void downLoadFile(String fileName, HttpServletRequest request, HttpServletResponse response){
-        if (fileName != null)
-        fileAction.downloadFile(fileName,request, response);
+    public ResponseEntity<byte[]> downLoadFile(HttpServletRequest request, @RequestParam("fileName") String fileName){
+        Map map;
+        String message;
+        byte[] bytes;
+        try {
+            String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
+            File file = new File(path + File.separator + fileName);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", fileName);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            if (file.exists()){
+                bytes = FileUtils.readFileToByteArray(file);
+                return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
+            }else {
+                message = "文件不存在";
+                map = MapUtil.toMap(0, message, null);
+                JsonUtil.toJSON(map);
+            }
+        }catch (IOException e) {
+            message="文件传输失败";
+            map = MapUtil.toMap(0, message, null);
+            JsonUtil.toJSON(map);
+        }
+       return null;
     }
 
     @RequestMapping(value = "/project/delfile.do")
-    public void deleteFile(FileImpl fileImpl,int fileId, HttpServletResponse response){
-        if (fileImpl != null){
-            fileAction.deleteFile(fileImpl, fileId, response);
+    public void deleteFile(FileImpl fileImpl,String userName){
+        try {
+            projectService.deleteFile(fileImpl, userName);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            Map map = MapUtil.toMap(0, message, null);
+            JsonUtil.toJSON(map);
         }
     }
 
-    @RequestMapping(value = "/project/addfile.do")
-    public void addFile(MultipartFile file, HttpServletRequest request) throws IOException{
-        fileAction.insertFileInfo(file, request);
+    //需要测试
+    @RequestMapping(value = "/project/addfile.do", method = RequestMethod.POST)
+    public void addFile(HttpServletRequest request, String userName, int projectId) throws IOException{
+        Map map;
+        String message;
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if (multipartResolver.isMultipart(request)){
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            Iterator iterator = multipartHttpServletRequest.getFileNames();
+            if (iterator.hasNext()){
+                MultipartFile file1 = multipartHttpServletRequest.getFile(iterator.next().toString());
+                projectService.addFile(file1, userName, projectId);
+                if (!file1.isEmpty()){
+                    String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
+                    InputStream is = file1.getInputStream();
+                    OutputStream os = new FileOutputStream(new File(path));
+                    byte[] buf = new byte[2048];
+                    while(is.read(buf) != -1){
+                        os.write(buf);
+                        os.flush();
+                    }
+                    is.close();
+                    os.close();
+                }else {
+                    message = "请选择要上传的文件";
+                    map = MapUtil.toMap(1,message, null);
+                    JsonUtil.toJSON(map);
+                }
+            }
+            message = "文件上传成功";
+            map = MapUtil.toMap(1, message, null);
+            JsonUtil.toJSON(map);
+        }
     }
 
     @RequestMapping(value = "/project/showmemes.do")
@@ -108,19 +178,10 @@ public class ProjectAction {
     }
 
     @RequestMapping(value = "/project/delmem.do",method = RequestMethod.POST)
-    public void deleteMem(String name, int id,  ProjectMember projectMember){
-        Map map;
-        try {
-            if (projectMember != null){
-                System.out.println(projectMember);
-            }
-            if (name != null){
-                System.out.println(name);
-            }
-            if (id == 1){
-                System.out.println(id);
-            }
-            boolean deleteFlag = projectService.deleteProMember(name, id, projectMember);
+    public void deleteMem(String name,  ProjectMember projectMember){
+            Map map;
+            try {
+            boolean deleteFlag = projectService.deleteProMember(name, projectMember);
             if (deleteFlag){
                 map = MapUtil.toMap(1, "success", null);
                 JsonUtil.toJSON(map);
@@ -137,4 +198,3 @@ public class ProjectAction {
 
     }
 }
-*/

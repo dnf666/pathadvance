@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author MEI
+ */
 @Service
 public class FileReferenceServiceImpl implements FileReferenceService {
 
     @Resource
     private FileReferenceMapper fileReferenceMapper;
 
+    @Override
     public List<FileImpl> getFilesByProjectId(int projectId) {
 
         return fileReferenceMapper.getFilesByProjectId(projectId);
