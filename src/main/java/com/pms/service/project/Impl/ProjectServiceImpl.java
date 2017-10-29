@@ -75,7 +75,7 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.getAllProjects();
     }
 
-    //需要测试
+    // TODO 需要测试
     @Override
     public boolean updateProject(Project project, String userName) throws Exception {
         List<ProjectMember> projectMembers = projectMapper.getProjectMembersByProjectId(project.getId());
@@ -97,6 +97,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(int id) {
         return projectMapper.getProjectById(id);
+    }
+
+    @Override
+    public List<Project> getProjectByTeamName(String teamName) {
+        return projectMapper.getProjectsByTeamName(teamName);
     }
 
 

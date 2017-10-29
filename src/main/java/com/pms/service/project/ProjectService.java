@@ -49,6 +49,13 @@ public interface ProjectService {
     Project getProject(int id);
 
     /**
+     * 通过团队名称得到所有团队下的项目
+     * @param teamName
+     * @return 指定团队下的所有项目
+     */
+    List<Project> getProjectByTeamName(String teamName);
+
+    /**
      * 删除文件
      * @param fileImpl 文件
      * @param userName 删除文件用户的名称

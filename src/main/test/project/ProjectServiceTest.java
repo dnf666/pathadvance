@@ -33,9 +33,6 @@ public class ProjectServiceTest {
         System.out.println(project.getCreateBy());
     }
 
-
-
-
     @Test
     public void getProjectMemsTest(){
         List<ProjectMember> projectMembers = projectService.getProMembers(1);
