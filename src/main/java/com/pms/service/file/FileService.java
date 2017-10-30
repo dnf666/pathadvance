@@ -52,9 +52,9 @@ public interface FileService {
 
     /**
      * 下载文件
-     * @param fileName
+     * @param fileId
      * @return boolean
      */
-    boolean downloadFile(String fileName);
+    boolean downloadFile(int fileId);
 
 }

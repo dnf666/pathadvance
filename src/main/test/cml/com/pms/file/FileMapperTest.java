@@ -2,12 +2,11 @@ package cml.com.pms.file;
 
 import com.pms.dao.file.FileMapper;
 import com.pms.model.file.FileImpl;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -21,8 +20,8 @@ public class FileMapperTest {
     FileMapper fileMapper;
 
     @Test
-    @Transactional
-    @Rollback
+    //@Transactional
+    //@Rollback
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
         file.setFileId(3);
@@ -32,11 +31,10 @@ public class FileMapperTest {
         file.setSize(1);
         file.setCreateBy("createBy");
         file.setCreateTime("createTime");
-        file.setDelFlag(true);
         file.setDelTime("delTime");
         file.setIsPrivater(false);
-        fileMapper.insertFileInfo(file);
-        //Assert.assertEquals();
+        boolean bool = fileMapper.insertFileInfo(file);
+        Assert.assertEquals(true,bool);
     }
 
     @Test
@@ -49,7 +47,7 @@ public class FileMapperTest {
         fileImpl.setSize(1);
         fileImpl.setCreateBy("createBy1");
         fileImpl.setCreateTime("createTime1");
-        fileImpl.setDelFlag(true);
+        fileImpl.setDelFlag(0);
         fileImpl.setDelTime("delTime1");
         fileImpl.setIsPrivater(true);
         fileMapper.updateFileInfo(fileImpl);
@@ -58,7 +56,8 @@ public class FileMapperTest {
 
     @Test
     public void selectByFileId() throws Exception{
-        fileMapper.selectByFileId(15);
+        FileImpl result = fileMapper.selectByFileId(1);
+        Assert.assertTrue(1 == result.getFileId());
     }
 
     @Test
@@ -79,10 +78,11 @@ public class FileMapperTest {
         file2.setSize(1);
         file2.setCreateBy("createBy2");
         file2.setCreateTime("createTime2");
-        file2.setDelFlag(false);
+        file2.setDelFlag(1);
         file2.setDelTime("delTime2");
         file2.setIsPrivater(false);
-        fileMapper.deleteByDelFlag(file2);
+        boolean bool = fileMapper.deleteByDelFlag(file2);
+        Assert.assertEquals(true,bool);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class FileMapperTest {
         file3.setSize(1);
         file3.setCreateBy("createBy3");
         file3.setCreateTime("createTime3");
-        file3.setDelFlag(true);
+        file3.setDelFlag(0);
         file3.setDelTime("delTime3");
         file3.setIsPrivater(false);
         fileMapper.recoverFile(file3);

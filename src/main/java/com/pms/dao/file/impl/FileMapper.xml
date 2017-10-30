@@ -87,11 +87,8 @@
     <update id="recoverFile" parameterType="java.lang.Integer">
         UPDATE file
         <set>
-            <if test="delFlag = 0">
+            <if test="delFlag = 1">
                 del_flag = #{delFlag},
-            </if>
-            <if test="delTime != null">
-                del_time = #{delTime}
             </if>
         </set>
         WHERE file_id = #{fileId};

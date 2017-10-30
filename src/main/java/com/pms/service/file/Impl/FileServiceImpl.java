@@ -90,7 +90,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean downloadFile(String fileName){
+    public boolean downloadFile(int fileId){
         return true;
     }
 
