@@ -24,7 +24,9 @@ public class UserServiceImpl implements UserService{
     String message;
 
     public boolean login(LoginInfo loginInfo,String verificationCode) {
-        if (verificationCode.equals(loginInfo.getVerificationCode())) {
+        String verificationCode_Upper = verificationCode.toUpperCase();
+        String code = loginInfo.getVerificationCode().toUpperCase();
+        if (verificationCode_Upper.equals(code)) {
             LoginInfo loginInfo_db = userMapper.selectPasswordByUserName(loginInfo.getUserName());
             if (loginInfo_db != null) {
                 if (loginInfo_db.getPassword().equals(loginInfo.getPassword())) {
