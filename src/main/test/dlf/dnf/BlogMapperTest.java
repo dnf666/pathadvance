@@ -3,6 +3,7 @@ package dnf;
 import com.pms.dao.blog.BlogMapper;
 import com.pms.model.blog.BlogWithBLOBs;
 import com.pms.model.blog.Role;
+import com.pms.service.blog.BlogService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,10 +22,14 @@ import java.util.List;
 public class BlogMapperTest {
     @Resource
     BlogMapper blogMapper;
+    @Resource
+    BlogService blogService;
     @Test
     public void insert()throws Exception{
+        System.out.println(blogService.selectAll());
+        System.out.println(blogService.selectAll());
         BlogWithBLOBs blogWithBLOBs =new BlogWithBLOBs();
-        blogWithBLOBs.setId(1);
+        blogWithBLOBs.setId(134);
         blogWithBLOBs.setContext("context");
         blogWithBLOBs.setCreateTime("time");
         blogWithBLOBs.setDelTime("deletetime");
@@ -32,7 +37,9 @@ public class BlogMapperTest {
         blogWithBLOBs.setDelFlag(true);
         blogWithBLOBs.setIsPrivate(true);
         blogWithBLOBs.setTitle("title");
- blogMapper.insert(blogWithBLOBs);
+ blogService.insert(blogWithBLOBs);
+        System.out.println(blogService.selectAll());
+
 
     }
     @Test
@@ -54,6 +61,9 @@ public class BlogMapperTest {
     }
         @Test
     public void update()throws Exception{
+            System.out.println(blogService.selectAll());
+            System.out.println(blogService.selectAll());
+        /*
             BlogWithBLOBs blogWithBLOBs =new BlogWithBLOBs();
             blogWithBLOBs.setId(2);
             blogWithBLOBs.setContext("context1");
@@ -64,7 +74,7 @@ public class BlogMapperTest {
             blogWithBLOBs.setIsPrivate(true);
             blogWithBLOBs.setTitle("title");
             Assert.assertEquals(1,blogMapper.updateByPrimaryKeyWithBLOBs(blogWithBLOBs));
-        }
+       */ }
         @Test
         public void find()throws Exception {
             System.out.println(blogMapper.selectByPrimaryKey(2));

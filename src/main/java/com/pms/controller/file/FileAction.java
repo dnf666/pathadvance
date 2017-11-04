@@ -18,7 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Chenmeiling on 2017/8/30.
+ *
+ * @author Chenmeiling
+ * @date 2017/8/30
  */
 @Controller
 public class FileAction {
@@ -32,7 +34,6 @@ public class FileAction {
     public void insertFileInfo(MultipartFile file, HttpServletRequest request) throws IOException {
         Map map;
         if (file.isEmpty()) {
-//            System.out.println("文件未上传!");
             message = "文件未上传!";
             //Map map = new HashMap();
             map = MapUtil.toMap(0,message,null);
@@ -49,7 +50,9 @@ public class FileAction {
             //把文件上传至path的路径
             File localFile = new File(path);
             file.transferTo(localFile);
+
             message = "文件上传成功！";
+
             //Map map = new HashMap();
             map = MapUtil.toMap(1,message,file);
             JsonUtil.toJSON(map);
@@ -58,6 +61,7 @@ public class FileAction {
 
     @RequestMapping("downloadFile")
     public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
+        String message;
         try {
             String path1 = request.getSession().getServletContext().getRealPath("upload") + File.separator;
             String path = path1 + fileName;
@@ -91,6 +95,7 @@ public class FileAction {
     }
 
 //    @RequestMapping("selectByFileName")
+
 //    public void selectByFileId(int fileId,HttpServletResponse response){
 //        List<FileImpl> list = fileService.selectByFileId(fileId);
 //        JsonUtil.toJSON(list,response);
@@ -119,6 +124,7 @@ public class FileAction {
         fileImpl.setDelTime(date);
         fileImpl.setDelFlag(true);
         System.out.println("时间格式："+date);
+
         //String message = null;
         //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileId)){
@@ -168,4 +174,3 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 }
-

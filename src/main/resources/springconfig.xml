@@ -2,14 +2,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/context
-         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/cache
+         http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+         ">
 
-
+<!--可以扫描基于类的注解，通常使用了这个就不使用<context:annotation-config/>-->
     <context:component-scan base-package="com.pms.*"/>
+    <!--仅会查找在同一个Application中的bean注解-->
     <context:annotation-config/>
+    <cache:annotation-driven />
     <!--<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
         <!--&lt;!&ndash; 指定连接数据库的JDBC驱动 &ndash;&gt;-->
         <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
@@ -18,7 +25,7 @@
         <!--&lt;!&ndash; 连接数据库的用户名 &ndash;&gt;-->
         <!--<property name="user" value="root"/>-->
         <!--<property name="password" value="root"/>-->
-        <!--&lt;!&ndash; 设置数据库连接池的最大连接数 &ndash;&gt;-->
+        <!--&lt;!&ndash; 设置数据库连接池   的最大连接数 &ndash;&gt;-->
         <!--<property name="maxPoolSize" value="20"/>-->
         <!--&lt;!&ndash; 设置数据库连接池的最小连接数 &ndash;&gt;-->
         <!--<property name="minPoolSize" value="2"/>-->
@@ -27,34 +34,53 @@
         <!--&lt;!&ndash; 设置数据库连接池的连接的最大空闲时间,单位为秒 &ndash;&gt;-->
         <!--<property name="maxIdleTime" value="20"/>-->
     <!--</bean>-->
+    <!--ComboPooledDataSource 是数据库连接池,封装数据库连接-->
     <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?useUnicode=true&amp;characterEncoding=utf-8"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <!--初始化连接池大小-->
         <property name="initialPoolSize" value="5"/>
         <property name="acquireIncrement" value="5"/>
         <property name="minPoolSize" value="1"/>
         <property name="maxPoolSize" value="20"/>
     </bean>
-<!--//我把映射文件位置改了。没错就是要搞事-->
+<!--spring和mybatis完美整合，不需要mybatis的配置映射文件-->
     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"/>
+        <!--迭代查找指定路径下的mapper文件，-->
         <property name="mapperLocations" value="classpath*:com/pms/dao/**/**/*.xml"/>
         <property name="configurationProperties">
             <props>
+                <!--缓存机制-->
                 <prop key="cacheEnable">true</prop>
+                <!--在变量为null的时候也调用setter方法-->
                 <prop key="callSetterOnNulls">true</prop>
             </props>
         </property>
     </bean>
-
+<!--dao接口所在包名，Spring会自动查找其下的类-->
     <bean name="daoManager" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--这项在这个项目中其实可以不写，因为MapperScannerConfigurer将会自动创建MapperFactoryBean之后自动装配，但是你
+        如果使用了一个以上的DateSource就会装配失败， 就要以下面的方式指定sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.pms.dao"/>
     </bean>
-
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean
+                        class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="default" />
+                <bean
+                        class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="data" />
+            </set>
+        </property>
+    </bean>
+    <!--事务管理， 事务回滚-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="datasource"/>
-</bean>
+        <property name="dataSource" ref="datasource"/>
+    </bean>
 </beans>

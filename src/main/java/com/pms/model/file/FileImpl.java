@@ -1,7 +1,9 @@
 package com.pms.model.file;
 
 /**
- * Created by Chenmeiling on 2017/8/26.
+ *
+ * @author Chenmeiling
+ * @date 2017/8/26
  */
 public class FileImpl {
     private int fileId;
@@ -53,9 +55,5 @@ public class FileImpl {
 
     public boolean getIsPrivater() { return isPrivater; }
 
-//<<<<<<< HEAD
-//    public void setPrivater(boolean privater) { this.isPrivater = privater; }
-//=======
     public void setIsPrivater(boolean privater) { isPrivater = privater; }
-//>>>>>>> 9e0147a2021659d2b24d7cbe54ac5982290fb5d4
 }

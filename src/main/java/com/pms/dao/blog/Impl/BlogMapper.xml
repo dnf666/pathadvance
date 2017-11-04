@@ -155,13 +155,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateDelFlag" parameterType="java.lang.Integer">
+  <!--<update id="updateDelFlag" parameterType="java.lang.Integer">
     UPDATE blog
     <set>
       del_flag = 1
     </set>
     where id = #{id}
-  </update>
+  </update>-->
 
   <update id="setPrivate" parameterType="java.lang.Integer">
     UPDATE blog

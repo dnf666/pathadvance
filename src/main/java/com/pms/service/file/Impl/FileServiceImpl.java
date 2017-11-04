@@ -4,13 +4,12 @@ import com.pms.dao.file.FileMapper;
 import com.pms.model.file.FileImpl;
 import com.pms.service.file.FileService;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 
-//import com.pms.model.file.File;
-
 /**
- * Created by Chenmeiling on 2017/8/18.
+ *
+ * @author Chenmeiling
+ * @date 2017/8/18
  */
 @Service
 public class FileServiceImpl implements FileService {
@@ -41,7 +40,6 @@ public class FileServiceImpl implements FileService {
         }
         return true;
     }
-
 
     @Override
     public boolean updateFileInfo(String fileName) {
@@ -95,4 +93,5 @@ public class FileServiceImpl implements FileService {
     public boolean downloadFile(String fileName){
         return true;
     }
+
 }

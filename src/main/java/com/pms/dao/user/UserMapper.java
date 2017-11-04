@@ -18,8 +18,12 @@ public interface UserMapper {
     public boolean insertIntoUser(User user);
     public PersonInfo selectPersonInfoByUserName(String userName);
     public boolean updateUserInfo(User user);
+/*<<<<<<< HEAD
+    List<User> findUserBySearching(User user);
+=======*/
     public List<User> selectOnePage(@Param("start") int start,@Param("limit") int limit);
     public int selectSumCount();
 
     List findBySearchingUser(User user);
+//>>>>>>> master
 }

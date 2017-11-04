@@ -5,6 +5,7 @@
 <mapper namespace="com.pms.dao.teamdao.TeamMapper">
     <!--对团队的操控-->
     <resultMap id="team" type="com.pms.model.team.Team">
+        <id column="team_id" property="teamId"/>
         <result column="team_name" property="teamName"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
@@ -43,6 +44,9 @@
     <select id="getTeamInfo" resultMap="teamInfo" parameterType="java.lang.String">
         select * from team WHERE team_name=#{teamName} AND del_flag=0;
     </select>
+    <select id="getTeamById" parameterType="java.lang.Integer" resultMap="teamInfo">
+        select * from team WHERE team_id=#{teamId} AND del_flag=0;
+    </select>
     <!--得到所有团队-->
     <select id="getAllTeam" resultMap="teamInfo">
         select * from team WHERE  del_flag=0;
@@ -64,9 +68,9 @@
     <update id="setPrivilege" parameterType="com.pms.model.team.TeamMember">
         UPDATE team_member
         <set>
-            team_privelige={#teamPrivelige}
+                  team_privelige = #{teamPrivelige}
         </set>
-        WHERE team_name={#teamName} AND del_flag=0 AND user_name={#userName}
+        WHERE team_name = #{teamName} AND del_flag = 0 AND user_name = #{userName}
     </update>
     <!--团队成员的增加-->
     <insert id="addTeamMember" parameterType="com.pms.model.team.TeamMember">
@@ -74,6 +78,14 @@
           (user_name,team_name,team_role,join_time,join_by,team_privelige)VALUES
           (#{userName},#{teamName},#{teamRole},#{joinTime},#{joinBy},#{teamPrivelige})
     </insert>
+    <!--重新添加一个曾被删除的团队成员-->
+    <update id="reAddTeamMember" parameterType="com.pms.model.team.TeamMember">
+        UPDATE team_member
+        <set>
+            del_flag = 0
+        </set>
+        WHERE team_name = #{teamName} AND del_flag = 1 AND user_name = #{userName}
+    </update>
     <!--团队成员的删除即打上删除标志-->
     <update id="delTeamMember" parameterType="com.pms.model.team.TeamMember">
         UPDATE  team_member
@@ -97,8 +109,13 @@
     <select id="getTeamInfoByUserName" parameterType="String" resultMap="teamMember">
         SELECT * FROM team_member WHERE del_flag=0  AND user_name=#{userName};
     </select>
-
-
+    <select id="getTeamMemberByTeamNameAndUserName" resultMap="teamMember">
+        SELECT * FROM team_member WHERE user_name = #{userName} AND del_flag=0 AND team_name=#{teamName};
+    </select>
+    <!--得到已经被删除的团队成员-->
+    <select id="getDelTeamMember" resultMap="teamMember">
+        SELECT * FROM team_member WHERE user_name = #{userName} AND del_flag = 1 AND team_name = #{teamName};
+    </select>
     <!--团队公告-->
     <resultMap id="teamNotice" type="com.pms.model.team.TeamNotice">
         <result column="id" property="id"/>
@@ -175,10 +192,25 @@
     <!--关于文件的归属操作-->
 
     <resultMap id="fileReference" type="com.pms.model.team.FileReference">
-        <result column="file_id" property="fileId"/>
+        <id column="file_id" property="fileId"/>
         <result column="team_id" property="teamId"/>
         <result column="project_id" property="projectId"/>
         <result column="user_id" property="userId"/>
     </resultMap>
+
+    <insert id="addTeamFile">
+        insert into file_reference (file_id, team_id, user_id) values
+        (#{fileId}, #{teamId},#{userId});
+    </insert>
+    <select id="getFRByFileId" parameterType="java.lang.Integer" resultMap="fileReference">
+        SELECT * FROM file_reference
+          WHERE
+            file_id = #{fileId}
+    </select>
+    <select id="getFRByTeamId" parameterType="java.lang.Integer" resultMap="fileReference">
+        SELECT * FROM file_reference
+        WHERE
+        team_id = #{teamId}
+    </select>
 
 </mapper>

@@ -1,0 +1,109 @@
+<!-- 通用头部，index是当前页面的入口css -->
+<script src='common/header.js' data-css='blogedit' data-title='Blogedit'></script><body>
+<div class="index" id="index">
+    <div class="head w-100">
+        <div class="head-box w-100">
+            <div class="maninfo">
+                <div class="title"></div>
+                <div class="introduction"><span class="name"></span><span class="time"></span></div>
+            </div>
+        </div>
+    </div>
+    <form action="blog.html" method="get">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">博客题目</span>
+          <input type="text" class="form-control inputTitle" id="inputTitle" placeholder="title" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">博客内容</span>
+          <textarea type="text" class="form-control textinput inputContent" id="inputContent"  aria-label="Username" aria-describedby="basic-addon1" rows="10"></textarea>
+        </div>
+        <div class="submit">
+            <button type="button" class="btn btn-info" id="public" data-toggle="modal" data-target="#modal2">
+              公开发布
+            </button>
+            <button type="button" class="btn btn-info set" id="personal" data-toggle="modal" data-target="#modal1">
+              私有发布
+            </button>
+
+
+                
+                <!-- 提交 -->
+<!--                 <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                                <h4 class="modal-title" id="modal-label">注意</h4>
+                            </div>
+
+                            <div class="modal-body">
+                               您确定上传你的blog吗？
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info sure" id="sure">确定</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+                <!-- 权限设置 -->
+<!--                 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                                <h4 class="modal-title" id="modal-label">选择你允许访问的好友</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <nav class="navbar navbar-light bg-light" style="margin:0px;">
+                                      <form class="form-inline">
+                                        <input class="form-control mr-sm-2 " type="text" id="userName" placeholder="Search" aria-label="Search"  style="position:relative;width:65%;margin:0px auto;margin-bottom:10px;display:inline;">
+                                        <button class="btn btn-success my-2 my-sm-0" id="search" type="button">Search</button>
+                                      </form>
+                                </nav>
+                                <div class=" text-center listman" style="display:none;">
+                                <ul class="list-group" style="position:relative;width:80%;margin:0px auto;margin:0px auto;">
+                                  <li class="list-group-item man1" style="cursor:pointer"></li>
+                                  <li class="list-group-item man1"  style="cursor:pointer"></li>
+                                  <li class="list-group-item man1"  style="cursor:pointer"></li>
+                                  <li class="list-group-item man1"  style="cursor:pointer"></li>
+                                  <li class="list-group-item man1" style="cursor:pointer"></li>
+                                </ul> 
+                                </div>   
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal">确定</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+ -->
+
+
+
+
+
+
+        </div>
+
+    </form>
+
+
+
+</div>
+
+<!-- 通用尾部，index是当前页面的入口js -->
+<script src='common/footer.js' data-js='blogedit'></script>

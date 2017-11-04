@@ -81,21 +81,8 @@ public class TeamServiceTest {
         projectMember.setJoinBy("东东");
         System.out.println(teamService.addProjectMember(projectMember,"东东"));
   */  }
-    @Test
-    public void delProjectMemberTest(){
-        ProjectMember projectMember=new ProjectMember.Builder().build();
-        projectMember.setTeamName("队1");
-        projectMember.setTeamRole("小菜鸟");
-        projectMember.setUserName("小强");
-        projectMember.setJoinTime("54545745");
-        projectMember.setProjectName("项目1");
-        projectMember.setJoinBy("东东");
-        projectMember.setDelFlag(1);
-        projectMember.setDelTime("444444");
-        projectMember.setDelRemarks("不知道");
-        projectMember.setDelBy("东东");
-        System.out.println(teamService.delProjectMember(projectMember,8));
-    }
+
+
     @Test
     public void createNoticeTest(){
         TeamNotice teamNotice=new TeamNotice();
