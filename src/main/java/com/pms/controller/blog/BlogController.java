@@ -14,6 +14,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 博客系统的controller
+ * 博客系统的跳转都在这
+ */
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
