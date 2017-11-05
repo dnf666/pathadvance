@@ -8,7 +8,7 @@ public class TeamNotice {
     private String title;
     private String createBy;
     private String createTime;
-    private int delFlag;
+    private boolean delFlag;
     private String delTime;
     private String context;
     private String teamName;
@@ -57,11 +57,11 @@ public class TeamNotice {
         this.createTime = createTime;
     }
 
-    public int getDelFlag() {
+    public boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -94,7 +94,7 @@ public class TeamNotice {
         private String title;
         private String createBy;
         private String createTime;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private String context;
         private String teamName;
@@ -122,7 +122,7 @@ public class TeamNotice {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

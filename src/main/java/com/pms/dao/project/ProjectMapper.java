@@ -63,7 +63,7 @@ public interface ProjectMapper {
      * @param teamId
      * @return list
      */
-    List<Project> getProjectsByTeamName(String teamId);
+    List<Project> getProjectsByTeamName(@Param("teamName") String teamId);
 
     /**
      * 添加项目成员

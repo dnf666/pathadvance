@@ -2,7 +2,9 @@ package com.pms.util.team;
 
 import com.pms.model.file.FileImpl;
 import com.pms.model.project.Project;
+import com.pms.model.project.ProjectMember;
 import com.pms.model.team.Team;
+import com.pms.model.team.TeamMasterHistory;
 import com.pms.model.team.TeamMember;
 import com.pms.model.team.TeamNotice;
 
@@ -38,6 +40,12 @@ public class IsNull
                 && teamNotice.getContext() != null
                 && teamNotice.getCreateTime() != null;
     }
+    public static boolean addTeamMemberInfoIsOK(TeamMember teamMember){
+        return  teamMember != null && teamMember.getTeamName() != null
+                && teamMember.getUserName() !=null
+                && teamMember.getJoinBy() != null && teamMember.getTeamRole() != null
+                && teamMember.getJoinTime() != null;
+    }
     public static boolean delTeammemberInfoIsOK(TeamMember teamMember){
         return teamMember != null && teamMember.getTeamName() != null
                 && teamMember.getUserName() != null
@@ -48,8 +56,7 @@ public class IsNull
         return teamNotice.getDelTime() != null && teamNotice.getId() != 0;
     }
     public static boolean updateaTeamNoticeInfoIsOK(TeamNotice teamNotice){
-        return teamNotice.getTeamName() != null
-                && teamNotice.getContext() != null
+        return  teamNotice.getContext() != null
                 && teamNotice.getCreateTime() != null
                 && teamNotice.getId() != 0;
     }
@@ -60,9 +67,38 @@ public class IsNull
                 && teamProject.getCreateAt() != null
                 && teamProject.getTeamName() != null;
     }
+    public static boolean delTeamProjectInfoIsOK(Project project){
+        return project != null
+                && project.getCreateBy() != null
+                && project.getId() != 0;
+    }
+    public static boolean delProjectMemberInfoIsOK(ProjectMember projectMember){
+        return projectMember != null
+                && projectMember.getDelBy() != null
+                && projectMember.getTeamName() != null
+                && projectMember.getUserName() != null
+                && projectMember.getProjectId() != 0;
+    }
+    public static boolean addProjectMemberInfoIsOK(ProjectMember projectMember){
+        return projectMember != null
+                && projectMember.getProjectRole() != null
+                && projectMember.getUserName() != null
+                && projectMember.getTeamName() != null
+                && projectMember.getJoinBy() != null
+                && projectMember.getJoinTime() != null;
+    }
     public static boolean addTeamFileInfoIsOK(FileImpl file){
         return file.getCreateBy() != null
                 & file.getFileName() != null
                 & file.getUrl() != null;
+    }
+    public static boolean updateTeamMasterHistor(TeamMasterHistory teamMasterHistory){
+        return teamMasterHistory != null
+                && teamMasterHistory.getUserName() != null
+                && teamMasterHistory.getTeamName() != null
+                && teamMasterHistory.getFromRole() != null
+                && teamMasterHistory.getModifyAt() != null
+                && teamMasterHistory.getModifyBy() != null
+                && teamMasterHistory.getToRole() != null;
     }
 }

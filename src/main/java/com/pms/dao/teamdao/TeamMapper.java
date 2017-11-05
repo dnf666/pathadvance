@@ -23,7 +23,7 @@ public interface TeamMapper {
     boolean addTeam(Team team);
 
     /**
-     * 注销团队
+     * 注销团队，打上一个删除的标记
      * @param team 团队 team需要设值的参数：teamName , delFlag , delTime , delRemarks
      * @return boolean
      */
@@ -116,7 +116,7 @@ public interface TeamMapper {
     boolean delNotice(TeamNotice teamNotice);
 
     /**
-     * 更新公告
+     * 通过公告id更新公告
      * @param teamNotice 团队公告 teamNotice需要设值的参数：id (团队公告的id) ， title , createBy , createTime , context
      * @return boolean
      */
@@ -130,22 +130,20 @@ public interface TeamMapper {
     TeamNotice getNoticeById(int id);
 
     /**
-     * 获得该团队的所有公告
+     * 通过团队名称获得该团队的所有公告
      * @param teamName 团队名称
      * @return List
      */
     List<TeamNotice> getNoticeByteamName(String teamName);
 
     /**
-     * 设置权限
+     * 设置权限相当于更改权限
      * @param teamMember 团队成员  teamMember需要设值的参数： team_privelige , teamName , userName.
      * @return boolean
      */
     boolean setPrivilege(TeamMember teamMember);
     /**
      * 团队成员职务变动记录,
-     * 只有更改了默认的职务才会在该表中添加信息,
-     * 同时团队成员表中的信息也会更改。
      * @param teamMasterHistory 团队成员职务变化历史纪录
      *        teamMasterHistory需要设值的参数：teamName , userName , toRole , fromRole , modifyBy , modifyAr
      * @return boolean
@@ -170,7 +168,7 @@ public interface TeamMapper {
 
     /**
      * 通过团队id查找文件参照关系
-     * @param teamId
+     * @param teamId 团队id
      * @return 文件参照对象
      */
     List<FileReference> getFRByTeamId(int teamId);

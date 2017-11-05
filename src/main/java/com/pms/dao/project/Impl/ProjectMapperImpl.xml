@@ -49,7 +49,7 @@
         UPDATE project
         <set>
             <if test="projectInfo != null">
-                project_info = #{projectInfo}
+                project_info = #{projectInfo},
             </if>
             <if test = "projectName != null">
                 project_name = #{projectName}
@@ -58,7 +58,7 @@
         WHERE id = #{id} AND del_flag = 0
     </update>
 
-    <select id = "getProjectsByTeamName" parameterType = "java.lang.Integer"  resultMap="Project">
+    <select id = "getProjectsByTeamName" parameterType = "java.lang.String"  resultMap="Project">
         SELECT * FROM project WHERE team_name = #{teamName} AND del_flag = 0
     </select>
 
@@ -87,7 +87,7 @@
                 del_flag=#{delFlag}
             </if>
         </set>
-        WHERE team_name = #{teamName}
+        WHERE project_id = #{projectId}
          AND user_name = #{userName} AND del_flag = 0
     </update>
 

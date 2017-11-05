@@ -9,7 +9,7 @@ public class TeamMember {
     private String teamRole;//团队角色
     private String joinTime;
     private String joinBy;//通过谁加入此团队的
-    private int delFlag;
+    private boolean delFlag;
     private String delTime;
     private String delBy;
     private String delRemarks;
@@ -69,11 +69,11 @@ public class TeamMember {
         this.joinBy = joinBy;
     }
 
-    public int getDelFlag() {
+    public boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -116,7 +116,7 @@ public class TeamMember {
         private String teamRole;
         private String joinTime;
         private String joinBy;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private String delBy;
         private String delRemarks;
@@ -150,7 +150,7 @@ public class TeamMember {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

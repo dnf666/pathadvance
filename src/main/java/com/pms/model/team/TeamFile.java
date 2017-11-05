@@ -10,7 +10,7 @@ public class TeamFile {
     private String fileClass;//文件分类
     private double fileSize;//文件大小
     private String createBy;
-    private int delFlag;
+    private boolean delFlag;
     private String delTime;
     private int isPrivater;//是否私有
     public TeamFile(){};
@@ -74,11 +74,11 @@ public class TeamFile {
         this.createBy = createBy;
     }
 
-    public int getDelFlag() {
+    public boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -106,7 +106,7 @@ public class TeamFile {
         private String fileClass;
         private double fileSize;
         private String createBy;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private int isPrivater;
 
@@ -143,7 +143,7 @@ public class TeamFile {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

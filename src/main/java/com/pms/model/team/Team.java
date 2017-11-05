@@ -10,7 +10,7 @@ public class Team {
     private String teamName;//团队名称
     private String createBy;//团队创建者
     private String createTime;//团队创建时间
-    private int delFlag;//删除标志
+    private boolean delFlag;//删除标志
     private String delTime;//删除时间
     private String delRemarks;//删除的备注
     public Team(){};
@@ -47,11 +47,11 @@ public class Team {
         this.createTime = createTime;
     }
 
-    public int getDelFlag() {
+    public boolean getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
 
@@ -75,7 +75,7 @@ public class Team {
         private String teamName;
         private String createBy;
         private String createTime;
-        private int delFlag;
+        private boolean delFlag;
         private String delTime;
         private String delRemarks;
 
@@ -97,7 +97,7 @@ public class Team {
             return this;
         }
 
-        public Builder delFlag(int val) {
+        public Builder delFlag(boolean val) {
             delFlag = val;
             return this;
         }

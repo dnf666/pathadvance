@@ -17,7 +17,20 @@ public class ProjectMember {
     private String delBy;
     private String teamName;
 
-    private ProjectMember(){}
+    public ProjectMember(){}
+
+    private ProjectMember(Builder builder) {
+        setProjectId(builder.projectId);
+        setUserName(builder.userName);
+        setProjectRole(builder.projectRole);
+        setJoinTime(builder.joinTime);
+        setJoinBy(builder.joinBy);
+        setDelFlag(builder.delFlag);
+        setDelTime(builder.delTime);
+        setDelRemarks(builder.delRemarks);
+        setDelBy(builder.delBy);
+        setTeamName(builder.teamName);
+    }
 
     @Override
     public String toString() {
@@ -34,20 +47,6 @@ public class ProjectMember {
                 ", teamId='" + teamName + '\'' +
                 '}';
     }
-
-    private ProjectMember(Builder builder) {
-        setProjectId(builder.projectId);
-        setUserName(builder.userName);
-        setProjectRole(builder.projectRole);
-        setJoinTime(builder.joinTime);
-        setJoinBy(builder.joinBy);
-        setDelFlag(builder.delFlag);
-        setDelTime(builder.delTime);
-        setDelRemarks(builder.delRemarks);
-        setDelBy(builder.delBy);
-        setTeamName(builder.teamName);
-    }
-
     public int getProjectId() {
         return projectId;
     }

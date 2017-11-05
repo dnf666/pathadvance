@@ -27,8 +27,8 @@ public class TeamMapperTest {
         @Test
         public void addTeamTest(){//创建团队的接口测试
             Team team = new Team.Builder()
-                    .teamName("队队")
-                    .createBy("刘岽")
+                    .teamName("队1")
+                    .createBy("东东")
                     .createTime("0000")
                     .build();
             boolean re = teamMapper.addTeam(team);
@@ -37,10 +37,10 @@ public class TeamMapperTest {
         @Test
         public void delTeamTest(){//有错误
                 Team team = new Team.Builder()
-                        .teamName("队1")
+                        .teamName("队队")
                         .createBy("刘岽")
                         .createTime("0000")
-                        .delFlag(1)
+                        .delFlag(true)
                         .delRemarks("测试")
                         .delTime("4444")
                         .build();
@@ -49,7 +49,7 @@ public class TeamMapperTest {
         }
         @Test
         public void getTeamInfoTest() {
-                String teamName = "队1";
+                String teamName = "队队";
                 Assert.assertEquals(teamName , teamMapper.getTeamInfo(teamName).getTeamName());
         }
         @Test
@@ -81,7 +81,7 @@ public class TeamMapperTest {
                         .teamRole("负责人")
                         .joinTime("111")
                         .delTime("2222")
-                        .delFlag(1)
+                        .delFlag(true)
                         .delBy("刘岽")
                         .build();
                 Assert.assertEquals(true , teamMapper.delTeamMember(teamMember));
@@ -93,8 +93,8 @@ public class TeamMapperTest {
                 Assert.assertEquals(number,teamMapper.getTeamMembersByTeamName(teamName).size());
         }
         @Test
-        public void getTeamMemberByTeamNameAndUserNameTest(){
-                Assert.assertEquals("liudong",teamMapper.getTeamMemberByTeamNameAndUserName("队1","liudong").getUserName());
+        public void getTeamMemberByTeamNameAndUserNameTest() throws Exception {
+                Assert.assertEquals("liudong",teamMapper.getTeamMemberByTeamNameAndUserName("队1","刘岽").getUserName());
         }
         @Test
         public void getTeamMemberInfoByNameTest(){
@@ -125,7 +125,7 @@ public class TeamMapperTest {
         public void  delNoticeTest(){
                 TeamNotice teamNotice = new TeamNotice.Builder()
                         .id(1)
-                        .delFlag(1)
+                        .delFlag(true)
                         .delTime("666")
                         .build();
                 Assert.assertEquals(true,teamMapper.delNotice(teamNotice));
@@ -134,7 +134,7 @@ public class TeamMapperTest {
         public void  updateNoticeTest(){
                 TeamNotice teamNotice = new TeamNotice.Builder()
                         .id(1)
-                        .teamName("队1")
+                        .teamName("队2")
                         .context("不知道什么内容")
                         .createBy("刘岽")
                         .createTime("5555")
@@ -156,7 +156,7 @@ public class TeamMapperTest {
         public void setPriviligeTest(){
                 TeamMember teamMember = new TeamMember.Builder()
                         .teamName("队1")
-                        .userName("LD")
+                        .userName("刘岽")
                         .teamPrivelige(2)
                         .build();
                 Assert.assertEquals(true,teamMapper.setPrivilege(teamMember));
@@ -189,7 +189,7 @@ public class TeamMapperTest {
         }
         @Test
         public void getFRByTeamIdTest(){
-                int teamId = 2;
+                int teamId = 1;
                 Assert.assertEquals(3, teamMapper.getFRByTeamId(teamId).get(0).getUserId());
         }
 
