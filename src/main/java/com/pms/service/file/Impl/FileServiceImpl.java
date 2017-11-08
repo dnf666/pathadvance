@@ -30,32 +30,26 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean selectByFileId(int fileId){
+    public FileImpl selectByFileId(int fileId){
+        return fileMapper.selectByFileId(fileId);
+    }
+
+    @Override
+    public boolean updateFileInfo(String fileName,int fileId) {
         try {
-            fileMapper.selectByFileId(fileId);
+            fileMapper.updateFileInfo(fileName,fileId);
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("查找失败");
+            System.out.println("修改失败");
             return false;
         }
         return true;
     }
 
     @Override
-    public boolean updateFileInfo(String fileName) {
-        FileImpl fileImpl = new FileImpl();
-        if (fileName != null) {
-            fileMapper.updateFileInfo(fileImpl);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public boolean deleteByDelFlag(int fileId){
-        FileImpl fileImpl = new FileImpl();
         try {
-            fileMapper.deleteByDelFlag(fileImpl);
+            fileMapper.deleteByDelFlag(fileId);
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("删除失败");
@@ -66,9 +60,8 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean recoverFile(int fileId) {
-        FileImpl fileImpl = new FileImpl();
         try {
-            fileMapper.recoverFile(fileImpl);
+            fileMapper.recoverFile(fileId);
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("恢复失败");

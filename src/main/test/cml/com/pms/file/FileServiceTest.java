@@ -38,23 +38,12 @@ public class FileServiceTest {
 
     @Test
     public void selectByFileId() throws Exception {
-        FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(9);
-        fileImpl.setFileName("wenjian");
-        fileImpl.setUrl("weizhi");
-        fileImpl.setFileClass("类型1");
-        fileImpl.setSize(1);
-        fileImpl.setCreateBy("createBy1");
-        fileImpl.setCreateTime("createTime1");
-        fileImpl.setDelFlag(0);
-        fileImpl.setDelTime("delTime1");
-        fileImpl.setIsPrivater(true);
         fileService.selectByFileId(2);
     }
 
     @Test
     public void updateFileInfo() throws Exception {
-        fileService.updateFileInfo("wenjian");
+        fileService.updateFileInfo("lala",1);
 
     }
 
@@ -84,9 +73,7 @@ public class FileServiceTest {
 
     @Test
     public void deleteFile() throws Exception{
-        FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(14);
-        fileService.deleteFile(14);
+        fileService.deleteFile(9);
     }
 
 }

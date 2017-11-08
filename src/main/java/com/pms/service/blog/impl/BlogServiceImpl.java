@@ -15,6 +15,7 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
 
+    @Override
     public int insert(BlogWithBLOBs blogWithBLOBs) {
         try {
             blogMapper.insert(blogWithBLOBs);
@@ -26,6 +27,7 @@ public class BlogServiceImpl implements BlogService {
         return 1;
     }
 
+    @Override
     public int insertSelective(BlogWithBLOBs blogWithBLOBs) {
         try {
             blogMapper.insertSelective(blogWithBLOBs);
@@ -37,6 +39,7 @@ public class BlogServiceImpl implements BlogService {
         return 1;
     }
 
+    @Override
     public int deleteByPrimaryKey(int id)
     {
         try {
@@ -49,6 +52,7 @@ public class BlogServiceImpl implements BlogService {
         return 1;
     }
 
+    @Override
     public int updateBlogWithBlobs(BlogWithBLOBs blogWithBLOBs) {
 
         try {
@@ -61,6 +65,7 @@ public class BlogServiceImpl implements BlogService {
         return 1;
     }
 
+    @Override
     public List<BlogWithBLOBs> selectAll() {
         try {
            List<BlogWithBLOBs> blogWithBLOBsList = blogMapper.selectAll();
@@ -73,6 +78,7 @@ public class BlogServiceImpl implements BlogService {
 
     }
 
+    @Override
     public BlogWithBLOBs selectByPrimaryKey(int id) {
         try {
           BlogWithBLOBs blogWithBLOBs = blogMapper.selectByPrimaryKey(id);
@@ -83,6 +89,7 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
     }
+    @Override
     public int updateBlogWithBlobsBySelective(BlogWithBLOBs blogWithBLOBs) {
         try {
              blogMapper.updateByPrimaryKeySelective(blogWithBLOBs);
@@ -95,18 +102,22 @@ public class BlogServiceImpl implements BlogService {
         return 1;
     }
 
+    @Override
     public int updateDelFlag(int id) {
         return blogMapper.updateDelFlag(id);
     }
 
+    @Override
     public int setPrivate(int id) {
         return blogMapper.setPrivate(id);
     }
 
+    @Override
     public List<BlogWithBLOBs> selectOwnAll(String userName) {
         return blogMapper.selectOwnAll(userName);
     }
 
+    @Override
     public List<BlogWithBLOBs> selectOtherAll(String userName) {
         return blogMapper.selectOtherAll(userName);
     }

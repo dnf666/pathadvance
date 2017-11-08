@@ -24,7 +24,7 @@ public class FileMapperTest {
     //@Rollback
     public void insertFileInfo() throws Exception {
         FileImpl file = new FileImpl();
-        file.setFileId(3);
+        file.setFileId(9);
         file.setFileName("fileName");
         file.setUrl("位置");
         file.setFileClass("类型");
@@ -39,18 +39,7 @@ public class FileMapperTest {
 
     @Test
     public void updateFileInfo() throws Exception {
-        FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(4);
-        fileImpl.setFileName("文件1");
-        fileImpl.setUrl("位置1");
-        fileImpl.setFileClass("类型1");
-        fileImpl.setSize(1);
-        fileImpl.setCreateBy("createBy1");
-        fileImpl.setCreateTime("createTime1");
-        fileImpl.setDelFlag(0);
-        fileImpl.setDelTime("delTime1");
-        fileImpl.setIsPrivater(true);
-        fileMapper.updateFileInfo(fileImpl);
+        fileMapper.updateFileInfo("lalala",4);
 
     }
 
@@ -70,35 +59,13 @@ public class FileMapperTest {
 
     @Test
     public void deleteByDelFlag() throws Exception{
-        FileImpl file2 = new FileImpl();
-        file2.setFileId(4);
-        file2.setFileName("文件2");
-        file2.setUrl("位置2");
-        file2.setFileClass("类型2");
-        file2.setSize(1);
-        file2.setCreateBy("createBy2");
-        file2.setCreateTime("createTime2");
-        file2.setDelFlag(1);
-        file2.setDelTime("delTime2");
-        file2.setIsPrivater(false);
-        boolean bool = fileMapper.deleteByDelFlag(file2);
+        boolean bool = fileMapper.deleteByDelFlag(4);
         Assert.assertEquals(true,bool);
     }
 
     @Test
     public void recoverFile() throws Exception{
-        FileImpl file3 = new FileImpl();
-        file3.setFileId(5);
-        file3.setFileName("文件3");
-        file3.setUrl("位置3");
-        file3.setFileClass("类型3");
-        file3.setSize(1);
-        file3.setCreateBy("createBy3");
-        file3.setCreateTime("createTime3");
-        file3.setDelFlag(0);
-        file3.setDelTime("delTime3");
-        file3.setIsPrivater(false);
-        fileMapper.recoverFile(file3);
+        fileMapper.recoverFile(4);
     }
 
 }

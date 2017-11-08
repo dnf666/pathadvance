@@ -8,8 +8,8 @@ package com.pms.model.file;
 public class FileImpl {
     private int fileId;
     private String fileName;
-    private String url;
-    private String fileClass;
+    private String url;//文件位置
+    private String fileClass;//文件类型
     private int size;
     private String createBy;
     private String createTime;

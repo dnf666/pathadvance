@@ -1,6 +1,5 @@
 package com.pms.controller.file;
 
-import com.pms.dao.file.FileMapper;
 import com.pms.model.file.FileImpl;
 import com.pms.service.file.FileService;
 import com.pms.util.JsonUtil;
@@ -29,13 +28,22 @@ public class FileAction {
     @Autowired
     FileService fileService;
 
+
+    /**
+     * 文件上传功能，通过spring MVC的MultipartFile来实现的
+     * 成功上传返回1，并返回文件对象，未上传返回0和message信息，
+     * 应该是个坑，你们要改。
+     * @param file
+     * @param request
+     * @throws IOException
+     */
     @RequestMapping("insertFileInfo")
     public void insertFileInfo(MultipartFile file, HttpServletRequest request) throws IOException {
         Map map;
         FileImpl fileImpl = new FileImpl();
         if (file.isEmpty()) {
             message = "文件未上传!";
-            //Map map = new HashMap();
+//            Map map = new HashMap();
             map = MapUtil.toMap(0,message,null);
             JsonUtil.toJSON(map);
         } else {
@@ -56,13 +64,18 @@ public class FileAction {
         }
     }
 
+    /**
+     * 文件下载功能，需要的参数为fileId
+     * 这儿也是个坑
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("downloadFile")
-    public void downloadFile(int fileId, HttpServletRequest request, HttpServletResponse response) {
+    public void downloadFile(int fileId, HttpServletResponse response) {
         String message;
         String filePath = null;
-        FileMapper fileMapper = null;
         try {
-            FileImpl fileImpl = fileMapper.selectByFileId(fileId);
+            FileImpl fileImpl = fileService.selectByFileId(fileId);
             if (fileId == fileImpl.getFileId()) {
                 filePath = fileImpl.getUrl();
             }
@@ -96,13 +109,19 @@ public class FileAction {
     }
 
 
+    /**
+     * 文件名称信息更改，需要传递的参数为fileName和fileId
+     * 成功返回1，未成功返回0
+     * @param fileName
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("updateFileInfo")
-    public void updateFileInfo(String fileName,HttpServletResponse response){
-        FileImpl fileImpl = new FileImpl();
+    public void updateFileInfo(String fileName,int fileId,HttpServletResponse response){
         Map map;
-        if (fileService.updateFileInfo(fileName)){
+        if (fileService.updateFileInfo(fileName,fileId)){
             message = "操作成功";
-            map = MapUtil.toMap(1,message,fileImpl);
+            map = MapUtil.toMap(1,message,null);
         }else {
             message = "操作失败";
             map = MapUtil.toMap(0,message,null);
@@ -110,6 +129,12 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 
+    /**
+     * 文件暂时删除功能，传递的参数为fileId
+     * 成功删除返回1，否则返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("deleteByDelFlag")
     public void deleteByDelFlag(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();
@@ -128,6 +153,12 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 
+    /**
+     * 删除文件恢复功能，传递的参数为fileId
+     * 成功返回1和该恢复的文件对象fileImple，否则返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("recoverFile")
     public void recoverFile(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();
@@ -143,6 +174,12 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 
+    /**
+     * 文件彻底删除功能，通过文件id来进行操作
+     * 成功返回1，失败返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("deleteFile")
     public void deleteFile(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();

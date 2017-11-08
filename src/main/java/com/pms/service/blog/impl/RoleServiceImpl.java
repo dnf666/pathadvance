@@ -12,14 +12,17 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     RoleMapper roleMapper;
 
+    @Override
     public int insertRole(Role role) {
         return roleMapper.insert(role);
     }
 
+    @Override
     public int deleteRoleByConbinationKey(Role role) {
         return roleMapper.deleteByConbinationKey(role);
     }
 
+    @Override
     public Role selectByConbinationKey(Role role) {
         return roleMapper.selectByConbinationKey(role);
     }
