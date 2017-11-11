@@ -14,9 +14,10 @@ public interface ProjectService {
     /**
      *添加项目
      * @param project 项目
+     * @param userName 用户名
      *@return 添加项目是否成功
      **/
-    boolean addProject(Project project);
+    boolean addProject(Project project, String userName);
 
     /**
      * 在用户与创建项目用户相同的情况下才能够删除项目
@@ -57,12 +58,12 @@ public interface ProjectService {
 
     /**
      * 删除文件
-     * @param fileImpl 文件
+     * @param fileId 要删除文件的id
      * @param userName 删除文件用户的名称
      * @return 是否删除文件成功
      * @throws Exception 当删除文件的用户不是项目成员抛出的异常
      */
-    boolean deleteFile(FileImpl fileImpl, String userName) throws Exception;
+    boolean deleteFile(int fileId, String userName) throws Exception;
 
     /**
      *添加文件

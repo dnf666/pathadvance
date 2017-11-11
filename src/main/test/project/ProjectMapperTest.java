@@ -41,7 +41,6 @@ public class ProjectMapperTest {
             System.out.println("连接到了数据库");
         } else {
             System.out.println("没有连接到数据库");
-
         }
     }
 

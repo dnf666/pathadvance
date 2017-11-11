@@ -25,9 +25,9 @@ public interface ProjectMapper {
     /**
      * 添加项目
      * @param project 项目   project需要设值的参数：projectName,teamName,projectInfo,createBy,createAt
-     * @return boolean
+     * @return 项目的id
      */
-    boolean addProject(Project project);
+    int addProject(Project project);
 
 
     /**
@@ -60,10 +60,10 @@ public interface ProjectMapper {
 
     /**
      * 得到团队的项目
-     * @param teamId
+     * @param teamName 团队名称
      * @return list
      */
-    List<Project> getProjectsByTeamName(String teamId);
+    List<Project> getProjectsByTeamName(String teamName);
 
     /**
      * 添加项目成员
@@ -92,7 +92,5 @@ public interface ProjectMapper {
      * @return boolean
      */
     boolean getProjectMembersByTeamName(String teamId);
-
-
 
 }

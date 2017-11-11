@@ -29,7 +29,7 @@
         <result column="del_remarks" property="delRemarks"/>
     </resultMap>
 
-    <insert id = "addProject" parameterType="com.pms.model.project.Project">
+    <insert id = "addProject" useGeneratedKeys="true" keyProperty="projectId" parameterType="com.pms.model.project.Project">
         INSERT INTO project
         (project_name,team_name,project_info,create_by,create_at) VALUES
         (#{projectName},#{teamName},#{projectInfo},#{createBy},#{createAt})
@@ -49,7 +49,7 @@
         UPDATE project
         <set>
             <if test="projectInfo != null">
-                project_info = #{projectInfo}
+                project_info = #{projectInfo},
             </if>
             <if test = "projectName != null">
                 project_name = #{projectName}
@@ -58,7 +58,7 @@
         WHERE id = #{id} AND del_flag = 0
     </update>
 
-    <select id = "getProjectsByTeamName" parameterType = "java.lang.Integer"  resultMap="Project">
+    <select id = "getProjectsByTeamName" parameterType = "java.lang.String"  resultMap="Project">
         SELECT * FROM project WHERE team_name = #{teamName} AND del_flag = 0
     </select>
 
@@ -87,7 +87,7 @@
                 del_flag=#{delFlag}
             </if>
         </set>
-        WHERE team_name = #{teamName}
+        WHERE project_id = #{projectId}
          AND user_name = #{userName} AND del_flag = 0
     </update>
 

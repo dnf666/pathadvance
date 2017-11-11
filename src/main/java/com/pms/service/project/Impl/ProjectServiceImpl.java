@@ -30,33 +30,16 @@ public class ProjectServiceImpl implements ProjectService {
     private FileMapper fileMapper;
     @Resource
     private FileReferenceMapper fileReferenceMapper;
-    @Resource
-    private TeamMapper teamMapper;
 
     @Override
-    public boolean addProject(Project project) {
-        String teamName = project.getTeamName();
-        String userName = project.getCreateBy();
-        if (projectMapper.addProject(project)){
-            List<TeamMember> teamMembers = teamMapper.getTeamMembersByTeamName(teamName);
-            if(teamMembers != null){
-                for(TeamMember teamMember : teamMembers){
-                    ProjectMember projectMember = new ProjectMember.Builder().projectId(project.getId())
-                            .teamName(teamMember.getTeamName()).joinBy(userName).joinTime(new SimpleDateFormat("yyyy/MM/dd HH-mm-ss").format(new Date()))
-                            .userName(teamMember.getUserName()).build();
-                    if (teamMember.getUserName().equals(userName)){
-                        projectMember.setProjectRole("负责人");
-                    }else{
-                        projectMember.setProjectRole("成员");
-                    }
-
-                    return projectMapper.addProjectMember(projectMember);
-                }
-            }
-        }
-
-
-        return false;
+    public boolean addProject(Project project,String userName) {
+        String createAt = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        project.setCreateAt(createAt);
+        project.setCreateBy(userName);
+        int projectId = projectMapper.addProject(project);
+        ProjectMember member = new ProjectMember.Builder().userName(userName).projectId(projectId)
+                .teamName(project.getTeamName()).projectRole("负责人").joinTime(createAt).joinBy(userName).build();
+        return projectMapper.addProjectMember(member);
     }
 
     @Override
@@ -107,15 +90,15 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public boolean deleteFile(FileImpl fileImpl, String userName) throws Exception {
-        List<TeamMember> teamMembers = fileReferenceMapper.getTeamMembersByFileId(fileImpl.getFileId());
+    public boolean deleteFile(int fileId, String userName) throws Exception {
+        List<TeamMember> teamMembers = fileReferenceMapper.getTeamMembersByFileId(fileId);
         List<String> userNames = new ArrayList<String>();
         if (teamMembers!= null){
             for(TeamMember teamMember : teamMembers){
                userNames.add(teamMember.getUserName());
             }
             if (userNames.contains(userName)){
-                return fileMapper.deleteByDelFlag(fileImpl) && fileReferenceMapper.deleteFileReferenceByFileId(fileImpl.getFileId());
+                return fileMapper.deleteFile(fileId) && fileReferenceMapper.deleteFileReferenceByFileId(fileId);
             }else{
                 throw new Exception("不是团队成员不能够删除团队文件");
             }
@@ -137,7 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public boolean deleteProMember(String userName, ProjectMember projectMember) throws Exception {
-        String principal ="负责人";
+        String principal ="负责人" ;
         int projectId = projectMember.getProjectId();
         Project project = projectMapper.getProjectById(projectId);
         if (project != null) {
