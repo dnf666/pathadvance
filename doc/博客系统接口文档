@@ -1,0 +1,176 @@
+### 博客模块
+
+
+
+#### 查看自己的全部博客
+
+##### URL
+
+        /pms/blog/selectOwnAll.do
+##### 请求内容
+
+参数名称|参数含义|参数类型|
+---|---|---
+
+userName|用户名|String	
+
+
+##### 响应内容
+
+参数名称|参数含义|参数类型|
+---|---|---
+createBy|作者|string
+context	|博客正文|string	
+createTime|创建时间|string	
+isPrivate|是否私有|boolean
+delFlag|是否被删除|boolean
+id|博客的唯一识别号|int
+title|博客题目|string	
+#### 查看别人的博客
+
+#### URL
+
+    /pms/blog/selectOtherAll.do
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---
+userName|用户名|string	
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---
+isPrivate|是否私有|boolean
+title|博客题目|string
+delFlag|是否已被删除|boolean		
+context|博客正文|string
+createTime|博客创建时间|string
+id|博客唯一识别号|int
+createBy|博客作者|string
+### 展示全部公开博客
+
+#### URL
+
+    /pms/blog/selectAll.do
+##### 请求内容
+无
+##### 响应内容
+
+参数名称|参数含义|参数类型|
+---|---|---
+createTime|博客创建时间|string
+delFlag|是否被删除|boolean		
+context|博客正文|string
+id|博客唯一识别号|int
+createBy|作者|string	
+isPrivate|是否私有|boolean
+title|博客题目|string	
+#### 添加博客
+
+##### URL
+
+        /pms/blog/addBlog.do
+        
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---
+title|博客题目|string	
+createBy|博客作者|string
+context|博客正文|string	
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---
+message|反馈信息|string
+status|状态码|int
+#### 删除博客
+
+##### URL
+
+    /pms/blog/deleteBlog.do
+##### 请求内容
+
+参数名称|参数含义|参数类型|
+---|---|---
+id|唯一识别号|int	
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---		
+status|状态码|int
+message|反馈信息|string
+#### 更新博客
+
+##### URL
+
+    /pms/blog/updateBlog.do
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---
+id|博客id|int
+context|博客正文|string	
+title|博客题目|string	
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---		
+message|反馈信息|string
+status|状态码|int
+### 权限
+
+#### 查询权限
+
+#### URL
+
+    /pms/role/selectRoleByConbinationKey.do
+
+#### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---		
+userId|访问者的id|string
+masterId|被访问者的id|string
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---		
+message|反馈信息|string
+status|状态码|int
+#### 删除权限
+
+##### URL
+
+    /pms/role/deleteRole.do
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---		
+userId|访问者id|string	
+masterId|被访问者id|string	
+##### 响应内容
+message|反馈信息|string
+status|状态码|string
+#### 根据条件选人
+
+##### URL
+
+    /pms/role/findUserBySearching.do
+
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---		
+userName|用户名|string	
+###### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---		
+status|状态码|int
+object|返回的对象|array<object>	
+message|反馈信息|string
+##### 添加权限
+
+##### URL
+
+        /pms/role/insertRole.do
+
+##### 请求内容
+参数名称|参数含义|参数类型|
+---|---|---		
+userId|访问者id|string	
+masterId|被访问者id|string	
+##### 响应内容
+参数名称|参数含义|参数类型|
+---|---|---		
+message|反馈信息|string
+status|状态码|int

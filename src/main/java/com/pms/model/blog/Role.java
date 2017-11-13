@@ -10,8 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Role {
-    private String userId;
-    private int roleId;
-    private String masterId;
-
+    private String userId;//访问者id
+    private int roleId;//权限的表示数字
+    private String masterId;//被访问者id
 }
