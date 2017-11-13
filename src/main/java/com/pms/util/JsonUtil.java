@@ -5,11 +5,8 @@ import com.sdicons.json.mapper.MapperException;
 import com.sdicons.json.model.JSONArray;
 import com.sdicons.json.model.JSONValue;
 import com.sdicons.json.parser.JSONParser;
-import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonUtil {
-
     public static Object json2Obj(String jsonStr, Class<?> cla) {
         Object obj = null;
         try {

@@ -1,10 +1,8 @@
 package com.pms.controller.project;
 
-import com.pms.controller.file.FileAction;
 import com.pms.model.file.FileImpl;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
-import com.pms.model.user.User;
 import com.pms.service.FileReference.FileReferenceService;
 import com.pms.service.project.ProjectService;
 import com.pms.util.JsonUtil;
@@ -21,16 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +38,9 @@ public class ProjectAction {
     @Resource
     private FileReferenceService fileReferenceService;
 
+    /**
+     * 项目首界面展示所有的项目
+     */
     @RequestMapping(value = "/project/showpros.do")
     public void showAllProjects(){
         Map map;
@@ -57,6 +53,10 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 查看项目详情
+     * @param projectId 要删除的项目的Id
+     */
     @RequestMapping(value = "/project/showpro.do")
     public void showProject(int projectId){
         Map map;
@@ -69,6 +69,10 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 展示项目里面所有文件
+     * @param projectId 项目Id
+     */
     @RequestMapping("/project/showfiles.do")
     public void showFiles(int projectId){
         Map map;
@@ -81,6 +85,12 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 下载文件
+     * @param request 前台发来的request
+     * @param fileName 要下载的文件的名称
+     * @return 文件
+     */
     @RequestMapping(value = "/project/downloadFile.do")
     public ResponseEntity<byte[]> downLoadFile(HttpServletRequest request, @RequestParam("fileName") String fileName){
         Map map;
@@ -108,10 +118,15 @@ public class ProjectAction {
        return null;
     }
 
+    /**
+     * 删除文件只是改变文件的删除标志
+     * @param fileId 要删除文件的id
+     * @param userName 要删除文件的用户的用户名
+     */
     @RequestMapping(value = "/project/delfile.do")
-    public void deleteFile(FileImpl fileImpl,String userName){
+    public void deleteFile(int fileId,String userName){
         try {
-            projectService.deleteFile(fileImpl, userName);
+            projectService.deleteFile(fileId, userName);
         } catch (Exception e) {
             String message = e.getMessage();
             Map map = MapUtil.toMap(0, message, null);
@@ -119,41 +134,64 @@ public class ProjectAction {
         }
     }
 
-    //需要测试
+    /**
+     * 向项目中添加文件
+     * @param request 前台发来的request
+     * @param userName 要添加文件用户的用户名
+     * @param projectId 项目id
+     */
     @RequestMapping(value = "/project/addfile.do", method = RequestMethod.POST)
-    public void addFile(HttpServletRequest request, String userName, int projectId) throws IOException{
+    public void addFile(HttpServletRequest request, String userName, int projectId) {
         Map map;
         String message;
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-        if (multipartResolver.isMultipart(request)){
+        System.out.println("addFile（） 方法调用");
+        System.out.println(request.getSession().getServletContext().getRealPath("upload"));
+        try{
+        if (multipartResolver.isMultipart(request)) {
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
             Iterator iterator = multipartHttpServletRequest.getFileNames();
-            if (iterator.hasNext()){
+            if (iterator.hasNext()) {
                 MultipartFile file1 = multipartHttpServletRequest.getFile(iterator.next().toString());
                 projectService.addFile(file1, userName, projectId);
-                if (!file1.isEmpty()){
-                    String path = request.getSession().getServletContext().getRealPath("upload") + File.separator;
-                    InputStream is = file1.getInputStream();
-                    OutputStream os = new FileOutputStream(new File(path));
+                String path = request.getSession().getServletContext().getRealPath("/upload") + File.separator;
+                String fileName = file1.getOriginalFilename();
+                File file = new File(path, fileName);
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                if (!file1.isEmpty()) {
+                    InputStream is = null;
+                    OutputStream os = null;
                     byte[] buf = new byte[2048];
-                    while(is.read(buf) != -1){
+                    while (is.read(buf) != -1) {
                         os.write(buf);
                         os.flush();
                     }
                     is.close();
                     os.close();
-                }else {
-                    message = "请选择要上传的文件";
-                    map = MapUtil.toMap(1,message, null);
-                    JsonUtil.toJSON(map);
+                }else{
+                        message = "请选择要上传的文件";
+                        map = MapUtil.toMap(1, message, null);
+                        JsonUtil.toJSON(map);
+                    }
                 }
             }
-            message = "文件上传成功";
-            map = MapUtil.toMap(1, message, null);
+                message = "文件上传成功";
+                map = MapUtil.toMap(1, message, null);
+                JsonUtil.toJSON(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+            message = "文件上传失败";
+            map = MapUtil.toMap(0, message, null);
             JsonUtil.toJSON(map);
         }
     }
 
+    /**
+     * 展示项目中所有的成员
+     * @param projectId 项目id
+     */
     @RequestMapping(value = "/project/showmemes.do")
     public void showMems(int projectId){
         Map map;
@@ -166,8 +204,12 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 添加成员
+     * @param projectMember 成员对象
+     */
         @RequestMapping(value = "/project/addmem.do")
-    public void addMem(ProjectMember projectMember){
+    public void addMem(@RequestBody ProjectMember projectMember){
         Map map;
         if (projectService.addProMember(projectMember)){
             map = MapUtil.toMap(1,"success", null);
@@ -177,8 +219,13 @@ public class ProjectAction {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 删除项目中的某个成员
+     * @param name 要删除成员的用户的用户名
+     * @param projectMember 要删除的项目成员
+     */
     @RequestMapping(value = "/project/delmem.do",method = RequestMethod.POST)
-    public void deleteMem(String name,  ProjectMember projectMember){
+    public void deleteMem(String name,  @RequestBody ProjectMember projectMember){
             Map map;
             try {
             boolean deleteFlag = projectService.deleteProMember(name, projectMember);

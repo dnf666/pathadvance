@@ -1,13 +1,14 @@
 package project;
 
-import com.pms.model.file.FileImpl;
 import com.pms.model.project.Project;
 import com.pms.model.project.ProjectMember;
 import com.pms.service.project.ProjectService;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,6 @@ public class ProjectServiceTest {
     private ProjectService projectService;
 
 
-    //这个有问题
     @Test
     public void getAllProjectsTest(){
         List<Project> projects = projectService.getAllProjects();
@@ -47,9 +47,11 @@ public class ProjectServiceTest {
 
     @Test
     public void addProjectTest(){
-
+        Project project = new Project.Builder().teamName("我们的队伍").projectName("我们的项目").projectInfo("我们的项目的介绍...")
+                .build();
+        assertTrue( projectService.addProject(project,"May"));
     }
-    //测试成功
+
     @Test
     public void delProjectTest(){
         try {
@@ -58,6 +60,18 @@ public class ProjectServiceTest {
             System.out.println(e.getMessage());
         }
     }
+
+    @Test
+    public void updateProjectTest(){
+        Project project = new Project.Builder().projectInfo("更新了项目介绍").projectName("我们的项目")
+                .teamName("我们的队伍").id(9).build();
+        try {
+            assertTrue(projectService.updateProject(project,"May"));
+        } catch (Exception e) {
+            Log.getLog("mei","yong",1);
+        }
+    }
+
 
 
 }

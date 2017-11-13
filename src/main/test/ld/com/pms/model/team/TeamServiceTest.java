@@ -146,7 +146,7 @@ public class TeamServiceTest {
                 .createBy("东东")
                 .projectInfo("项目信息")
                 .build();
-        Assert.assertEquals(false,  projectService.addProject(project));
+        Assert.assertEquals(false,  projectService.addProject(project,project.getCreateBy()));
 
         List<ProjectMember> list = teamService.getProMemberByProID(1);
         System.out.println(list.size());

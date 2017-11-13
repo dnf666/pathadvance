@@ -242,7 +242,7 @@ public class TeamSerciveImpl implements TeamService{
         //创建项目必须要有一个团队,首先判断当前用户是否是在当前的团队当中
         if (IsNull.addTeamProjectInfoIsOK(teamProject)){
             if(getTeamMemberByTeamNameAndUserName(teamProject.getTeamName(), teamProject.getCreateBy()) != null) {
-                return projectService.addProject(teamProject);
+                return projectService.addProject(teamProject,teamProject.getCreateBy());
             }
         }
         return false;

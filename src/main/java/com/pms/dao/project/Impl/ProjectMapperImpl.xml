@@ -29,7 +29,7 @@
         <result column="del_remarks" property="delRemarks"/>
     </resultMap>
 
-    <insert id = "addProject" parameterType="com.pms.model.project.Project">
+    <insert id = "addProject" useGeneratedKeys="true" keyProperty="projectId" parameterType="com.pms.model.project.Project">
         INSERT INTO project
         (project_name,team_name,project_info,create_by,create_at) VALUES
         (#{projectName},#{teamName},#{projectInfo},#{createBy},#{createAt})

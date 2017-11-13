@@ -1,10 +1,12 @@
 package com.pms.model.project;
 
 /**
- * Created by liudong on 2017/8/11.
+ *
+ * @author liudong
+ * @date 2017/8/11
  */
 
-//项目成员
+
 public class ProjectMember {
     private int projectId;
     private String userName;
