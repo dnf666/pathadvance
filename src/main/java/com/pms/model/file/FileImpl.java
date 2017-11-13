@@ -8,12 +8,12 @@ package com.pms.model.file;
 public class FileImpl {
     private int fileId;
     private String fileName;
-    private String url;
-    private String fileClass;
+    private String url;//文件位置
+    private String fileClass;//文件类型
     private int size;
     private String createBy;
     private String createTime;
-    private boolean delFlag;
+    private int delFlag;
     private String delTime;
     private boolean isPrivater;
 
@@ -45,9 +45,9 @@ public class FileImpl {
 
     public void setCreateTime(String createTime) { this.createTime = createTime; }
 
-    public boolean getDelFlag() { return delFlag; }
+    public int getDelFlag() { return delFlag; }
 
-    public void setDelFlag(boolean delFlag) { this.delFlag = delFlag; }
+    public void setDelFlag(int delFlag) { this.delFlag = delFlag; }
 
     public String getDelTime() { return delTime; }
 

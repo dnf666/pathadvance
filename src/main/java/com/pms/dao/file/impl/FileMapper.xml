@@ -36,49 +36,19 @@
         (#{fileId},#{fileName},#{url},#{fileClass},#{size},#{createBy},#{createTime},#{delFlag},#{delTime},#{isPrivater})
     </insert>
 
-    <update id="updateFileInfo" parameterType="com.pms.model.file.FileImpl" >
+    <update id="updateFileInfo" >
         UPDATE file
         <set>
-            <if test="fileId != null">
-                file_id = #{fileId},
-            </if>
-            <if test="url != null">
-                url = #{url},
-            </if>
-            <if test="fileClass != null">
-                class = #{fileClass},
-            </if>
-            <if test="size !=null">
-                size = #{size},
-            </if>
-            <if test="createBy != null">
-                create_by = #{createBy},
-            </if>
-            <if test="createTime !=null">
-                create_time = #{createTime},
-            </if>
-            <if test="delFlag != 0">
-                del_flag = #{delFlag},
-            </if>
-            <if test="delTime != null">
-                del_time = #{delTime},
-            </if>
-            <if test="isPrivater != null">
-                is_privater = #{isPrivater}
-            </if>
+            file_name = #{fileName}
         </set>
-        WHERE file_name = #{fileName};
+        WHERE file_id = #{fileId};
     </update>
 
     <update id="deleteByDelFlag">
         UPDATE file
         <set>
-            <if test="delFlag != 0">
-                del_flag = #{delFlag},
-            </if>
-            <if test="delTime != null">
-                del_time = #{delTime}
-            </if>
+            del_flag = 1,
+            del_time = #{delTime}
         </set>
         WHERE file_id = #{fileId};
     </update>
@@ -86,12 +56,7 @@
     <update id="recoverFile" parameterType="java.lang.Integer">
         UPDATE file
         <set>
-            <if test="delFlag = 0">
-                del_flag = #{delFlag},
-            </if>
-            <if test="delTime != null">
-                del_time = #{delTime}
-            </if>
+            del_flag = 0
         </set>
         WHERE file_id = #{fileId};
     </update>

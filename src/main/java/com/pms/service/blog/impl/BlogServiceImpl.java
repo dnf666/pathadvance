@@ -123,6 +123,7 @@ public class BlogServiceImpl implements BlogService {
     }
     @Override
     @Cacheable(value = "data")
+
     public List<BlogWithBLOBs> selectOtherAll(String userName) {
         return blogMapper.selectOtherAll(userName);
     }

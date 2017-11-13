@@ -412,8 +412,8 @@ public class TeamSerciveImpl implements TeamService{
     }
 
     @Override
-    public boolean downloadTeamFileById(String fileName) {
-        return fileService.downloadFile(fileName);
+    public boolean downloadTeamFileById(int fileId) {
+        return fileService.downloadFile(fileId);
     }
 
     @Override

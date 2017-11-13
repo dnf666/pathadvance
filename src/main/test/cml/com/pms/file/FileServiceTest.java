@@ -30,55 +30,20 @@ public class FileServiceTest {
         file.setCreateBy("createBy");
         file.setCreateTime("createTime");
         file.setFileClass("text");
-        file.setDelFlag(true);
+        file.setDelFlag(0);
         file.setDelTime("delTime");
         file.setIsPrivater(true);
         fileService.insertFileInfo(file);
-
     }
 
     @Test
-/*<<<<<<< HEAD
-    public void selectByFileName() throws Exception {
-        FileImpl file1 = new FileImpl();
-        FileImpl file2 = new FileImpl();
-        FileImpl file3 = new FileImpl();
-        List list = new ArrayList();
-        list.add(file1);
-        list.add(file2);
-        list.add(file3);
-<<<<<<< HEAD
-
-//       fileService.selectByFileId(2);
-
-=======
-        fileService.selectByFileId(file1,2);
-=======*/
     public void selectByFileId() throws Exception {
-        FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(9);
-        fileImpl.setFileName("wenjian");
-        fileImpl.setUrl("weizhi");
-        fileImpl.setFileClass("类型1");
-        fileImpl.setSize(1);
-        fileImpl.setCreateBy("createBy1");
-        fileImpl.setCreateTime("createTime1");
-        fileImpl.setDelFlag(true);
-        fileImpl.setDelTime("delTime1");
-        fileImpl.setIsPrivater(true);
-//<<<<<<< HEAD
         fileService.selectByFileId(2);
-//=======
-//        fileService.selectByFileId(2);
-//>>>>>>> 045825e6011a0c2f34bafa8296bd668f410f7e91
-//>>>>>>> master
-//>>>>>>> c1ed8a5768bc8dbd08bcdaec5cfb1353f73917d8
-
     }
 
     @Test
     public void updateFileInfo() throws Exception {
-        fileService.updateFileInfo("wenjian");
+        fileService.updateFileInfo("lala",1);
 
     }
 
@@ -92,7 +57,7 @@ public class FileServiceTest {
         file1.setCreateBy("createBy1");
         file1.setCreateTime("createTime1");
         file1.setFileClass("text1");
-        file1.setDelFlag(true);
+        file1.setDelFlag(1);
         file1.setDelTime("delTime1");
         file1.setIsPrivater(true);
         fileService.deleteByDelFlag(3);
@@ -108,9 +73,7 @@ public class FileServiceTest {
 
     @Test
     public void deleteFile() throws Exception{
-        FileImpl fileImpl = new FileImpl();
-        fileImpl.setFileId(14);
-        fileService.deleteFile(14);
+        fileService.deleteFile(9);
     }
 
 }

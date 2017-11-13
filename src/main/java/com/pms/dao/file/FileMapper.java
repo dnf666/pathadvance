@@ -2,6 +2,7 @@ package com.pms.dao.file;
 
 
 import com.pms.model.file.FileImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,21 +11,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileMapper {
     /**
-     * 得到文件相关信息
+     * 通过文件id来查找文件
      * @param fileId
      * @return
      */
     FileImpl selectByFileId(int fileId);
 
     /**
-     * 文件删除
+     *通过文件id在数据库中将这条文件记录删除来实现文件彻底删除
      * @param fileId
      * @return
      */
     boolean deleteFile(int fileId);
 
     /**
-     * 文件上传
+     * 文件上传，传递的是model层的FileImpl对象
      * @param fileImpl
      * @return
      */
@@ -32,25 +33,25 @@ public interface FileMapper {
 
 
     /**
-     * 文件信息更改
-     * @param fileImpl
+     * 通过文件id查找文件，然后更改文件名称信息
+     * @param fileName
      * @return
      */
-    boolean updateFileInfo(FileImpl fileImpl);
+    boolean updateFileInfo(@Param("fileName") String fileName, @Param("fileId") int fileId);
 
 
     /**
-     * 文件删除，只是修改删除标记
-     * @param fileImpl
+     * 通过文件id来实现修改数据库中删除标记，以实现文件暂时删除
+     * @param fileId
      * @return
      */
-    boolean deleteByDelFlag(FileImpl fileImpl);
+    boolean deleteByDelFlag(int fileId);
 
     /**
-     * 删除文件的恢复，修改删除标记
-     * @param fileImpl
+     * 删除文件的恢复,通过文件id
+     * @param fileId
      * @return
      */
-    boolean recoverFile(FileImpl fileImpl);
+    boolean recoverFile(int fileId);
 
 }

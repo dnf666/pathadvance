@@ -17,20 +17,20 @@ public interface FileService {
     boolean insertFileInfo(FileImpl fileImpl);
 
     /**
-     * 查看文件信息
+     * 通过文件id查找文件
      * @return boolean
      */
-    boolean selectByFileId(int fileId);
+    FileImpl selectByFileId(int fileId);
 
     /**
-     * 更新文件信息
+     * 通过文件id来更新文件名称信息
      * @param fileName
      * @return boolean
      */
-    boolean updateFileInfo(String fileName);
+    boolean updateFileInfo(String fileName,int fileId);
 
     /**
-     * 删除文件，只是修改删除标记
+     * 通过文件id来修改数据库中的文件删除标记，以实现文件暂时删除的目的
      * @param fileId
      * @return boolean
      */
@@ -44,17 +44,17 @@ public interface FileService {
     boolean recoverFile(int fileId);
 
     /**
-     * 删除文件
+     * 通过文件id彻底删除数据库中的文件记录
      * @param fileId
      * @return boolean
      */
     boolean deleteFile(int fileId);
 
     /**
-     * 下载文件
-     * @param fileName
+     * 通过文件id下载文件
+     * @param fileId
      * @return boolean
      */
-    boolean downloadFile(String fileName);
+    boolean downloadFile(int fileId);
 
 }

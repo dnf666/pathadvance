@@ -107,7 +107,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public boolean deleteFile(FileImpl fileImpl, String userName) throws Exception {
-        List<TeamMember> teamMembers = fileReferenceMapper.getTeamMembersByFileId(fileImpl.getFileId());
+       /* List<TeamMember> teamMembers = fileReferenceMapper.getTeamMembersByFileId(fileImpl.getFileId());
         List<String> userNames = new ArrayList<String>();
         if (teamMembers!= null){
             for(TeamMember teamMember : teamMembers){
@@ -118,7 +118,7 @@ public class ProjectServiceImpl implements ProjectService {
             }else{
                 throw new Exception("不是团队成员不能够删除团队文件");
             }
-        }
+        }*/
         return false;
     }
 

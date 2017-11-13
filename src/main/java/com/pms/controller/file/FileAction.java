@@ -30,12 +30,22 @@ public class FileAction {
     @Autowired
     FileService fileService;
 
+
+    /**
+     * 文件上传功能，通过spring MVC的MultipartFile来实现的
+     * 成功上传返回1，并返回文件对象，未上传返回0和message信息，
+     * 应该是个坑，你们要改。
+     * @param file
+     * @param request
+     * @throws IOException
+     */
     @RequestMapping("insertFileInfo")
     public void insertFileInfo(MultipartFile file, HttpServletRequest request) throws IOException {
         Map map;
+        FileImpl fileImpl = new FileImpl();
         if (file.isEmpty()) {
             message = "文件未上传!";
-            //Map map = new HashMap();
+//            Map map = new HashMap();
             map = MapUtil.toMap(0,message,null);
             JsonUtil.toJSON(map);
         } else {
@@ -45,27 +55,33 @@ public class FileAction {
             String path1 = request.getSession().getServletContext().getRealPath("upload") + File.separator;
             //此处用日期做为标识
             String path = path1 + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + fileName;
-            //查看文件上传路径,方便查找
-            //System.out.println(path);
+            fileImpl.setUrl(path);
             //把文件上传至path的路径
             File localFile = new File(path);
             file.transferTo(localFile);
-
             message = "文件上传成功！";
-
             //Map map = new HashMap();
             map = MapUtil.toMap(1,message,file);
             JsonUtil.toJSON(map);
         }
     }
 
+    /**
+     * 文件下载功能，需要的参数为fileId
+     * 这儿也是个坑
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("downloadFile")
-    public void downloadFile(String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public void downloadFile(int fileId, HttpServletResponse response) {
         String message;
+        String filePath = null;
         try {
-            String path1 = request.getSession().getServletContext().getRealPath("upload") + File.separator;
-            String path = path1 + fileName;
-            InputStream inputStream = new FileInputStream(new File(path));
+            FileImpl fileImpl = fileService.selectByFileId(fileId);
+            if (fileId == fileImpl.getFileId()) {
+                filePath = fileImpl.getUrl();
+            }
+            InputStream inputStream = new FileInputStream(new File(filePath));
             OutputStream os = response.getOutputStream();
             byte[] b = new byte[2048];
             int length;
@@ -94,21 +110,20 @@ public class FileAction {
         }
     }
 
-//    @RequestMapping("selectByFileName")
 
-//    public void selectByFileId(int fileId,HttpServletResponse response){
-//        List<FileImpl> list = fileService.selectByFileId(fileId);
-//        JsonUtil.toJSON(list,response);
-//    }
-
+    /**
+     * 文件名称信息更改，需要传递的参数为fileName和fileId
+     * 成功返回1，未成功返回0
+     * @param fileName
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("updateFileInfo")
-    public void updateFileInfo(String fileName,HttpServletResponse response){
-        FileImpl fileImpl = new FileImpl();
+    public void updateFileInfo(String fileName,int fileId,HttpServletResponse response){
         Map map;
-        //String messge = null;
-        if (fileService.updateFileInfo(fileName)){
+        if (fileService.updateFileInfo(fileName,fileId)){
             message = "操作成功";
-            map = MapUtil.toMap(1,message,fileImpl);
+            map = MapUtil.toMap(1,message,null);
         }else {
             message = "操作失败";
             map = MapUtil.toMap(0,message,null);
@@ -116,17 +131,20 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 
+    /**
+     * 文件暂时删除功能，传递的参数为fileId
+     * 成功删除返回1，否则返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("deleteByDelFlag")
     public void deleteByDelFlag(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();
         Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
-        fileImpl.setDelFlag(true);
+        fileImpl.setDelFlag(0);
         System.out.println("时间格式："+date);
-
-        //String message = null;
-        //boolean result = fileService.deleteByDelFlag(fileImpl,fileName,teamName);
         if (fileService.deleteByDelFlag(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);
@@ -135,15 +153,19 @@ public class FileAction {
             map = MapUtil.toMap(0,message,null);
         }
         JsonUtil.toJSON(map,response);
-
     }
 
+    /**
+     * 删除文件恢复功能，传递的参数为fileId
+     * 成功返回1和该恢复的文件对象fileImple，否则返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("recoverFile")
     public void recoverFile(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();
         Map map;
-        //String res = null;
-        //boolean result = fileService.recoverFile(fileImpl,fileName,teamName);
+        fileImpl.setDelFlag(0);
         if (fileService.recoverFile(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,fileImpl);
@@ -154,16 +176,20 @@ public class FileAction {
         JsonUtil.toJSON(map,response);
     }
 
+    /**
+     * 文件彻底删除功能，通过文件id来进行操作
+     * 成功返回1，失败返回0
+     * @param fileId
+     * @param response
+     */
     @RequestMapping("deleteFile")
     public void deleteFile(int fileId,HttpServletResponse response){
         FileImpl fileImpl = new FileImpl();
         Map map;
         String date = simpleDateFormat.format(new Date());
         fileImpl.setDelTime(date);
-        fileImpl.setDelFlag(true);
+        fileImpl.setDelFlag(1);
         System.out.println("时间格式："+date);
-        //String res = null;
-        //boolean result = fileService.deleteFile(fileImpl,fileName,teamName);
         if (fileService.deleteFile(fileId)){
             message = "操作成功";
             map = MapUtil.toMap(1,message,null);

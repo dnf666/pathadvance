@@ -232,10 +232,10 @@ public interface TeamService {
 
     /**
      * 通过文件的id下载文件
-     * @param fileName 文件名
+     * @param fileId 文件名
      * @return boolean
      */
-    boolean downloadTeamFileById(String fileName);
+    boolean downloadTeamFileById(int fileId);
 
     /**
      * 根据团队id展示团队文件
