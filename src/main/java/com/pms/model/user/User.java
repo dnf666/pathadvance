@@ -4,16 +4,17 @@ import java.util.Date;
 
 /**
  * Created by rhan on 2017/7/22.
+ * 用户的映射类
  */
 public class User {
-    private String userName;
-    private String password;
-    private String picture;
-    private String stuId;
-    private String peofession;
-    private Date createAt;
-    private boolean delFlag;
-    private String delRemarks;
+    private String userName;//用户名
+    private String password;//密码
+    private String picture;//头像地址
+    private String stuId;//学号
+    private String peofession;//专业
+    private Date createAt;//创建的时间
+    private boolean delFlag;//用户是否被停用的标记
+    private String delRemarks;//停用的备注，例如恶意灌水
     public String getUserName() {
         return userName;
     }

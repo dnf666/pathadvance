@@ -4,12 +4,15 @@ import com.pms.model.user.User;
 
 /**
  * Created by rhan on 2017/7/22.
+ * 这个类是用来给前端返回用户信息是用的一个类型
+ * 例如当用户处于个人页面的时候，就会返回这些信息
+ * 这些信息可以对外公开，而且不是敏感信息
  */
 public class PersonInfo {
-    private String userName;
-    private String picture;
-    private String stuId;
-    private String peofession;
+    private String userName;//用户名
+    private String picture;//头像地址
+    private String stuId;//学号
+    private String peofession;//专业
 
     public PersonInfo(User user){
         this.userName = user.getUserName();

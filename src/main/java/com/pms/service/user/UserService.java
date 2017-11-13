@@ -2,11 +2,9 @@ package com.pms.service.user;
 
 import com.pms.dataModel.User.LoginInfo;
 import com.pms.dataModel.User.PersonInfo;
-import com.pms.model.blog.Role;
 import com.pms.model.user.User;
 import com.pms.service.user.Impl.UserServiceImpl;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,9 +26,19 @@ public interface UserService {
      * @param user
      * @return
      * @throws Exception
+     *  IsExistException异常，是当注册的用户名在数据库当中已经存在的时候
+     *  就会返回这个异常
      */
     boolean register(User user) throws UserServiceImpl.IsExistException;
 
+    /**
+     * 修改用户的在数据库当中的信息
+     * @param user
+     * @return
+     * @throws NoSuchElementException
+     *  当尝试的从数据库当中获取到用户实体的时候，如果当前的数据没有
+     *  该用户名对应的用户数据，那么就会返回这个异常
+     */
     boolean modifyInfo(User user) throws NoSuchElementException;
 
     PersonInfo getUserInfo(String userName);
@@ -50,5 +58,10 @@ public interface UserService {
      */
     String getMessage();
 
+    /**
+     * 这个是戴林甫写的。。。和我没关系。。。
+     * @param user
+     * @return
+     */
     List findUserBySearching(User user);
 }
