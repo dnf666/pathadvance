@@ -16,6 +16,7 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int insert(BlogWithBLOBs blogWithBLOBs) {
         try {
@@ -27,6 +28,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int insertSelective(BlogWithBLOBs blogWithBLOBs) {
         try {
@@ -38,6 +40,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int deleteByPrimaryKey(int id)
     {
@@ -50,6 +53,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int updateBlogWithBlobs(BlogWithBLOBs blogWithBLOBs) {
 
@@ -63,6 +67,7 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
+    @Override
     @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectAll() {
         try {
@@ -76,6 +81,7 @@ public class BlogServiceImpl implements BlogService {
         }
 
     }
+    @Override
     @Cacheable(value = "data")
     public BlogWithBLOBs selectByPrimaryKey(int id) {
         try {
@@ -87,6 +93,7 @@ public class BlogServiceImpl implements BlogService {
             return null;
         }
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int updateBlogWithBlobsBySelective(BlogWithBLOBs blogWithBLOBs) {
         try {
@@ -99,18 +106,22 @@ public class BlogServiceImpl implements BlogService {
         }
         return 1;
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int updateDelFlag(int id) {
         return blogMapper.updateDelFlag(id);
     }
+    @Override
     @CacheEvict(value = "data", allEntries = true)
     public int setPrivate(int id) {
         return blogMapper.setPrivate(id);
     }
+    @Override
     @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectOwnAll(String userName) {
         return blogMapper.selectOwnAll(userName);
     }
+    @Override
     @Cacheable(value = "data")
     public List<BlogWithBLOBs> selectOtherAll(String userName) {
         return blogMapper.selectOtherAll(userName);
