@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.path.dao.CenterNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.path.model.CenterNode" >
+    <id column="c_id" property="cId" jdbcType="INTEGER" />
+    <id column="c_num" property="cNum" jdbcType="VARCHAR" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_address" property="cAddress" jdbcType="VARCHAR" />
+    <result column="c_type" property="cType" jdbcType="INTEGER" />
+    <result column="c_longitude" property="cLongitude" jdbcType="VARCHAR" />
+    <result column="c_latitude" property="cLatitude" jdbcType="VARCHAR" />
+    <result column="c_baidulongitude" property="cBaidulongitude" jdbcType="REAL" />
+    <result column="c_baidulatitude" property="cBaidulatitude" jdbcType="REAL" />
+    <result column="c_quatity" property="cQuatity" jdbcType="DOUBLE" />
+    <result column="c_rem" property="cRem" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    c_id, c_num, c_name, c_address, c_type, c_longitude, c_latitude, c_baidulongitude, 
+    c_baidulatitude, c_quatity, c_rem
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.CenterNodeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from centernode
+    where c_id = #{cId,jdbcType=INTEGER}
+      and c_num = #{cNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.path.model.CenterNodeKey" >
+    delete from centernode
+    where c_id = #{cId,jdbcType=INTEGER}
+      and c_num = #{cNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.path.model.CenterNode" >
+    insert into centernode (c_id, c_num, c_name, 
+      c_address, c_type, c_longitude, 
+      c_latitude, c_baidulongitude, c_baidulatitude, 
+      c_quatity, c_rem)
+    values (#{cId,jdbcType=INTEGER}, #{cNum,jdbcType=VARCHAR}, #{cName,jdbcType=VARCHAR}, 
+      #{cAddress,jdbcType=VARCHAR}, #{cType,jdbcType=INTEGER}, #{cLongitude,jdbcType=VARCHAR}, 
+      #{cLatitude,jdbcType=VARCHAR}, #{cBaidulongitude,jdbcType=REAL}, #{cBaidulatitude,jdbcType=REAL}, 
+      #{cQuatity,jdbcType=DOUBLE}, #{cRem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.path.model.CenterNode" >
+    insert into centernode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="cNum != null" >
+        c_num,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cAddress != null" >
+        c_address,
+      </if>
+      <if test="cType != null" >
+        c_type,
+      </if>
+      <if test="cLongitude != null" >
+        c_longitude,
+      </if>
+      <if test="cLatitude != null" >
+        c_latitude,
+      </if>
+      <if test="cBaidulongitude != null" >
+        c_baidulongitude,
+      </if>
+      <if test="cBaidulatitude != null" >
+        c_baidulatitude,
+      </if>
+      <if test="cQuatity != null" >
+        c_quatity,
+      </if>
+      <if test="cRem != null" >
+        c_rem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cNum != null" >
+        #{cNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddress != null" >
+        #{cAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        #{cType,jdbcType=INTEGER},
+      </if>
+      <if test="cLongitude != null" >
+        #{cLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="cLatitude != null" >
+        #{cLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="cBaidulongitude != null" >
+        #{cBaidulongitude,jdbcType=REAL},
+      </if>
+      <if test="cBaidulatitude != null" >
+        #{cBaidulatitude,jdbcType=REAL},
+      </if>
+      <if test="cQuatity != null" >
+        #{cQuatity,jdbcType=DOUBLE},
+      </if>
+      <if test="cRem != null" >
+        #{cRem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.path.model.CenterNode" >
+    update centernode
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddress != null" >
+        c_address = #{cAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cType != null" >
+        c_type = #{cType,jdbcType=INTEGER},
+      </if>
+      <if test="cLongitude != null" >
+        c_longitude = #{cLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="cLatitude != null" >
+        c_latitude = #{cLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="cBaidulongitude != null" >
+        c_baidulongitude = #{cBaidulongitude,jdbcType=REAL},
+      </if>
+      <if test="cBaidulatitude != null" >
+        c_baidulatitude = #{cBaidulatitude,jdbcType=REAL},
+      </if>
+      <if test="cQuatity != null" >
+        c_quatity = #{cQuatity,jdbcType=DOUBLE},
+      </if>
+      <if test="cRem != null" >
+        c_rem = #{cRem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+      and c_num = #{cNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.path.model.CenterNode" >
+    update centernode
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_address = #{cAddress,jdbcType=VARCHAR},
+      c_type = #{cType,jdbcType=INTEGER},
+      c_longitude = #{cLongitude,jdbcType=VARCHAR},
+      c_latitude = #{cLatitude,jdbcType=VARCHAR},
+      c_baidulongitude = #{cBaidulongitude,jdbcType=REAL},
+      c_baidulatitude = #{cBaidulatitude,jdbcType=REAL},
+      c_quatity = #{cQuatity,jdbcType=DOUBLE},
+      c_rem = #{cRem,jdbcType=VARCHAR}
+    where c_id = #{cId,jdbcType=INTEGER}
+      and c_num = #{cNum,jdbcType=VARCHAR}
+  </update>
+</mapper>

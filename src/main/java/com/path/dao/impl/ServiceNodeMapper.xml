@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.path.dao.ServiceNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.path.model.ServiceNode" >
+    <id column="s_id" property="sId" jdbcType="INTEGER" />
+    <id column="s_num" property="sNum" jdbcType="VARCHAR" />
+    <result column="s_name" property="sName" jdbcType="VARCHAR" />
+    <result column="s_address" property="sAddress" jdbcType="VARCHAR" />
+    <result column="s_type" property="sType" jdbcType="INTEGER" />
+    <result column="s_longitude" property="sLongitude" jdbcType="VARCHAR" />
+    <result column="s_latitude" property="sLatitude" jdbcType="VARCHAR" />
+    <result column="s_baidulongitude" property="sBaidulongitude" jdbcType="REAL" />
+    <result column="s_baidulatitude" property="sBaidulatitude" jdbcType="REAL" />
+    <result column="s_quatity" property="sQuatity" jdbcType="REAL" />
+    <result column="s_rem" property="sRem" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    s_id, s_num, s_name, s_address, s_type, s_longitude, s_latitude, s_baidulongitude, 
+    s_baidulatitude, s_quatity, s_rem
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.ServiceNodeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from servicenode
+    where s_id = #{sId,jdbcType=INTEGER}
+      and s_num = #{sNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.path.model.ServiceNodeKey" >
+    delete from servicenode
+    where s_id = #{sId,jdbcType=INTEGER}
+      and s_num = #{sNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.path.model.ServiceNode" >
+    insert into servicenode (s_id, s_num, s_name, 
+      s_address, s_type, s_longitude, 
+      s_latitude, s_baidulongitude, s_baidulatitude, 
+      s_quatity, s_rem)
+    values (#{sId,jdbcType=INTEGER}, #{sNum,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, 
+      #{sAddress,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, #{sLongitude,jdbcType=VARCHAR}, 
+      #{sLatitude,jdbcType=VARCHAR}, #{sBaidulongitude,jdbcType=REAL}, #{sBaidulatitude,jdbcType=REAL}, 
+      #{sQuatity,jdbcType=REAL}, #{sRem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.path.model.ServiceNode" >
+    insert into servicenode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="sNum != null" >
+        s_num,
+      </if>
+      <if test="sName != null" >
+        s_name,
+      </if>
+      <if test="sAddress != null" >
+        s_address,
+      </if>
+      <if test="sType != null" >
+        s_type,
+      </if>
+      <if test="sLongitude != null" >
+        s_longitude,
+      </if>
+      <if test="sLatitude != null" >
+        s_latitude,
+      </if>
+      <if test="sBaidulongitude != null" >
+        s_baidulongitude,
+      </if>
+      <if test="sBaidulatitude != null" >
+        s_baidulatitude,
+      </if>
+      <if test="sQuatity != null" >
+        s_quatity,
+      </if>
+      <if test="sRem != null" >
+        s_rem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sId != null" >
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="sNum != null" >
+        #{sNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null" >
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sAddress != null" >
+        #{sAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null" >
+        #{sType,jdbcType=INTEGER},
+      </if>
+      <if test="sLongitude != null" >
+        #{sLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="sLatitude != null" >
+        #{sLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="sBaidulongitude != null" >
+        #{sBaidulongitude,jdbcType=REAL},
+      </if>
+      <if test="sBaidulatitude != null" >
+        #{sBaidulatitude,jdbcType=REAL},
+      </if>
+      <if test="sQuatity != null" >
+        #{sQuatity,jdbcType=REAL},
+      </if>
+      <if test="sRem != null" >
+        #{sRem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.path.model.ServiceNode" >
+    update servicenode
+    <set >
+      <if test="sName != null" >
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sAddress != null" >
+        s_address = #{sAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null" >
+        s_type = #{sType,jdbcType=INTEGER},
+      </if>
+      <if test="sLongitude != null" >
+        s_longitude = #{sLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="sLatitude != null" >
+        s_latitude = #{sLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="sBaidulongitude != null" >
+        s_baidulongitude = #{sBaidulongitude,jdbcType=REAL},
+      </if>
+      <if test="sBaidulatitude != null" >
+        s_baidulatitude = #{sBaidulatitude,jdbcType=REAL},
+      </if>
+      <if test="sQuatity != null" >
+        s_quatity = #{sQuatity,jdbcType=REAL},
+      </if>
+      <if test="sRem != null" >
+        s_rem = #{sRem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+      and s_num = #{sNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.path.model.ServiceNode" >
+    update servicenode
+    set s_name = #{sName,jdbcType=VARCHAR},
+      s_address = #{sAddress,jdbcType=VARCHAR},
+      s_type = #{sType,jdbcType=INTEGER},
+      s_longitude = #{sLongitude,jdbcType=VARCHAR},
+      s_latitude = #{sLatitude,jdbcType=VARCHAR},
+      s_baidulongitude = #{sBaidulongitude,jdbcType=REAL},
+      s_baidulatitude = #{sBaidulatitude,jdbcType=REAL},
+      s_quatity = #{sQuatity,jdbcType=REAL},
+      s_rem = #{sRem,jdbcType=VARCHAR}
+    where s_id = #{sId,jdbcType=INTEGER}
+      and s_num = #{sNum,jdbcType=VARCHAR}
+  </update>
+</mapper>

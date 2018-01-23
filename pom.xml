@@ -3,15 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
-  <groupId>pms</groupId>
-  <artifactId>pms</artifactId>
+  <groupId>path</groupId>
+  <artifactId>path</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>pms Maven Webapp</name>
+  <name>path Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <build>
-    <finalName>pms</finalName>
+    <finalName>path</finalName>
 
     <plugins>
       <plugin>
@@ -170,21 +170,7 @@
       <version>20160810</version>
     </dependency>
     <!-- json -->
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-      <version>1.2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
-      <version>1.2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring</artifactId>
-      <version>1.2.2</version>
-    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

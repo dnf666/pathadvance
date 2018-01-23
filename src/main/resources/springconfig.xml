@@ -13,30 +13,12 @@
          ">
 
 <!--可以扫描基于类的注解，通常使用了这个就不使用<context:annotation-config/>-->
-    <context:component-scan base-package="com.pms.*"/>
+    <context:component-scan base-package="com.path.*"/>
     <!--仅会查找在同一个Application中的bean注解-->
     <context:annotation-config/>
     <cache:annotation-driven />
-    <!--<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-        <!--&lt;!&ndash; 指定连接数据库的JDBC驱动 &ndash;&gt;-->
-        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
-        <!--&lt;!&ndash; 连接数据库所用的URL &ndash;&gt;-->
-        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?userUnicode=true&amp;characterEncoding=utf-8"/>-->
-        <!--&lt;!&ndash; 连接数据库的用户名 &ndash;&gt;-->
-        <!--<property name="user" value="root"/>-->
-        <!--<property name="password" value="root"/>-->
-        <!--&lt;!&ndash; 设置数据库连接池   的最大连接数 &ndash;&gt;-->
-        <!--<property name="maxPoolSize" value="20"/>-->
-        <!--&lt;!&ndash; 设置数据库连接池的最小连接数 &ndash;&gt;-->
-        <!--<property name="minPoolSize" value="2"/>-->
-        <!--&lt;!&ndash; 设置数据库连接池的初始化连接数 &ndash;&gt;-->
-        <!--<property name="initialPoolSize" value="2"/>-->
-        <!--&lt;!&ndash; 设置数据库连接池的连接的最大空闲时间,单位为秒 &ndash;&gt;-->
-        <!--<property name="maxIdleTime" value="20"/>-->
-    <!--</bean>-->
-    <!--ComboPooledDataSource 是数据库连接池,封装数据库连接-->
     <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pms?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
@@ -50,7 +32,7 @@
     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="datasource"/>
         <!--迭代查找指定路径下的mapper文件，-->
-        <property name="mapperLocations" value="classpath*:com/pms/dao/**/**/*.xml"/>
+        <property name="mapperLocations" value="classpath*:com/path/dao/**/**/*.xml"/>
         <property name="configurationProperties">
             <props>
                 <!--缓存机制-->
@@ -65,7 +47,7 @@
         <!--这项在这个项目中其实可以不写，因为MapperScannerConfigurer将会自动创建MapperFactoryBean之后自动装配，但是你
         如果使用了一个以上的DateSource就会装配失败， 就要以下面的方式指定sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.pms.dao"/>
+        <property name="basePackage" value="com.path.dao"/>
     </bean>
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.path.dao.DistanceMapper" >
+  <resultMap id="BaseResultMap" type="com.path.model.Distance" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <id column="start_id" property="startId" jdbcType="INTEGER" />
+    <id column="end_id" property="endId" jdbcType="INTEGER" />
+    <result column="standard_dis" property="standardDis" jdbcType="INTEGER" />
+    <result column="standard_time" property="standardTime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d_id, start_id, end_id, standard_dis, standard_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.DistanceKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from distance
+    where d_id = #{dId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=INTEGER}
+      and end_id = #{endId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.path.model.DistanceKey" >
+    delete from distance
+    where d_id = #{dId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=INTEGER}
+      and end_id = #{endId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.path.model.Distance" >
+    insert into distance (d_id, start_id, end_id, 
+      standard_dis, standard_time)
+    values (#{dId,jdbcType=INTEGER}, #{startId,jdbcType=INTEGER}, #{endId,jdbcType=INTEGER}, 
+      #{standardDis,jdbcType=INTEGER}, #{standardTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.path.model.Distance" >
+    insert into distance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="startId != null" >
+        start_id,
+      </if>
+      <if test="endId != null" >
+        end_id,
+      </if>
+      <if test="standardDis != null" >
+        standard_dis,
+      </if>
+      <if test="standardTime != null" >
+        standard_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="startId != null" >
+        #{startId,jdbcType=INTEGER},
+      </if>
+      <if test="endId != null" >
+        #{endId,jdbcType=INTEGER},
+      </if>
+      <if test="standardDis != null" >
+        #{standardDis,jdbcType=INTEGER},
+      </if>
+      <if test="standardTime != null" >
+        #{standardTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.path.model.Distance" >
+    update distance
+    <set >
+      <if test="standardDis != null" >
+        standard_dis = #{standardDis,jdbcType=INTEGER},
+      </if>
+      <if test="standardTime != null" >
+        standard_time = #{standardTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=INTEGER}
+      and end_id = #{endId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.path.model.Distance" >
+    update distance
+    set standard_dis = #{standardDis,jdbcType=INTEGER},
+      standard_time = #{standardTime,jdbcType=INTEGER}
+    where d_id = #{dId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=INTEGER}
+      and end_id = #{endId,jdbcType=INTEGER}
+  </update>
+</mapper>

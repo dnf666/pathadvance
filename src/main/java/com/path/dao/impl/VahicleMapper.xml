@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.path.dao.VahicleMapper" >
+  <resultMap id="BaseResultMap" type="com.path.model.Vahicle" >
+    <id column="v_id" property="vId" jdbcType="INTEGER" />
+    <id column="v_num" property="vNum" jdbcType="INTEGER" />
+    <result column="v_type" property="vType" jdbcType="VARCHAR" />
+    <result column="v_capacity" property="vCapacity" jdbcType="REAL" />
+    <result column="v_oil" property="vOil" jdbcType="REAL" />
+    <result column="v_price" property="vPrice" jdbcType="REAL" />
+    <result column="v_date" property="vDate" jdbcType="DATE" />
+    <result column="v_rem" property="vRem" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    v_id, v_num, v_type, v_capacity, v_oil, v_price, v_date, v_rem
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.VahicleKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from vahicle
+    where v_id = #{vId,jdbcType=INTEGER}
+      and v_num = #{vNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.path.model.VahicleKey" >
+    delete from vahicle
+    where v_id = #{vId,jdbcType=INTEGER}
+      and v_num = #{vNum,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.path.model.Vahicle" >
+    insert into vahicle (v_id, v_num, v_type, 
+      v_capacity, v_oil, v_price, v_date, 
+      v_rem)
+    values (#{vId,jdbcType=INTEGER}, #{vNum,jdbcType=INTEGER}, #{vType,jdbcType=VARCHAR}, 
+      #{vCapacity,jdbcType=REAL}, #{vOil,jdbcType=REAL}, #{vPrice,jdbcType=REAL}, #{vDate,jdbcType=DATE}, 
+      #{vRem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.path.model.Vahicle" >
+    insert into vahicle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        v_id,
+      </if>
+      <if test="vNum != null" >
+        v_num,
+      </if>
+      <if test="vType != null" >
+        v_type,
+      </if>
+      <if test="vCapacity != null" >
+        v_capacity,
+      </if>
+      <if test="vOil != null" >
+        v_oil,
+      </if>
+      <if test="vPrice != null" >
+        v_price,
+      </if>
+      <if test="vDate != null" >
+        v_date,
+      </if>
+      <if test="vRem != null" >
+        v_rem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        #{vId,jdbcType=INTEGER},
+      </if>
+      <if test="vNum != null" >
+        #{vNum,jdbcType=INTEGER},
+      </if>
+      <if test="vType != null" >
+        #{vType,jdbcType=VARCHAR},
+      </if>
+      <if test="vCapacity != null" >
+        #{vCapacity,jdbcType=REAL},
+      </if>
+      <if test="vOil != null" >
+        #{vOil,jdbcType=REAL},
+      </if>
+      <if test="vPrice != null" >
+        #{vPrice,jdbcType=REAL},
+      </if>
+      <if test="vDate != null" >
+        #{vDate,jdbcType=DATE},
+      </if>
+      <if test="vRem != null" >
+        #{vRem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.path.model.Vahicle" >
+    update vahicle
+    <set >
+      <if test="vType != null" >
+        v_type = #{vType,jdbcType=VARCHAR},
+      </if>
+      <if test="vCapacity != null" >
+        v_capacity = #{vCapacity,jdbcType=REAL},
+      </if>
+      <if test="vOil != null" >
+        v_oil = #{vOil,jdbcType=REAL},
+      </if>
+      <if test="vPrice != null" >
+        v_price = #{vPrice,jdbcType=REAL},
+      </if>
+      <if test="vDate != null" >
+        v_date = #{vDate,jdbcType=DATE},
+      </if>
+      <if test="vRem != null" >
+        v_rem = #{vRem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where v_id = #{vId,jdbcType=INTEGER}
+      and v_num = #{vNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.path.model.Vahicle" >
+    update vahicle
+    set v_type = #{vType,jdbcType=VARCHAR},
+      v_capacity = #{vCapacity,jdbcType=REAL},
+      v_oil = #{vOil,jdbcType=REAL},
+      v_price = #{vPrice,jdbcType=REAL},
+      v_date = #{vDate,jdbcType=DATE},
+      v_rem = #{vRem,jdbcType=VARCHAR}
+    where v_id = #{vId,jdbcType=INTEGER}
+      and v_num = #{vNum,jdbcType=INTEGER}
+  </update>
+</mapper>

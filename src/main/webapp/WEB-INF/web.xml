@@ -42,7 +42,7 @@
 
   <filter>
     <filter-name>CROSFilter</filter-name>
-    <filter-class>com.pms.filter.CORSFilter</filter-class>
+    <filter-class>com.path.filter.CORSFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>CROSFilter</filter-name>
