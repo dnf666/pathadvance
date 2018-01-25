@@ -176,6 +176,6 @@
       <artifactId>lombok</artifactId>
       <version>1.16.6</version>
     </dependency>
-</dependencies>
 
+  </dependencies>
 </project>

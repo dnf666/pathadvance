@@ -1,11 +1,12 @@
-package com.path.dao;
+package com.path.service;
 
 import com.path.model.CenterNode;
 import com.path.model.CenterNodeKey;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CenterNodeMapper {
+/**
+ * @author demo
+ */
+public interface CenterNodeService {
     int deleteByPrimaryKey(CenterNodeKey key);
 
     int insert(CenterNode record);
