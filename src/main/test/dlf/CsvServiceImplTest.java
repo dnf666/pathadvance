@@ -1,5 +1,7 @@
 package dlf;
 
+import com.path.model.Vahicle;
+import com.path.service.csv.impl.CsvServiceImpl;
 import org.junit.Test;
 
 import java.io.*;
@@ -20,7 +22,7 @@ public class CsvServiceImplTest {
         int mine =s.lastIndexOf(".");
         System.out.println(s.substring(mine+1));
         try{
-            in = new BufferedInputStream(new FileInputStream(new File("/Users/demo/IdeaProjects/path/src/main/resources/properties/type.properties")));
+            in = new BufferedInputStream(new FileInputStream(new File("src/main/resources/properties/type.properties")));
 
             properties.load(in);
             String type1 = properties.getProperty("type");
@@ -42,6 +44,7 @@ public class CsvServiceImplTest {
 
     @Test
     public void removeDuplication() {
+        CsvServiceImpl<Vahicle> csvService = new CsvServiceImpl();
     }
 
     @Test

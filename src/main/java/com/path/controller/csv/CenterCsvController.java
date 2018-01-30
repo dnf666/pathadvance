@@ -1,19 +1,20 @@
 package com.path.controller.csv;
 
 import com.csvreader.CsvReader;
+import com.path.model.CenterNode;
+import com.path.service.csv.CsvService;
 import com.path.util.FileUtil;
 import com.path.util.JsonUtil;
+import com.path.util.MapUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -22,28 +23,34 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/csv")
-public class CsvController {
-    private File CsvFile;
-    private String CsvFileFileName;
-    private String CsvFileContentType;// 封装上传文件类型的属性
-    private String allowTypes; // 封装允许上传的文件类型的属性，通过参数设置
+public class CenterCsvController {
+    @Resource
+    private CsvService<CenterNode> csvService;
     /**
      * 这是批量导入
      */
-@RequestMapping("/addfile.do")
-    public void batchInsertApprovedUser(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println(request.getCharacterEncoding());
-    //戴林甫修改
+@RequestMapping("/addcenternode.do")
+    public void batchInsertApprovedUser(HttpServletRequest request,String type) {
     MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-    MultipartFile multipartFile = multipartHttpServletRequest.getFile("file");
+    MultipartFile multipartFile = multipartHttpServletRequest.getFile(type);
     String fileName = multipartFile.getOriginalFilename();
-    System.out.println(fileName);
-
+String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/");
     String path = request.getSession().getServletContext().getRealPath("/WEB-INF/download")+File.separator+fileName;
     File file = new File(path);
     try {
         multipartFile.transferTo(file);
+        System.out.println("确认类型");
+        csvService.ensureType(file,projectPath);
     } catch (IOException e) {
+        e.printStackTrace();
+    } catch (Exception e) {
+       Map<String,Object> map = MapUtil.toMap(0,e.getMessage(),null);
+        JsonUtil.toJSON(map);
+    }
+    try {
+        csvService.readCsv(path);
+
+    } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
 
