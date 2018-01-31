@@ -1,21 +1,19 @@
 package com.path.controller.csv;
 
-import com.csvreader.CsvReader;
 import com.path.model.CenterNode;
-import com.path.service.csv.CsvService;
-import com.path.util.FileUtil;
+import com.path.service.csv.CenterCsvService;
 import com.path.util.JsonUtil;
 import com.path.util.MapUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -25,33 +23,50 @@ import java.util.*;
 @RequestMapping("/csv")
 public class CenterCsvController {
     @Resource
-    private CsvService<CenterNode> csvService;
+    private CenterCsvService csvService;
     /**
      * 这是批量导入
      */
 @RequestMapping("/addcenternode.do")
-    public void batchInsertApprovedUser(HttpServletRequest request,String type) {
+    public void batchInsertApprovedUser(HttpServletRequest request,@RequestParam(required = false) String type) {
     MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-    MultipartFile multipartFile = multipartHttpServletRequest.getFile(type);
+    MultipartFile multipartFile = multipartHttpServletRequest.getFile("file");
+    if(multipartFile.isEmpty())
+    {
+        Map<String,Object> map = MapUtil.toMap(0,"文件没有上传",null);
+        JsonUtil.toJSON(map);
+        return;
+    }
     String fileName = multipartFile.getOriginalFilename();
 String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/");
     String path = request.getSession().getServletContext().getRealPath("/WEB-INF/download")+File.separator+fileName;
     File file = new File(path);
     try {
-        multipartFile.transferTo(file);
+//        multipartFile.transferTo(file);
+        FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),file);
         System.out.println("确认类型");
         csvService.ensureType(file,projectPath);
     } catch (IOException e) {
         e.printStackTrace();
+        return;
     } catch (Exception e) {
        Map<String,Object> map = MapUtil.toMap(0,e.getMessage(),null);
         JsonUtil.toJSON(map);
+        return;
     }
     try {
-        csvService.readCsv(path);
+        List<CenterNode> list = csvService.readCsv(path);
+         list = csvService.removeDuplication(list);
+           boolean result = csvService.storeDatabase(list);
+        Map<String,Object> map = MapUtil.toMap(1,"导入成功",result);
+        JsonUtil.toJSON(map);
+    } catch (IOException e) {
+        Map<String,Object> map = MapUtil.toMap(0,e.getMessage(),null);
+        JsonUtil.toJSON(map);
 
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
+    } catch (Exception e) {
+        Map<String,Object> map = MapUtil.toMap(0,e.getMessage(),null);
+        JsonUtil.toJSON(map);
     }
 
 //        Map<String, Object> map = new HashMap<String, Object>();

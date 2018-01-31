@@ -1,7 +1,6 @@
 package dlf;
 
 import com.path.model.Vahicle;
-import com.path.service.csv.impl.CsvServiceImpl;
 import org.junit.Test;
 
 import java.io.*;
@@ -42,10 +41,7 @@ public class CsvServiceImplTest {
     public void readCsv() {
     }
 
-    @Test
-    public void removeDuplication() {
-        CsvServiceImpl<Vahicle> csvService = new CsvServiceImpl();
-    }
+
 
     @Test
     public void storeDatabase() {

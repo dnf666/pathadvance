@@ -161,4 +161,12 @@
     where c_id = #{cId,jdbcType=INTEGER}
       and c_num = #{cNum,jdbcType=VARCHAR}
   </update>
+
+  <insert id="insertAdvance" parameterType="java.util.List">
+    INSERT into centernode (c_id, c_num, c_name, c_address, c_type, c_longitude, c_latitude, c_baidulongitude, c_baidulatitude, c_quatity)
+    VALUES
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.cId},#{item.cNum},#{item.cName},#{item.cAddress},#{item.cType},#{item.cLongitude},#{item.cLatitude},#{item.cBaiduLongitude},#{item.cbaiduLatitude},#{item.cQuatity})
+    </foreach>
+  </insert>
 </mapper>
