@@ -42,7 +42,7 @@ String projectPath = request.getSession().getServletContext().getRealPath("/WEB-
     String path = request.getSession().getServletContext().getRealPath("/WEB-INF/download")+File.separator+fileName;
     File file = new File(path);
     try {
-//        multipartFile.transferTo(file);
+//              multipartFile.transferTo(file);
         FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),file);
         System.out.println("确认类型");
         csvService.ensureType(file,projectPath);

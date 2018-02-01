@@ -6,6 +6,7 @@
 
 <form action="/path/csv/addcenternode.do" enctype="multipart/form-data" method="post">
     <input type="file" name="file">
+    <input type="text" name="type" value="file">
     <input type="submit" value="提交">
 </form>
 </body>

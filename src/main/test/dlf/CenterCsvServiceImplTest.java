@@ -43,26 +43,34 @@ public class CenterCsvServiceImplTest {
     @Test
     public void readCsv() throws IOException {
         String path = "/Users/demo/IdeaProjects/path/src/main/webapp/WEB-INF/download/中心点模板.csv";
-
-        List<CenterNode> list = new ArrayList<CenterNode>();
-        char delimiter = ',';
-        CsvReader csvReader = new CsvReader(path, delimiter, Charset.forName("utf-8"));
-        csvReader.setSkipEmptyRecords(true);
-        csvReader.readHeaders();
-        System.out.println(csvReader.getRawRecord());
-        while(csvReader.readRecord())
-        {
-            CenterNode centerNode = new CenterNode();
-            centerNode.setcNum(csvReader.get("中心点编号"));
-            centerNode.setCName(csvReader.get("地点名字"));
-            centerNode.setCAddress(csvReader.get("具体地址"));
-            centerNode.setCType(Integer.valueOf(csvReader.get("类型")));
-//            BigDecimal bigDecimal = new BigDecimal(csvReader.get("存储量（元）"));
-//            System.out.println(bigDecimal.toPlainString());
-            centerNode.setCQuatity(Double.parseDouble(csvReader.get("存储量（元）")));
-            list.add(centerNode);
+File file = new File(path);
+List<CenterNode> list = centerCsvService.readCsv(path);
+        List<CenterNode> centerNodeList = null;
+        try {
+            centerNodeList = centerCsvService.removeDuplication(list);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println(list);
+        System.out.println(centerNodeList);
+//        List<CenterNode> list = new ArrayList<CenterNode>();
+//        char delimiter = ',';
+//        CsvReader csvReader = new CsvReader(path, delimiter, Charset.forName("utf-8"));
+//        csvReader.setSkipEmptyRecords(true);
+//        csvReader.readHeaders();
+//        System.out.println(csvReader.getRawRecord());
+//        while(csvReader.readRecord())
+//        {
+//            CenterNode centerNode = new CenterNode();
+//            centerNode.setcNum(csvReader.get("中心点编号"));
+//            centerNode.setCName(csvReader.get("地点名字"));
+//            centerNode.setCAddress(csvReader.get("具体地址"));
+//            centerNode.setCType(Integer.valueOf(csvReader.get("类型")));
+////            BigDecimal bigDecimal = new BigDecimal(csvReader.get("存储量（元）"));
+////            System.out.println(bigDecimal.toPlainString());
+//            centerNode.setCQuatity(Double.parseDouble(csvReader.get("存储量（元）")));
+//            list.add(centerNode);
+//        }
+//        System.out.println(list);
     }
 
     @Test

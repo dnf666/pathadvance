@@ -44,13 +44,21 @@ public class CenterCsvServiceImpl implements CenterCsvService {
     public List<CenterNode> readCsv(String path) throws IOException {
         List<CenterNode> list = new ArrayList<CenterNode>();
         char delimiter = ',';
-        CsvReader csvReader = new CsvReader(path, delimiter, Charset.forName("GBK"));
+        CsvReader csvReader = new CsvReader(path, delimiter, Charset.forName("utf-8"));
         csvReader.setSkipEmptyRecords(true);
         csvReader.readHeaders();
+        String s =csvReader.getHeader(1);
+        String s1 = "具体地址";
+        System.out.println("具体地址");
+        System.out.println(s1);
+        System.out.println(s);
+
         while(csvReader.readRecord())
         {
             CenterNode centerNode = new CenterNode();
-            centerNode.setcNum(csvReader.get("编号"));
+            System.out.println("111111"+csvReader.get("中心编号"));
+            System.out.println("2222222"+csvReader.get("地点名字"));
+            centerNode.setcNum(csvReader.get("中心编号"));
             centerNode.setCName(csvReader.get("地点名字"));
             centerNode.setCAddress(csvReader.get("具体地址"));
             centerNode.setCType(Integer.valueOf(csvReader.get("类型")));
