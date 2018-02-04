@@ -21,4 +21,6 @@ public interface CenterNodeMapper {
     int updateByPrimaryKey(CenterNode record);
 
     boolean insertAdvance(List<CenterNode> list);
+
+    boolean updateAdvance(List<CenterNode> list2);
 }

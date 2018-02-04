@@ -1,13 +1,19 @@
-package com.path.service.impl;
+package com.path.service.questionbasic.impl;
 
 import com.path.dao.QuestionBasicMapper;
 import com.path.model.QuestionBasic;
+import com.path.service.questionbasic.QuestionBasicService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author demo
  */
-public class QuestionBasicServiceImpl implements QuestionBasicMapper {
-
+@Service
+public class QuestionBasicServiceImpl implements QuestionBasicService {
+@Resource
+private QuestionBasicMapper questionBasicMapper;
     @Override
     public int deleteByPrimaryKey(Integer qId) {
         return 0;
@@ -15,7 +21,8 @@ public class QuestionBasicServiceImpl implements QuestionBasicMapper {
 
     @Override
     public int insert(QuestionBasic record) {
-        return 0;
+        int i = questionBasicMapper.insert(record);
+        return i;
     }
 
     @Override

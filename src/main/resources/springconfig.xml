@@ -18,7 +18,7 @@
     <context:annotation-config/>
     <cache:annotation-driven />
     <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>

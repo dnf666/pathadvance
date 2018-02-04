@@ -19,7 +19,7 @@
     c_baidulatitude, c_quatity, c_rem
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.CenterNodeKey" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from centernode
     where c_id = #{cId,jdbcType=INTEGER}
@@ -163,10 +163,23 @@
   </update>
 
   <insert id="insertAdvance" parameterType="java.util.List">
-    INSERT into centernode (c_id, c_num, c_name, c_address, c_type, c_longitude, c_latitude, c_baidulongitude, c_baidulatitude, c_quatity)
+    INSERT into centernode (c_id, c_num, c_name, c_address, c_type, c_quatity)
     VALUES
     <foreach collection="list" index="index" item="item" separator=",">
-      (#{item.cId},#{item.cNum},#{item.cName},#{item.cAddress},#{item.cType},#{item.cLongitude},#{item.cLatitude},#{item.cBaiduLongitude},#{item.cbaiduLatitude},#{item.cQuatity})
+      (#{item.cId},#{item.cNum},#{item.cName},#{item.cAddress},#{item.cType},#{item.cQuatity})
     </foreach>
   </insert>
+
+  <update id="updateAdvance" parameterType="java.util.List">
+
+    <foreach collection="list" separator=";" item="cus">
+      update centernode set
+      c_longitude = #{cus.cLongitude,jdbcType=VARCHAR},
+      c_latitude = #{cus.cLatitude,jdbcType=VARCHAR},
+      c_baidulongitude = #{cus.cBaidulongitude,jdbcType=REAL},
+      c_baidulatitude = #{cus.cBaidulatitude,jdbcType=REAL}
+      where c_id = #{cus.cId,jdbcType=INTEGER}
+      and c_num = #{cus.cNum,jdbcType=VARCHAR}
+    </foreach>
+  </update>
 </mapper>

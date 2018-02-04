@@ -18,7 +18,7 @@ public class CenterCsvControllerTest {
 
     @Test
     public void testCsv(){
-        String s= "src/main/webapp/WEB-INF/download/centertemplate.csv";
+        String s= "/Users/demo/IdeaProjects/path/src/main/webapp/WEB-INF/download/中心点.csv";
         File file = new File(s);
 //        if(!file.exists())
 //        {
@@ -33,16 +33,19 @@ public class CenterCsvControllerTest {
        char delimiter = ',';
         try {
             CsvReader csvReader = new CsvReader(path,delimiter, Charset.forName("GBK"));
-           csvReader.setSkipEmptyRecords(true);
+           csvReader.setSkipEmptyRecords(false);
            csvReader.readHeaders();
-
+            System.out.println(csvReader.getValues());
+            System.out.println(csvReader.getSkipEmptyRecords());
+            System.out.println(csvReader.getSafetySwitch());
                 while (csvReader.readRecord()) {
                     CenterNode registerInfo = new CenterNode();
-                    System.out.println("123"+csvReader.get("具体地址"));
                     registerInfo.setCAddress(csvReader.get("具体地址"));
-                    registerInfo.setCName(csvReader.get("地点名字"));
+
+                    registerInfo.setCName(csvReader.get("地点名称"));
                     registerInfo.setCQuatity(Double.valueOf(csvReader.get("存储量（元）")));
-                    registerInfo.setCType(Integer.valueOf(csvReader.get("中心点编号")));
+                    registerInfo.setCNum(csvReader.get("中心编号"));
+                    registerInfo.setCType(Integer.valueOf(csvReader.get("类型")));
                     System.out.println(registerInfo.toString());
                 }
         } catch (FileNotFoundException e) {

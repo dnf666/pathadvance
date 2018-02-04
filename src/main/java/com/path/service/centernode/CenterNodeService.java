@@ -1,7 +1,9 @@
-package com.path.service;
+package com.path.service.centernode;
 
 import com.path.model.CenterNode;
 import com.path.model.CenterNodeKey;
+
+import java.util.List;
 
 /**
  * @author demo
@@ -18,4 +20,5 @@ public interface CenterNodeService {
     int updateByPrimaryKeySelective(CenterNode record);
 
     int updateByPrimaryKey(CenterNode record);
+    boolean updateAdvance(List<CenterNode> list);
 }

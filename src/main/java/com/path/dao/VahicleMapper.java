@@ -3,6 +3,8 @@ package com.path.dao;
 import com.path.model.Vahicle;
 import com.path.model.VahicleKey;
 
+import java.util.List;
+
 public interface VahicleMapper {
     int deleteByPrimaryKey(VahicleKey key);
 
@@ -15,4 +17,6 @@ public interface VahicleMapper {
     int updateByPrimaryKeySelective(Vahicle record);
 
     int updateByPrimaryKey(Vahicle record);
+
+    boolean insertAdvance(List<Vahicle> list);
 }

@@ -1,4 +1,4 @@
-package com.path.service;
+package com.path.service.questionbasic;
 
 import com.path.model.QuestionBasic;
 
