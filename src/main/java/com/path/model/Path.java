@@ -5,18 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * @author demo
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class QuestionBasic {
-    private Integer qId;
-
-    private String qName;
-
-    private String qDescript;
-
-    private String qRem1;
-
-    private String qRem2;
+public class Path {
+    private String projectPath;
+    private String path;
+    private Integer questionId;
 }

@@ -125,4 +125,11 @@
     where v_id = #{vId,jdbcType=INTEGER}
       and v_num = #{vNum,jdbcType=INTEGER}
   </update>
+  <insert id="insertAdvance" parameterType="java.util.List">
+    INSERT into vahicle (v_id, v_num, v_type, v_capacity, v_date, v_oil,v_price)
+    VALUES
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.vId},#{item.vNum},#{item.vType},#{item.vCapacity},#{item.vDate},#{item.vOil},#{item.vPrice})
+    </foreach>
+  </insert>
 </mapper>

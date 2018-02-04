@@ -18,7 +18,7 @@
     <context:annotation-config/>
     <cache:annotation-driven />
     <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
@@ -67,7 +67,7 @@
     </bean>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8"/>
+        <property name="defaultEncoding" value="UTF-8"/>
         <property name="maxUploadSize" value="10485760000"/>
         <property name="maxInMemorySize" value="40960000"/>
     </bean>

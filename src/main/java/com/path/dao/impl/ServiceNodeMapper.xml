@@ -11,7 +11,7 @@
     <result column="s_latitude" property="sLatitude" jdbcType="VARCHAR" />
     <result column="s_baidulongitude" property="sBaidulongitude" jdbcType="REAL" />
     <result column="s_baidulatitude" property="sBaidulatitude" jdbcType="REAL" />
-    <result column="s_quatity" property="sQuatity" jdbcType="REAL" />
+    <result column="s_quatity" property="sQuatity" jdbcType="DOUBLE" />
     <result column="s_rem" property="sRem" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -38,7 +38,7 @@
     values (#{sId,jdbcType=INTEGER}, #{sNum,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, 
       #{sAddress,jdbcType=VARCHAR}, #{sType,jdbcType=INTEGER}, #{sLongitude,jdbcType=VARCHAR}, 
       #{sLatitude,jdbcType=VARCHAR}, #{sBaidulongitude,jdbcType=REAL}, #{sBaidulatitude,jdbcType=REAL}, 
-      #{sQuatity,jdbcType=REAL}, #{sRem,jdbcType=VARCHAR})
+      #{sQuatity,jdbcType=DOUBLE}, #{sRem,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.path.model.ServiceNode" >
     insert into servicenode
@@ -106,7 +106,7 @@
         #{sBaidulatitude,jdbcType=REAL},
       </if>
       <if test="sQuatity != null" >
-        #{sQuatity,jdbcType=REAL},
+        #{sQuatity,jdbcType=DOUBLE},
       </if>
       <if test="sRem != null" >
         #{sRem,jdbcType=VARCHAR},
@@ -138,7 +138,7 @@
         s_baidulatitude = #{sBaidulatitude,jdbcType=REAL},
       </if>
       <if test="sQuatity != null" >
-        s_quatity = #{sQuatity,jdbcType=REAL},
+        s_quatity = #{sQuatity,jdbcType=DOUBLE},
       </if>
       <if test="sRem != null" >
         s_rem = #{sRem,jdbcType=VARCHAR},
@@ -156,9 +156,17 @@
       s_latitude = #{sLatitude,jdbcType=VARCHAR},
       s_baidulongitude = #{sBaidulongitude,jdbcType=REAL},
       s_baidulatitude = #{sBaidulatitude,jdbcType=REAL},
-      s_quatity = #{sQuatity,jdbcType=REAL},
+      s_quatity = #{sQuatity,jdbcType=DOUBLE},
       s_rem = #{sRem,jdbcType=VARCHAR}
     where s_id = #{sId,jdbcType=INTEGER}
       and s_num = #{sNum,jdbcType=VARCHAR}
   </update>
+
+  <insert id="insertAdvance" parameterType="java.util.List">
+  INSERT into servicenode (s_id, s_num, s_name, s_address, s_type, s_quatity)
+  VALUES
+  <foreach collection="list" index="index" item="item" separator=",">
+    (#{item.sId},#{item.sNum},#{item.sName},#{item.sAddress},#{item.sType},#{item.sQuatity})
+  </foreach>
+  </insert>
 </mapper>

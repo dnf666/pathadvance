@@ -3,6 +3,8 @@ package com.path.dao;
 import com.path.model.ServiceNode;
 import com.path.model.ServiceNodeKey;
 
+import java.util.List;
+
 public interface ServiceNodeMapper {
     int deleteByPrimaryKey(ServiceNodeKey key);
 
@@ -15,4 +17,6 @@ public interface ServiceNodeMapper {
     int updateByPrimaryKeySelective(ServiceNode record);
 
     int updateByPrimaryKey(ServiceNode record);
+
+    boolean insertAdvance(List<ServiceNode> list);
 }

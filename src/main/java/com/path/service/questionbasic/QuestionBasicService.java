@@ -1,10 +1,11 @@
-package com.path.dao;
+package com.path.service.questionbasic;
 
 import com.path.model.QuestionBasic;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface QuestionBasicMapper {
+/**
+ * @author demo
+ */
+public interface QuestionBasicService {
     int deleteByPrimaryKey(Integer qId);
 
     int insert(QuestionBasic record);

@@ -1,30 +1,30 @@
-package com.path.service.impl;
+package com.path.service.centernode.impl;
 
 import com.path.dao.CenterNodeMapper;
 import com.path.model.CenterNode;
 import com.path.model.CenterNodeKey;
-import com.path.service.CenterNodeService;
+import com.path.service.centernode.CenterNodeService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author demo
  */
 @Service
-public class CenterNodeServiceImpl implements CenterNodeService{
+public class CenterNodeServiceImpl implements CenterNodeService {
     @Resource
     private CenterNodeMapper centerNodeMapper;
     @Override
     public int deleteByPrimaryKey(CenterNodeKey key) {
-        int result= centerNodeMapper.deleteByPrimaryKey(key);
-        return result;
+        return 0;
     }
 
     @Override
     public int insert(CenterNode record) {
-        return 0;
+        return centerNodeMapper.insert(record);
     }
 
     @Override
@@ -45,5 +45,13 @@ public class CenterNodeServiceImpl implements CenterNodeService{
     @Override
     public int updateByPrimaryKey(CenterNode record) {
         return 0;
+    }
+
+    @Override
+    public boolean updateAdvance(List<CenterNode> list) {
+        List<CenterNode> list1 = list.stream().filter(e->e.getCId()!=null).collect(Collectors.toList());
+        List<CenterNode> list2 = list1.stream().filter(e->e.getCNum()!=null).collect(Collectors.toList());
+        boolean result = centerNodeMapper.updateAdvance(list2);
+        return result;
     }
 }
