@@ -48,15 +48,15 @@ public class VahicleCsvServiceImpl implements CsvService<Vahicle>{
     }
 
     @Override
-    public List<Vahicle> removeDuplication(List<Vahicle> list) throws Exception {
+    public List<Vahicle> checkFile(List<Vahicle> list) throws Exception {
         int i=1;
         //删除不完整数据
-        List<Vahicle> list1 = list.stream().filter((e)->e.getVNum()==null||"".equals(e.getVNum())).collect(Collectors.toList());
-        List<Vahicle> list2 = list1.stream().filter((e)->e.getVType()==null||"".equals(e.getVType())).collect(Collectors.toList());
-        List<Vahicle> list3 = list2.stream().filter((e)->e.getVCapacity()==null||"".equals(e.getVCapacity())).collect(Collectors.toList());
-        List<Vahicle> list4 = list3.stream().filter((e)->e.getVDate()==null||"".equals(e.getVDate())).collect(Collectors.toList());
-        List<Vahicle> list5 = list4.stream().filter((e)->e.getVPrice()==null||"".equals(e.getVPrice())).collect(Collectors.toList());
-        List<Vahicle> list6 = list5.stream().filter((e)->e.getVOil()==null||"".equals(e.getVOil())).collect(Collectors.toList());
+        List<Vahicle> list1 = list.stream().filter((e)->e.getVNum()!=null&&!("".equals(e.getVNum()))).collect(Collectors.toList());
+        List<Vahicle> list2 = list1.stream().filter((e)->e.getVType()!=null&&!("".equals(e.getVType()))).collect(Collectors.toList());
+        List<Vahicle> list3 = list2.stream().filter((e)->e.getVCapacity()!=null&&!("".equals(e.getVCapacity()))).collect(Collectors.toList());
+        List<Vahicle> list4 = list3.stream().filter((e)->e.getVDate()!=null&&!("".equals(e.getVDate()))).collect(Collectors.toList());
+        List<Vahicle> list5 = list4.stream().filter((e)->e.getVPrice()!=null&&!("".equals(e.getVPrice()))).collect(Collectors.toList());
+        List<Vahicle> list6 = list5.stream().filter((e)->e.getVOil()!=null&&!("".equals(e.getVOil()))).collect(Collectors.toList());
         //去除重复数据
         Iterator<Vahicle> iterator = list6.iterator();
         Set<Integer> set = new HashSet<Integer>();

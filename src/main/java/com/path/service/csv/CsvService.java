@@ -47,12 +47,12 @@ public interface CsvService<T> {
     List<T> readCsv(Path path) throws IOException;
 
     /**
-     * 删除重复数据
+     *
      * @param list 原始数据
      * @return
      * @throws Exception
      */
-    List<T> removeDuplication(List<T> list) throws Exception;
+    List<T> checkFile(List<T> list) throws Exception;
 
     /**
      * 存入数据库

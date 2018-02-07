@@ -2,7 +2,7 @@ package com.path.service.csv.impl;
 
 import com.csvreader.CsvReader;
 import com.path.dao.ServiceNodeMapper;
-import com.path.model.CenterNode;
+import com.path.model.ServiceNode;
 import com.path.model.Path;
 import com.path.model.ServiceNode;
 import com.path.service.csv.CsvService;
@@ -55,31 +55,40 @@ public class ServiceCsvServiceImpl implements CsvService<ServiceNode>{
     }
 
     @Override
-    public List<ServiceNode> removeDuplication(List<ServiceNode> list) throws Exception {
-        int i=1;
-        //删除不完整数据
-        List<ServiceNode> list1 = list.stream().filter((e)->e.getSNum()!=null||!("".equals(e.getSNum()))).collect(Collectors.toList());
-        List<ServiceNode> list2 = list1.stream().filter((e)->e.getSName()!=null||!("".equals(e.getSName()))).collect(Collectors.toList());
-        List<ServiceNode> list3 = list2.stream().filter((e)->e.getSAddress()!=null||!("".equals(e.getSAddress()))).collect(Collectors.toList());
-        List<ServiceNode> list4 = list3.stream().filter((e)->e.getSType()!=null||!("".equals(e.getSType()))).collect(Collectors.toList());
-        List<ServiceNode> list5 = list4.stream().filter((e)->e.getSQuatity()!=null||!("".equals(e.getSQuatity()))).collect(Collectors.toList());
-        //去除重复数据
-        Iterator<ServiceNode> iterator = list5.iterator();
-        Set<String> set = new HashSet<String>();
+   public List<ServiceNode> checkFile(List<ServiceNode> list) throws Exception {
+        int i = 1;
+        String empty = "";
+        Map<String,Integer> map = new HashMap<>();
+        //检查不完整数据
+        Iterator<ServiceNode> iterator = list.iterator();
         while (iterator.hasNext()) {
-            String num = iterator.next().getSNum();
-            if (set.contains(num)) {
-                throw new Exception("第"+i+"行数据与其他数据有冲突");
+            ServiceNode ServiceNode = iterator.next();
+            if (ServiceNode.getSNum() == null || ServiceNode.getSNum().equals(empty)) {
+                throw new Exception("第" + i + "行没有编号");
             }
-            else {
-                i++;
-                set.add(num);
+            if (ServiceNode.getSName() == null || ServiceNode.getSName().equals(empty)) {
+                throw new Exception("第" + i + "行没有名称");
             }
+            if (ServiceNode.getSAddress() == null || ServiceNode.getSAddress().equals(empty)) {
+                throw new Exception("第" + i + "行没有地址");
+            }
+            if (ServiceNode.getSType().toString() == null || ServiceNode.getSType().toString().equals(empty)) {
+                throw new Exception("第" + i + "行没有类型");
+            }
+             if(ServiceNode.getSQuatity().toString()==null || ServiceNode.getSQuatity().toString().equals(empty))
+            {
+                throw new Exception("第"+i+"行没有存储量");
+            }
+            String cNum = ServiceNode.getSNum();
+            if(map.containsKey(cNum)){
+               int j =  map.get(cNum);
+               throw  new Exception("第"+i+"行和第"+j+"行编号重复");
+            }
+            map.put(ServiceNode.getSNum(),i);
 
         }
-        return list5;
-
-    }
+        return list;
+   }
 
     @Override
     public boolean storeDatabase(List<ServiceNode> list) {

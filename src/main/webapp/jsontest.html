@@ -5,31 +5,33 @@
     <title>Title</title>
 </head>
 <body>
-userName:<input type="text" class="userName">
-password:<input type="text" class="password">
-<button class="submit" ></button>
-<br/>
-<form action="/jsonTest.do">
-userName1:<input type="text" class="userName" name="userName">
-password1:<input type="text" class="password" name="password">
-    <input type="submit" value="登陆">
-</form>
+qid:<input type="text" class="qId" name="qId">
+qname:<input type="text" class="qName" name="qName">
+    qdesc:<input type="text" class="qDescript" name="qDescript">
+    <input type="button" class="submit"/>
+<a href="/path/download/download.do">xiazai</a>
+
+<br>
+<input type="button" class="submit1">
 </body>
-<script src="/js/jquery.js"></script>
+<script src="js/jquery.min.js"></script>
 <script>
     $('.submit').click(function(){
-        var userName = $('.userName').val();
-        var password = $('.password').val();
+        console.log("11111");
+        var userName = $('.qId').val();
+        var password = $('.qName').val();
+        var qdes = $('.qDescript').val();
         var json={
-            "userName":userName,
-            "password":password
+            "qId":userName,
+            "qName":password,
+            "qDescript":qdes
         };
         $.ajax({
-            url:"/jsonTest.do",
+            url:"/path/questionBasic/addQuestion.do",
             contentType:"application/json",
             dataType:"json",
-            type:"POST",
-            data:JSON.stringify(json),
+            type:"get",
+            data:json,
             success:function (data) {
                 console.log(data);
             },
@@ -38,6 +40,24 @@ password1:<input type="text" class="password" name="password">
             }
             }
         )
+    })
+    $(".submit1").click(function () {
+        $.ajax({
+            url:"/path/download/downloadFile.do",
+            contentType:"application/json",
+            dataType:"json",
+            type:"get",
+            data:{
+                fileName:"服务点模板.csv"
+            },
+            success:function(data){
+
+            },
+            error:function (data) {
+                console.log(data);
+            }
+        })
+
     })
 </script>
 </html>
