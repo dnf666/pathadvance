@@ -1,12 +1,14 @@
-package com.path.dao;
+package com.path.service.servicenode;
 
-import com.path.model.CenterNode;
 import com.path.model.ServiceNode;
 import com.path.model.ServiceNodeKey;
 
 import java.util.List;
 
-public interface ServiceNodeMapper {
+/**
+ * create by 戴哥 on 2018/2/7
+ */
+public interface ServiceNodeService {
     int deleteByPrimaryKey(ServiceNodeKey key);
 
     int insert(ServiceNode record);
@@ -18,10 +20,7 @@ public interface ServiceNodeMapper {
     int updateByPrimaryKeySelective(ServiceNode record);
 
     int updateByPrimaryKey(ServiceNode record);
-
-    boolean insertAdvance(List<ServiceNode> list);
     boolean updateAdvance(List<ServiceNode> list);
-
     List<String> selectAllServiceNodeAddress(String questionId);
 
 }

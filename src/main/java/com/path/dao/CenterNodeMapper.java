@@ -22,5 +22,7 @@ public interface CenterNodeMapper {
 
     boolean insertAdvance(List<CenterNode> list);
 
-    boolean updateAdvance(List<CenterNode> list2);
+    boolean updateAdvance(List<CenterNode> list);
+
+    List<String> selectAllCenterNodeAddress(String questionId);
 }
