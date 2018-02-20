@@ -25,7 +25,6 @@ public class CenterCsvServiceImpl implements CsvService<CenterNode> {
 
     @Override
     public List<CenterNode> readCsv(Path path) throws IOException {
-        path.setQuestionId(1);
         String centernode = "centernode.properties";
         List<CenterNode> list = new ArrayList<CenterNode>();
         char delimiter = ',';
@@ -39,7 +38,11 @@ public class CenterCsvServiceImpl implements CsvService<CenterNode> {
         String leixing = properties.getProperty("leixing");
         String cunchu = properties.getProperty("cunchu");
         while (csvReader.readRecord()) {
-
+            //解决csv文件空记录
+            if(csvReader.get(leixing)=="")
+            {
+                continue;
+            }
             CenterNode centerNode = new CenterNode();
             centerNode.setCId(path.getQuestionId());
             centerNode.setCNum(csvReader.get(bianhao));

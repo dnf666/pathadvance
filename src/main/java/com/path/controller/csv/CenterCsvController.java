@@ -44,7 +44,8 @@ public class CenterCsvController {
             System.out.println("确认类型");
             csvService.ensureType(file, projectPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            Map map = MapUtil.toMap(0, e.getMessage(), result);
+            JsonUtil.toJSON(map);
             return;
         } catch (Exception e) {
             Map map = MapUtil.toMap(0, e.getMessage(), result);
@@ -54,6 +55,7 @@ public class CenterCsvController {
         try {
             List<CenterNode> list = csvService.readCsv(pathObject);
             csvService.checkFile(list);
+            result = true;
         } catch (IOException e) {
             Map map = MapUtil.toMap(0, e.getMessage(), result);
             JsonUtil.toJSON(map);
@@ -79,7 +81,8 @@ public class CenterCsvController {
         try {
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
         } catch (IOException e) {
-            e.printStackTrace();
+            Map map = MapUtil.toMap(0, e.getMessage(), result);
+            JsonUtil.toJSON(map);
             return;
         } catch (Exception e) {
             Map map = MapUtil.toMap(0, e.getMessage(), result);
