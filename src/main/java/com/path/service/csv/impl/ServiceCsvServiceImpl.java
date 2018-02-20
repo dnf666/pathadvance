@@ -39,12 +39,11 @@ public class ServiceCsvServiceImpl implements CsvService<ServiceNode>{
         String dizhi = properties.getProperty("dizhi");
         String leixing = properties.getProperty("leixing");
         String cunchu = properties.getProperty("cunchu");
-
         while(csvReader.readRecord())
         {
-            //这里只是为了解决csv的空记录的问题
-
-            if(csvReader.get(leixing)==""){
+            //解决csv文件空记录
+            if(csvReader.get(leixing)=="")
+            {
                 continue;
             }
             ServiceNode serviceNode = new ServiceNode();
