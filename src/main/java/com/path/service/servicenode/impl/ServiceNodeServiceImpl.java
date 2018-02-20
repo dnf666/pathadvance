@@ -6,6 +6,7 @@ import com.path.model.ServiceNodeKey;
 import com.path.model.ServiceNode;
 import com.path.model.ServiceNodeKey;
 import com.path.service.servicenode.ServiceNodeService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 /**
  * create by 戴哥 on 2018/2/7
  */
+@Service
 public class ServiceNodeServiceImpl implements ServiceNodeService {
     @Resource
     private ServiceNodeMapper serviceNodeMapper;
