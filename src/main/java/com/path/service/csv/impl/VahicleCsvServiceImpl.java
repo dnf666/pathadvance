@@ -35,6 +35,11 @@ public class VahicleCsvServiceImpl implements CsvService<Vahicle>{
 
         while(csvReader.readRecord())
         {
+            //这里只是为了解决csv的空记录的问题
+
+            if(csvReader.get("汽车编号")==""){
+                continue;
+            }
             Vahicle Vahicle = new Vahicle();
             Vahicle.setVNum(Integer.valueOf(csvReader.get("汽车编号")));
             Vahicle.setVType(csvReader.get("汽车类型"));

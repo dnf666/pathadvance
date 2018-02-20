@@ -42,6 +42,7 @@ public class CenterCsvController {
         try {
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
             System.out.println("确认类型");
+            //确认文件类型
             csvService.ensureType(file, projectPath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,6 +55,7 @@ public class CenterCsvController {
         try {
             List<CenterNode> list = csvService.readCsv(pathObject);
             csvService.checkFile(list);
+            result = true;
         } catch (IOException e) {
             Map map = MapUtil.toMap(0, e.getMessage(), result);
             JsonUtil.toJSON(map);
@@ -68,7 +70,13 @@ public class CenterCsvController {
         JsonUtil.toJSON(map);
 
     }
-@RequestMapping("importCenterNode")
+
+    /**
+     * 检查后的导入文件
+     * @param request
+     * @param multipartFile
+     */
+    @RequestMapping("importCenterNode")
     public void insertCenterNode(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         Integer questionId = (Integer) request.getSession().getAttribute("questionId");

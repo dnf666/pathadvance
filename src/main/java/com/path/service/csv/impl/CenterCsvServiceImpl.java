@@ -39,7 +39,10 @@ public class CenterCsvServiceImpl implements CsvService<CenterNode> {
         String leixing = properties.getProperty("leixing");
         String cunchu = properties.getProperty("cunchu");
         while (csvReader.readRecord()) {
-
+            //这里只是为了解决csv的空记录的问题
+            if(csvReader.get(leixing)==""){
+                continue;
+            }
             CenterNode centerNode = new CenterNode();
             centerNode.setCId(path.getQuestionId());
             centerNode.setCNum(csvReader.get(bianhao));
