@@ -54,4 +54,10 @@ public class CenterNodeServiceImpl implements CenterNodeService {
         boolean result = centerNodeMapper.updateAdvance(list2);
         return result;
     }
+
+    @Override
+    public List<String> selectAllCenterNodeAddress(String questionId) {
+        List<String> centerNodes = centerNodeMapper.selectAllCenterNodeAddress(questionId);
+        return centerNodes;
+    }
 }
