@@ -42,7 +42,7 @@ public class ServiceCsvServiceImpl implements CsvService<ServiceNode>{
         while(csvReader.readRecord())
         {
             //解决csv文件空记录
-            if(csvReader.get(leixing)=="")
+            if(csvReader.get(leixing).equals(""))
             {
                 continue;
             }

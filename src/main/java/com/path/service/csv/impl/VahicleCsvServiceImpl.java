@@ -41,14 +41,15 @@ public class VahicleCsvServiceImpl implements CsvService<Vahicle>{
                 continue;
             }
 
-            Vahicle Vahicle = new Vahicle();
-            Vahicle.setVNum(Integer.valueOf(csvReader.get("汽车编号")));
-            Vahicle.setVType(csvReader.get("汽车类型"));
-            Vahicle.setVCapacity(Float.valueOf(csvReader.get("运钞量（元）")));
-            Vahicle.setVOil(Float.valueOf(csvReader.get("耗油量（升/百公里每小时）")));
-            Vahicle.setVPrice(Float.valueOf(csvReader.get("运费（元/每公里）")));
-            Vahicle.setVDate(DateUtil.stringToDate(csvReader.get("出厂日期")));
-            list.add(Vahicle);
+            Vahicle vahicle = new Vahicle();
+            vahicle.setVId(path.getQuestionId());
+            vahicle.setVNum(Integer.valueOf(csvReader.get("汽车编号")));
+            vahicle.setVType(csvReader.get("汽车类型"));
+            vahicle.setVCapacity(Float.valueOf(csvReader.get("运钞量（元）")));
+            vahicle.setVOil(Float.valueOf(csvReader.get("耗油量（升/百公里每小时）")));
+            vahicle.setVPrice(Float.valueOf(csvReader.get("运费（元/每公里）")));
+            vahicle.setVDate(DateUtil.stringToDate(csvReader.get("出厂日期")));
+            list.add(vahicle);
         }
         return list;
     }

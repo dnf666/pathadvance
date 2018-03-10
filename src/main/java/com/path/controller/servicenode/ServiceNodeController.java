@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ServiceNodeController {
     @Resource
     private ServiceNodeService serviceNodeService;
-    @RequestMapping("/importByMap")
+    @RequestMapping("importByMap")
     public void importByMap(List<ServiceNode> list){
         try {
             list.stream().forEach(e -> serviceNodeService.insert(e));
@@ -47,7 +47,12 @@ public class ServiceNodeController {
         Map map = MapUtil.toMap(1, "中心点地址", ServiceNodes);
         JsonUtil.toJSON(map);
     }
-    @RequestMapping("/addlaandlo")
+
+    /**
+     * 添加经纬度
+     * @param serviceNodeList
+     */
+    @RequestMapping("addlaandlo")
     public void addExtraMessage(List<ServiceNode> serviceNodeList){
         boolean result = serviceNodeService.updateAdvance(serviceNodeList);
         if(result) {

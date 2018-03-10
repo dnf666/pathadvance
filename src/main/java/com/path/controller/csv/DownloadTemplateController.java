@@ -29,7 +29,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("download")
 public class DownloadTemplateController {
-
+    /**
+     * 取得数据文件模板名
+     * @param request request
+     */
     @RequestMapping("gainFileName")
     public void gainFileName(HttpServletRequest request){
         String path = request.getSession().getServletContext().getRealPath("/WEB-INF/download") + File.separator ;
@@ -48,6 +51,12 @@ public class DownloadTemplateController {
         JsonUtil.toJSON(map);
     }
 
+    /**
+     * 下载文件
+     * @param request
+     * @param fileName
+     * @return
+     */
     @RequestMapping("downloadFile")
     public ResponseEntity<byte[]> downloadFile(HttpServletRequest request,String fileName){
         byte[] bytes = null;
