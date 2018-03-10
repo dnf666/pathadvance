@@ -1,0 +1,298 @@
+body{
+	position: relative;
+}
+.logo{
+	height: 80px;
+	position: absolute;
+	z-index: 100;
+	left: 0px;
+	top: 0px;
+}
+.logo-img{
+	width: 60px;
+	height: 60px;
+	float: left;
+	padding: 10px;
+}
+.logo-text{
+	padding-right: 10px; 
+	height: 60px;
+	padding-top: 20px;
+	float: right;
+	color: #3385ff;
+	text-align: center;
+}
+
+/*进度条*/
+.progress{
+	width: 288px;
+	position: absolute;
+	z-index: 100;
+	top: 160px;
+	left: 20px;
+}
+.pro{
+	width: 320px;
+	height: 60px;
+	margin-bottom: 60px;
+	transition: width 0.2s;
+}
+.pro:hover{
+	width: 360px;	
+	cursor: pointer;
+}
+.pro .pro-left{
+	float: right;
+	width: 96px;
+	height: 60px;
+	margin-right: 20px;
+}
+.pro .pro-left span{
+	display: block;
+	font-size: 12px;
+	margin-top: 34px;
+	margin-left: 20px;
+}
+.pro .pro-left1{
+	background: url(../images/1.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-left2{
+	background: url(../images/2.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-left3{
+	background: url(../images/3.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-left4{
+	background: url(../images/4.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-right{
+	float: right;
+	width: 192px;
+	height: 60px;
+}
+.pro .pro-right span{
+	display: block;
+	width: 80%;
+	height: 100%;
+	text-align: left;
+	line-height: 60px;
+	color: #fff;
+	padding-left: 20px;
+}
+.pro .pro-right1{
+	background: url(../images/5.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-right2{
+	background: url(../images/6.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-right3{
+	background: url(../images/7.png) 0 0 no-repeat;
+	background-size:cover;
+}
+.pro .pro-right4{
+	background: url(../images/8.png) 0 0 no-repeat;
+	background-size:cover;
+}
+
+/*信息录入部分*/
+.info,.info1,.info2{
+	width: 300px;
+	height: 680px;
+	position: absolute;
+	z-index: 100;
+	right: -1000px;
+	top: 20px;
+	background-color: #fff;
+	box-shadow: 2px 2px 4px #888;
+	border-radius: 4px;
+}
+.info1{
+	height: 414px;
+}
+.info .info-tit,.info1 .info-tit,.info2 .info-tit{
+	width: 100%;
+	height: 40px;
+	border-radius: 4px 4px 0 0;
+	background-color: #3385ff;
+	color: #fff;
+/*	text-align: left;*/
+	text-indent: 10px;
+	line-height: 40px;
+	font-size: 16px;
+	font-weight: normal;
+}
+.info-panel{
+	width: 100%;
+}
+.info-panel-wrap{
+	width: 280px;
+	padding: 10px;
+}
+.info-panel-tit{
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	color: #4D4D4D;
+}
+.info-panel-cont{
+	width: 100%;
+}
+.info-file{
+	width: 100%;
+	padding-top: 10px;
+}
+.info-file a{
+
+}
+.info-file .info-fileselect{
+	width: 154px;
+	display: inline-block;
+	margin-top: 10px;
+	font-size: 12px;
+	padding: 4px;
+}
+.info-file .info-fileadd{
+	display: inline-block;
+	border: none;
+	color: #fff;
+	width: 60px;
+	padding: 4px;
+	background: url(../images/upload.png) 4px 2px no-repeat;
+	background-color: #3385ff;
+	background-size: 20px 20px;
+	font-size: 12px;
+	text-indent: 16px;
+	border-radius: 4px;
+}
+.info-search{
+	margin-top: 10px;
+}
+.info-search .file-search-text{
+	float: left;
+	width: 154px;
+	font-size: 12px;
+	padding: 4px;
+	margin-left: 4px;
+	border: 1px solid #ccc;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.info-search .file-search-action{
+	float: left;
+	border: none;
+	width: 24px;
+	height: 24px;
+	background: url(../images/search.png) 2px 2px no-repeat;
+	background-color: #3385ff;
+	background-size: 20px 20px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+.file-search-result{
+	clear: both;
+	padding-top: 10px;
+	overflow: hidden;
+}
+.file-search-result span{
+	float: left;
+	font-size: 12px;
+	color: red;
+	padding-top: 4px;
+	margin-left: 4px;
+}
+.file-search-result a{
+	float: left;
+	margin-left: 10px;
+	width: 24px;
+	height: 24px;
+	background: url(../images/add.png) 2px 2px no-repeat;
+	background-color: #3385ff;
+	border-radius: 4px;
+	background-size: 20px 20px;
+}
+.info-bottom{
+	width: 280px;
+	padding: 6px;
+	margin-top: 10px;
+	overflow: hidden;
+}
+.info-bottom .cancel,.info-bottom .sure,.info-bottom .cancel1,.info-bottom .sure1,.info-bottom .cancel2,.info-bottom .sure2{
+	width: 60px;
+	height: 30px;
+	color: #fff;
+	background-color: #3385ff;
+	border-radius: 4px;
+	border: none;
+	font-size: 14px;
+}
+.info-bottom .cancel,.info-bottom .cancel1,.info-bottom .cancel2{
+	float: left;
+	margin-left: 60px;
+}
+.info-bottom .sure,.info-bottom .sure1,.info-bottom .sure2{
+	float: left;
+	margin-left: 40px;
+}
+
+.now-action{
+	width: 100%;
+	clear: both;
+	overflow: hidden;
+	padding-top: 10px;
+}
+.now-progress{
+	/*clear: right;*/
+}
+.now-action span{
+	float: left;
+	margin-left: 4px;
+}
+.start,.stop,.restart,.algo-download{
+	width: 24px;
+	height: 24px;
+	border-radius: 4px;
+	float: left;
+	margin-left: 4px;
+	margin-top: 10px;
+}
+.start{
+	background: url(../images/start.png) 2px 2px no-repeat;
+	background-size: 20px 20px;
+	background-color: #3385ff;
+	clear: left;
+}
+.stop{
+	background: url(../images/stop.png) 2px 2px no-repeat;
+	background-size: 20px 20px;
+	background-color: #3385ff;
+}
+.restart{
+	background: url(../images/restart.png) 2px 2px no-repeat;
+	background-size: 20px 20px;
+	background-color: #3385ff;
+}
+.algo-time{
+	padding-top: 10px;
+}
+.algo-time span{
+	float: left;
+
+}
+.algo-time-dig{
+
+}
+.algo-status{
+	margin-left: 10px;
+}
+.algo-download{
+	background: url(../images/download.png) 2px 2px no-repeat;
+	background-size: 20px 20px;
+	background-color: #3385ff;
+	display: inline-block;
+}

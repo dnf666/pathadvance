@@ -29,7 +29,7 @@ public class CenterCsvController {
     private CsvService<CenterNode> csvService;
 
     /**
-     * 这是批量导入
+     * 检查中心点数据是否合理
      */
     @RequestMapping("/checkCenterFile.do")
     public void checkFile(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
@@ -70,10 +70,17 @@ public class CenterCsvController {
         JsonUtil.toJSON(map);
 
     }
-@RequestMapping("importCenterNode")
-    public void insertCenterNode(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
+
+    /**
+     * 导入中心点数据
+     * @param request http请求
+     * @param multipartFile 中心点文件
+     */
+    @RequestMapping("importCenterNode")
+    public void insertCenterNode(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
-        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+        //Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+        Integer questionId = 1;
         String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
         String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
         Path pathObject = new Path(projectPath, path, questionId);

@@ -2,6 +2,9 @@ package dlf;
 
 import com.path.model.Vahicle;
 import org.junit.Test;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
 import java.util.Properties;
@@ -39,6 +42,8 @@ public class CsvServiceImplTest {
 
     @Test
     public void readCsv() {
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("springconfig.xml");
+
     }
 
 

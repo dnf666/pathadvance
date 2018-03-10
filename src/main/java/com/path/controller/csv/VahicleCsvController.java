@@ -69,10 +69,11 @@ public class VahicleCsvController {
 
     }
     @RequestMapping("importVahicle")
-    public void insertVahicle(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
+    public void insertVahicle(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
 
         String fileName = multipartFile.getOriginalFilename();
-        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+//        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+        Integer questionId = 1;
         String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
         String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
         Path pathObject = new Path(projectPath, path, questionId);

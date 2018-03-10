@@ -4,6 +4,7 @@ import com.path.dao.CenterNodeMapper;
 import com.path.model.CenterNode;
 import com.path.model.CenterNodeKey;
 import com.path.service.centernode.CenterNodeService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

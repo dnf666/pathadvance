@@ -29,10 +29,10 @@ public class ServiceCsvController {
     private CsvService<ServiceNode> csvService;
 
     /**
-     * 这是批量导入
+     * 检查文件类型
      */
     @RequestMapping("/checkServiceFile.do")
-    public void checkFile(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
+    public void checkFile(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         Integer questionId = (Integer) request.getSession().getAttribute("questionId");
         String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
@@ -72,10 +72,11 @@ public class ServiceCsvController {
     }
 
     @RequestMapping("importServiceNode")
-    public void insertServiceNode(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) {
+    public void insertServiceNode(HttpServletRequest request, @RequestParam("info-fileselect") MultipartFile multipartFile) {
 
         String fileName = multipartFile.getOriginalFilename();
-        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+//        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+        Integer questionId = 1;
         String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
         String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
         Path pathObject = new Path(projectPath, path, questionId);
