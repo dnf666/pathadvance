@@ -100,7 +100,7 @@
 			<li class="info-panel-wrap">
 				<h2 class="info-panel-tit">经纬度计算</h2>
 				<div class="info-panel-cont">
-					<div class="now-action"><span>中心地址经纬度计算进度：</span><span class="now-progress">0%</span><div class="start"></div><div class="stop"></div><div class="restart"></div></div>
+					<div class="now-action"><span>中心地址经纬度计算进度：</span><span class="now-progress">0%</span><div class="start" id="start-center"></div><div class="stop"></div><div class="restart"></div></div>
 					<div class="now-action"><span>服务点地址经纬度计算进度：</span><span class="now-progress">0%</span><div class="start"></div><div class="stop"></div><div class="restart"></div></div>
 				</div>
 			</li>
@@ -133,6 +133,94 @@
 		var point = new BMap.Point(106.55,29.55);
 		map.centerAndZoom(point, 13);
 		map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+		// 创建地址解析器实例     
+		var myGeo = new BMap.Geocoder();
+
+		//查询中心地址
+		function getcenter(){
+			var p = new Promise(function(resolve,reject){
+				var search_url = "./center.php?action=searchcenter";
+				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+		        obj.open('GET', search_url, true);
+		        obj.onreadystatechange = function() {
+		            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+		            	//console.log(obj.responseText);
+		                resolve(obj.responseText);
+		            }
+		        };
+		        obj.send();
+			});
+			return p;
+		}
+
+		//获取中心经纬度
+		function setaddr(data){
+			var p = new Promise(function(resolve,reject){
+				var obj = {};
+				var oStr = "";
+				var j = 0;
+				var postData = "";
+				data = JSON.parse(data);
+				//console.log(data);
+				var len = data.data.length;
+				for(var i=0;i<len;i++){
+					var addr = data.data[i].address;
+					myGeo.getPoint(addr, function(point){
+						if (point) {    
+						    obj[data.data[j].address] = {
+						    	longitude: point.lng,
+						    	latitude: point.lat
+						    }
+						    j++;
+						}
+						if(Object.keys(obj).length===len){
+							resolve(obj);
+						}
+					},"重庆市");
+				};
+			});
+			return p;
+		}
+
+		//将中心经纬度写入mysql
+		function updateaddr(data){
+			var p = new Promise(function(resolve,reject){
+				//console.log(data);
+				var url = "./center.php?action=setcenter";
+				//postData = JSON.stringify(data);
+				var postData = "";
+				var tmp = "";
+				(function(){
+					for(var key in data){
+						tmp = JSON.stringify(data[key]);
+						postData += key + '=' + tmp + '&';
+					}
+				})();
+				//console.log(postData);
+				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+			    obj.open('POST',url,true);
+			    obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			    obj.onreadystatechange = function() {
+			        if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+			            //console.log(JSON.parse(obj.responseText));
+			            //console.log(obj.responseText);
+			        }
+			    };
+			    obj.send(postData);
+			})
+			return p;
+		}
+
+		var startcenter = document.getElementById("start-center");
+		startcenter.onclick = function(){
+			getcenter().then(function(data){
+				return setaddr(data);
+			}).then(function(data){
+				updateaddr(data);
+			});
+		}
+
 	</script>
 </body>
 </html>
