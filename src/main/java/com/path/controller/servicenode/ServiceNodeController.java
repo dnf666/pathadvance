@@ -42,7 +42,8 @@ public class ServiceNodeController {
      */
     @RequestMapping("getServiceAddress")
     public void getCenterAddress(HttpServletRequest request) {
-        String questionId = (String) request.getSession().getAttribute("questionId");
+//        String questionId = (String) request.getSession().getAttribute("questionId");
+            String questionId = "1";
         List<String> ServiceNodes = serviceNodeService.selectAllServiceNodeAddress(questionId);
         Map map = MapUtil.toMap(1, "中心点地址", ServiceNodes);
         JsonUtil.toJSON(map);

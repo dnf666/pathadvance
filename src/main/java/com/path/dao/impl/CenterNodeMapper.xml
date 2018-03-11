@@ -182,7 +182,7 @@
       and c_num = #{cus.cNum,jdbcType=VARCHAR}
     </foreach>
   </update>
-  <select id="selectAllCenterNodeAddress" parameterType="java.lang.String" resultType="java.util.List">
-    select c_address from centernode where c_id = #{cId};
+  <select id="selectAllCenterNodeAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>from centernode where c_id = #{cId};
   </select>
 </mapper>

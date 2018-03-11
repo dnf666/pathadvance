@@ -5,7 +5,9 @@ import com.path.service.centernode.CenterNodeService;
 import com.path.util.JsonUtil;
 import com.path.util.MapUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +44,10 @@ public class CenterNodeController {
      */
     @RequestMapping("getCenterAddress")
     public void getCenterAddress(HttpServletRequest request) {
-        String questionId = (String) request.getSession().getAttribute("questionId");
-        List<String> centerNodes = centerNodeService.selectAllCenterNodeAddress(questionId);
-        Map map = MapUtil.toMap(1, "中心点地址", centerNodes);
+//        String questionId = (String) request.getSession().getAttribute("questionId");
+        String questionId = "1";
+        List<CenterNode> centerNodes = centerNodeService.selectAllCenterNodeAddress(questionId);
+        Map map = MapUtil.toMap(200, "查询中心地址成功", centerNodes);
         JsonUtil.toJSON(map);
     }
 
@@ -53,15 +56,16 @@ public class CenterNodeController {
      * @param centerNodeList
      */
     @RequestMapping("addlaandlo")
-    public void addExtraMessage(List<CenterNode> centerNodeList){
-        boolean result = centerNodeService.updateAdvance(centerNodeList);
-        if(result) {
-           Map map = MapUtil.toMap(1, "添加成功", result);
-           JsonUtil.toJSON(map);
-        }else{
-            Map map = MapUtil.toMap(0, "添加失败", result);
-            JsonUtil.toJSON(map);
-        }
+    public void addExtraMessage(@RequestParam("postData") List<CenterNode> mapModel){
+        System.out.println(mapModel);
+//        boolean result = centerNodeService.updateAdvance(centerNodeList);
+//        if(result) {
+           Map map = MapUtil.toMap(1, "添加成功", mapModel);
+          JsonUtil.toJSON(map);
+//        }else{
+//            Map map = MapUtil.toMap(0, "添加失败", result);
+//            JsonUtil.toJSON(map);
+//        }
 
    }
 

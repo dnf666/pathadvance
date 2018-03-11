@@ -57,8 +57,8 @@ public class CenterNodeServiceImpl implements CenterNodeService {
     }
 
     @Override
-    public List<String> selectAllCenterNodeAddress(String questionId) {
-        List<String> centerNodes = centerNodeMapper.selectAllCenterNodeAddress(questionId);
+    public List<CenterNode> selectAllCenterNodeAddress(String questionId) {
+        List<CenterNode> centerNodes = centerNodeMapper.selectAllCenterNodeAddress(questionId);
         return centerNodes;
     }
 }
