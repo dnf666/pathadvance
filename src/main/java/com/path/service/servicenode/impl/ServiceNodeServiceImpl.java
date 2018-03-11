@@ -51,8 +51,8 @@ public class ServiceNodeServiceImpl implements ServiceNodeService {
 
     @Override
     public boolean updateAdvance(List<ServiceNode> list) {
-        List<ServiceNode> list1 = list.stream().filter(e->e.getSId()!=null).collect(Collectors.toList());
-        List<ServiceNode> list2 = list1.stream().filter(e->e.getSNum()!=null).collect(Collectors.toList());
+        List<ServiceNode> list1 = list.stream().filter(e->e.getSLatitude()!=null).collect(Collectors.toList());
+        List<ServiceNode> list2 = list1.stream().filter(e->e.getSLongitude()!=null).collect(Collectors.toList());
         boolean result = serviceNodeMapper.updateAdvance(list2);
         return result;
     }

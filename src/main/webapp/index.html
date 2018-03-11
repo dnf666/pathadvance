@@ -169,8 +169,8 @@
 					myGeo.getPoint(addr, function(point){
 						if (point) {    
 						    obj[data.data[j].CAddress] = {
-						    	longitude: point.lng,
-						    	latitude: point.lat
+						    	cLongitude: point.lng,
+						    	cLatitude: point.lat
 						    }
 						    j++;
 						}
@@ -298,7 +298,7 @@
 				return updateaddr(data);
 			}).then(function(){
 				s.style.backgroundColor = "#3385ff";
-				s.disabled = false;
+				// s.disabled = false;
 			});
 		}
 
@@ -313,7 +313,7 @@
 				return updateser(data);
 			}).then(function(){
 				c.style.backgroundColor = "#3385ff";
-				c.disabled = false;
+				// c.disabled = false;
 			});
 		}
 
