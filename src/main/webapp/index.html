@@ -291,14 +291,14 @@
 		startcenter.onclick = function(){
 			var s = document.getElementById("start-center");
 			s.style.backgroundColor = "#ccc";
-			s.disabled = true;
+			s.setAttribute("disabled", 'disabled');
 			getcenter().then(function(data){
 				return setaddr(data);
 			}).then(function(data){
 				return updateaddr(data);
 			}).then(function(){
 				s.style.backgroundColor = "#3385ff";
-				s.disabled = false;
+				// s.disabled = false;
 			});
 		}
 
@@ -306,14 +306,14 @@
 		startservice.onclick = function(){
 			var c = document.getElementById("start-service");
 			c.style.backgroundColor = "#ccc";
-			c.disabled = true;
+			c.setAttribute("disabled", 'disabled');
 			getser().then(function(data){
 				return setser(data);
 			}).then(function(data){
 				return updateser(data);
 			}).then(function(){
 				c.style.backgroundColor = "#3385ff";
-				c.disabled = false;
+				// c.disabled = false;
 			});
 		}
 
