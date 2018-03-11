@@ -289,19 +289,31 @@
 
 		var startcenter = document.getElementById("start-center");
 		startcenter.onclick = function(){
+			var s = document.getElementById("start-center");
+			s.style.backgroundColor = "#ccc";
+			s.disabled = true;
 			getcenter().then(function(data){
 				return setaddr(data);
 			}).then(function(data){
-				updateaddr(data);
+				return updateaddr(data);
+			}).then(function(){
+				s.style.backgroundColor = "#3385ff";
+				s.disabled = false;
 			});
 		}
 
 		var startservice = document.getElementById("start-service");
 		startservice.onclick = function(){
+			var c = document.getElementById("start-service");
+			c.style.backgroundColor = "#ccc";
+			c.disabled = true;
 			getser().then(function(data){
 				return setser(data);
 			}).then(function(data){
-				updateser(data);
+				return updateser(data);
+			}).then(function(){
+				c.style.backgroundColor = "#3385ff";
+				c.disabled = false;
 			});
 		}
 
