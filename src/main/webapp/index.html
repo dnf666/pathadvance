@@ -140,7 +140,7 @@
 		//查询中心地址
 		function getcenter(){
 			var p = new Promise(function(resolve,reject){
-				var search_url = "./center.php?action=searchcenter";
+				var search_url = "centernode/getCenterAddress.do";
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 		        obj.open('GET', search_url, true);
 		        obj.onreadystatechange = function() {
@@ -165,10 +165,10 @@
 				//console.log(data);
 				var len = data.data.length;
 				for(var i=0;i<len;i++){
-					var addr = data.data[i].address;
+					var addr = data.data[i].CAddress;
 					myGeo.getPoint(addr, function(point){
 						if (point) {    
-						    obj[data.data[j].address] = {
+						    obj[data.data[j].CAddress] = {
 						    	longitude: point.lng,
 						    	latitude: point.lat
 						    }
@@ -187,7 +187,7 @@
 		function updateaddr(data){
 			var p = new Promise(function(resolve,reject){
 				//console.log(data);
-				var url = "./center.php?action=setcenter";
+				var url = "centernode/addlaandlo.do";
 				//postData = JSON.stringify(data);
 				var postData = "";
 				var tmp = "";
