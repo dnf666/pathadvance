@@ -189,14 +189,14 @@
 				//console.log(data);
 				var url = "./center.php?action=setcenter";
 				//postData = JSON.stringify(data);
-				var postData = "";
-				var tmp = "";
-				(function(){
-					for(var key in data){
-						tmp = JSON.stringify(data[key]);
-						postData += key + '=' + tmp + '&';
-					}
-				})();
+				var postData = data;
+				// var tmp = "";
+				// (function(){
+				// 	for(var key in data){
+				// 		tmp = JSON.stringify(data[key]);
+				// 		postData += key + '=' + tmp + '&';
+				// 	}
+				// })();
 				//console.log(postData);
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 			    obj.open('POST',url,true);
