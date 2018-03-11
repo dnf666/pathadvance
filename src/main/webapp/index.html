@@ -169,8 +169,8 @@
 					myGeo.getPoint(addr, function(point){
 						if (point) {    
 						    obj[data.data[j].CAddress] = {
-						    	longitude: point.lng,
-						    	latitude: point.lat
+						    	cLongitude: point.lng,
+						    	cLatitude: point.lat
 						    }
 						    j++;
 						}

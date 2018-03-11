@@ -50,8 +50,8 @@ public class CenterNodeServiceImpl implements CenterNodeService {
 
     @Override
     public boolean updateAdvance(List<CenterNode> list) {
-        List<CenterNode> list1 = list.stream().filter(e->e.getCId()!=null).collect(Collectors.toList());
-        List<CenterNode> list2 = list1.stream().filter(e->e.getCNum()!=null).collect(Collectors.toList());
+        List<CenterNode> list1 = list.stream().filter(e->e.getCLatitude()!=null).collect(Collectors.toList());
+        List<CenterNode> list2 = list1.stream().filter(e->e.getCLongitude()!=null).collect(Collectors.toList());
         boolean result = centerNodeMapper.updateAdvance(list2);
         return result;
     }
