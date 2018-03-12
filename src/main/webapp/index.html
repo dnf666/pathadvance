@@ -146,19 +146,6 @@
 		        obj.onreadystatechange = function() {
 		            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
 		            	//console.log(obj.responseText);
-		            	var responseText = JSON.parse(obj.responseText);
-	                    var len = responseText.data.length;
-	                    for(var i =0;i<len;i++){
-	                    	//添加地标
-		                    var pt = new BMap.Point(responseText.data[i].longitude,responseText.data[i].latitude);
-							// var myIcon = new BMap.Icon("./lib/images/addr.png", new BMap.Size(19,25));
-							var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});
-							var marker = new BMap.Marker(pt);  // 创建标注
-							marker.setLabel(label);
-							//var marker = new BMap.Marker(pt); // 创建点
-							map.addOverlay(marker);              // 将标注添加到地图中
-							marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-	                    }
 		                resolve(obj.responseText);
 		            }
 		        };
@@ -185,6 +172,14 @@
 						    	cLatitude: point.lat
 						    }
 						    j++;
+						    var pt = new BMap.Point(point.lng,point.lat);
+							// var myIcon = new BMap.Icon("./lib/images/addr.png", new BMap.Size(19,25));
+							var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});
+							var marker = new BMap.Marker(pt);  // 创建标注
+							marker.setLabel(label);
+							//var marker = new BMap.Marker(pt); // 创建点
+							map.addOverlay(marker);              // 将标注添加到地图中
+							marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 						}
 						if(Object.keys(obj).length===len){
 							resolve(obj);
@@ -230,19 +225,7 @@
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 		        obj.open('GET', search_url, true);
 		        obj.onreadystatechange = function() {
-		            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-		            	var responseText = JSON.parse(obj.responseText);
-	                    var len = responseText.data.length;
-	                    for(var i =0;i<len;i++){
-	                    	//添加地标
-		                    var pt = new BMap.Point(responseText.data[i].longitude,responseText.data[i].latitude);
-							// var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
-							// var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});
-							var marker = new BMap.Marker(pt); // 创建点
-							// marker.setLabel(label);
-							//var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-							map.addOverlay(marker);              // 将标注添加到地图中
-	                    }
+		            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成		     
 		                resolve(obj.responseText);
 		            }
 		        };
@@ -270,6 +253,13 @@
 						    	sLatitude: point.lat
 						    }
 						    j++;
+						    var pt = new BMap.Point(point.lng,point.lat);
+							// var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
+							// var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});
+							var marker = new BMap.Marker(pt); // 创建点
+							// marker.setLabel(label);
+							//var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+							map.addOverlay(marker);              // 将标注添加到地图中
 						}
 						if(Object.keys(obj).length===len){
 							resolve(obj);
