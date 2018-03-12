@@ -136,8 +136,8 @@
 
 		// 创建地址解析器实例     
 		var myGeo = new BMap.Geocoder();
-
-		//查询中心地址
+		//中心地址经纬度获取
+		//step1:查询中心地址
 		function getcenter(){
 			var p = new Promise(function(resolve,reject){
 				var search_url = "centernode/getCenterAddress.do";
@@ -153,8 +153,7 @@
 			});
 			return p;
 		}
-
-		//获取中心经纬度
+		//step2:调用API获取中心经纬度
 		function setaddr(data){
 			var p = new Promise(function(resolve,reject){
 				var obj = {};
@@ -182,8 +181,7 @@
 			});
 			return p;
 		}
-
-		//将中心经纬度写入mysql
+		//step3:将中心经纬度写入传给后台
 		function updateaddr(data){
 			var p = new Promise(function(resolve,reject){
 				//console.log(data);
@@ -212,7 +210,8 @@
 			return p;
 		}
 
-		//查询服务点地址
+		//服务点地址经纬度获取
+		//step1:查询服务点地址
 		function getser(){
 			var p = new Promise(function(resolve,reject){
 				var search_url = "./service.php?action=searchservice";
@@ -227,8 +226,7 @@
 			});
 			return p;
 		}
-
-		//获取服务点经纬度
+		//step2:调用API获取服务点经纬度
 		function setser(data){
 			var p = new Promise(function(resolve,reject){
 				var obj = {};
@@ -257,21 +255,19 @@
 			});
 			return p;
 		}
-
-
-		//将服务点经纬度写入mysql
+		//step3：将服务点经纬度写入mysql
 		function updateser(data){
 			var p = new Promise(function(resolve,reject){
 				var url = "./service.php?action=setservice";
 				//postData = JSON.stringify(data);
-				var postData = "";
-				var tmp = "";
-				(function(){
-					for(var key in data){
-						tmp = JSON.stringify(data[key]);
-						postData += key + '=' + tmp + '&';
-					}
-				})();
+				var postData = data;
+				// var tmp = "";
+				// (function(){
+				// 	for(var key in data){
+				// 		tmp = JSON.stringify(data[key]);
+				// 		postData += key + '=' + tmp + '&';
+				// 	}
+				// })();
 				//console.log(postData);
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 			    obj.open('POST',url,true);
@@ -291,14 +287,14 @@
 		startcenter.onclick = function(){
 			var s = document.getElementById("start-center");
 			s.style.backgroundColor = "#ccc";
-			s.setAttribute("disabled", 'disabled');
+			s.setAttribute("disabled", true);
 			getcenter().then(function(data){
 				return setaddr(data);
 			}).then(function(data){
 				return updateaddr(data);
 			}).then(function(){
 				s.style.backgroundColor = "#3385ff";
-				// s.disabled = false;
+				s.setAttribute("disabled",false);
 			});
 		}
 
@@ -306,14 +302,14 @@
 		startservice.onclick = function(){
 			var c = document.getElementById("start-service");
 			c.style.backgroundColor = "#ccc";
-			c.setAttribute("disabled", 'disabled');
+			c.setAttribute("disabled", true);
 			getser().then(function(data){
 				return setser(data);
 			}).then(function(data){
 				return updateser(data);
 			}).then(function(){
 				c.style.backgroundColor = "#3385ff";
-				// c.disabled = false;
+				c.setAttribute("disabled", false);
 			});
 		}
 
