@@ -281,6 +281,24 @@
 			    obj.send(postData);
 			})
 			return p;
+		}
+
+		function changeSbutton(){
+			var p = new Promise(function(resolve,reject){
+					s.style.backgroundColor = "#3385ff";
+					s.setAttribute("disabled",false);
+					alert("ok");
+				});
+			return p;	
+		}
+
+		function changeCbutton(){
+			var p = new Promise(function(resolve,reject){
+					c.style.backgroundColor = "#3385ff";
+					c.setAttribute("disabled",false);
+					alert("ok");
+				});
+			return p;
 		} 
 
 		var startcenter = document.getElementById("start-center");
@@ -293,8 +311,7 @@
 			}).then(function(data){
 				return updateaddr(data);
 			}).then(function(){
-				s.style.backgroundColor = "#3385ff";
-				s.setAttribute("disabled",false);
+				changeSbutton();
 			});
 		}
 
@@ -308,8 +325,7 @@
 			}).then(function(data){
 				return updateser(data);
 			}).then(function(){
-				c.style.backgroundColor = "#3385ff";
-				c.setAttribute("disabled", false);
+				changeCbutton();
 			});
 		}
 
