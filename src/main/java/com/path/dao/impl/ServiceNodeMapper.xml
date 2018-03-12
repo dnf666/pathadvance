@@ -180,4 +180,7 @@
       where s_address = #{cus.sAddress,jdbcType=VARCHAR}
     </foreach>
   </update>
+  <select id="selectAllServiceNodeAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>from servicenode where s_id = #{sId};
+  </select>
 </mapper>

@@ -59,7 +59,7 @@ public class ServiceNodeServiceImpl implements ServiceNodeService {
 
     @Override
     public List<String> selectAllServiceNodeAddress(String questionId) {
-        List<String> ServiceNodes = serviceNodeMapper.selectAllServiceNodeAddress(questionId);
-        return ServiceNodes;
+        List<String> serviceNodes = serviceNodeMapper.selectAllServiceNodeAddress(questionId);
+        return serviceNodes;
     }
 }

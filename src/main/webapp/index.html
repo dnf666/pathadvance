@@ -187,16 +187,15 @@
 				//console.log(data);
 				var url = "centernode/addlaandlo.do";
 				//postData = JSON.stringify(data);
-				var postData = data;
-				// var tmp = "";
-				// (function(){
-				// 	for(var key in data){
-				// 		tmp = JSON.stringify(data[key]);
-				// 		postData += key + '=' + tmp + '&';
-				// 	}
-				// })();
-				//console.log(postData);
-				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+				var postData = "";
+				var tmp = "";
+				(function(){
+					for(var key in data){
+						tmp = JSON.stringify(data[key]);
+						postData += key + '=' + tmp + '&';
+					}
+				})();
+				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
 			    obj.open('POST',url,true);
 			    obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			    obj.onreadystatechange = function() {
@@ -214,7 +213,7 @@
 		//step1:查询服务点地址
 		function getser(){
 			var p = new Promise(function(resolve,reject){
-				var search_url = "./service.php?action=searchservice";
+				var search_url = "servicenode/getServiceAddress.do";
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 		        obj.open('GET', search_url, true);
 		        obj.onreadystatechange = function() {
@@ -238,12 +237,12 @@
 				var len = data.data.length;
 				//console.log(len);
 				for(var i=0;i<data.data.length;i++){
-					var addr = data.data[i].address;
+					var addr = data.data[i].SAddress;
 					myGeo.getPoint(addr, function(point){
 						if (point) {    
-						    obj[data.data[j].address] = {
-						    	longitude: point.lng,
-						    	latitude: point.lat
+						    obj[data.data[j].SAddress] = {
+						    	sLongitude: point.lng,
+						    	sLatitude: point.lat
 						    }
 						    j++;
 						}
@@ -258,16 +257,16 @@
 		//step3：将服务点经纬度写入mysql
 		function updateser(data){
 			var p = new Promise(function(resolve,reject){
-				var url = "./service.php?action=setservice";
+				var url = "servicenode/addlaandlo.do";
 				//postData = JSON.stringify(data);
-				var postData = data;
-				// var tmp = "";
-				// (function(){
-				// 	for(var key in data){
-				// 		tmp = JSON.stringify(data[key]);
-				// 		postData += key + '=' + tmp + '&';
-				// 	}
-				// })();
+				var postData = "";
+				var tmp = "";
+				(function(){
+					for(var key in data){
+						tmp = JSON.stringify(data[key]);
+						postData += key + '=' + tmp + '&';
+					}
+				})();
 				//console.log(postData);
 				var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 			    obj.open('POST',url,true);
@@ -283,23 +282,7 @@
 			return p;
 		}
 
-		function changeSbutton(){
-			var p = new Promise(function(resolve,reject){
-					s.style.backgroundColor = "#3385ff";
-					s.setAttribute("disabled",false);
-					alert("ok");
-				});
-			return p;	
-		}
 
-		function changeCbutton(){
-			var p = new Promise(function(resolve,reject){
-					c.style.backgroundColor = "#3385ff";
-					c.setAttribute("disabled",false);
-					alert("ok");
-				});
-			return p;
-		} 
 
 		var startcenter = document.getElementById("start-center");
 		startcenter.onclick = function(){
@@ -310,8 +293,6 @@
 				return setaddr(data);
 			}).then(function(data){
 				return updateaddr(data);
-			}).then(function(){
-				changeSbutton();
 			});
 		}
 
@@ -324,8 +305,6 @@
 				return setser(data);
 			}).then(function(data){
 				return updateser(data);
-			}).then(function(){
-				changeCbutton();
 			});
 		}
 
