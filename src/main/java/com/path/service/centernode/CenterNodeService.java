@@ -21,6 +21,6 @@ public interface CenterNodeService {
 
     int updateByPrimaryKey(CenterNode record);
     boolean updateAdvance(List<CenterNode> list);
-    List<String> selectAllCenterNodeAddress(String questionId);
+    List<CenterNode> selectAllCenterNodeAddress(String questionId);
 
 }

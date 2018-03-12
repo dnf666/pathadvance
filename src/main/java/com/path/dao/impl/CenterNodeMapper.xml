@@ -178,11 +178,10 @@
       c_latitude = #{cus.cLatitude,jdbcType=VARCHAR},
       c_baidulongitude = #{cus.cBaidulongitude,jdbcType=REAL},
       c_baidulatitude = #{cus.cBaidulatitude,jdbcType=REAL}
-      where c_id = #{cus.cId,jdbcType=INTEGER}
-      and c_num = #{cus.cNum,jdbcType=VARCHAR}
+      where c_address = #{cus.cAddress,jdbcType=VARCHAR}
     </foreach>
   </update>
-  <select id="selectAllCenterNodeAddress" parameterType="java.lang.String" resultType="java.util.List">
-    select c_address from centernode where c_id = #{cId};
+  <select id="selectAllCenterNodeAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>from centernode where c_id = #{cId};
   </select>
 </mapper>
