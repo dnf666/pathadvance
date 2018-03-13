@@ -303,7 +303,7 @@
     function getcenter(){
         var p = new Promise(function(resolve,reject){
             var address = [];
-            var search_url = "./center.php?action=searchcenter";
+            var search_url = "centernode/getCenterAddress.do";
             var obj = new XMLHttpRequest();  
             // XMLHttpRequest对象用于在后台与服务器交换数据          
             obj.open('GET', search_url, true);
@@ -326,7 +326,7 @@
     //step2:查询服务点地址转化成数组
     function getser(address){
         var p = new Promise(function(resolve,reject){
-            var search_url = "./service.php?action=searchservice";
+            var search_url = "servicenode/getServiceAddress.do";
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function() {
@@ -419,7 +419,7 @@
     //step5：向后台传递结果
     function updatedis(data){
         var p = new Promise(function(resolve,reject){
-            var url = "./distim.php?action=insertdis";
+            var url = "distance/addDistance.do";
                 //postData = JSON.stringify(data);
             var postData = "";
             var tmp = "";
