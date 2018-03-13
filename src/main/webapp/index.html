@@ -302,7 +302,9 @@
     //step1:查询中心地址组装成数组
     function getcenter(){
         var p = new Promise(function(resolve,reject){
-            var address = [];
+            var addrdata = [];//存放 
+            var address = [];//存放地址
+            var addrnum = [];//存放地址编号
             var search_url = "centernode/getCenterAddress.do";
             var obj = new XMLHttpRequest();  
             // XMLHttpRequest对象用于在后台与服务器交换数据          
@@ -313,10 +315,13 @@
                     var responseText = JSON.parse(obj.responseText);
                     var len = responseText.data.length;
                     for(var j=0;j<len;j++){
-                        var addr = responseText.data[j].address;
+                        var addr = responseText.data[j].CAddress;
+                        var num = responseText.data[j].CNum;
+                        addrnum.push(num);
                         address.push(addr);
-                    }
-                    resolve(address);
+                    };
+                    addrdata = [address,addrnum];
+                    resolve(addrdata);
                 }
             };
             obj.send();
@@ -335,8 +340,10 @@
                     var responseText = JSON.parse(obj.responseText);
                     var len = responseText.data.length;
                     for(var j=0;j<len;j++){
-                        var addr = responseText.data[j].address;
-                        address.push(addr);
+                        var addr = responseText.data[j].CAddress;
+                        var num = responseText.data[j].CNum;
+                        address[0].push(addr);
+                        address[1].push(num);
                     }
                     resolve(address);
                 }
@@ -350,12 +357,12 @@
     function getstar(address){
         var p = new Promise(function(resolve,reject){
             var num = 1;
-            var len = address.length;
+            var len = address[0].length;
             for(var i=0;i<len;i++){
                 for(var j=0;j<len;j++){
                     output[num]={
-                        start: address[i],
-                        endaddr: address[j],
+                        start: address[1][i],
+                        endaddr: address[1][j],
                     };
                     num++;
                 }
@@ -368,7 +375,7 @@
     function twopoint(address){
         var p = new Promise(function(resolve,reject){
             var num = 1;
-            var len = address.length;
+            var len = address[0].length;
             var searchComplete = function(results){
                 if (transit.getStatus() != BMAP_STATUS_SUCCESS)
                 {
@@ -395,14 +402,14 @@
                 onPolylinesSet: function(){                
                     //console.log(output);
                     setTimeout(function(){
-                        transit.search(address[m],address[n]);
+                        transit.search(address[0][m],address[0][n]);
                     },1000);
                 }
             });
                 
             var m = 0;
             var n = 0;
-            transit.search(address[m],address[n]);
+            transit.search(address[0][m],address[0][n]);
                 // for(var i=0;i<len;i++){
                 //     for(var j=0;j<len;j++){
                 //         transit.search(address[i],address[j]);
@@ -429,7 +436,7 @@
                     postData += key + '=' + tmp + '&';
                 }
             })();
-            console.log(postData);
+            // console.log(postData);
             //console.log(postData);
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
             obj.open('POST',url,true);
