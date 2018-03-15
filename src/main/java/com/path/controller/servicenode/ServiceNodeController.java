@@ -48,7 +48,7 @@ public class ServiceNodeController {
 //        String questionId = (String) request.getSession().getAttribute("questionId");
             String questionId = "1";
         List<String> ServiceNodes = serviceNodeService.selectAllServiceNodeAddress(questionId);
-        Map map = MapUtil.toMap(1, "中心点地址", ServiceNodes);
+        Map map = MapUtil.toMap(1, "服务点地址", ServiceNodes);
         JsonUtil.toJSON(map);
     }
 
@@ -61,6 +61,7 @@ public class ServiceNodeController {
         List<ServiceNode> list = new ArrayList<>();
         Set<String> set1 = postData.keySet();
         Iterator iterator = set1.iterator();
+        System.out.println(postData);
         while (iterator.hasNext()) {
             String string = (String) iterator.next();
             String string1 = postData.get(string);

@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
+import java.sql.*;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
@@ -43,6 +44,28 @@ public class CsvServiceImplTest {
     @Test
     public void readCsv() {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("springconfig.xml");
+        Connection conn = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); // 注册数据库驱动
+            String url = "jdbc:mysql://localhost:3306/path"; // briup为数据库名称
+            try {
+                conn = DriverManager.getConnection(url, "root","root"); // 获取连接数据库的Connection对象
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet set = statement.executeQuery("select * from servicenode");
+            while (set.next()){
+                System.out.println(set.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

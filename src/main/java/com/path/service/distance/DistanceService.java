@@ -1,11 +1,14 @@
-package com.path.dao;
+package com.path.service.distance;
 
 import com.path.model.Distance;
 import com.path.model.DistanceKey;
 
 import java.util.List;
 
-public interface DistanceMapper {
+/**
+ * @author demo
+ */
+public interface DistanceService {
     int deleteByPrimaryKey(DistanceKey key);
 
     int insert(Distance record);
@@ -17,6 +20,7 @@ public interface DistanceMapper {
     int updateByPrimaryKeySelective(Distance record);
 
     int updateByPrimaryKey(Distance record);
-
+    boolean updateAdvance(List<Distance> list);
+    List<Distance> selectAllCenterNodeAddress(String questionId);
     int insertAdvance(List<Distance> list);
 }

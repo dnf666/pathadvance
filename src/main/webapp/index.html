@@ -131,49 +131,49 @@
 
 <!-- 绘制地图 -->
 <div class="info3">
-    <h1 class="info-tit">绘制地图</h1>
-    <ul class="info-panel">
-        <li class="info-panel-wrap">
-            <h2 class="info-panel-tit">推荐方案</h2>
-            <input type="radio" name="route-radio" value="" class="route-radio">&nbsp;距离最近&nbsp;
-            <input type="radio" name="route-radio" value="" class="route-radio">&nbsp;时间最短
-            <input type="button" name="" value="刷新" class="f5">
-            <table border="1" class="route-list">
-                <tr>
-                    <th>方案id</th>
-                    <th>距离(单位：米)</th>
-                    <th>时间(单位：秒)</th>
-                </tr>
-                <tr>
-                    <td>01</td>
-                    <td>23333</td>
-                    <td>23323</td>
-                </tr>
-                <tr>
-                    <td>02</td>
-                    <td>23333</td>
-                    <td>23323</td>
-                </tr>
-                <tr>
-                    <td>03</td>
-                    <td>23333</td>
-                    <td>23323</td>
-                </tr>
-                <tr>
-                    <td>04</td>
-                    <td>23333</td>
-                    <td>23323</td>
-                </tr>
-            </table>
-        </li>
-        <li class="info-panel-wrap">
-            <h2 class="info-panel-tit">路书控制</h2>
-            <div class="start" id="lushu-start"></div><div class="stop"></div><div class="restart"></div>
-        </li>
-    </ul>
-    <form class="info-bottom" method="post" action="" enctype="multipart/form-data" style="padding-top: 30px;">
-        <input type="button" name="" value="上一步" class="cancel3"><input type="button" name="" value="下一步" class="sure3" disabled="disabled" style="background-color: #ccc">
-    </form>
+	<h1 class="info-tit">绘制地图</h1>
+	<ul class="info-panel">
+		<li class="info-panel-wrap">
+			<h2 class="info-panel-tit">推荐方案</h2>
+			<input type="radio" name="route-radio" value="" class="route-radio">&nbsp;距离最近&nbsp;
+			<input type="radio" name="route-radio" value="" class="route-radio">&nbsp;时间最短
+			<input type="button" name="" value="刷新" class="f5">
+			<table border="1" class="route-list">
+				<tr>
+					<th>方案id</th>
+					<th>距离(单位：米)</th>
+					<th>时间(单位：秒)</th>
+				</tr>
+				<tr>
+					<td>01</td>
+					<td>23333</td>
+					<td>23323</td>
+				</tr>
+				<tr>
+					<td>02</td>
+					<td>23333</td>
+					<td>23323</td>
+				</tr>
+				<tr>
+					<td>03</td>
+					<td>23333</td>
+					<td>23323</td>
+				</tr>
+				<tr>
+					<td>04</td>
+					<td>23333</td>
+					<td>23323</td>
+				</tr>
+			</table>
+		</li>
+		<li class="info-panel-wrap">
+			<h2 class="info-panel-tit">路书控制</h2>
+			<div class="start" id="lushu-start"></div><div class="stop"></div><div class="restart"></div>
+		</li>
+	</ul>
+	<form class="info-bottom" method="post" action="" enctype="multipart/form-data" style="padding-top: 30px;">
+		<input type="button" name="" value="上一步" class="cancel3"><input type="button" name="" value="下一步" class="sure3" disabled="disabled" style="background-color: #ccc">
+	</form>
 </div>
 
 <script type="text/javascript">
@@ -193,8 +193,8 @@
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function() {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-                    //console.log(obj.responseText);
                     resolve(obj.responseText);
+
                 }
             };
             obj.send();
@@ -211,6 +211,7 @@
             data = JSON.parse(data);
             //console.log(data);
             var len = data.data.length;
+            //console.log(len);
             for(var i=0;i<len;i++){
                 var addr = data.data[i].CAddress;
                 myGeo.getPoint(addr, function(point){
@@ -224,6 +225,7 @@
                         // var myIcon = new BMap.Icon("./lib/images/addr.png", new BMap.Size(19,25));
                         // console.log(data);
                         // var label = new BMap.Label(addr,{offset:new BMap.Size(20,-10)});
+                        // var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
                         var marker = new BMap.Marker(pt);  // 创建标注
                         // marker.setLabel(label);
                         //var marker = new BMap.Marker(pt); // 创建点
@@ -231,6 +233,7 @@
                         marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                     }
                     if(Object.keys(obj).length===len){
+                        //console.log(Object.keys(obj).length);
                         resolve(obj);
                     }
                 },"重庆市");
@@ -290,13 +293,11 @@
             var j = 0;
             var postData = "";
             data = JSON.parse(data);
-            //console.log(data);
             var len = data.data.length;
-            //console.log(len);
-            for(var i=0;i<data.data.length;i++){
+            for(var i=0;i<len;i++){
                 var addr = data.data[i].SAddress;
                 myGeo.getPoint(addr, function(point){
-                    if (point) {
+                    if (point.lng && point.lat) {
                         obj[data.data[j].SAddress] = {
                             sLongitude: point.lng,
                             sLatitude: point.lat
@@ -304,17 +305,25 @@
                         j++;
                         var pt = new BMap.Point(point.lng,point.lat);
                         // var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
-                        // var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});
-                        var marker = new BMap.Marker(pt); // 创建点
+                        // var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
+                        // var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
+                        var marker = new BMap.Marker(pt);
                         // marker.setLabel(label);
                         //var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
                         map.addOverlay(marker);              // 将标注添加到地图中
+                    }else
+                    {
+                        altert("111");
                     }
+
                     if(Object.keys(obj).length===len){
+                        console.log(Object.keys(obj).length);
+                        console.log(obj);
                         resolve(obj);
                     }
                 },"重庆市");
             };
+
         });
         return p;
     }
@@ -331,14 +340,11 @@
                     postData += key + '=' + tmp + '&';
                 }
             })();
-            //console.log(postData);
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('POST',url,true);
             obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             obj.onreadystatechange = function() {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-                    //console.log(JSON.parse(obj.responseText));
-                    //console.log(obj.responseText);
                 }
             };
             obj.send(postData);
@@ -348,14 +354,14 @@
 
     //计算时间距离
     //step1:查询中心地址组装成数组
-    function getcenter(){
+    function getcenter1(){
         var p = new Promise(function(resolve,reject){
-            var addrdata = [];//存放 
+            var addrdata = [];//存放
             var address = [];//存放地址
             var addrnum = [];//存放地址编号
             var search_url = "centernode/getCenterAddress.do";
-            var obj = new XMLHttpRequest();  
-            // XMLHttpRequest对象用于在后台与服务器交换数据          
+            var obj = new XMLHttpRequest();
+            // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function() {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
@@ -367,7 +373,7 @@
                         var num = responseText.data[j].CNum;
                         addrnum.push(num);
                         address.push(addr);
-                    };
+                    }
                     addrdata = [address,addrnum];
                     resolve(addrdata);
                 }
@@ -377,10 +383,10 @@
         return p;
     }
     //step2:查询服务点地址转化成数组
-    function getser(address){
+    function getser1(address){
         var p = new Promise(function(resolve,reject){
             var search_url = "servicenode/getServiceAddress.do";
-            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function() {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
@@ -388,12 +394,13 @@
                     var responseText = JSON.parse(obj.responseText);
                     var len = responseText.data.length;
                     for(var j=0;j<len;j++){
-                        var addr = responseText.data[j].CAddress;
-                        var num = responseText.data[j].CNum;
+                        var addr = responseText.data[j].SAddress;
+                        var num = responseText.data[j].SNum;
                         address[0].push(addr);
                         address[1].push(num);
                     }
                     resolve(address);
+                    console.log(address);
                 }
             };
             obj.send();
@@ -428,12 +435,12 @@
                 if (transit.getStatus() != BMAP_STATUS_SUCCESS)
                 {
                     return ;
-                } 
+                }
                 var plan = results.getPlan(0);
-                    // output[num]={
-                    //     time: plan.getDuration(true),
-                    //     distance: plan.getDistance(true)
-                    // }
+                // output[num]={
+                //     time: plan.getDuration(true),
+                //     distance: plan.getDistance(true)
+                // }
                 output[num]["timeaddr"]=plan.getDuration(true);
                 output[num]["distance"]=plan.getDistance(true);
                 num++;
@@ -442,40 +449,41 @@
                     m++;
                     n=0;
                 }
-                    
+
             };
             var transit = new BMap.DrivingRoute(map, {
                 renderOptions: {map: map},
                 onSearchComplete: searchComplete,
-                onPolylinesSet: function(){                
+                onPolylinesSet: function(){
                     //console.log(output);
                     setTimeout(function(){
                         transit.search(address[0][m],address[0][n]);
                     },1000);
                 }
             });
-                
+
             var m = 0;
             var n = 0;
             transit.search(address[0][m],address[0][n]);
-                // for(var i=0;i<len;i++){
-                //     for(var j=0;j<len;j++){
-                //         transit.search(address[i],address[j]);
-                //     }
-                // }
-                // console.log(output);
+            // for(var i=0;i<len;i++){
+            //     for(var j=0;j<len;j++){
+            //         transit.search(address[i],address[j]);
+            //     }
+            // }
+            // console.log(output);
             setTimeout(function(){
                 resolve(output);
+                console.log(output);
             },20000);
-                
+
         })
-        return p;           
+        return p;
     }
     //step5：向后台传递结果
     function updatedis(data){
         var p = new Promise(function(resolve,reject){
             var url = "distance/addDistance.do";
-                //postData = JSON.stringify(data);
+            //postData = JSON.stringify(data);
             var postData = "";
             var tmp = "";
             (function(){
@@ -485,8 +493,8 @@
                 }
             })();
             // console.log(postData);
-            //console.log(postData);
-            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+            console.log(postData);
+            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('POST',url,true);
             obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             obj.onreadystatechange = function() {
@@ -498,7 +506,7 @@
             obj.send(postData);
         })
         return p;
-    }   
+    }
 
 
     var startcenter = document.getElementById("start-center");
@@ -509,7 +517,7 @@
         getcenter().then(function(data){
             return setaddr(data);
         }).then(function(data){
-            return updateaddr(data);
+            updateaddr(data);
         });
     }
 
@@ -521,7 +529,7 @@
         getser().then(function(data){
             return setser(data);
         }).then(function(data){
-            return updateser(data);
+            updateser(data);
         });
     }
 
@@ -530,8 +538,8 @@
         var t = document.getElementById("start-timedis");
         t.style.backgroundColor = "#ccc";
         t.setAttribute("disabled", true);
-        getcenter().then(function(address){
-            return getser(address);
+        getcenter1().then(function(address){
+            return getser1(address);
         }).then(function(address){
             return getstar(address);
         }).then(function(address){
