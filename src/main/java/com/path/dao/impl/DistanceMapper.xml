@@ -3,8 +3,8 @@
 <mapper namespace="com.path.dao.DistanceMapper" >
   <resultMap id="BaseResultMap" type="com.path.model.Distance" >
     <id column="d_id" property="dId" jdbcType="INTEGER" />
-    <id column="start_id" property="startId" jdbcType="INTEGER" />
-    <id column="end_id" property="endId" jdbcType="INTEGER" />
+    <id column="start_id" property="startId" jdbcType="VARCHAR" />
+    <id column="end_id" property="endId" jdbcType="VARCHAR" />
     <result column="standard_dis" property="standardDis" jdbcType="INTEGER" />
     <result column="standard_time" property="standardTime" jdbcType="INTEGER" />
   </resultMap>
@@ -28,7 +28,7 @@
   <insert id="insert" parameterType="com.path.model.Distance" >
     insert into distance (d_id, start_id, end_id, 
       standard_dis, standard_time)
-    values (#{dId,jdbcType=INTEGER}, #{startId,jdbcType=INTEGER}, #{endId,jdbcType=INTEGER}, 
+    values (#{dId,jdbcType=INTEGER}, #{startId,jdbcType=VARCHAR}, #{endId,jdbcType=VARCHAR},
       #{standardDis,jdbcType=INTEGER}, #{standardTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.path.model.Distance" >

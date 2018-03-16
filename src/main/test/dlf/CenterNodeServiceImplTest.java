@@ -10,7 +10,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +29,14 @@ private CenterNodeKey centerNodeKey = new CenterNodeKey();
 private CenterNode centerNode = new CenterNode("lala","lala",3,"123","1231a",213f,231f,123.32,null);
     @Test
     public void deleteByPrimaryKey() {
+        String s = "1小时11分钟";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh小时mm分钟");
+        try {
+            Date date = simpleDateFormat.parse(s);
+            System.out.println(date.getMinutes());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

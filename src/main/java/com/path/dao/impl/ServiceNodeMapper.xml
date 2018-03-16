@@ -181,6 +181,6 @@
     </foreach>
   </update>
   <select id="selectAllServiceNodeAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"></include>from servicenode where s_id = #{sId};
+    select <include refid="Base_Column_List"></include>from servicenode where s_id = #{sId} limit 3;
   </select>
 </mapper>

@@ -23,8 +23,7 @@ public class DistanceServiceImpl implements DistanceService{
 
     @Override
     public int insert(Distance record) {
-
-        return 0;
+                return  distanceMapper.insert(record);
     }
 
     @Override

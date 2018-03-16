@@ -1,5 +1,7 @@
 package com.path.controller.distance;
 
+import com.alibaba.fastjson.JSONObject;
+import com.path.model.CenterNode;
 import com.path.model.Distance;
 import com.path.service.distance.DistanceService;
 import com.path.util.JsonUtil;
@@ -9,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author demo
@@ -24,6 +25,19 @@ public class DistanceController {
     public void addDistance(@RequestParam Map<String,String> postData){
         try {
             System.out.println(postData);
+            List<Distance> list = new ArrayList<>();
+            Set<String> set1 = postData.keySet();
+            Iterator iterator = set1.iterator();
+            while (iterator.hasNext()) {
+                String string = (String) iterator.next();
+                String string1 = postData.get(string);
+                JSONObject jsonObject = JSONObject.parseObject(string1);
+                Distance distance = jsonObject.toJavaObject(Distance.class);
+                System.out.println(distance);
+                distance.setDId(1);
+                list.add(distance);
+            }
+            list.stream().forEach(e->distanceService.insert(e));
         }catch (Exception e) {
             e.printStackTrace();
             Map map = MapUtil.toMap(0, "添加失败", false);

@@ -177,6 +177,25 @@
 </div>
 
 <script type="text/javascript">
+    function time2int(str){
+        var value = 0;
+        if(str.indexOf("小时") !== -1){
+            value = parseInt(str.substr(0,str.indexOf("小")))*60+parseInt(str.substr(str.indexOf("时")+1,str.indexOf("分")-3));
+        }else{
+            value = parseInt(str);
+        }
+        return value;
+    }
+
+    function dis2int(str){
+        var value = 0;
+        if(str.indexOf("公里") !== -1){
+            value = parseFloat(str)*1000;
+        }else{
+            value = parseInt(str);
+        }
+        return value;
+    }
     var map = new BMap.Map("container");    // 创建Map实例
     var point = new BMap.Point(106.55,29.55);
     map.centerAndZoom(point, 13);
@@ -416,8 +435,8 @@
             for(var i=0;i<len;i++){
                 for(var j=0;j<len;j++){
                     output[num]={
-                        start: address[1][i],
-                        endaddr: address[1][j],
+                        startId: address[1][i],
+                        endId: address[1][j],
                     };
                     num++;
                 }
@@ -441,8 +460,8 @@
                 //     time: plan.getDuration(true),
                 //     distance: plan.getDistance(true)
                 // }
-                output[num]["timeaddr"]=plan.getDuration(true);
-                output[num]["distance"]=plan.getDistance(true);
+                output[num]["standardTime"]=time2int(plan.getDuration(true));
+                output[num]["standardDis"]=dis2int(plan.getDistance(true));
                 num++;
                 n++;
                 if(n===len){
@@ -474,7 +493,7 @@
             setTimeout(function(){
                 resolve(output);
                 console.log(output);
-            },20000);
+            },25000);
 
         })
         return p;
