@@ -1,9 +1,8 @@
-package com.path.controller.distance;
+package com.path.controller.finalsolution;
 
 import com.alibaba.fastjson.JSONObject;
-import com.path.model.CenterNode;
-import com.path.model.Distance;
-import com.path.service.distance.DistanceService;
+import com.path.model.FinalSolution;
+import com.path.service.finalsolution.FinalSolutionService;
 import com.path.util.JsonUtil;
 import com.path.util.MapUtil;
 import org.springframework.stereotype.Controller;
@@ -17,27 +16,27 @@ import java.util.*;
  * @author demo
  */
 @Controller
-@RequestMapping("distance")
-public class DistanceController {
+@RequestMapping("finalsolution")
+public class FinalSolutionController {
     @Resource
-    private DistanceService distanceService;
-    @RequestMapping("addDistance")
-    public void addDistance(@RequestParam Map<String,String> postData){
+    private FinalSolutionService finalSolutionService;
+
+    @RequestMapping("addfinalsolution")
+    public void addFinalSolution(@RequestParam Map<String, String> postData) {
         try {
-            List<Distance> list = new ArrayList<>();
+            List<FinalSolution> list = new ArrayList<>();
             Set<String> set1 = postData.keySet();
             Iterator iterator = set1.iterator();
             while (iterator.hasNext()) {
                 String string = (String) iterator.next();
                 String string1 = postData.get(string);
                 JSONObject jsonObject = JSONObject.parseObject(string1);
-                Distance distance = jsonObject.toJavaObject(Distance.class);
-                System.out.println(distance);
-                distance.setDId(1);
-                list.add(distance);
+                FinalSolution FinalSolution = jsonObject.toJavaObject(FinalSolution.class);
+                FinalSolution.setQId(1);
+                list.add(FinalSolution);
             }
-            list.stream().forEach(e->distanceService.insert(e));
-        }catch (Exception e) {
+            list.stream().forEach(e -> finalSolutionService.insert(e));
+        } catch (Exception e) {
             e.printStackTrace();
             Map map = MapUtil.toMap(0, "添加失败", false);
             JsonUtil.toJSON(map);
@@ -46,3 +45,4 @@ public class DistanceController {
         JsonUtil.toJSON(map);
     }
 }
+
