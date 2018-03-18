@@ -21,4 +21,6 @@ public interface RouteMapper {
     List<Route> findMinDistanceForFour();
 
     List<Route> findMinTimeForFour();
+
+    List<Route> findRouteByFid(int postData);
 }

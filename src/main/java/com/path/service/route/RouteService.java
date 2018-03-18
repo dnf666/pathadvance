@@ -28,4 +28,6 @@ public interface RouteService {
 
     List<Route> findMinDistanceForFour();
     List<Route> findMinTimeForFour();
+
+    List<Route> findByFid(int postData);
 }

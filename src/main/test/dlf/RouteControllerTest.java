@@ -24,7 +24,7 @@ public class RouteControllerTest {
     private RouteMapper routeMapper;
     @Test
     public void addRoute() {
-        System.out.println( routeMapper.findMinDistanceForFour());
+        System.out.println( routeMapper.findRouteByFid(3));
 
         }
     }

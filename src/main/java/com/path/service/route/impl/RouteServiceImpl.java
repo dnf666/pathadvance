@@ -106,4 +106,10 @@ public class RouteServiceImpl implements RouteService{
         return list;
     }
 
+    @Override
+    public List<Route> findByFid(int postData) {
+
+        return routeMapper.findRouteByFid(postData);
+    }
+
 }

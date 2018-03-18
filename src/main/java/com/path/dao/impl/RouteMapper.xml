@@ -104,9 +104,12 @@
       and v_id = #{vId,jdbcType=INTEGER}
   </update>
   <select id="findMinDistanceForFour" resultMap="BaseResultMap">
-    select f_id,sum(total_dis) AS total_dis from route group by f_id order by total_dis desc limit 4;
+    select f_id,sum(total_dis) AS total_dis,sum(total_time) as total_time from route group by f_id order by total_dis ASC limit 4;
   </select>
   <select id="findMinTimeForFour" resultMap="BaseResultMap">
-    select f_id,sum(total_time) AS total_time from route group by f_id order by total_time desc limit 4;
+    select f_id,sum(total_time) AS total_time,sum(total_dis) AS total_dis from route group by f_id order by total_time ASC limit 4;
+  </select>
+  <select id="findRouteByFid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select route from route where f_id = #{postData};
   </select>
 </mapper>

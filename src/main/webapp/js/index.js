@@ -42,5 +42,11 @@ $(function(){
         $(".info2").animate({right:'20px'});
         $(".info3").animate({right:'-1000px'});
     });
+    $(".pro4").click(function(){
+        $(".info3").animate({right:'20px'});
+        $(".info1").animate({right:'-1000px'});
+        $(".info2").animate({right:'-1000px'});
+        $(".info").animate({right:'-1000px'});
+    });
 
 });
