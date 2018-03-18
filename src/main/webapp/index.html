@@ -138,10 +138,11 @@
 	<ul class="info-panel">
 		<li class="info-panel-wrap">
 			<h2 class="info-panel-tit">推荐方案</h2>
-			<input type="radio" name="route-radio" value="" class="route-radio">&nbsp;距离最近&nbsp;
+            <input type="hidden" name="quest" id="quest" value="">
+			<input type="radio" name="route-radio" value="" class="route-radio" checked="checked">&nbsp;距离最近&nbsp;
 			<input type="radio" name="route-radio" value="" class="route-radio">&nbsp;时间最短
-			<input type="button" name="" value="刷新" class="f5">
-			<table border="1" class="route-list">
+			<input type="submit" value="刷新" class="f5" id="f5" onclick="query()">
+			<table border="1" class="route-list" id="route-list">
 				<tr>
 					<th>方案id</th>
 					<th>距离(单位：米)</th>
@@ -572,6 +573,146 @@
             updatedis(output);
         });
     }
+
+    //绘制地图：根据时间和距离将方案进行排序
+    function query(){
+        var inputs = document.getElementsByName("route-radio");
+        var query = document.getElementById("f5");
+        var quest = document.getElementById("quest");
+        var table = document.getElementById("route-list");
+
+        //postData = JSON.stringify(data);
+        var postData = "";
+        for(var i=0;i<inputs.length;i++){
+            if(inputs[i].checked){
+                postData = inputs[i].value;
+            }else{
+                console.log("error");
+            }
+        }
+        var url = "servicenode/addlaandlo.do?postData=postData";
+        var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+        obj.open('POST',url,true);
+        obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        obj.onreadystatechange = function() {
+            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+                console.log(obj.responseText);
+                var v = obj.responseText; 
+                //这里将结果展示在表格中
+                //1.默认输出5行
+                for(var i=0;i<5;i++){
+                    row = document.createElement("tr");
+                    table.appendChild(row);
+                    for(var j=0;j<3;j++){
+                        cell = document.createElement("td");
+                        cell.innerText = v[j];
+                        row.appendChild(cell);
+                    }
+                }
+            }
+        };
+        obj.send(postData);
+    }
+
+    //路书
+    function getroute(fid){
+        var p = new Promise(function(resolve,reject){
+            // var search_url = "./drawline.php?action=getroute";
+            // var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+            // obj.open('GET', search_url, true);
+            // obj.onreadystatechange = function() {
+            //     if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+            //         //console.log(obj.responseText)
+            //         var responseText = JSON.parse(obj.responseText);
+            //         resolve(responseText);
+            //     }
+            // };
+            // obj.send();
+            var postData = fid;
+            var url = "servicenode/addlaandlo.do?postData=postData";
+            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+            obj.open('POST',url,true);
+            obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            obj.onreadystatechange = function() {
+                if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+                    resolve(obj.responseText);
+                    //这里将结果展示在表格中
+                    //
+                    //
+                    //
+                    //
+                    //
+                }
+            };
+            obj.send(postData);
+        });
+        return p;
+    }
+    function lushu(data){
+        var p = new Promise(function(resolve,reject){
+            var lushu = [];
+            // 实例化一个驾车导航用来生成路线
+            var drv = new BMap.DrivingRoute('重庆市', {
+                onSearchComplete: function(res) {
+                    if (drv.getStatus() == BMAP_STATUS_SUCCESS) {
+                        var plan = res.getPlan(0);
+                        var arrPois =[];
+                        for(var j=0;j<plan.getNumRoutes();j++){
+                            var route = plan.getRoute(j);
+                            arrPois= arrPois.concat(route.getPath());
+                        }
+                        map.addOverlay(new BMap.Polyline(arrPois, {strokeColor: '#111'}));
+                        map.setViewport(arrPois);
+                        
+                        lushu.push(new BMapLib.LuShu(map,arrPois,{
+                        defaultContent:"",//"从天安门到百度大厦"
+                        autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                        icon  : new BMap.Icon('http://lbsyun.baidu.com/jsdemo/img/car.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                        speed: 20000, 
+                        enableRotation:true,//是否设置marker随着道路的走向进行旋转
+                        }));          
+                    }
+                }
+            });
+            for(var k=0;k<data.data.length;k++){
+                var len = data.data[k].length;
+                var arr = data.data[k].slice(2,len-1);
+                var p1 = new BMap.Point(data.data[k][1].longitude,data.data[k][1].latitude);
+                var p2 = new BMap.Point(data.data[k][len-1].longitude,data.data[k][len-1].latitude);
+                drv.search(p1, p2,{waypoints:arr});
+            }
+            document.getElementById("run").onclick = function(){
+                for(var i=0;i<lushu.length;i++){
+                    lushu[i].start();
+                }
+            }
+            document.getElementById("stop").onclick = function(){
+                for(var i=0;i<lushu.length;i++){
+                    lushu[i].stop();
+                }
+            }
+            document.getElementById("pause").onclick = function(){
+                for(var i=0;i<lushu.length;i++){
+                    lushu[i].pause();
+                }
+            }
+            
+        });
+        return p;
+    }
+
+    var table = document.getElementById("route-list");
+    var tr = table.getElementsByTagName("tr");
+    for(var i=1;i<tr.length;i++){
+        var fid = tr[i].getElementsByTagName("td")[0].innerText; 
+        tr[i].onclick = function(){
+            getroute(fid).then(function(data){
+                lushu(data);
+            });
+        }
+    }
+
+
 </script>
 </body>
 </html>
