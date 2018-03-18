@@ -10,6 +10,9 @@
 	<script type="text/javascript" src="./js/index.js"></script>
 	<style type="text/css">
 		html,body{height:100%; width:100%; overflow:hidden; margin:0; padding:0;}
+		#map img{
+			max-width: inherit;
+		}
 	</style>
 	<title>path optimization</title>
 </head>
@@ -244,7 +247,7 @@
                         // var myIcon = new BMap.Icon("./lib/images/addr.png", new BMap.Size(19,25));
                         // console.log(data);
                         // var label = new BMap.Label(addr,{offset:new BMap.Size(20,-10)});
-                        // var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
+                        //  var myIcon = new BMap.Icon("http://api.map.baidu.com/lbsapi/creatmap/images/us_mk_icon.png", new BMap.Size(20,20));
                         var marker = new BMap.Marker(pt);  // 创建标注
                         // marker.setLabel(label);
                         //var marker = new BMap.Marker(pt); // 创建点
@@ -326,7 +329,9 @@
                         // var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
                         // var label = new BMap.Label(responseText.data[i].address,{offset:new BMap.Size(20,-10)});var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
                         // var myIcon = new BMap.Icon("images/car.png", new BMap.Size(40,20));
-                        var marker = new BMap.Marker(pt);
+                        var myIcon = new BMap.Icon("http://api.map.baidu.com/lbsapi/creatmap/images/us_mk_icon.png", new BMap.Size(23,23),{imageOffset: new BMap.Size(-40,-45)});
+
+                        var marker = new BMap.Marker(pt,{icon:myIcon});
                         // marker.setLabel(label);
                         //var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
                         map.addOverlay(marker);              // 将标注添加到地图中
@@ -532,7 +537,7 @@
     startcenter.onclick = function(){
         var s = document.getElementById("start-center");
         s.style.backgroundColor = "#ccc";
-        s.setAttribute("disabled", true);
+        s.setAttribute("disabled", true);servicenode
         getcenter().then(function(data){
             return setaddr(data);
         }).then(function(data){

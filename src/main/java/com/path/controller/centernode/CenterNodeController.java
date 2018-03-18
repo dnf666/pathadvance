@@ -25,7 +25,7 @@ public class CenterNodeController {
     @Resource
     private CenterNodeService centerNodeService;
 
-    @RequestMapping("importByMap")
+    @RequestMapping("/importByMap.do")
     public void importByMap(List<CenterNode> list) {
         try {
             list.stream().forEach(e -> centerNodeService.insert(e));
