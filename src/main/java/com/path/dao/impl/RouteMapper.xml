@@ -6,9 +6,11 @@
     <id column="f_id" property="fId" jdbcType="INTEGER" />
     <id column="v_id" property="vId" jdbcType="INTEGER" />
     <result column="route" property="route" jdbcType="VARCHAR" />
+    <result column="total_time" property="totalTime" jdbcType="DOUBLE" />
+    <result column="total_dis" property="totalDis" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    r_id, f_id, v_id, route
+    r_id, f_id, v_id, route, total_time, tota_dis
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.path.model.RouteKey" >
     select 
@@ -26,9 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.path.model.Route" >
     insert into route (r_id, f_id, v_id, 
-      route)
+      route, total_time, tota_dis
+      )
     values (#{rId,jdbcType=INTEGER}, #{fId,jdbcType=INTEGER}, #{vId,jdbcType=INTEGER}, 
-      #{route,jdbcType=VARCHAR})
+      #{route,jdbcType=VARCHAR}, #{totalTime,jdbcType=DOUBLE}, #{totaDis,jdbcType=DOUBLE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.path.model.Route" >
     insert into route
@@ -45,6 +49,12 @@
       <if test="route != null" >
         route,
       </if>
+      <if test="totalTime != null" >
+        total_time,
+      </if>
+      <if test="totaDis != null" >
+        tota_dis,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="rId != null" >
@@ -59,6 +69,12 @@
       <if test="route != null" >
         #{route,jdbcType=VARCHAR},
       </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="totaDis != null" >
+        #{totaDis,jdbcType=DOUBLE},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.path.model.Route" >
@@ -67,6 +83,12 @@
       <if test="route != null" >
         route = #{route,jdbcType=VARCHAR},
       </if>
+      <if test="totalTime != null" >
+        total_time = #{totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="totaDis != null" >
+        tota_dis = #{totaDis,jdbcType=DOUBLE},
+      </if>
     </set>
     where r_id = #{rId,jdbcType=INTEGER}
       and f_id = #{fId,jdbcType=INTEGER}
@@ -74,9 +96,17 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.path.model.Route" >
     update route
-    set route = #{route,jdbcType=VARCHAR}
+    set route = #{route,jdbcType=VARCHAR},
+      total_time = #{totalTime,jdbcType=DOUBLE},
+      tota_dis = #{totaDis,jdbcType=DOUBLE}
     where r_id = #{rId,jdbcType=INTEGER}
       and f_id = #{fId,jdbcType=INTEGER}
       and v_id = #{vId,jdbcType=INTEGER}
   </update>
+  <select id="findMinDistanceForFour" resultMap="BaseResultMap">
+    select f_id,sum(total_dis) AS total_dis from route group by f_id order by total_dis desc limit 4;
+  </select>
+  <select id="findMinTimeForFour" resultMap="BaseResultMap">
+    select f_id,sum(total_time) AS total_time from route group by f_id order by total_time desc limit 4;
+  </select>
 </mapper>

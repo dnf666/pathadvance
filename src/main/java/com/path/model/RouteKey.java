@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Data
 public class RouteKey {
     private Integer rId;
 

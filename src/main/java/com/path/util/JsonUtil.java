@@ -80,4 +80,5 @@ public class JsonUtil {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         toJSON(o,response);
     }
+
 }

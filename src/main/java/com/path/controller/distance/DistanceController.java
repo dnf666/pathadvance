@@ -45,4 +45,6 @@ public class DistanceController {
         Map map = MapUtil.toMap(200, "添加成功", true);
         JsonUtil.toJSON(map);
     }
+
+
 }
