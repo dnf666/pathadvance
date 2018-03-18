@@ -52,9 +52,15 @@ public class RouteController {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping("findmindistanceforfour")
-    public void findMinDistanceForFour(HttpServletRequest request){
-        List<Route> list = routeService.findMinDistanceForFour();
+    @RequestMapping("findminforfour")
+    public void findMinDistanceForFour(@RequestParam String postData){
+  List<Route> list = new ArrayList<>();
+        if (postData.equals("time")){
+          list = routeService.findMinDistanceForFour();
+        }
+        if (postData.equals("distance")){
+             list = routeService.findMinTimeForFour();
+        }
         if (list.isEmpty()){
             Map map = MapUtil.toMap(404, "没有查到", list);
             JsonUtil.toJSON(map);
@@ -63,17 +69,6 @@ public class RouteController {
         JsonUtil.toJSON(map);
     }
 
-    @RequestMapping("findmintimeforfour")
-    public void findMinTimeForFour(HttpServletRequest request){
-        List<Route> list = routeService.findMinTimeForFour();
-        if (list.isEmpty()){
-            Map map = MapUtil.toMap(404, "没有查到", list);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        Map map = MapUtil.toMap(200, "查询成功", list);
-        JsonUtil.toJSON(map);
-    }
 
 
 }

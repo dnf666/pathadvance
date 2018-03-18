@@ -139,8 +139,8 @@
 		<li class="info-panel-wrap">
 			<h2 class="info-panel-tit">推荐方案</h2>
             <input type="hidden" name="quest" id="quest" value="">
-			<input type="radio" name="route-radio" value="" class="route-radio" checked="checked">&nbsp;距离最近&nbsp;
-			<input type="radio" name="route-radio" value="" class="route-radio">&nbsp;时间最短
+			<input type="radio" name="route-radio" value="distance" class="route-radio" checked="checked">&nbsp;距离最近&nbsp;
+			<input type="radio" name="route-radio" value="time" class="route-radio">&nbsp;时间最短
 			<input type="submit" value="刷新" class="f5" id="f5" onclick="query()">
 			<table border="1" class="route-list" id="route-list">
 				<tr>
@@ -590,7 +590,7 @@
                 console.log("error");
             }
         }
-        var url = "servicenode/addlaandlo.do?postData=postData";
+        var url = "route/findminforfour.do?postData="+postData;
         var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
         obj.open('POST',url,true);
         obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
