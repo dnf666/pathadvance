@@ -173,7 +173,7 @@
             <input type="hidden" name="quest" id="quest" value="">
             <input type="radio" name="route-radio" value="distance" class="route-radio" checked="checked">&nbsp;距离最近&nbsp;
             <input type="radio" name="route-radio" value="time" class="route-radio">&nbsp;时间最短
-            <input type="submit" value="刷新" class="f5" id="f5" onclick="query()">
+            <input type="submit" value="刷新" class="f5" id="f5"">
             <table border="1" class="route-list" id="route-list">
                 <tr>
                     <th>方案id</th>
@@ -190,9 +190,7 @@
         </li>
     </ul>
     <form class="info-bottom" method="post" action="" enctype="multipart/form-data" style="padding-top: 30px;">
-        <input type="button" name="" value="上一步" class="cancel3"><input type="button" name="" value="下一步" class="sure3"
-                                                                        disabled="disabled"
-                                                                        style="background-color: #ccc">
+        <input type="button" name="" value="上一步" class="cancel3"><input type="button" name="" value="下一步" class="sure3" disabled="disabled" style="background-color: #ccc">
     </form>
 </div>
 
@@ -656,38 +654,49 @@
                 }
             };
             obj.send(postData);
+            resolve("sb");
         });
         return p;
 
     }
     //给每一行添加事件
 
-    function trevent() {
+    function trevent(sb) {
         var p = new Promise(function(resolve,reject){
+            var table = document.getElementById("route-list");
             var trs = table.getElementsByTagName("tr");
-            console.log(trs.innerHTML);
             for(var n=1;n<trs.length;n++){
                 var fid = trs[n].getElementsByTagName("td")[0].innerText;
-                trs[n].onmouseover = (function(n){
-                    trs[n].style.backgroundColor = "#ccc";
-                    trs[n].style.color = "#fff";
-                })(n)
-                trs[n].onmouseout = (function(n){
-                    trs[n].style.backgroundColor = "";
-                    trs[n].style.color = "";
-                })(n)
-                trs[n].onclick=(function (n) {
-                    var row = table.getElementsByTagName("tr");
-                    for(var j=1;j<trs.length;j++){
-                        row[j].style.backgroundColor = "";
-                        row[j].style.color = "";
+                (function(arg){
+                    trs[n].onmouseover = function(){
+                        trs[arg].style.backgroundColor = "#ccc";
+                        trs[arg].style.color = "#fff";
+                        trs[arg].style.cursor = "pointer";
                     }
-                    trs[n].style.backgroundColor = "#ccc";
-                    trs[n].style.color = "#fff";
-                    getroute(fid).then(function (data) {
-                        lushu(data);
-                    });
+                })(n);
+
+                (function(arg){
+                    trs[n].onmouseout = function(){
+                        trs[arg].style.backgroundColor = "";
+                        trs[arg].style.color = "";
+                    }
+                })(n);
+                
+                (function(arg){
+                    trs[n].onclick=function () {
+                        // var row = table.getElementsByTagName("tr");
+                        // for(var j=1;j<row.length;j++){
+                        //     row[j].style.backgroundColor = "";
+                        //     row[j].style.color = "";
+                        // }
+                        // trs[arg].style.backgroundColor = "#ccc";
+                        // trs[arg].style.color = "#fff";
+                        getroute(fid).then(function (data) {
+                            lushu(data);
+                        });
+                    }
                 })(n)
+                
             }
         });
         return p;
@@ -695,20 +704,6 @@
     //路书
     function getroute(fid) {
         var p = new Promise(function (resolve, reject) {
-
-            // var search_url = "./drawline.php?action=getroute";
-            // var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
-            // obj.open('GET', search_url, true);
-            // obj.onreadystatechange = function() {
-            //     if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-            //         //console.log(obj.responseText)
-            //         var responseText = JSON.parse(obj.responseText);
-            //         resolve(responseText);
-            //     }
-            // };
-            // obj.send();
-
-
             var postData = fid;
             var url = "route/findroute.do?postData="+postData;
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
