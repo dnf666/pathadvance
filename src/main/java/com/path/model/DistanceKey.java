@@ -1,33 +1,19 @@
 package com.path.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class DistanceKey {
     private Integer dId;
 
-    private Integer startId;
+    private String startId;
 
-    private Integer endId;
+    private String endId;
 
-    public Integer getdId() {
-        return dId;
-    }
-
-    public void setdId(Integer dId) {
-        this.dId = dId;
-    }
-
-    public Integer getStartId() {
-        return startId;
-    }
-
-    public void setStartId(Integer startId) {
-        this.startId = startId;
-    }
-
-    public Integer getEndId() {
-        return endId;
-    }
-
-    public void setEndId(Integer endId) {
-        this.endId = endId;
-    }
 }

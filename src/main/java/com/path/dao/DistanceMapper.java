@@ -3,6 +3,8 @@ package com.path.dao;
 import com.path.model.Distance;
 import com.path.model.DistanceKey;
 
+import java.util.List;
+
 public interface DistanceMapper {
     int deleteByPrimaryKey(DistanceKey key);
 
@@ -15,4 +17,6 @@ public interface DistanceMapper {
     int updateByPrimaryKeySelective(Distance record);
 
     int updateByPrimaryKey(Distance record);
+
+    int insertAdvance(List<Distance> list);
 }

@@ -1,13 +1,20 @@
 package com.path.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Route extends RouteKey {
     private String route;
 
-    public String getRoute() {
-        return route;
-    }
+    private Double totalTime;
 
-    public void setRoute(String route) {
-        this.route = route == null ? null : route.trim();
-    }
+    private Double totalDis;
+
+
 }
