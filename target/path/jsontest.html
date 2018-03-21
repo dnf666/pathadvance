@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+qid:<input type="text" class="qId" name="qId">
+qname:<input type="text" class="qName" name="qName">
+    qdesc:<input type="text" class="qDescript" name="qDescript">
+    <input type="button" class="submit"/>
+<a href="/path/download/download.do">xiazai</a>
+
+<br>
+<input type="button" class="submit1">
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    $('.submit').click(function(){
+        console.log("11111");
+        var userName = $('.qId').val();
+        var password = $('.qName').val();
+        var qdes = $('.qDescript').val();
+        var json={
+            "qId":userName,
+            "qName":password,
+            "qDescript":qdes
+        };
+        $.ajax({
+            url:"/path/questionBasic/addQuestion.do",
+            contentType:"application/json",
+            dataType:"json",
+            type:"get",
+            data:json,
+            success:function (data) {
+                console.log(data);
+            },
+            error:function (data) {
+                alert("失败");
+            }
+            }
+        )
+    })
+    $(".submit1").click(function () {
+        $.ajax({
+            url:"/path/download/downloadFile.do",
+            contentType:"application/json",
+            dataType:"json",
+            type:"get",
+            data:{
+                fileName:"服务点模板.csv"
+            },
+            success:function(data){
+
+            },
+            error:function (data) {
+                console.log(data);
+            }
+        })
+
+    })
+</script>
+</html>

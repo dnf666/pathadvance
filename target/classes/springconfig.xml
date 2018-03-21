@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/cache
+         http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!--可以扫描基于类的注解，通常使用了这个就不使用<context:annotation-config/>-->
+    <context:component-scan base-package="com.path.*"/>
+    <!--仅会查找在同一个Application中的bean注解-->
+    <context:annotation-config/>
+    <cache:annotation-driven />
+    <bean name="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/path?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <!--初始化连接池大小-->
+        <property name="initialPoolSize" value="5"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="maxPoolSize" value="20"/>
+    </bean>
+<!--spring和mybatis完美整合，不需要mybatis的配置映射文件-->
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="datasource"/>
+        <!--迭代查找指定路径下的mapper文件，-->
+        <property name="mapperLocations" value="classpath*:com/path/dao/**/**/*.xml"/>
+        <property name="configurationProperties">
+            <props>
+                <!--缓存机制-->
+                <prop key="cacheEnable">true</prop>
+                <!--在变量为null的时候也调用setter方法-->
+                <prop key="callSetterOnNulls">true</prop>
+            </props>
+        </property>
+    </bean>
+<!--dao接口所在包名，Spring会自动查找其下的类-->
+    <bean name="daoManager" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--这项在这个项目中其实可以不写，因为MapperScannerConfigurer将会自动创建MapperFactoryBean之后自动装配，但是你
+        如果使用了一个以上的DateSource就会装配失败， 就要以下面的方式指定sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.path.dao"/>
+    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean
+                        class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="default" />
+                <bean
+                        class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="data" />
+            </set>
+        </property>
+    </bean>
+    <!--事务管理， 事务回滚-->
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- 事务行为控制 -->
+        <tx:attributes>
+            <tx:method name="save" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED"  rollback-for="Exception"/>
+            <tx:method name="add*" propagation="REQUIRED"  rollback-for="Exception"/>
+            <tx:method name="create*" propagation="REQUIRED"  rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED"  rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED"  rollback-for="Exception"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960000"/>
+    </bean>
+</beans>

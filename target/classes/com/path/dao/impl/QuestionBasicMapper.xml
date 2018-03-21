@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.path.dao.QuestionBasicMapper" >
+  <resultMap id="BaseResultMap" type="com.path.model.QuestionBasic" >
+    <id column="q_id" property="qId" jdbcType="INTEGER" />
+    <result column="q_name" property="qName" jdbcType="VARCHAR" />
+    <result column="q_descript" property="qDescript" jdbcType="VARCHAR" />
+    <result column="q_rem1" property="qRem1" jdbcType="VARCHAR" />
+    <result column="q_rem2" property="qRem2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    q_id, q_name, q_descript, q_rem1, q_rem2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from questionbasic
+    where q_id = #{qId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from questionbasic
+    where q_id = #{qId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.path.model.QuestionBasic" >
+    insert into questionbasic (q_id, q_name, q_descript, 
+      q_rem1, q_rem2)
+    values (#{qId,jdbcType=INTEGER}, #{qName,jdbcType=VARCHAR}, #{qDescript,jdbcType=VARCHAR}, 
+      #{qRem1,jdbcType=VARCHAR}, #{qRem2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.path.model.QuestionBasic" >
+    insert into questionbasic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        q_id,
+      </if>
+      <if test="qName != null" >
+        q_name,
+      </if>
+      <if test="qDescript != null" >
+        q_descript,
+      </if>
+      <if test="qRem1 != null" >
+        q_rem1,
+      </if>
+      <if test="qRem2 != null" >
+        q_rem2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        #{qId,jdbcType=INTEGER},
+      </if>
+      <if test="qName != null" >
+        #{qName,jdbcType=VARCHAR},
+      </if>
+      <if test="qDescript != null" >
+        #{qDescript,jdbcType=VARCHAR},
+      </if>
+      <if test="qRem1 != null" >
+        #{qRem1,jdbcType=VARCHAR},
+      </if>
+      <if test="qRem2 != null" >
+        #{qRem2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.path.model.QuestionBasic" >
+    update questionbasic
+    <set >
+      <if test="qName != null" >
+        q_name = #{qName,jdbcType=VARCHAR},
+      </if>
+      <if test="qDescript != null" >
+        q_descript = #{qDescript,jdbcType=VARCHAR},
+      </if>
+      <if test="qRem1 != null" >
+        q_rem1 = #{qRem1,jdbcType=VARCHAR},
+      </if>
+      <if test="qRem2 != null" >
+        q_rem2 = #{qRem2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where q_id = #{qId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.path.model.QuestionBasic" >
+    update questionbasic
+    set q_name = #{qName,jdbcType=VARCHAR},
+      q_descript = #{qDescript,jdbcType=VARCHAR},
+      q_rem1 = #{qRem1,jdbcType=VARCHAR},
+      q_rem2 = #{qRem2,jdbcType=VARCHAR}
+    where q_id = #{qId,jdbcType=INTEGER}
+  </update>
+</mapper>

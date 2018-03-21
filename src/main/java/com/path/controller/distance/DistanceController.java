@@ -32,11 +32,10 @@ public class DistanceController {
                 String string1 = postData.get(string);
                 JSONObject jsonObject = JSONObject.parseObject(string1);
                 Distance distance = jsonObject.toJavaObject(Distance.class);
-                System.out.println(distance);
                 distance.setDId(1);
                 list.add(distance);
             }
-            list.stream().forEach(e->distanceService.insert(e));
+            list.stream().forEach(e->distanceService.updateByPrimaryKeySelective(e));
         }catch (Exception e) {
             e.printStackTrace();
             Map map = MapUtil.toMap(0, "添加失败", false);

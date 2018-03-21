@@ -38,7 +38,7 @@ public class DistanceServiceImpl implements DistanceService{
 
     @Override
     public int updateByPrimaryKeySelective(Distance record) {
-        return 0;
+        return  distanceMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
