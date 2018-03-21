@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./style/index.css">
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=c0yGtp0Plt9NjWKiLZorq0Ckc29hrgFn"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
     <script type="text/javascript" src="./js/lib/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
     <style type="text/css">
@@ -173,7 +174,7 @@
             <input type="hidden" name="quest" id="quest" value="">
             <input type="radio" name="route-radio" value="distance" class="route-radio" checked="checked">&nbsp;距离最近&nbsp;
             <input type="radio" name="route-radio" value="time" class="route-radio">&nbsp;时间最短
-            <input type="submit" value="刷新" class="f5" id="f5"">
+            <input type="submit" value="刷新" class="f5" id="f5">
             <table border="1" class="route-list" id="route-list">
                 <tr>
                     <th>方案id</th>
@@ -522,7 +523,7 @@
             setTimeout(function () {
                 resolve(output);
                 console.log(output);
-            }, 25000);
+            }, 65000);
 
         })
         return p;
@@ -563,7 +564,7 @@
         var s = document.getElementById("start-center");
         s.style.backgroundColor = "#ccc";
         s.setAttribute("disabled", true);
-        servicenode
+
         getcenter().then(function (data) {
             return setaddr(data);
         }).then(function (data) {
@@ -620,7 +621,7 @@
             obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             obj.onreadystatechange = function () {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-                    console.log(obj.responseText);
+
                     var responseText = JSON.parse(obj.responseText);
                     var l = responseText.data.length;
                     //这里将结果展示在表格中
@@ -634,27 +635,27 @@
                         }
                     }
                     for (var m = 0; m < l; m++) {
-                        row = document.createElement("tr");
+                        var row = document.createElement("tr");
                         table.appendChild(row);
 
-                        cell1 = document.createElement("td");
+                        var cell1 = document.createElement("td");
                         cell1.innerText = responseText.data[m].FId;
                         row.appendChild(cell1);
 
-                        cell2 = document.createElement("td");
+                        var cell2 = document.createElement("td");
                         cell2.innerText = responseText.data[m].totalDis;
                         row.appendChild(cell2);
 
-                        cell3 = document.createElement("td");
+                        var cell3 = document.createElement("td");
                         cell3.innerText = responseText.data[m].totalTime;
                         row.appendChild(cell3);
 
                     }
+                    resolve("haha")
 
                 }
             };
             obj.send(postData);
-            resolve("sb");
         });
         return p;
 
@@ -666,7 +667,7 @@
             var table = document.getElementById("route-list");
             var trs = table.getElementsByTagName("tr");
             for(var n=1;n<trs.length;n++){
-                var fid = trs[n].getElementsByTagName("td")[0].innerText;
+
                 (function(arg){
                     trs[n].onmouseover = function(){
                         trs[arg].style.backgroundColor = "#ccc";
@@ -681,7 +682,7 @@
                         trs[arg].style.color = "";
                     }
                 })(n);
-                
+
                 (function(arg){
                     trs[n].onclick=function () {
                         // var row = table.getElementsByTagName("tr");
@@ -691,12 +692,13 @@
                         // }
                         // trs[arg].style.backgroundColor = "#ccc";
                         // trs[arg].style.color = "#fff";
+                        var fid = trs[arg].getElementsByTagName("td")[0].innerText;
                         getroute(fid).then(function (data) {
                             lushu(data);
                         });
                     }
                 })(n)
-                
+
             }
         });
         return p;
@@ -704,6 +706,7 @@
     //路书
     function getroute(fid) {
         var p = new Promise(function (resolve, reject) {
+            var num = 0;
             var postData = fid;
             var url = "route/findroute.do?postData="+postData;
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
@@ -711,7 +714,20 @@
             obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             obj.onreadystatechange = function () {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-                    resolve(obj.responseText);
+                    var data = JSON.parse(obj.responseText);
+                    for(var k = 0;k < data.data.length;k++) {
+                        myGeo.getPoint(data.data[k][0], function (point) {
+                            if (point) {
+                                data.data[num][0]={"longitude": point.lng, "latitude": point.lat};
+                                num++;
+                                if(num === data.data.length){
+                                    resolve(data);
+                                }
+                            } else {
+                                alert("您选择地址没有解析到结果!");
+                            }
+                        }, "重庆市");
+                    }
                 }
             };
             obj.send(postData);
@@ -722,27 +738,26 @@
     function lushu(data) {
         var p = new Promise(function (resolve, reject) {
             var lushu = [];
-            data = JSON.parse(data);
             console.log(data);
             // 实例化一个驾车导航用来生成路线
             var drv = new BMap.DrivingRoute('重庆市', {
-                onSearchComplete: function (res) {
+                onSearchComplete: function(res) {
                     if (drv.getStatus() == BMAP_STATUS_SUCCESS) {
                         var plan = res.getPlan(0);
-                        var arrPois = [];
-                        for (var j = 0; j < plan.getNumRoutes(); j++) {
+                        var arrPois =[];
+                        for(var j=0;j<plan.getNumRoutes();j++){
                             var route = plan.getRoute(j);
-                            arrPois = arrPois.concat(route.getPath());
+                            arrPois= arrPois.concat(route.getPath());
                         }
                         map.addOverlay(new BMap.Polyline(arrPois, {strokeColor: '#111'}));
                         map.setViewport(arrPois);
 
-                        lushu.push(new BMapLib.LuShu(map, arrPois, {
-                            defaultContent: "",//"从天安门到百度大厦"
-                            autoView: true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
-                            icon: new BMap.Icon('http://lbsyun.baidu.com/jsdemo/img/car.png', new BMap.Size(52, 26), {anchor: new BMap.Size(27, 13)}),
-                            speed: 20000,
-                            enableRotation: true,//是否设置marker随着道路的走向进行旋转
+                        lushu.push(new BMapLib.LuShu(map,arrPois,{
+                            defaultContent:"",//"从天安门到百度大厦"
+                            autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+                            icon  : new BMap.Icon('http://lbsyun.baidu.com/jsdemo/img/car.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
+                            speed: 12000,
+                            enableRotation:true//是否设置marker随着道路的走向进行旋转
                         }));
                     }
                 }
@@ -750,9 +765,12 @@
             for (var k = 0; k < data.data.length; k++) {
                 var len = data.data[k].length;
                 var arr = data.data[k].slice(1, len - 1);
-                var p1 = new BMap.Point(data.data[k][0].longitude, data.data[k][0].latitude);
-                var p2 = new BMap.Point(data.data[k][len - 1].longitude, data.data[k][len - 1].latitude);
+                var p1 = new BMap.Point(data.data[k][0].longitude,data.data[k][0].latitude);
+                var p2 = p1;
+                // var p1 = new BMap.Point(106.495095,29.620681);
+                // var p2 = new BMap.Point(106.495095,29.620681);
                 drv.search(p1, p2, {waypoints: arr});
+
             }
             document.getElementById("lushu-start").onclick = function () {
                 for (var i = 0; i < lushu.length; i++) {
@@ -761,12 +779,12 @@
             }
             document.getElementById("lushu-stop").onclick = function () {
                 for (var i = 0; i < lushu.length; i++) {
-                    lushu[i].stop();
+                    lushu[i].pause();
                 }
             }
             document.getElementById("lushu-pause").onclick = function () {
                 for (var i = 0; i < lushu.length; i++) {
-                    lushu[i].pause();
+                    lushu[i].stop();
                 }
             }
 
