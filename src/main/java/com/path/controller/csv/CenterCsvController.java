@@ -110,7 +110,7 @@ public class CenterCsvController {
             JsonUtil.toJSON(map);
             return;
         }
-        Map map = MapUtil.toMap(1, message, result);
+        Map map = MapUtil.toMap(200, message, result);
         JsonUtil.toJSON(map);
     }
 }

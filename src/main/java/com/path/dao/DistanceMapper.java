@@ -19,4 +19,8 @@ public interface DistanceMapper {
     int updateByPrimaryKey(Distance record);
 
     int insertAdvance(List<Distance> list);
+
+    List<Distance> produceAllWay(Integer questionId);
+
+    int checkRemainCount(int i);
 }

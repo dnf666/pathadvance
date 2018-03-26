@@ -28,52 +28,51 @@ public class ServiceCsvController {
     @Resource
     private CsvService<ServiceNode> csvService;
 
-    /**
-     * 检查文件类型
-     */
-    @RequestMapping("/checkServiceFile.do")
-    public void checkFile(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
-        String fileName = multipartFile.getOriginalFilename();
-        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
-        String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
-        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
-        Path pathObject = new Path(projectPath, path, questionId);
-        File file = new File(path);
-        try {
-            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
-            System.out.println("确认类型");
-            csvService.ensureType(file, projectPath);
-        } catch (IOException e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        try {
-            List<ServiceNode> list = csvService.readCsv(pathObject);
-            list = csvService.checkFile(list);
-            result = true;
-        } catch (IOException e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        Map map = MapUtil.toMap(1, "确认成功，请点击上传", result);
-        JsonUtil.toJSON(map);
-
-    }
+//    /**
+//     * 检查文件类型
+//     */
+//    @RequestMapping("/checkServiceFile.do")
+//    public void checkFile(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
+//        String fileName = multipartFile.getOriginalFilename();
+//        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+//        String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
+//        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
+//        Path pathObject = new Path(projectPath, path, questionId);
+//        File file = new File(path);
+//        try {
+//            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
+//            System.out.println("确认类型");
+//            csvService.ensureType(file, projectPath);
+//        } catch (IOException e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//        } catch (Exception e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//        }
+//        try {
+//            List<ServiceNode> list = csvService.readCsv(pathObject);
+//            list = csvService.checkFile(list);
+//            result = true;
+//        } catch (IOException e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//
+//        } catch (Exception e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//        }
+//        Map map = MapUtil.toMap(1, "确认成功，请点击上传", result);
+//        JsonUtil.toJSON(map);
+//
+//    }
 
     @RequestMapping("importServiceNode")
     public void insertServiceNode(HttpServletRequest request, @RequestParam("info-fileselect") MultipartFile multipartFile) {
-
         String fileName = multipartFile.getOriginalFilename();
 //        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
         Integer questionId = 1;

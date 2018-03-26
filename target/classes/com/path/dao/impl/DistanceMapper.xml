@@ -97,4 +97,10 @@
       (#{item.dId},#{item.startId},#{item.endId},#{item.standardDis},#{item.standardTime})
     </foreach>
   </insert>
+  <select id="selectNullNode" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT c_address,s_address from distance,centernode,servicenode where standard_dis is NULL or standard_time is NULL limit 1;
+  </select>
+  <select id="produceAllWay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT c_id AS d_id,c_num AS startId,s_num AS endId from centernode,servicenode where c_id = #{questionId} and s_id = #{questionId};
+  </select>
 </mapper>

@@ -8,8 +8,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
 import java.sql.*;
-import java.util.Properties;
+import java.util.*;
 
+import static jdk.nashorn.internal.objects.NativeRegExp.getLastInput;
+import static jdk.nashorn.internal.objects.NativeRegExp.test;
+import static jdk.nashorn.internal.runtime.ScriptObject.getCount;
+import static jdk.nashorn.internal.runtime.ScriptObject.setGlobalObjectProto;
 import static org.junit.Assert.*;
 
 /**
@@ -73,5 +77,65 @@ public class CsvServiceImplTest {
 
     @Test
     public void storeDatabase() {
+        //输入完成
+        Scanner scanner = new Scanner(System.in);
+       int account =  scanner.nextInt();
+       int cha = scanner.nextInt();
+       int number[] = new int[account];
+        for (int i = 0; i < account; i++) {
+            number[i] = scanner.nextInt();
+        }
+        System.out.println(account);
+        System.out.println(cha);
+        System.out.println(number);
+    }
+static int cha = 3;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int account =  scanner.nextInt();
+        int cha = scanner.nextInt();
+        int count = 0;
+        if (cha == 0){
+            Map map = new HashMap();
+            for (int i = 0; i < account; i++) {
+                int a = scanner.nextInt();
+                if (map.containsKey(a)) {
+                    map.put(a,(int)map.get(a)+1);
+                    if((int)map.get(a)<3){
+                        count++;
+                    }
+                }else
+                {
+                 map.put(a,1);
+                }
+            }
+        }else {
+            List<Integer> number = new ArrayList<>(account);
+            for (int i = 0; i < account; i++) {
+                int a = scanner.nextInt();
+                if (!number.contains(a)) {
+                    number.add(a);
+                }
+
+
+            }
+            for (int i = 0; i < number.size() - 1; i++) {
+                for (int j = i + 1; j < number.size(); j++) {
+                    if (number.get(i) - number.get(j) == cha || number.get(j) - number.get(i) == cha) {
+                        count++;
+                    }
+                }
+            }
+        }
+            System.out.println(count);
+
+    }
+
+
+
+    private static void test1(int i, int i1) {
+        if (i-i1 == cha){
+
+        }
     }
 }

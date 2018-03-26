@@ -28,46 +28,46 @@ public class VahicleCsvController {
     @Resource
     private CsvService<Vahicle> csvService;
 
-    /**
-     * 这是批量导入
-     */
-    @RequestMapping("/checkVahicleFile.do")
-    public void checkFile(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
-        String fileName = multipartFile.getOriginalFilename();
-        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
-        String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
-        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
-        Path pathObject = new Path(projectPath, path, questionId);
-        File file = new File(path);
-        try {
-            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
-            System.out.println("确认类型");
-            csvService.ensureType(file, projectPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        try {
-            List<Vahicle> list = csvService.readCsv(pathObject);
-            csvService.checkFile(list);
-        } catch (IOException e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, e.getMessage(), result);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        Map map = MapUtil.toMap(1, "确认成功，请点击上传", result);
-        JsonUtil.toJSON(map);
-
-    }
+//    /**
+//     * 这是批量导入
+//     */
+//    @RequestMapping("/checkVahicleFile.do")
+//    public void checkFile(HttpServletRequest request,@RequestParam("file") MultipartFile multipartFile) {
+//        String fileName = multipartFile.getOriginalFilename();
+//        Integer questionId = (Integer) request.getSession().getAttribute("questionId");
+//        String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
+//        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
+//        Path pathObject = new Path(projectPath, path, questionId);
+//        File file = new File(path);
+//        try {
+//            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
+//            System.out.println("确认类型");
+//            csvService.ensureType(file, projectPath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return;
+//        } catch (Exception e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//        }
+//        try {
+//            List<Vahicle> list = csvService.readCsv(pathObject);
+//            csvService.checkFile(list);
+//        } catch (IOException e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//
+//        } catch (Exception e) {
+//            Map map = MapUtil.toMap(0, e.getMessage(), result);
+//            JsonUtil.toJSON(map);
+//            return;
+//        }
+//        Map map = MapUtil.toMap(1, "确认成功，请点击上传", result);
+//        JsonUtil.toJSON(map);
+//
+//    }
     @RequestMapping("importVahicle")
     public void insertVahicle(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
 

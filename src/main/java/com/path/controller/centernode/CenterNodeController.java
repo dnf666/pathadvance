@@ -49,7 +49,6 @@ public class CenterNodeController {
         String questionId = "1";
         List<CenterNode> centerNodes = centerNodeService.selectAllCenterNodeAddress(questionId);
         Map map = MapUtil.toMap(200, "查询中心地址成功", centerNodes);
-        System.out.println(map);
         JsonUtil.toJSON(map);
     }
 
