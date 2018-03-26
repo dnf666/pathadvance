@@ -61,7 +61,6 @@ public class ServiceNodeController {
         List<ServiceNode> list = new ArrayList<>();
         Set<String> set1 = postData.keySet();
         Iterator iterator = set1.iterator();
-        System.out.println(postData);
         while (iterator.hasNext()) {
             String string = (String) iterator.next();
             String string1 = postData.get(string);

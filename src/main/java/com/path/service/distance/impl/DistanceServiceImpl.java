@@ -60,4 +60,17 @@ public class DistanceServiceImpl implements DistanceService{
     public int insertAdvance(List<Distance> list) {
         return distanceMapper.insertAdvance(list);
     }
+
+    @Override
+    public List<Distance> produceAllWay(Integer questionId) {
+
+        List<Distance> list = distanceMapper.produceAllWay(questionId);
+        return list;
+    }
+
+    @Override
+    public int checkRemainCount(int i) {
+         int remainCount = distanceMapper.checkRemainCount(i);
+         return remainCount;
+    }
 }

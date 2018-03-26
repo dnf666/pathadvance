@@ -91,10 +91,20 @@
       and end_id = #{endId,jdbcType=INTEGER}
   </update>
   <insert id="insertAdvance" parameterType="java.util.List">
-    INSERT into centernode (d_id, start_id,end_id,standard_dis,standard_time)
+    INSERT into distance (d_id, start_id,end_id,standard_dis,standard_time)
     VALUES
     <foreach collection="list" index="index" item="item" separator=",">
       (#{item.dId},#{item.startId},#{item.endId},#{item.standardDis},#{item.standardTime})
     </foreach>
   </insert>
+  <select id="selectNullNode" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT c_address,s_address from distance,centernode,servicenode where standard_dis is NULL or standard_time is NULL limit 1;
+  </select>
+  <select id="produceAllWay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT c_id AS d_id,c_num AS startId,s_num AS endId from centernode,servicenode where c_id = #{questionId} and s_id = #{questionId};
+  </select>
+
+  <select id = "checkRemainCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT COUNT(*) FROM distance WHERE standard_time IS NULL OR standard_dis IS NULL AND d_id = #{questionId};
+  </select>
 </mapper>
