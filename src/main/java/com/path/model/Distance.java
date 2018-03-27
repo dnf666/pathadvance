@@ -15,6 +15,8 @@ public class Distance extends DistanceKey {
     private String startId;
 
     private String endId;
+    private String startAddress;
+    private String endAddress;
     private Integer standardDis;
 
     private Integer standardTime;

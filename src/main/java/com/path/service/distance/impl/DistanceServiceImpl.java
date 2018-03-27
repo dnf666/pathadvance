@@ -5,6 +5,7 @@ import com.path.model.Distance;
 import com.path.model.DistanceKey;
 import com.path.service.distance.DistanceService;
 import org.springframework.stereotype.Service;
+import sun.security.x509.DistributionPointName;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DistanceServiceImpl implements DistanceService{
 
     @Override
     public int insertSelective(Distance record) {
-        return 0;
+        return distanceMapper.insertSelective(record);
     }
 
     @Override
@@ -59,6 +60,16 @@ public class DistanceServiceImpl implements DistanceService{
     @Override
     public int insertAdvance(List<Distance> list) {
         return distanceMapper.insertAdvance(list);
+    }
+
+    @Override
+    public DistanceKey selectIfNull(Integer questionId) {
+        return distanceMapper.selectIfNull(questionId);
+    }
+
+    @Override
+    public Distance selectNullNode(Integer questionId) {
+         return distanceMapper.selectNullNode(questionId);
     }
 
     @Override

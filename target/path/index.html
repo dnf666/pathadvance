@@ -136,7 +136,7 @@
         <li class="info-panel-wrap">
             <h2 class="info-panel-tit">计算两地车行时间和距离</h2>
             <div class="info-panel-cont">
-                <div class="now-action"><span>两地间隔时间和距离计算进度：</span><span class="now-progress">0%</span>
+                <div class="now-action"><span>两地间隔时间和距离计算进度：</span><span class="now-progress">还剩<span id="number">？</span>条</span>
                     <div class="start" id="start-timedis"></div>
                     <div class="stop"></div>
                     <div class="restart"></div>
@@ -400,139 +400,210 @@
 
     //计算时间距离
     //step1:查询中心地址组装成数组
-    function getcenter1() {
-        var p = new Promise(function (resolve, reject) {
-            var addrdata = [];//存放
-            var address = [];//存放地址
-            var addrnum = [];//存放地址编号
-            var search_url = "centernode/getCenterAddress.do";
-            var obj = new XMLHttpRequest();
-            // XMLHttpRequest对象用于在后台与服务器交换数据
-            obj.open('GET', search_url, true);
-            obj.onreadystatechange = function () {
-                if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
-                    //resolve(obj.responseText);
-                    var responseText = JSON.parse(obj.responseText);
-                    var len = responseText.data.length;
-                    for (var j = 0; j < len; j++) {
-                        var addr = responseText.data[j].CAddress;
-                        var num = responseText.data[j].CNum;
-                        addrnum.push(num);
-                        address.push(addr);
-                    }
-                    addrdata = [address, addrnum];
-                    resolve(addrdata);
-                }
-            };
-            obj.send();
-        });
-        return p;
-    }
+    // function getcenter1() {
+    //     var p = new Promise(function (resolve, reject) {
+    //         var addrdata = [];//存放
+    //         var address = [];//存放地址
+    //         var addrnum = [];//存放地址编号
+    //         var search_url = "centernode/getCenterAddress.do";
+    //         var obj = new XMLHttpRequest();
+    //         // XMLHttpRequest对象用于在后台与服务器交换数据
+    //         obj.open('GET', search_url, true);
+    //         obj.onreadystatechange = function () {
+    //             if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+    //                 //resolve(obj.responseText);
+    //                 var responseText = JSON.parse(obj.responseText);
+    //                 var len = responseText.data.length;
+    //                 for (var j = 0; j < len; j++) {
+    //                     var addr = responseText.data[j].CAddress;
+    //                     var num = responseText.data[j].CNum;
+    //                     addrnum.push(num);
+    //                     address.push(addr);
+    //                 }
+    //                 addrdata = [address, addrnum];
+    //                 resolve(addrdata);
+    //             }
+    //         };
+    //         obj.send();
+    //     });
+    //     return p;
+    // }
 
-    //step2:查询服务点地址转化成数组
-    function getser1(address) {
-        var p = new Promise(function (resolve, reject) {
-            var search_url = "servicenode/getServiceAddress.do";
+    // //step2:查询服务点地址转化成数组
+    // function getser1(address) {
+    //     var p = new Promise(function (resolve, reject) {
+    //         var search_url = "servicenode/getServiceAddress.do";
+    //         var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+    //         obj.open('GET', search_url, true);
+    //         obj.onreadystatechange = function () {
+    //             if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+    //                 //resolve(obj.responseText);
+    //                 var responseText = JSON.parse(obj.responseText);
+    //                 var len = responseText.data.length;
+    //                 for (var j = 0; j < len; j++) {
+    //                     var addr = responseText.data[j].SAddress;
+    //                     var num = responseText.data[j].SNum;
+    //                     address[0].push(addr);
+    //                     address[1].push(num);
+    //                 }
+    //                 resolve(address);
+    //                 console.log(address);
+    //             }
+    //         };
+    //         obj.send();
+    //     });
+    //     return p;
+    // }
+
+    // //step3:获取起点和终点
+    // var output = {};
+
+    // function getstar(address) {
+    //     var p = new Promise(function (resolve, reject) {
+    //         var num = 1;
+    //         var len = address[0].length;
+    //         for (var i = 0; i < len; i++) {
+    //             for (var j = 0; j < len; j++) {
+    //                 output[num] = {
+    //                     startId: address[1][i],
+    //                     endId: address[1][j],
+    //                 };
+    //                 num++;
+    //             }
+    //         }
+    //         resolve(address);
+    //     });
+    //     return p;
+    // }
+
+    // //step4:调用API获取两两之间的时间和距离
+    // function twopoint(address) {
+    //     var p = new Promise(function (resolve, reject) {
+    //         var num = 1;
+    //         var len = address[0].length;
+    //         var searchComplete = function (results) {
+    //             if (transit.getStatus() != BMAP_STATUS_SUCCESS) {
+    //                 return;
+    //             }
+    //             var plan = results.getPlan(0);
+    //             // output[num]={
+    //             //     time: plan.getDuration(true),
+    //             //     distance: plan.getDistance(true)
+    //             // }
+    //             output[num]["standardTime"] = time2int(plan.getDuration(true));
+    //             output[num]["standardDis"] = dis2int(plan.getDistance(true));
+    //             num++;
+    //             n++;
+    //             if (n === len) {
+    //                 m++;
+    //                 n = 0;
+    //             }
+
+    //         };
+    //         var transit = new BMap.DrivingRoute(map, {
+    //             renderOptions: {map: map},
+    //             onSearchComplete: searchComplete,
+    //             onPolylinesSet: function () {
+    //                 //console.log(output);
+    //                 setTimeout(function () {
+    //                     transit.search(address[0][m], address[0][n]);
+    //                 }, 1000);
+    //             }
+    //         });
+
+    //         var m = 0;
+    //         var n = 0;
+    //         transit.search(address[0][m], address[0][n]);
+    //         // for(var i=0;i<len;i++){
+    //         //     for(var j=0;j<len;j++){
+    //         //         transit.search(address[i],address[j]);
+    //         //     }
+    //         // }
+    //         // console.log(output);
+    //         setTimeout(function () {
+    //             resolve(output);
+    //             console.log(output);
+    //         }, 65000);
+
+    //     })
+    //     return p;
+    // }
+
+    // //step5：向后台传递结果
+    // function updatedis(data) {
+    //     var p = new Promise(function (resolve, reject) {
+    //         var url = "distance/addDistance.do";
+    //         //postData = JSON.stringify(data);
+    //         var postData = "";
+    //         var tmp = "";
+    //         (function () {
+    //             for (var key in data) {
+    //                 tmp = JSON.stringify(data[key]);
+    //                 postData += key + '=' + tmp + '&';
+    //             }
+    //         })();
+    //         // console.log(postData);
+    //         console.log(postData);
+    //         var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+    //         obj.open('POST', url, true);
+    //         obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //         obj.onreadystatechange = function () {
+    //             if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+    //                 //console.log(JSON.parse(obj.responseText));
+    //                 console.log(obj.responseText);
+    //             }
+    //         };
+    //         obj.send(postData);
+    //     })
+    //     return p;
+    // }
+
+    //新思路：请求一次，写入一次时间和距离
+    //step1：请求时间距离表中一条记录的起点和终点
+    function querytimedis(){
+        var p = new Promise(function(resolve,reject){
+            //url需要做修改
+            var search_url = "distance/selectnullnode.do";
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function () {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
                     //resolve(obj.responseText);
+                    console.log(obj.responseText);
                     var responseText = JSON.parse(obj.responseText);
-                    var len = responseText.data.length;
-                    for (var j = 0; j < len; j++) {
-                        var addr = responseText.data[j].SAddress;
-                        var num = responseText.data[j].SNum;
-                        address[0].push(addr);
-                        address[1].push(num);
+                    //还剩多少条，提示用户
+                    var number = document.getElementById("number");
+                    number.innerText = responseText.data.remainCount;
+                    var data = {};
+
+                    data["startId"] = responseText.data.startId;
+                    data["endId"] = responseText.data.endId;
+                    var searchComplete = function (results){
+                        if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+                            console.log("false");
+                            return ;
+                        }
+                        var plan = results.getPlan(0);
+                        data["standardTime"] = time2int(plan.getDuration(true));
+                        data["standardDis"] = dis2int(plan.getDistance(true));
+                        resolve(data);
                     }
-                    resolve(address);
-                    console.log(address);
+                    var transit = new BMap.DrivingRoute(map, {renderOptions: {map: map},
+                        onSearchComplete: searchComplete,
+                        onPolylinesSet: function(){
+                        }});
+                    transit.search(responseText.data.startAddress, responseText.data.endAddress);
                 }
             };
             obj.send();
         });
         return p;
     }
-
-    //step3:获取起点和终点
-    var output = {};
-
-    function getstar(address) {
+    //step2:将时间距离传给后台
+    function writeinsql(data) {
         var p = new Promise(function (resolve, reject) {
-            var num = 1;
-            var len = address[0].length;
-            for (var i = 0; i < len; i++) {
-                for (var j = 0; j < len; j++) {
-                    output[num] = {
-                        startId: address[1][i],
-                        endId: address[1][j],
-                    };
-                    num++;
-                }
-            }
-            resolve(address);
-        });
-        return p;
-    }
-
-    //step4:调用API获取两两之间的时间和距离
-    function twopoint(address) {
-        var p = new Promise(function (resolve, reject) {
-            var num = 1;
-            var len = address[0].length;
-            var searchComplete = function (results) {
-                if (transit.getStatus() != BMAP_STATUS_SUCCESS) {
-                    return;
-                }
-                var plan = results.getPlan(0);
-                // output[num]={
-                //     time: plan.getDuration(true),
-                //     distance: plan.getDistance(true)
-                // }
-                output[num]["standardTime"] = time2int(plan.getDuration(true));
-                output[num]["standardDis"] = dis2int(plan.getDistance(true));
-                num++;
-                n++;
-                if (n === len) {
-                    m++;
-                    n = 0;
-                }
-
-            };
-            var transit = new BMap.DrivingRoute(map, {
-                renderOptions: {map: map},
-                onSearchComplete: searchComplete,
-                onPolylinesSet: function () {
-                    //console.log(output);
-                    setTimeout(function () {
-                        transit.search(address[0][m], address[0][n]);
-                    }, 1000);
-                }
-            });
-
-            var m = 0;
-            var n = 0;
-            transit.search(address[0][m], address[0][n]);
-            // for(var i=0;i<len;i++){
-            //     for(var j=0;j<len;j++){
-            //         transit.search(address[i],address[j]);
-            //     }
-            // }
-            // console.log(output);
-            setTimeout(function () {
-                resolve(output);
-                console.log(output);
-            }, 65000);
-
-        })
-        return p;
-    }
-
-    //step5：向后台传递结果
-    function updatedis(data) {
-        var p = new Promise(function (resolve, reject) {
-            var url = "distance/addDistance.do";
+            console.log(data);
+            var url = "distance/updatetimeanddis.do";
             //postData = JSON.stringify(data);
             var postData = "";
             var tmp = "";
@@ -542,7 +613,6 @@
                     postData += key + '=' + tmp + '&';
                 }
             })();
-            // console.log(postData);
             console.log(postData);
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('POST', url, true);
@@ -558,6 +628,15 @@
         return p;
     }
 
+    var starttimedis = document.getElementById("start-timedis");
+    starttimedis.onclick = function () {
+        var t = document.getElementById("start-timedis");
+        t.style.backgroundColor = "#ccc";
+        t.setAttribute("disabled", true);
+        querytimedis().then(function (data) {
+            writeinsql(data);
+        });
+    }
 
     var startcenter = document.getElementById("start-center");
     startcenter.onclick = function () {
@@ -584,21 +663,21 @@
         });
     }
 
-    var starttimedis = document.getElementById("start-timedis");
-    starttimedis.onclick = function () {
-        var t = document.getElementById("start-timedis");
-        t.style.backgroundColor = "#ccc";
-        t.setAttribute("disabled", true);
-        getcenter1().then(function (address) {
-            return getser1(address);
-        }).then(function (address) {
-            return getstar(address);
-        }).then(function (address) {
-            return twopoint(address);
-        }).then(function (output) {
-            updatedis(output);
-        });
-    }
+    // var starttimedis = document.getElementById("start-timedis");
+    // starttimedis.onclick = function () {
+    //     var t = document.getElementById("start-timedis");
+    //     t.style.backgroundColor = "#ccc";
+    //     t.setAttribute("disabled", true);
+    //     getcenter1().then(function (address) {
+    //         return getser1(address);
+    //     }).then(function (address) {
+    //         return getstar(address);
+    //     }).then(function (address) {
+    //         return twopoint(address);
+    //     }).then(function (output) {
+    //         updatedis(output);
+    //     });
+    // }
 
     //绘制地图：根据时间和距离将方案进行排序
     function query() {

@@ -1,5 +1,6 @@
 package dlf;
 
+import com.alibaba.fastjson.JSONObject;
 import com.path.dao.DistanceMapper;
 import com.path.model.Distance;
 import org.junit.Test;
@@ -40,6 +41,11 @@ public class DistanceServiceImplTest {
 
     @Test
     public void updateByPrimaryKeySelective() {
+        Distance distance = new Distance(1,"\"c1\"","\"s1009\"","\"123\"","123",1,1);
+        System.out.println(distance.getStartId().replaceAll("\"",""));
+        System.out.println(distanceMapper.updateByPrimaryKeySelective(distance));
+        System.out.println(distance);
+
     }
 
     @Test

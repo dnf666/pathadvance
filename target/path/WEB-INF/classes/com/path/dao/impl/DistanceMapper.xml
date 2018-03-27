@@ -79,16 +79,16 @@
       </if>
     </set>
     where d_id = #{dId,jdbcType=INTEGER}
-      and start_id = #{startId,jdbcType=INTEGER}
-      and end_id = #{endId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=VARCHAR}
+      and end_id = #{endId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.path.model.Distance" >
     update distance
     set standard_dis = #{standardDis,jdbcType=INTEGER},
       standard_time = #{standardTime,jdbcType=INTEGER}
     where d_id = #{dId,jdbcType=INTEGER}
-      and start_id = #{startId,jdbcType=INTEGER}
-      and end_id = #{endId,jdbcType=INTEGER}
+      and start_id = ${startId,jdbcType=VARCHAR}
+      and end_id = ${endId,jdbcType=VARCHAR}
   </update>
   <insert id="insertAdvance" parameterType="java.util.List">
     INSERT into distance (d_id, start_id,end_id,standard_dis,standard_time)
@@ -97,14 +97,22 @@
       (#{item.dId},#{item.startId},#{item.endId},#{item.standardDis},#{item.standardTime})
     </foreach>
   </insert>
-  <select id="selectNullNode" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    SELECT c_address,s_address from distance,centernode,servicenode where standard_dis is NULL or standard_time is NULL limit 1;
+  <select id="selectNullNode" resultType="com.path.model.Distance" parameterType="java.lang.Integer">
+    SELECT d_id as dId,c_address AS startAddress,s_address AS endAddress,start_id AS startId,end_id as endId from distance,centernode,servicenode where standard_dis is NULL or standard_time is NULL limit 1;
   </select>
+
+
+
+
+
   <select id="produceAllWay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT c_id AS d_id,c_num AS startId,s_num AS endId from centernode,servicenode where c_id = #{questionId} and s_id = #{questionId};
   </select>
 
   <select id = "checkRemainCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
     SELECT COUNT(*) FROM distance WHERE standard_time IS NULL OR standard_dis IS NULL AND d_id = #{questionId};
+  </select>
+  <select id = "selectIfNull" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT count(d_id) AS d_id FROM distance WHERE  d_id = #{questionId} limit 1;
   </select>
 </mapper>

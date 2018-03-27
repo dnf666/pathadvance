@@ -563,32 +563,36 @@
     function querytimedis(){
         var p = new Promise(function(resolve,reject){
             //url需要做修改
-            var search_url = "servicenode/getServiceAddress.do";
+            var search_url = "distance/selectnullnode.do";
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('GET', search_url, true);
             obj.onreadystatechange = function () {
                 if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
                     //resolve(obj.responseText);
+                    console.log(obj.responseText);
                     var responseText = JSON.parse(obj.responseText);
                     //还剩多少条，提示用户
-                    var count = document.getElementById("number");
-                    number.innerText = responseText[2];
-                    var data = [];
+                    var number = document.getElementById("number");
+                    number.innerText = responseText.data.remainCount;
+                    var data = {};
+
+                    data["startId"] = responseText.data.startId;
+                    data["endId"] = responseText.data.endId;
                     var searchComplete = function (results){
                         if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+                            console.log("false");
                             return ;
                         }
                         var plan = results.getPlan(0);
-                        data[0] = plan.getDuration(true);
-                        data[1] = plan.getDistance(true);
+                        data["standardTime"] = time2int(plan.getDuration(true));
+                        data["standardDis"] = dis2int(plan.getDistance(true));
                         resolve(data);
                     }
                     var transit = new BMap.DrivingRoute(map, {renderOptions: {map: map},
                         onSearchComplete: searchComplete,
-                        onPolylinesSet: function(){        
-                            console.log(data);
-                    }});
-                    transit.search(responseText[0], responseText[1]);
+                        onPolylinesSet: function(){
+                        }});
+                    transit.search(responseText.data.startAddress, responseText.data.endAddress);
                 }
             };
             obj.send();
@@ -598,7 +602,8 @@
     //step2:将时间距离传给后台
     function writeinsql(data) {
         var p = new Promise(function (resolve, reject) {
-            var url = "distance/addDistance.do";
+            console.log(data);
+            var url = "distance/updatetimeanddis.do";
             //postData = JSON.stringify(data);
             var postData = "";
             var tmp = "";
@@ -608,7 +613,7 @@
                     postData += key + '=' + tmp + '&';
                 }
             })();
-            // console.log(postData);
+            console.log(postData);
             var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
             obj.open('POST', url, true);
             obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

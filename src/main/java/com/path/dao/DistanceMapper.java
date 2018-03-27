@@ -23,4 +23,8 @@ public interface DistanceMapper {
     List<Distance> produceAllWay(Integer questionId);
 
     int checkRemainCount(int i);
+
+    DistanceKey selectIfNull(Integer questionId);
+
+    Distance selectNullNode(Integer questionId);
 }

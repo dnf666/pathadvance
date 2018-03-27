@@ -47,5 +47,16 @@ public interface DistanceService {
     List<Distance> selectAllCenterNodeAddress(String questionId);
     int insertAdvance(List<Distance> list);
 
+    /**
+     * 查询表是否没有数据
+     * @param questionId
+     * @return
+     */
+    DistanceKey selectIfNull(Integer questionId);
 
+    /**
+     * 查询空点
+     * @param questionId
+     */
+    Distance selectNullNode(Integer questionId);
 }

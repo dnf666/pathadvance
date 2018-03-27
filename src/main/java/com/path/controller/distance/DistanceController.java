@@ -1,5 +1,6 @@
 package com.path.controller.distance;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.path.model.CenterNode;
 import com.path.model.Distance;
@@ -7,6 +8,7 @@ import com.path.service.distance.DistanceService;
 import com.path.util.JsonUtil;
 import com.path.util.MapUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,55 +25,7 @@ public class DistanceController {
     @Resource
     private DistanceService distanceService;
 
-    @RequestMapping("addDistance")
-    public void addDistance(@RequestParam Map<String, String> postData) {
-        try {
-            List<Distance> list = new ArrayList<>();
-            Set<String> set1 = postData.keySet();
-            Iterator iterator = set1.iterator();
-            while (iterator.hasNext()) {
-                String string = (String) iterator.next();
-                String string1 = postData.get(string);
-                JSONObject jsonObject = JSONObject.parseObject(string1);
-                Distance distance = jsonObject.toJavaObject(Distance.class);
-                distance.setDId(1);
-                list.add(distance);
-            }
 
-            list.stream().forEach(e -> distanceService.updateByPrimaryKeySelective(e));
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, "添加失败", false);
-            JsonUtil.toJSON(map);
-        }
-        Map map = MapUtil.toMap(200, "添加成功", true);
-        JsonUtil.toJSON(map);
-    }
-
-    /**
-     * 生成所有路径
-     * @param request
-     */
-    @RequestMapping("produceallway")
-    public void produceallway(HttpServletRequest request) {
-        //Integer questionId = (Integer) request.getSession().getAttribute("questionId");
-        Integer questionId = 1;
-        List<Distance> list = distanceService.produceAllWay(questionId);
-        try {
-            list.parallelStream().forEach(e -> distanceService.insertSelective(e));
-        } catch (Exception e) {
-            Map map = MapUtil.toMap(0, "添加失败", false);
-            JsonUtil.toJSON(map);
-            return;
-        }
-        if (!list.isEmpty()) {
-            Map map = MapUtil.toMap(200, "添加成功" + list.size() + "条数据", true);
-            JsonUtil.toJSON(map);
-        }else{
-            Map map = MapUtil.toMap(404, "数据库没有数据", false);
-            JsonUtil.toJSON(map);
-        }
-
-    }
 
     /**
      * 更新时间和距离
@@ -79,14 +33,16 @@ public class DistanceController {
      *   返回的剩余需要更新的条数
      */
     @RequestMapping("updatetimeanddis")
-    public void updatetimeanddis(@RequestParam String postData){
-            JSONObject jsonObject = JSONObject.parseObject(postData);
-            Distance distance = jsonObject.toJavaObject(Distance.class);
+    public void updatetimeanddis(Distance postData){
         int result = 0;
         int remainCount = 0;
-            distance.setDId(1);
+        Integer questionId = 1;
+            postData.setDId(questionId);
+            //不太优雅的设计，由于前端传过来的字符串有双引号，所以需要替换
+            postData.setStartId(postData.getStartId().replaceAll("\"",""));
+            postData.setEndId(postData.getEndId().replaceAll("\"",""));
             try {
-                result = distanceService.updateByPrimaryKeySelective(distance);
+                result = distanceService.updateByPrimaryKeySelective(postData);
                 remainCount =  distanceService.checkRemainCount(1);
             }catch (Exception e){
                 Map map = MapUtil.toMap(400, "更新失败"+e.getMessage(), result);
@@ -97,4 +53,18 @@ public class DistanceController {
         JsonUtil.toJSON(map);
 
     }
+    @RequestMapping("selectnullnode")
+    public void selectnullnode(Integer questionId){
+        questionId = 1;
+        //初始化
+        if (distanceService.selectIfNull(questionId).getDId()==0)
+        {
+            List<Distance> list = distanceService.produceAllWay(questionId);
+            list.stream().forEach(e -> distanceService.insertSelective(e));
+        }
+        Distance distance = distanceService.selectNullNode( questionId);
+        Map map = MapUtil.toMap(200, "下一条记录", distance);
+        JsonUtil.toJSON(map);
+    }
+
 }
