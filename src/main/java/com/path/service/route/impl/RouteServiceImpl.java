@@ -112,4 +112,9 @@ public class RouteServiceImpl implements RouteService{
         return routeMapper.findRouteByFid(postData);
     }
 
+    @Override
+    public List<Route> geneticAlgorithm() {
+        return null;
+    }
+
 }

@@ -10,12 +10,21 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class QuestionBasic {
-    private Integer qId;
-
+    /**
+     * 问题编号
+     */
+    private Integer qId ;
+    /**
+     * 问题名字
+     */
     private String qName;
-
+    /**
+     * 问题描述
+     */
     private String qDescript;
-
+    /**
+     * 扩展用字段 下同
+     */
     private String qRem1;
 
     private String qRem2;

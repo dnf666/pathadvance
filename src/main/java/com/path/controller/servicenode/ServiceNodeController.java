@@ -44,11 +44,11 @@ public class ServiceNodeController {
      * 取得相关信息给前端算经纬度
      */
     @RequestMapping("getServiceAddress")
-    public void getCenterAddress(HttpServletRequest request) {
+    public void getServiceAddress(HttpServletRequest request) {
 //        String questionId = (String) request.getSession().getAttribute("questionId");
             String questionId = "1";
-        List<String> ServiceNodes = serviceNodeService.selectAllServiceNodeAddress(questionId);
-        Map map = MapUtil.toMap(1, "服务点地址", ServiceNodes);
+        List<ServiceNode> serviceNodes = serviceNodeService.selectAllServiceNodeAddress(questionId);
+        Map map = MapUtil.toMap(1, "服务点地址", serviceNodes);
         JsonUtil.toJSON(map);
     }
 

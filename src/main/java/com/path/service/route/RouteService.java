@@ -30,4 +30,6 @@ public interface RouteService {
     List<Route> findMinTimeForFour();
 
     List<Route> findByFid(int postData);
+
+    List<Route> geneticAlgorithm();
 }

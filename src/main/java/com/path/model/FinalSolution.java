@@ -10,8 +10,13 @@ import lombok.ToString;
 @ToString
 @Data
 public class FinalSolution {
+    /**
+     * 解决方案编号
+     */
     private Integer fId;
-
-    private Integer qId;
+    /**
+     * 问题编号
+     */
+    private Integer qId = 1;
 
 }

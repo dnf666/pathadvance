@@ -11,23 +11,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class CenterNodeKey {
-    private Integer cId;
-
+    /**
+     * 和问题id一致
+     */
+    private Integer cId = 1;
+    /**
+     * 中心点编号
+     */
     private String cNum;
 
-//    public Integer getcId() {
-//        return cId;
-//    }
-//
-//    public void setcId(Integer cId) {
-//        this.cId = cId;
-//    }
-//
-//    public String getcNum() {
-//        return cNum;
-//    }
-//
-//    public void setcNum(String cNum) {
-//        this.cNum = cNum == null ? null : cNum.trim();
-//    }
+
 }

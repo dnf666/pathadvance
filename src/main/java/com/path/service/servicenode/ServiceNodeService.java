@@ -3,6 +3,7 @@ package com.path.service.servicenode;
 import com.path.model.ServiceNode;
 import com.path.model.ServiceNodeKey;
 
+import javax.xml.ws.Service;
 import java.util.List;
 
 /**
@@ -21,6 +22,6 @@ public interface ServiceNodeService {
 
     int updateByPrimaryKey(ServiceNode record);
     boolean updateAdvance(List<ServiceNode> list);
-    List<String> selectAllServiceNodeAddress(String questionId);
+    List<ServiceNode> selectAllServiceNodeAddress(String questionId);
 
 }

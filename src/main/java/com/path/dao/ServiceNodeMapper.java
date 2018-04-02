@@ -22,6 +22,6 @@ public interface ServiceNodeMapper {
     boolean insertAdvance(List<ServiceNode> list);
     boolean updateAdvance(List<ServiceNode> list);
 
-    List<String> selectAllServiceNodeAddress(String questionId);
+    List<ServiceNode> selectAllServiceNodeAddress(String questionId);
 
 }

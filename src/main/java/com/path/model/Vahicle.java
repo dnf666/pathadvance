@@ -11,63 +11,28 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class Vahicle extends VahicleKey {
+    /**
+     * 车辆类型。如东风牌拖拉机t-1号
+     */
     private String vType;
-
+    /**
+     * 车的装载量
+     */
     private Float vCapacity;
-
+    /**
+    * 耗油量升/百公里每小时
+     */
     private Float vOil;
-
+    /**
+     * 运费元/每公里
+     */
     private Float vPrice;
-
+    /**
+     * 注册时间
+     */
     private Date vDate;
 
     private String vRem;
 
-//    public String getvType() {
-//        return vType;
-//    }
-//
-//    public void setvType(String vType) {
-//        this.vType = vType == null ? null : vType.trim();
-//    }
-//
-//    public Float getvCapacity() {
-//        return vCapacity;
-//    }
-//
-//    public void setvCapacity(Float vCapacity) {
-//        this.vCapacity = vCapacity;
-//    }
-//
-//    public Float getvOil() {
-//        return vOil;
-//    }
-//
-//    public void setvOil(Float vOil) {
-//        this.vOil = vOil;
-//    }
-//
-//    public Float getvPrice() {
-//        return vPrice;
-//    }
-//
-//    public void setvPrice(Float vPrice) {
-//        this.vPrice = vPrice;
-//    }
-//
-//    public Date getvDate() {
-//        return vDate;
-//    }
-//
-//    public void setvDate(Date vDate) {
-//        this.vDate = vDate;
-//    }
-//
-//    public String getvRem() {
-//        return vRem;
-//    }
-//
-//    public void setvRem(String vRem) {
-//        this.vRem = vRem == null ? null : vRem.trim();
-//    }
+
 }

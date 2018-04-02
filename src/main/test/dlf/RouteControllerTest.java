@@ -5,10 +5,7 @@ import com.path.dao.CenterNodeMapper;
 import com.path.dao.DistanceMapper;
 import com.path.dao.RouteMapper;
 import com.path.dao.ServiceNodeMapper;
-import com.path.model.CenterNode;
-import com.path.model.Distance;
-import com.path.model.DistanceKey;
-import com.path.model.ServiceNode;
+import com.path.model.*;
 import com.path.service.centernode.CenterNodeService;
 import com.sdicons.json.validator.impl.predicates.Array;
 import com.sdicons.json.validator.impl.predicates.Int;
@@ -22,6 +19,7 @@ import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import javax.xml.ws.Service;
+import java.time.temporal.Temporal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,86 +51,122 @@ public class RouteControllerTest {
         List<CenterNode> centerNodeList = centerNodeMapper.selectAllCenterNodeAddress("1");
         List<ServiceNode> serviceNodeList = serviceNodeMapper.selectAllServiceNodeAddress("1");
         int count = 10;
-        List<List> routeList = initializeRoute(count,centerNodeList,serviceNodeList);
-        Map treeMap = saveDistanceAndRoute(routeList);
+        List<RouteTemp> routeList = initializeRoute(count, centerNodeList, serviceNodeList);
+        if (!routeList.isEmpty()) {
+            Map treeMap = saveDistanceAndRoute(routeList);
+            System.out.println(1);
+        } else {
+            System.out.println("没有路径");
+        }
     }
 
     /**
      * 存储距离和方案到treemap中
+     *
      * @param routeList
      * @return
      */
-    private Map saveDistanceAndRoute(List<List> routeList) {
-        DistanceKey distance = new DistanceKey();
+    private Map saveDistanceAndRoute(List<RouteTemp> routeList) {
+        Map<Integer, List> map = new TreeMap<>();
+        DistanceKey distance = new Distance();
+        List node = null;
         int totalDis = 0;
         int routeSize = routeList.size();
         for (int i = 0; i < routeSize; i++) {
-               List route =  routeList.get(i);
-               int routeNodeSize = route.size();
-            for (int j = 0; j < routeNodeSize-1; j++) {
-                    Object a = route.get(j);
-                    Object b = route.get(j+1);
-                if (a instanceof CenterNode){
-                    distance.setStartId (((CenterNode)a).getCNum());
+            List<List> route = routeList.get(i).getRoute();
+            int routeCount = route.size();
+            for (int j = 0; j < routeCount ; j++) {
+                int size = route.get(j).size();
+                node = route.get(j);
+                for (int k = 0; k < size - 1; k++) {
+                    Object a = node.get(k);
+                    Object b = node.get(k + 1);
+                    if (a instanceof CenterNode) {
+                        distance.setStartId(((CenterNode) a).getCNum());
+                    }
+                    if (a instanceof ServiceNode) {
+                        distance.setStartId(((ServiceNode) a).getSNum());
+                    }
+                    if (b instanceof CenterNode) {
+                        distance.setEndId(((CenterNode) b).getCNum());
+                    }
+                    if (b instanceof ServiceNode) {
+                        distance.setEndId(((ServiceNode) b).getSNum());
+                    }
+                    Distance distance1 = distanceMapper.selectByPrimaryKey(distance);
+                    totalDis = totalDis + distance1.getStandardDis();
                 }
-                if (a instanceof ServiceNode){
-                    distance.setStartId (((ServiceNode)a).getSNum());
-                }
-                if (b instanceof CenterNode){
-                    distance.setEndId (((CenterNode)b).getCNum());
-                }
-                if (b instanceof ServiceNode){
-                    distance.setEndId (((ServiceNode)b).getSNum());
-                }
+                map.put(totalDis, route);
 
             }
         }
-        return null;
+        return map;
     }
 
     /**
      * 初始化路线
-     * @param count 路线数量
+     *
+     * @param count           路线数量
      * @param serviceNodeList 服务点列表
      * @return
      */
-    private List<List> initializeRoute(int count,List<CenterNode> centerNodeList, List<ServiceNode> serviceNodeList) {
+    private List<RouteTemp> initializeRoute(int count, List<CenterNode> centerNodeList, List<ServiceNode> serviceNodeList) {
         CenterNode centerNode = centerNodeList.get(0);
-        List<List> routeList = new ArrayList<>();
-        List oneRoute = null;
+        List<RouteTemp> routeList = new ArrayList<>();
+        RouteTemp oneRoute = null;
         //随机产生路径
         for (int i = 0; i < count; i++) {
             List<ServiceNode> list2 = new ArrayList<>(serviceNodeList);
             //确定这个方案生成几条路径，最多3条
             int routeCount = (int) (Math.random() * 3);
+            //防止route的数量为0
+            routeCount = confirmNotZero(routeCount);
+            oneRoute = new RouteTemp(routeCount);
+            oneRoute.setId(i);
             //确定每条route的数量
             for (int j = 0; j < routeCount; j++) {
-                oneRoute = new ArrayList<>();
+                List everyPath = oneRoute.getRoute().get(j);
                 //开头用中心点
-                oneRoute.add(centerNode);
+                everyPath.add(centerNode);
                 int listSize = list2.size();
-                //如果服务点还剩一个，直接加入并退出
-                if (listSize == 1) {
-                    oneRoute.add(list2.get(1));
+                //还剩最后一条路径时，直接生成。防止点取不完
+                if (j == routeCount - 1) {
+                    list2.stream().forEach(e -> everyPath.add(e));
+                    everyPath.add(centerNode);
                     break;
                 }
+                //如果服务点还剩一个，直接加入并退出
+                if (listSize == 1) {
+                    everyPath.add(list2.get(0));
+                    everyPath.add(centerNode);
+                    break;
+                }
+
                 int everyRouteNode = (int) (Math.random() * listSize);
+                everyRouteNode = confirmNotZero(everyRouteNode);
                 //开始取点
                 for (int k = 0; k < everyRouteNode; k++) {
                     //随机取某一个点
                     int index = (int) (Math.random() * list2.size());
                     ServiceNode serviceNode = list2.get(index);
                     //路线中加点，服务点少一个点
-                    oneRoute.add(serviceNode);
+                    oneRoute.getRoute().get(j).add(serviceNode);
                     list2.remove(index);
                 }
                 //结尾用中心点结尾
-                oneRoute.add(centerNode);
+                oneRoute.getRoute().get(j).add(centerNode);
 
             }
             routeList.add(oneRoute);
         }
         return routeList;
+    }
+
+    private int confirmNotZero(int routeCount) {
+        while (routeCount == 0) {
+            routeCount = (int) (Math.random() * 3);
+        }
+        return routeCount;
     }
 
     @Test
@@ -147,15 +181,22 @@ public class RouteControllerTest {
         list1.remove(1);
         System.out.println(list2);
     }
+
     @Test
     public void genetic2() {
-        List<ServiceNode> list1 = serviceNodeMapper.selectAllServiceNodeAddress("1");
-        List<String> names =list1.stream().map(ServiceNode::getSName).collect(Collectors.toList());
-        System.out.println(names);
-        DistanceKey distance = new Distance();
-        distance.setDId(1);
-        distance.setStartId("c1");
-        distance.setEndId("s1009");
-        System.out.println(distanceMapper.selectByPrimaryKey(distance));
+//        List<ServiceNode> list1 = serviceNodeMapper.selectAllServiceNodeAddress("1");
+//        List<String> names =list1.stream().map(ServiceNode::getSName).collect(Collectors.toList());
+//        System.out.println(names);
+//        DistanceKey distance = new Distance();
+//        distance.setDId(1);
+//        distance.setStartId("c1");
+//        distance.setEndId("s1009");
+//        System.out.println(distanceMapper.selectByPrimaryKey(distance));
+        Distance distance = new Distance();
+        List list = new ArrayList();
+        list.add(distance);
+        list.add(distance);
+        System.out.println(list);
+
     }
 }

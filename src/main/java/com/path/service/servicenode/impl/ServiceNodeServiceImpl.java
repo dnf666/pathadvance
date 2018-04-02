@@ -58,8 +58,8 @@ public class ServiceNodeServiceImpl implements ServiceNodeService {
     }
 
     @Override
-    public List<String> selectAllServiceNodeAddress(String questionId) {
-        List<String> serviceNodes = serviceNodeMapper.selectAllServiceNodeAddress(questionId);
+    public List<ServiceNode> selectAllServiceNodeAddress(String questionId) {
+        List<ServiceNode> serviceNodes = serviceNodeMapper.selectAllServiceNodeAddress(questionId);
         return serviceNodes;
     }
 }

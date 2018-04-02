@@ -10,10 +10,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Route extends RouteKey {
+    /**
+     * 路线
+     */
     private String route;
-
+    /**
+     * 总时间
+     */
     private Double totalTime;
-
+    /**
+     * 总距离
+     */
     private Double totalDis;
 
 

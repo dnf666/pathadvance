@@ -21,6 +21,9 @@ public class FinalSolutionControllerTest {
     private FinalSolutionService finalSolutionService;
     @Test
     public void addFinalSolution() {
+
         finalSolutionService.insert(new FinalSolution(1,1));
     }
+
+
 }

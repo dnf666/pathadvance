@@ -23,6 +23,10 @@ public class QuestionBasicServiceImplTest {
     private static QuestionBasic questionBasic = new QuestionBasic();
     @Test
     public void deleteByPrimaryKey() {
+        char c = 'A';
+        int sum = (int)c-65;
+        System.out.println(sum);
+
 
     }
 

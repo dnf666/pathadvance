@@ -87,8 +87,8 @@
     set standard_dis = #{standardDis,jdbcType=INTEGER},
       standard_time = #{standardTime,jdbcType=INTEGER}
     where d_id = #{dId,jdbcType=INTEGER}
-      and start_id = ${startId,jdbcType=VARCHAR}
-      and end_id = ${endId,jdbcType=VARCHAR}
+      and start_id = #{startId,jdbcType=VARCHAR}
+      and end_id = #{endId,jdbcType=VARCHAR}
   </update>
   <insert id="insertAdvance" parameterType="java.util.List">
     INSERT into distance (d_id, start_id,end_id,standard_dis,standard_time)

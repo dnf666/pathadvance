@@ -10,23 +10,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class VahicleKey {
-    private Integer vId;
-
+    /**
+     * 问题编号
+     */
+    private Integer vId =1;
+    /**
+     * 汽车编号
+     */
     private Integer vNum;
-//
-//    public Integer getvId() {
-//        return vId;
-//    }
-//
-//    public void setvId(Integer vId) {
-//        this.vId = vId;
-//    }
-//
-//    public Integer getvNum() {
-//        return vNum;
-//    }
-//
-//    public void setvNum(Integer vNum) {
-//        this.vNum = vNum;
-//    }
+
 }

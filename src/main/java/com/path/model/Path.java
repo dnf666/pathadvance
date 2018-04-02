@@ -13,7 +13,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Path {
+    /**
+     * 项目路径
+     */
     private String projectPath;
+    /**
+     * 取properties文件的路径
+     */
     private String path;
-    private Integer questionId;
+    /**
+     * 问题编号
+     */
+    private Integer questionId = 1;
 }
