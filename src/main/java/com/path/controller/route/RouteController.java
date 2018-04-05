@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.sql.Connection;
 import java.util.*;
 
 /**
@@ -26,7 +24,7 @@ public class RouteController {
 
     /**
      * 添加计算后的路线
-     * @param postData
+     * @param postData 添加路线
      */
     @RequestMapping("addroute")
     public void addRoute(@RequestParam Map<String, String> postData) {
@@ -40,15 +38,15 @@ public class RouteController {
                 String string1 = postData.get(string);
                 JSONObject jsonObject = JSONObject.parseObject(string1);
                 Route route = jsonObject.toJavaObject(Route.class);
-                String routes[] = route.getRoute().split(",");
-                List<String> startAndEnd = new ArrayList<String>();
+                String[] routes = route.getRoute().split(",");
+                List<String> startAndEnd = new ArrayList<>();
                 Collections.addAll(startAndEnd, routes);
                 Route route1 = routeService.calculateTimeAndDistance(startAndEnd, id);
                 route.setTotalTime(route1.getTotalTime());
                 route.setTotalDis(route1.getTotalDis());
                 list.add(route);
             }
-            list.stream().forEach(e -> routeService.insert(e));
+            list.stream().forEach(e -> routeService.insert(e,"1"));
         } catch (Exception e) {
             e.printStackTrace();
             Map map = MapUtil.toMap(0, "添加失败", false);
@@ -60,16 +58,17 @@ public class RouteController {
 
     /**
      * 寻找距离最短或时间最短的四条路线
-     * @param postData
+     * @param postData 传过来的执行要求
      */
     @RequestMapping("findminforfour")
     public void findMinDistanceForFour(@RequestParam String postData) {
+        String distance = "distance";
+        String time = "time";
         List<Route> list = new ArrayList<>();
-        System.out.println(postData);
-        if (postData.equals("distance")) {
+        if (distance.equals(postData)) {
             list = routeService.findMinDistanceForFour();
         }
-        if (postData.equals("time")) {
+        if (time.equals(postData)) {
             list = routeService.findMinTimeForFour();
         }
         if (list.isEmpty()) {
@@ -81,12 +80,12 @@ public class RouteController {
     }
 
     /**
-     * 查到所有的路线
-     * @param postData
+     * 查到某方案的所有的路线
+     * @param postData 方案id
      */
     @RequestMapping("findroute")
     public void findroute(@RequestParam int postData) {
-        List<Route> list = new ArrayList<>();
+        List<Route> list;
         list = routeService.findByFid(postData);
         List<List<String>> list3 = new ArrayList<>();
         Iterator iterator = list.iterator();
@@ -114,11 +113,19 @@ public class RouteController {
     }
 
     /**
-     * 开始执行遗传算法
-     */
+     * 执行遗传算法
+     * @param questionId 问题的id ps： 巨烦
+     * */
     @RequestMapping("geneticAlgorithm")
-    public void geneticAlgorithm(){
-            routeService.geneticAlgorithm();
+    public void geneticAlgorithm(String questionId){
+        int result = routeService.geneticAlgorithm(questionId);
+        if(result > 0) {
+            Map map = MapUtil.toMap(200, "查询成功", result);
+            JsonUtil.toJSON(map);
+        }else{
+            Map map = MapUtil.toMap(400, "查询失败", result);
+            JsonUtil.toJSON(map);
+        }
     }
 
 }

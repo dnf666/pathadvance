@@ -17,7 +17,8 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("finalsolution")
-public class FinalSolutionController {
+public class
+FinalSolutionController {
     @Resource
     private FinalSolutionService finalSolutionService;
 
@@ -31,9 +32,9 @@ public class FinalSolutionController {
                 String string = (String) iterator.next();
                 String string1 = postData.get(string);
                 JSONObject jsonObject = JSONObject.parseObject(string1);
-                FinalSolution FinalSolution = jsonObject.toJavaObject(FinalSolution.class);
-                FinalSolution.setQId(1);
-                list.add(FinalSolution);
+                FinalSolution finalSolution = jsonObject.toJavaObject(FinalSolution.class);
+                finalSolution.setQId(1);
+                list.add(finalSolution);
             }
             list.stream().forEach(e -> finalSolutionService.insert(e));
         } catch (Exception e) {

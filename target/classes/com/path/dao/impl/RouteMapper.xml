@@ -28,10 +28,10 @@
   </delete>
   <insert id="insert" parameterType="com.path.model.Route" >
     insert into route (r_id, f_id, v_id, 
-      route, total_time, tota_dis
+      route, total_time, total_dis
       )
     values (#{rId,jdbcType=INTEGER}, #{fId,jdbcType=INTEGER}, #{vId,jdbcType=INTEGER}, 
-      #{route,jdbcType=VARCHAR}, #{totalTime,jdbcType=DOUBLE}, #{totaDis,jdbcType=DOUBLE}
+      #{route,jdbcType=VARCHAR}, #{totalTime,jdbcType=DOUBLE}, #{totalDis,jdbcType=DOUBLE}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.path.model.Route" >
@@ -52,8 +52,8 @@
       <if test="totalTime != null" >
         total_time,
       </if>
-      <if test="totaDis != null" >
-        tota_dis,
+      <if test="totalDis != null" >
+        total_dis,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -73,7 +73,7 @@
         #{totalTime,jdbcType=DOUBLE},
       </if>
       <if test="totaDis != null" >
-        #{totaDis,jdbcType=DOUBLE},
+        #{totalDis,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -86,8 +86,8 @@
       <if test="totalTime != null" >
         total_time = #{totalTime,jdbcType=DOUBLE},
       </if>
-      <if test="totaDis != null" >
-        tota_dis = #{totaDis,jdbcType=DOUBLE},
+      <if test="totalDis != null" >
+        total_dis = #{totalDis,jdbcType=DOUBLE},
       </if>
     </set>
     where r_id = #{rId,jdbcType=INTEGER}
@@ -98,7 +98,7 @@
     update route
     set route = #{route,jdbcType=VARCHAR},
       total_time = #{totalTime,jdbcType=DOUBLE},
-      tota_dis = #{totaDis,jdbcType=DOUBLE}
+      total_dis = #{totalDis,jdbcType=DOUBLE}
     where r_id = #{rId,jdbcType=INTEGER}
       and f_id = #{fId,jdbcType=INTEGER}
       and v_id = #{vId,jdbcType=INTEGER}

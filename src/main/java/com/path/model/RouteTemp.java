@@ -12,13 +12,15 @@ import java.util.List;
  * @author demo
  */
 @Data
-@AllArgsConstructor
 @ToString
 public class RouteTemp {
-    private int id;
-    private List<List> route;
 
+    private List<List> route;
     public RouteTemp() {
+    }
+
+    public RouteTemp(List<List> route) {
+        this.route = route;
     }
 
     public RouteTemp(int count) {

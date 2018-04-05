@@ -16,8 +16,8 @@
     <include refid="Base_Column_List" />
     from distance
     where d_id = #{dId,jdbcType=INTEGER}
-      and start_id = #{startId,jdbcType=INTEGER}
-      and end_id = #{endId,jdbcType=INTEGER}
+      and start_id = #{startId,jdbcType=VARCHAR}
+      and end_id = #{endId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.path.model.DistanceKey" >
     delete from distance

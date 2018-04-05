@@ -17,7 +17,7 @@ public class RouteKey {
     /**
      * 解决方案编号
      */
-    private Integer fId;
+    private Integer fId ;
     /**
      * 车辆编号
      */

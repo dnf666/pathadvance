@@ -3,8 +3,10 @@ package com.path.service.route;
 import com.path.model.Distance;
 import com.path.model.Route;
 import com.path.model.RouteKey;
+import com.path.model.RouteTemp;
 
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author demo
@@ -12,7 +14,7 @@ import java.util.List;
 public interface RouteService {
     int deleteByPrimaryKey(RouteKey key);
 
-    int insert(Route record);
+    int insert(Route record ,String questionId);
 
     int insertSelective(Route record);
 
@@ -31,5 +33,5 @@ public interface RouteService {
 
     List<Route> findByFid(int postData);
 
-    List<Route> geneticAlgorithm();
+    int geneticAlgorithm(String questionId);
 }
