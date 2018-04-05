@@ -40,14 +40,6 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <filter>
-    <filter-name>CROSFilter</filter-name>
-    <filter-class>com.path.filter.CORSFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>CROSFilter</filter-name>
-    <url-pattern>/project/addfile.do</url-pattern>
-  </filter-mapping>
 <!--shiro过滤器的代理类-->
 <!--  <filter>
     <filter-name>shiroFilter</filter-name>

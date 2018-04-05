@@ -77,14 +77,21 @@ public class CenterCsvController {
      * @param multipartFile 中心点文件
      */
     @RequestMapping("importCenterNode")
-    public void insertCenterNode(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile) {
+    public void insertCenterNode(HttpServletRequest request,@RequestParam("info-fileselect") MultipartFile multipartFile)  {
         String fileName = multipartFile.getOriginalFilename();
         //Integer questionId = (Integer) request.getSession().getAttribute("questionId");
         Integer questionId = 1;
         String projectPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/properties");
-        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/download") + File.separator + fileName;
+        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/download") + File.separator + fileName;
         Path pathObject = new Path(projectPath, path, questionId);
         File file = new File(path);
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
         } catch (IOException e) {

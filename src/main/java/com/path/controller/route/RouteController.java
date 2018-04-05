@@ -117,13 +117,13 @@ public class RouteController {
      * @param questionId 问题的id ps： 巨烦
      * */
     @RequestMapping("geneticAlgorithm")
-    public void geneticAlgorithm(String questionId){
+    public void geneticAlgorithm(@RequestParam("postData") String questionId){
         int result = routeService.geneticAlgorithm(questionId);
         if(result > 0) {
-            Map map = MapUtil.toMap(200, "查询成功", result);
+            Map map = MapUtil.toMap(200, "计算完成", result);
             JsonUtil.toJSON(map);
         }else{
-            Map map = MapUtil.toMap(400, "查询失败", result);
+            Map map = MapUtil.toMap(400, "计算失败", result);
             JsonUtil.toJSON(map);
         }
     }

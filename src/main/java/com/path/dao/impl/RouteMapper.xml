@@ -112,4 +112,8 @@
   <select id="findRouteByFid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select route from route where f_id = #{postData};
   </select>
+  <delete id="deleteAll" parameterType="java.lang.Integer" >
+    delete from route where f_id in (select f_id from finalsolution where q_id = #{i,jdbcType=INTEGER});
+    delete from finalsolution where q_id = #{i,jdbcType=INTEGER};
+  </delete>
 </mapper>

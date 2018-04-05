@@ -105,8 +105,9 @@
 
 
 
-  <select id="produceAllWay" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    SELECT c_id AS d_id,c_num AS startId,s_num AS endId from centernode,servicenode where c_id = #{questionId} and s_id = #{questionId};
+  <select id="produceAllWay" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT c_num AS startId from centernode where c_id = #{questionId}
+    union select s_num as startId  from servicenode where s_id = #{questionId}
   </select>
 
   <select id = "checkRemainCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">

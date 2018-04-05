@@ -20,7 +20,7 @@ public interface DistanceMapper {
 
     int insertAdvance(List<Distance> list);
 
-    List<Distance> produceAllWay(Integer questionId);
+    List<String> produceAllWay(Integer questionId);
 
     int checkRemainCount(int i);
 

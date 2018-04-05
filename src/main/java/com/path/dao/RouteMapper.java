@@ -23,4 +23,6 @@ public interface RouteMapper {
     List<Route> findMinTimeForFour();
 
     List<Route> findRouteByFid(int postData);
+
+    void deleteAll(int i);
 }

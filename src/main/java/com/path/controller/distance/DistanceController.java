@@ -54,8 +54,20 @@ public class DistanceController {
         //初始化
         if (distanceService.selectIfNull(questionId).getDId()==0)
         {
-            List<Distance> list = distanceService.produceAllWay(questionId);
-            list.stream().forEach(e -> distanceService.insertSelective(e));
+            List<String> list = distanceService.produceAllWay(questionId);
+                List<Distance> list2 = new ArrayList<>();
+            for (String d:list) {
+                for (String s :list)
+                {
+                    Distance distance = new Distance();
+                    distance.setDId(questionId);
+                    distance.setStartId(d);
+                    distance.setEndId(s);
+                    list2.add(distance);
+                }
+
+            }
+            list2.forEach(e -> distanceService.insertSelective(e));
         }
         Distance distance = distanceService.selectNullNode( questionId);
         Map map = MapUtil.toMap(200, "下一条记录", distance);

@@ -475,4 +475,33 @@ public class RouteControllerTest {
         System.out.println(list1);
 
     }
+    @Test
+    public void delete (){
+        routeMapper.deleteAll(1);
+    }
+    @Test
+    public void delete1 () {
+        TreeMap<Integer, String> s = new TreeMap<>();
+        s.put(1, "1");
+        s.put(2, "2");
+        s.put(3, "3");
+        List<Integer> list = new ArrayList<>();
+        SortedMap<Integer, String> sortedMap = s.subMap(0, 1);
+        System.out.println(s.ceilingKey(0));
+        int size = s.size();
+        for (int i = 1; i <= size; i++) {
+            for (int j = i; j <= size; j++) {
+                list.add(i);
+            }
+        }
+        System.out.println(list);
+        int a = (int) (Math.random() * list.size());
+        int a1 = list.get(a);
+        Set<Integer> entry = s.keySet();
+        Iterator iterator = entry.iterator();
+        for (int i = 0; i < a1; i++) {
+            a = (int) iterator.next();
+        }
+        System.out.println(a);
+    }
 }

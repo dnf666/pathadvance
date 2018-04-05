@@ -66,7 +66,7 @@ public class DistanceServiceImplTest {
 
     @Test
     public void produceAllWay() {
-        List<Distance> list = distanceMapper.produceAllWay(1);
+        List<String> list = distanceMapper.produceAllWay(1);
         System.out.println(list);
     }
 }

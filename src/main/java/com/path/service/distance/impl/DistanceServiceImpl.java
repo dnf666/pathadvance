@@ -73,10 +73,9 @@ public class DistanceServiceImpl implements DistanceService{
     }
 
     @Override
-    public List<Distance> produceAllWay(Integer questionId) {
+    public List<String> produceAllWay(Integer questionId) {
 
-        List<Distance> list = distanceMapper.produceAllWay(questionId);
-        return list;
+        return distanceMapper.produceAllWay(questionId);
     }
 
     @Override

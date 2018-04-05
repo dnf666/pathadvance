@@ -25,7 +25,7 @@ public interface DistanceService {
      * @param questionId
      * @return
      */
-    List<Distance> produceAllWay(Integer questionId);
+    List<String> produceAllWay(Integer questionId);
 
 
     /**

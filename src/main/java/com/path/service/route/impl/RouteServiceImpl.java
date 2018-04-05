@@ -3,6 +3,7 @@ package com.path.service.route.impl;
 import com.path.dao.*;
 import com.path.model.*;
 import com.path.service.route.RouteService;
+import com.sdicons.json.validator.impl.predicates.Int;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -157,6 +158,7 @@ public class RouteServiceImpl implements RouteService{
             minDistance = treeMap.firstKey();
             //杂交变异
             while (i < HYBRIDMUTATIONCOUNT) {
+
                 treeMap = hybridMutation(treeMap);
                 int min = treeMap.firstKey();
                 if(minDistance == min){
@@ -243,8 +245,8 @@ public class RouteServiceImpl implements RouteService{
      * @param treeMap 保存有距离和路线的结构
      */
     private TreeMap<Integer,RouteTemp> hybridMutation(TreeMap<Integer,RouteTemp> treeMap) {
-        //先杂交
-        Map.Entry<Integer, RouteTemp> entry = treeMap.firstEntry();
+        //先轮盘赌，找到父代
+        Map.Entry<Integer, RouteTemp> entry = lunPanDu(treeMap);
         List<List> route =entry.getValue().getRoute();
         int routeCount = route.size();
         //直接变异
@@ -267,6 +269,31 @@ public class RouteServiceImpl implements RouteService{
             }
         }
         return treeMap;
+    }
+
+    /**
+     * 轮盘赌
+     * @param treeMap 数据
+     * @return 父代
+     */
+    private Map.Entry<Integer,RouteTemp> lunPanDu(TreeMap<Integer,RouteTemp> treeMap) {
+        int size = treeMap.size();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            for (int j = i; j < size; j++) {
+                list.add(i);
+            }
+        }
+       int index = list.get((int)Math.random()*list.size());
+       Set<Integer> set = treeMap.keySet();
+       Iterator<Integer> iterator = set.iterator();
+       int parentKey = 0;
+        for (int i = 0; i < index; i++) {
+            parentKey = iterator.next();
+        }
+        Map.Entry<Integer,RouteTemp> entry = (Map.Entry<Integer, RouteTemp>) treeMap.get(parentKey);
+        return entry;
+
     }
 
     /**
@@ -336,21 +363,13 @@ public class RouteServiceImpl implements RouteService{
         //防止取到首和尾
         routeIndex1 = notInHeadAndTail(routeWaySize1, routeIndex1);
         routeIndex2 = notInHeadAndTail(routeWaySize2, routeIndex2);
-        int indexCount1 = (int) (Math.random() * (routeWaySize1 - routeIndex1));
-        int indexCount2 = (int) (Math.random() * (routeWaySize2 - routeIndex2));
-        indexCount1 = confirmNotZero(indexCount1,routeWaySize1 - routeIndex1);
-        indexCount2 = confirmNotZero(indexCount2,routeWaySize2 - routeIndex2);
-        //将数组拆成三段,每段都添加
+        //将数组拆成两段,每段都添加
         List head1 = new ArrayList(routeWay1.subList(0, routeIndex1));
-        List middle1 = new ArrayList(routeWay1.subList(routeIndex1, routeIndex1 + indexCount1));
-        List tail1 = new ArrayList(routeWay1.subList(routeIndex1 + indexCount1, routeWaySize1));
+        List tail1 = new ArrayList(routeWay1.subList(routeIndex1, routeWaySize1));
         List head2 = new ArrayList(routeWay2.subList(0, routeIndex2));
-        List middle2 = new ArrayList(routeWay2.subList(routeIndex2, routeIndex2 + indexCount2));
-        List tail2 = new ArrayList(routeWay2.subList(routeIndex2 + indexCount2, routeWaySize2));
-        head1.addAll(middle2);
-        head1.addAll(tail1);
-        head2.addAll(middle1);
-        head2.addAll(tail2);
+        List tail2 = new ArrayList(routeWay2.subList(routeIndex2 , routeWaySize2));
+        head1.addAll(tail2);
+        head2.addAll(tail1);
         route.set(route1,head1);
         route.set(route2,head2);
         return route;

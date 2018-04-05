@@ -45,7 +45,7 @@
         <div class="pro-left pro-left2"><span>P:20%</span></div>
     </li>
     <li class="pro pro3">
-        <div class="pro-right pro-right3"><span>执行算法</span></div>
+        <div class="pro-right pro-right3" id="pro-right3"><span>执行算法</span></div>
         <div class="pro-left pro-left3"><span>P:20%</span></div>
     </li>
     <li class="pro pro4">
@@ -155,7 +155,7 @@
         <li class="info-panel-wrap">
             <h2 class="info-panel-tit">遗传算法计算</h2>
             <div class="algo-time"><span>算法已运行：</span><span class="algo-time-dig">1s</span><span
-                    class="algo-status">未完成</span><span style="padding-top: 10px;clear: left;padding-bottom: 20px;">方案下载地址:</span>
+                    class="algo-status" id="algo-status">未完成</span><span style="padding-top: 10px;clear: left;padding-bottom: 20px;">方案下载地址:</span>
                 <div class="algo-download"></div>
             </div>
         </li>
@@ -695,7 +695,7 @@
                 }
             }
             var url = "route/findminforfour.do?postData=" + postData;
-            var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+            var obj = new XMLHttpRequest();  // XMLHttpfindRequest对象用于在后台与服务器交换数据
             obj.open('POST', url, true);
             obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             obj.onreadystatechange = function () {
@@ -878,6 +878,23 @@
         })
     }
 
+    var proright3 = document.getElementById("pro-right3");
+    var algostatus = document.getElementById("algo-status");
+    proright3.onclick = function(){
+        var postData = 1;
+        var url = "route/geneticAlgorithm.do?postData="+postData;
+        var obj = new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据
+        obj.open('POST', url, true);
+        obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        obj.onreadystatechange = function () {
+            if (obj.readyState == 4 && obj.status == 200) { // readyState == 4说明请求已完成
+                var data = JSON.parse(obj.responseText);
+                algostatus.innerText = data.message;
+                console.log(data);
+            }
+        };
+        obj.send(postData);
+    }
 
 
 

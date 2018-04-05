@@ -25,20 +25,7 @@ import java.util.stream.Collectors;
 public class ServiceNodeController {
     @Resource
     private ServiceNodeService serviceNodeService;
-    @RequestMapping("importByMap")
-    public void importByMap(List<ServiceNode> list){
-        try {
-            list.stream().forEach(e -> serviceNodeService.insert(e));
-        }catch (Exception e){
-            e.printStackTrace();
-            Map map = MapUtil.toMap(0, "添加失败", false);
-            JsonUtil.toJSON(map);
-        }
-        Map map = MapUtil.toMap(1, "添加成功", true);
-        JsonUtil.toJSON(map);
 
-
-    }
 
     /**
      * 取得相关信息给前端算经纬度
