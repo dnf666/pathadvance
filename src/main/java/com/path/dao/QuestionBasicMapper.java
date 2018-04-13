@@ -1,7 +1,9 @@
 package com.path.dao;
 
 import com.path.model.QuestionBasic;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface QuestionBasicMapper {
     int deleteByPrimaryKey(Integer qId);
 

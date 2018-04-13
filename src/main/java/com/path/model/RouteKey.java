@@ -1,33 +1,26 @@
 package com.path.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class RouteKey {
+    /**
+     * 路线编号,自增的
+     */
     private Integer rId;
-
-    private Integer fId;
-
+    /**
+     * 解决方案编号
+     */
+    private Integer fId ;
+    /**
+     * 车辆编号
+     */
     private Integer vId;
 
-    public Integer getrId() {
-        return rId;
-    }
-
-    public void setrId(Integer rId) {
-        this.rId = rId;
-    }
-
-    public Integer getfId() {
-        return fId;
-    }
-
-    public void setfId(Integer fId) {
-        this.fId = fId;
-    }
-
-    public Integer getvId() {
-        return vId;
-    }
-
-    public void setvId(Integer vId) {
-        this.vId = vId;
-    }
 }

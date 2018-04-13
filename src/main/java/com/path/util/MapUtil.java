@@ -25,9 +25,9 @@ public class MapUtil {
      */
     public static Map toMap(Object status,String message,Object object){
         Map map = new HashMap();
-        map.put("status",status);
+        map.put("resultCode",status);
         map.put("message",message);
-        map.put("object",object);
+        map.put("data",object);
         return map;
     }
 

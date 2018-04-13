@@ -1,23 +1,22 @@
 package com.path.model;
 
-public class VahicleKey {
-    private Integer vId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class VahicleKey {
+    /**
+     * 问题编号
+     */
+    private Integer vId =1;
+    /**
+     * 汽车编号
+     */
     private Integer vNum;
 
-    public Integer getvId() {
-        return vId;
-    }
-
-    public void setvId(Integer vId) {
-        this.vId = vId;
-    }
-
-    public Integer getvNum() {
-        return vNum;
-    }
-
-    public void setvNum(Integer vNum) {
-        this.vNum = vNum;
-    }
 }
